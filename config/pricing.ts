@@ -1,0 +1,6 @@
+export const PRICING = {
+    FREE_SHIPPING_THRESHOLD: 200,
+    SHIPPING_FEE: 15,
+    GIFT_WRAP_FEE: 15,
+  }
+  
