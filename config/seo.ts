@@ -8,3 +8,8 @@ export const SEO = {
     robotsIndex: true,
   } as const
   
+
+  export function formatTitle(title?: string) {
+    if (!title) return SEO.defaultTitle
+    return SEO.titleTemplate.replace("%s", title)
+  }

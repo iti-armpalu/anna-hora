@@ -281,8 +281,8 @@ export default function PrivacyPage() {
                 </div>
                 <div className="space-y-4">
                   <p className="leading-relaxed text-foreground">
-                    If you have any questions about this Privacy Policy or how we handle your personal information,
-                    please don't hesitate to contact us:
+                    {`If you have any questions about this Privacy Policy or how we handle your personal information,
+                    please don't hesitate to contact us:`}
                   </p>
                   <div className="space-y-2 text-foreground">
                     <p>

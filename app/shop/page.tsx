@@ -15,7 +15,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 
 export default function ShopPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("all")

@@ -23,16 +23,16 @@ export default function AboutPage() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-          setIsLoading(false)
+            setIsLoading(false)
         }, 3000) // 3 second delay to see the loading spinner
-    
+
         return () => clearTimeout(timer)
-      }, [])
-    
-      if (isLoading) {
+    }, [])
+
+    if (isLoading) {
         return <Loading /> // This will trigger the loading.tsx component
-      }
-    
+    }
+
 
     return (
         <div>
@@ -220,9 +220,9 @@ export default function AboutPage() {
                                 <em className="font-serif italic">How You Feel</em>
                             </h3>
                             <p className="text-stone-600 leading-relaxed">
-                                Each ANNA HORA piece is chosen not just for how it looks, but for how it makes you feel. The weight of
+                                {`Each ANNA HORA piece is chosen not just for how it looks, but for how it makes you feel. The weight of
                                 silk as it settles against your skin. The way morning light catches the subtle sheen. The confidence
-                                that comes from knowing you're wearing something truly special.
+                                that comes from knowing you're wearing something truly special.`}
                             </p>
                             <p className="text-stone-600 leading-relaxed">
                                 Our pieces become part of your personal rituals—the robe you reach for after a long day, the camisole
@@ -289,8 +289,8 @@ export default function AboutPage() {
                         <div className="bg-white p-8 rounded-lg">
                             <h4 className="text-xl font-light text-stone-800 mb-4">Sustainable Luxury</h4>
                             <p className="text-stone-600 leading-relaxed mb-4">
-                                We partner with silk farms that practice regenerative agriculture, ensuring our luxury doesn't come at
-                                the earth's expense.
+                                {`We partner with silk farms that practice regenerative agriculture, ensuring our luxury doesn't come at
+                                the earth's expense.`}
                             </p>
                             <p className="text-sm text-stone-500">
                                 Our packaging is fully recyclable, and we offer a take-back program for pieces at the end of their
@@ -328,7 +328,7 @@ export default function AboutPage() {
                                 luxury.
                             </p>
                             <p className="text-sm text-stone-500">
-                                A portion of every purchase supports women's wellness initiatives in our partner communities.
+                                {`A portion of every purchase supports women's wellness initiatives in our partner communities.`}
                             </p>
                         </div>
                     </div>
@@ -345,9 +345,9 @@ export default function AboutPage() {
                             <em className="font-serif italic">Embrace Serenity</em>
                         </h3>
                         <p className="text-xl text-stone-600 leading-relaxed mb-12">
-                            We invite you to experience ANNA HORA—not just as clothing, but as a daily reminder that you deserve
+                            {`We invite you to experience ANNA HORA—not just as clothing, but as a daily reminder that you deserve
                             moments of beauty, comfort, and quiet luxury. Whether you're treating yourself or someone you love, each
-                            piece is an investment in the art of living well.
+                            piece is an investment in the art of living well.`}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link href="/shop">

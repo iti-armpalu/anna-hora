@@ -77,7 +77,7 @@ export function PreferencesTab({
         </CardHeader>
         <CardContent>
           <p className="text-sm text-stone-600 mb-4">
-            Choose how you'd like to receive updates about your orders, new products, and exclusive offers.
+            {`Choose how you'd like to receive updates about your orders, new products, and exclusive offers.`}
           </p>
           <Button>Save Preferences</Button>
         </CardContent>
