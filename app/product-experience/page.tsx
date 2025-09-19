@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Music, Upload, CheckCircle, X, Mail, QrCode, RotateCcw } from "lucide-react"
 import { toast } from "sonner"
+import Image from "next/image"
 
 export default function ProductExperiencePage() {
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)
@@ -83,7 +84,7 @@ export default function ProductExperiencePage() {
   const handleReturnSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setReturnSubmitted(true)
-    toast.success("Return request submitted. We'll email you a return label within 24 hours.", {
+    toast.success("Return request submitted. We&apos;ll email you a return label within 24 hours.", {
       position: "top-right",
       duration: 6000,
       style: {
@@ -138,7 +139,7 @@ export default function ProductExperiencePage() {
         <div className="text-center mb-16">
           <h1 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">Your Silk Care Guide</h1>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            Thank you for choosing ANNA HORA. Here's everything you need to keep your silk looking beautiful.
+            Thank you for choosing ANNA HORA. Here&apos;s everything you need to keep your silk looking beautiful.
           </p>
         </div>
 
@@ -210,7 +211,7 @@ export default function ProductExperiencePage() {
                         className="w-full mt-1 p-2 border border-stone-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent"
                       >
                         <option value="">Select a reason</option>
-                        <option value="size">Size doesn't fit</option>
+                        <option value="size">Size doesn&apos;t fit</option>
                         <option value="quality">Quality issue</option>
                         <option value="color">Color not as expected</option>
                         <option value="damaged">Item arrived damaged</option>
@@ -252,7 +253,7 @@ export default function ProductExperiencePage() {
                     <CheckCircle className="h-12 w-12 text-stone-600 mx-auto mb-4" />
                     <h3 className="text-xl font-light text-stone-900 mb-2">Return Request Submitted</h3>
                     <p className="text-stone-600 leading-relaxed">
-                      We've received your return request. You'll receive an email with return instructions and a prepaid
+                      We&apos;ve received your return request. You&apos;ll receive an email with return instructions and a prepaid
                       shipping label within 24 hours.
                     </p>
                   </div>
@@ -285,7 +286,7 @@ export default function ProductExperiencePage() {
               <CardContent className="p-8">
                 <div className="flex flex-col md:flex-row gap-6 mb-8">
                   <div className="flex-shrink-0">
-                    <img
+                    <Image
                       src="/placeholder.svg?height=200&width=200&text=Silk & Serenity Playlist Cover"
                       alt="Silk & Serenity Playlist"
                       className="w-48 h-48 rounded-lg shadow-md mx-auto md:mx-0"
@@ -358,7 +359,7 @@ export default function ProductExperiencePage() {
             <Card className="bg-white border-stone-200">
               <CardContent className="p-8">
                 <p className="text-stone-600 mb-8 text-center leading-relaxed">
-                  We'd love to see how you style your silk pieces. Share photos or videos for a chance to be featured.
+                  We&apos;d love to see how you style your silk pieces. Share photos or videos for a chance to be featured.
                 </p>
 
                 {!feedbackSubmitted ? (
@@ -441,7 +442,7 @@ export default function ProductExperiencePage() {
                     <CheckCircle className="h-12 w-12 text-stone-600 mx-auto mb-4" />
                     <h3 className="text-xl font-light text-stone-900 mb-2">Thank You</h3>
                     <p className="text-stone-600">
-                      Your feedback has been submitted. We'll review your content and may feature it on our channels.
+                      Your feedback has been submitted. We&apos;ll review your content and may feature it on our channels.
                     </p>
                   </div>
                 )}
