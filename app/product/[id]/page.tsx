@@ -321,33 +321,33 @@ export default function ProductPage() {
                           <tbody>
                             <tr className="border-b border-stone-100">
                               <td className="py-2">XS</td>
-                              <td className="py-2">32-34"</td>
-                              <td className="py-2">48"</td>
-                              <td className="py-2">23"</td>
+                              <td className="py-2">32-34&quot;</td>
+                              <td className="py-2">48&quot;</td>
+                              <td className="py-2">23&quot;</td>
                             </tr>
                             <tr className="border-b border-stone-100">
                               <td className="py-2">S</td>
-                              <td className="py-2">34-36"</td>
-                              <td className="py-2">49"</td>
-                              <td className="py-2">23.5"</td>
+                              <td className="py-2">34-36&quot;</td>
+                              <td className="py-2">49&quot;</td>
+                              <td className="py-2">23.5&quot;</td>
                             </tr>
                             <tr className="border-b border-stone-100">
                               <td className="py-2">M</td>
-                              <td className="py-2">36-38"</td>
-                              <td className="py-2">50"</td>
-                              <td className="py-2">24"</td>
+                              <td className="py-2">36-38&quot;</td>
+                              <td className="py-2">50&quot;</td>
+                              <td className="py-2">24&quot;</td>
                             </tr>
                             <tr className="border-b border-stone-100">
                               <td className="py-2">L</td>
-                              <td className="py-2">38-40"</td>
-                              <td className="py-2">51"</td>
-                              <td className="py-2">24.5"</td>
+                              <td className="py-2">38-40&quot;</td>
+                              <td className="py-2">51&quot;</td>
+                              <td className="py-2">24.5&quot;</td>
                             </tr>
                             <tr>
                               <td className="py-2">XL</td>
-                              <td className="py-2">40-42"</td>
-                              <td className="py-2">52"</td>
-                              <td className="py-2">25"</td>
+                              <td className="py-2">40-42&quot;</td>
+                              <td className="py-2">52&quot;</td>
+                              <td className="py-2">25&quot;</td>
                             </tr>
                           </tbody>
                         </table>

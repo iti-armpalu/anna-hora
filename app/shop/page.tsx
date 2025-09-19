@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+// import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 
 export default function ShopPage() {

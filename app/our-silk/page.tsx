@@ -112,9 +112,6 @@ export default function OurSilkPage() {
                   like a second skin. As you slip into silk, you feel the day&apos;s tensions dissolve, replaced by a sense
                   of being held, cherished, understood.
                 </p>
-                <blockquote className="border-l-2 border-stone-300 pl-6 italic text-stone-700 text-xl">
-                  "Silk doesn&apos;t just touch the body—it speaks to it in a language older than words."
-                </blockquote>
               </div>
               <div className="relative">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
@@ -311,7 +308,7 @@ export default function OurSilkPage() {
                   environment, and for the people who bring this ancient art to life.
                 </p>
                 <p className="text-lg text-stone-600 leading-relaxed">
-                  We believe in the philosophy of "slow luxury"—creating pieces that are meant to be treasured for
+                  We believe in the philosophy of &quot;slow luxury&quot; — creating pieces that are meant to be treasured for
                   years, not seasons. Every purchase supports sustainable practices and fair wages, ensuring that beauty
                   and ethics walk hand in hand.
                 </p>
