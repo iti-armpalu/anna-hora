@@ -6,7 +6,6 @@ import { User, Shield, Lock, Eye, FileText, Mail } from "lucide-react"
 import Loading from "@/components/loading"
 
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function PrivacyPage() {
   const [isLoading, setIsLoading] = useState(true)

@@ -11,15 +11,7 @@ import Loading from "@/components/loading"
 
 export default function AboutPage() {
     const [isVideoPlaying, setIsVideoPlaying] = useState(false)
-    const [scrollY, setScrollY] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
-
-
-    useEffect(() => {
-        const handleScroll = () => setScrollY(window.scrollY)
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
 
     useEffect(() => {
         const timer = setTimeout(() => {

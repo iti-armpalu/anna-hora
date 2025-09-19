@@ -20,14 +20,14 @@ export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedSort, setSelectedSort] = useState("newest")
   const [viewMode, setViewMode] = useState("grid")
-  const [quickViewProduct, setQuickViewProduct] = useState<any>(null)
+  // const [quickViewProduct, setQuickViewProduct] = useState<any>(null)
   const [wishlist, setWishlist] = useState<number[]>([])
-  const [filters, setFilters] = useState({
-    size: [] as string[],
-    color: [] as string[],
-    price: [] as string[],
-    fabric: [] as string[],
-  })
+  // const [filters, setFilters] = useState({
+  //   size: [] as string[],
+  //   color: [] as string[],
+  //   price: [] as string[],
+  //   fabric: [] as string[],
+  // })
 
   const categories = [
     { id: "all", name: "All Products" },
@@ -497,10 +497,10 @@ export default function ShopPage() {
                             <Button
                               size="icon"
                               variant="secondary"
-                              onClick={(e) => {
-                                e.preventDefault()
-                                setQuickViewProduct(product)
-                              }}
+                              // onClick={(e) => {
+                              //   e.preventDefault()
+                              //   setQuickViewProduct(product)
+                              // }}
                               className="bg-white/90 hover:bg-white"
                             >
                               <Eye className="w-4 h-4 text-stone-600" />
@@ -581,7 +581,7 @@ export default function ShopPage() {
       </div>
 
       {/* Quick View Modal */}
-      <Dialog open={!!quickViewProduct} onOpenChange={() => setQuickViewProduct(null)}>
+      {/* <Dialog open={!!quickViewProduct} onOpenChange={() => setQuickViewProduct(null)}>
         <DialogContent className="max-w-4xl">
           {quickViewProduct && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -658,7 +658,8 @@ export default function ShopPage() {
             </div>
           )}
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
+
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>

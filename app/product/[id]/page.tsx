@@ -24,7 +24,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedColor, setSelectedColor] = useState("midnight")
   const [selectedSize, setSelectedSize] = useState("")
@@ -68,11 +68,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     video: "/placeholder.mp4",
     description: {
       sensory:
-        "There's something almost ceremonial about slipping into this robe—the way the silk settles against your skin like a gentle embrace, the subtle weight that speaks of quality without ever feeling heavy. This is the piece you reach for when the day demands softness, when you need to wrap yourself in something that understands the art of quiet luxury.",
+        "There&apos;s something almost ceremonial about slipping into this robe—the way the silk settles against your skin like a gentle embrace, the subtle weight that speaks of quality without ever feeling heavy. This is the piece you reach for when the day demands softness, when you need to wrap yourself in something that understands the art of quiet luxury.",
       lifestyle:
-        "Perfect for those stolen moments between day and night, when the world slows down and you can finally breathe. Whether it's your morning coffee ritual or the gentle transition into evening, this robe transforms ordinary moments into something sacred.",
+        "Perfect for those stolen moments between day and night, when the world slows down and you can finally breathe. Whether it&apos;s your morning coffee ritual or the gentle transition into evening, this robe transforms ordinary moments into something sacred.",
       style:
-        "The relaxed silhouette drapes beautifully without overwhelming, while the classic lapel collar adds a touch of timeless elegance. It's sophisticated enough for unexpected guests, yet intimate enough for your most private moments.",
+        "The relaxed silhouette drapes beautifully without overwhelming, while the classic lapel collar adds a touch of timeless elegance. It&apos;s sophisticated enough for unexpected guests, yet intimate enough for your most private moments.",
     },
     specifications: {
       fabric: "100% Grade 6A Mulberry Silk Charmeuse",
@@ -83,7 +83,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     },
     fit: {
       type: "Relaxed fit, true to size",
-      modelInfo: "Model is 5'8\" wearing size S",
+      modelInfo: "Model is 5&apos;8\" wearing size S",
       notes: "Designed for comfortable layering with a graceful drape",
     },
   }
@@ -133,7 +133,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       date: "1 month ago",
       size: "S",
       verified: true,
-      text: "Worth every penny. The quality is exceptional and it's become part of my daily routine. Highly recommend!",
+      text: "Worth every penny. The quality is exceptional and it&apos;s become part of my daily routine. Highly recommend!",
       helpful: 8,
     },
     {

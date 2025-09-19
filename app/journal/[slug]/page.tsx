@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
+export default function ArticlePage() {
 
   // Sample article data - in a real app, this would be fetched based on the slug
   const article = {

@@ -58,7 +58,7 @@ export default function SignInPage() {
       } else {
         setError("Invalid email or password")
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.")
     } finally {
       setIsLoading(false)
@@ -86,7 +86,7 @@ export default function SignInPage() {
         // },
       })
       router.push("/")
-    } catch (err) {
+    } catch {
       setError("Social login failed. Please try again.")
     } finally {
       setIsLoading(false)
@@ -161,7 +161,7 @@ export default function SignInPage() {
       <SocialLoginSection onSocialLogin={handleSocialLogin} isLoading={isLoading} />
 
       <div className="text-center text-sm text-muted-foreground">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-primary hover:text-primary/80 font-medium transition-colors">
           Sign up
         </Link>

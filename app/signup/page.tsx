@@ -83,7 +83,7 @@ export default function SignUpPage() {
       } else {
         setError("Registration failed. Please try again.")
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.")
     } finally {
       setIsLoading(false)
@@ -103,7 +103,7 @@ export default function SignUpPage() {
       }
       login(socialUser)
       router.push("/account")
-    } catch (err) {
+    } catch {
       setError("Social login failed. Please try again.")
     } finally {
       setIsLoading(false)

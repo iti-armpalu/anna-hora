@@ -103,17 +103,17 @@ export default function OurSilkPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-6">
                 <p className="text-lg text-stone-600 leading-relaxed">
-                  {`Imagine the first touch of morning air, cool and gentle against your skin. This is silk—a fabric that
-                  doesn't merely cover, but caresses. Each thread is spun from the cocoon of the mulberry silkworm,
-                  creating a material so fine it seems to float rather than rest.`}
+                  Imagine the first touch of morning air, cool and gentle against your skin. This is silk—a fabric that
+                  doesn&apos;t merely cover, but caresses. Each thread is spun from the cocoon of the mulberry silkworm,
+                  creating a material so fine it seems to float rather than rest.
                 </p>
                 <p className="text-lg text-stone-600 leading-relaxed">
-                  {`The weight is perfect—substantial enough to drape beautifully, yet light enough to move with your body
-                  like a second skin. As you slip into silk, you feel the day's tensions dissolve, replaced by a sense
-                  of being held, cherished, understood.`}
+                  The weight is perfect—substantial enough to drape beautifully, yet light enough to move with your body
+                  like a second skin. As you slip into silk, you feel the day&apos;s tensions dissolve, replaced by a sense
+                  of being held, cherished, understood.
                 </p>
                 <blockquote className="border-l-2 border-stone-300 pl-6 italic text-stone-700 text-xl">
-                  {`"Silk doesn't just touch the body—it speaks to it in a language older than words."`}
+                  "Silk doesn&apos;t just touch the body—it speaks to it in a language older than words."
                 </blockquote>
               </div>
               <div className="relative">
@@ -224,8 +224,8 @@ export default function OurSilkPage() {
                 <em className="font-serif italic">Serves You</em>
               </h3>
               <p className="text-lg text-stone-600">
-                {`Silk's elegance is matched only by its intelligence—a fabric that adapts, protects, and enhances your
-                natural beauty.`}
+                Silk&apos;s elegance is matched only by its intelligence—a fabric that adapts, protects, and enhances your
+                natural beauty.
               </p>
             </div>
 
@@ -238,8 +238,8 @@ export default function OurSilkPage() {
                   <div>
                     <h4 className="text-lg font-light text-stone-800 mb-3">Temperature Regulation</h4>
                     <p className="text-stone-600 leading-relaxed">
-                      {`Silk's natural protein fibers adjust to your body temperature, keeping you cool in summer and warm
-                      in winter—the perfect companion for every season.`}
+                      Silk&apos;s natural protein fibers adjust to your body temperature, keeping you cool in summer and warm
+                      in winter—the perfect companion for every season.
                     </p>
                   </div>
                 </div>
@@ -253,8 +253,8 @@ export default function OurSilkPage() {
                   <div>
                     <h4 className="text-lg font-light text-stone-800 mb-3">Naturally Hypoallergenic</h4>
                     <p className="text-stone-600 leading-relaxed">
-                      {`Silk's smooth surface and natural properties resist dust mites, mold, and allergens, making it
-                      ideal for sensitive skin.`}
+                      Silk&apos;s smooth surface and natural properties resist dust mites, mold, and allergens, making it
+                      ideal for sensitive skin.
                     </p>
                   </div>
                 </div>

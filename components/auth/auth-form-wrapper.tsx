@@ -4,6 +4,7 @@ import type React from "react"
 
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SEO } from "@/config/seo"
 
 interface AuthFormWrapperProps {
   children: React.ReactNode
@@ -20,7 +21,7 @@ export function AuthFormWrapper({ children, title, description, showBrand = true
         {showBrand && (
           <div className="text-center mb-8">
             <Link href="/" className="inline-block">
-              <h1 className="text-3xl font-bold text-primary mb-2">Anna Hora</h1>
+              <h1 className="text-3xl font-bold text-primary mb-2">{SEO.siteName}</h1>
               <p className="text-muted-foreground text-sm">Premium Silk Loungewear</p>
             </Link>
           </div>
@@ -34,15 +35,6 @@ export function AuthFormWrapper({ children, title, description, showBrand = true
 
           <CardContent className="space-y-6">{children}</CardContent>
         </Card>
-
-        {/* Decorative Image */}
-        <div className="mt-8 text-center">
-          <img
-            src="/elegant-woman-profile.png"
-            alt="Elegant woman in silk loungewear"
-            className="w-24 h-24 mx-auto rounded-full object-cover opacity-60"
-          />
-        </div>
       </div>
     </div>
   )
