@@ -32,6 +32,7 @@ export const footerContent = {
     legal: [
       { label: "Privacy Policy", href: "/privacy" as Route },
       { label: "Terms of Service", href: "/terms" as Route },
+      { label: "QR Scanned Link", href: "/product-experience" as Route },
     ],
   },
 } as const satisfies {
