@@ -110,20 +110,20 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div>
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-stone-100 to-stone-200">
           <Image
-            src="/placeholder.svg?height=1080&width=1920"
+            src="/anna-hora-hero-1.webp"
             alt="Silk loungewear hero"
             fill
-            className="object-cover opacity-60"
+            className="object-cover opacity-100"
             priority
           />
         </div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        {/* <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-800 mb-6 leading-tight">
             For the moments
             <br />
@@ -146,7 +146,42 @@ export default function HomePage() {
               Watch Our Story
             </Button>
           </div>
+        </div> */}
+
+
+        <div className="relative z-10 w-full text-left px-8">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-200 mb-6 leading-tight text-left">
+            For the moments
+            <br />
+            <em className="font-serif italic">you keep to yourself</em>
+          </h2>
+
+          <p className="text-lg md:text-xl text-stone-400 mb-8 max-w-2xl font-light text-left">
+            Discover our collection of premium silk loungewear, crafted for those who understand that true luxury lies
+            in the quiet moments of self-care.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-start">
+            {/* <Button href="/shop" size="lg" className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3">
+              Explore Collection
+            </Button> */}
+            <Button asChild size="lg" className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3">
+              <Link href="/shop">Explore Collection</Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Watch Our Story
+            </Button>
+          </div>
         </div>
+
+
+
+
       </section>
 
       {/* Featured Categories */}
@@ -218,7 +253,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=500"
+                src="/anna-hora-silk.webp"
                 alt="Premium silk texture"
                 width={500}
                 height={600}
@@ -248,9 +283,12 @@ export default function HomePage() {
                   <p className="text-sm text-stone-600">The highest grade of mulberry silk</p>
                 </div>
               </div>
-              <Button variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
+              {/* <Button href="our-silk" variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
                 Learn More About Our Silk
                 <ChevronRight className="w-4 h-4 ml-2" />
+              </Button> */}
+              <Button asChild variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
+                <Link href="/our-silk"> Learn More About Our Silk</Link>
               </Button>
             </div>
           </div>
@@ -332,9 +370,8 @@ export default function HomePage() {
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`w-3 h-3 ${
-                              i < Math.floor(product.rating) ? "fill-stone-400 text-stone-400" : "text-stone-300"
-                            }`}
+                            className={`w-3 h-3 ${i < Math.floor(product.rating) ? "fill-stone-400 text-stone-400" : "text-stone-300"
+                              }`}
                           />
                         ))}
                       </div>

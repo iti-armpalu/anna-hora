@@ -73,7 +73,7 @@ export default function GiftGuidePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=400&width=500&text=Elegant gift card with silk ribbon"
+                  src="/anna-hora-giftcard-2.webp"
                   alt=" Gift Card"
                   width={500}
                   height={400}

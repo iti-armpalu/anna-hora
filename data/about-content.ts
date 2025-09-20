@@ -12,7 +12,7 @@ export const aboutContent = {
 
     founder: {
         image: {
-            src: "/placeholder.svg?height=600&width=500&text=Founder",
+            src: "/anna-hora-founders.webp",
             alt: "Founder portrait",
             width: 500,
             height: 600,

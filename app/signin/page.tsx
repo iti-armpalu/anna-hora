@@ -15,7 +15,6 @@ import { SocialLoginSection } from "@/components/auth/social-login-section"
 import { ErrorAlert } from "@/components/auth/error-alert"
 import { toast } from "sonner"
 
-
 export default function SignInPage() {
   const [formData, setFormData] = useState<AuthCredentials>({
     email: "",
