@@ -6,7 +6,7 @@ import {
   Download,
   Play,
   Pause,
-  ChevronRight,
+  // ChevronRight,
   Droplets,
   Thermometer,
   Shield,
@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
 export default function OurSilkPage() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
@@ -412,10 +413,12 @@ export default function OurSilkPage() {
               this ancient luxury can transform your daily rituals into moments of pure indulgence.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
-                Shop Silk Collection
-                <ChevronRight className="w-4 h-4 ml-2" />
+
+              <Button asChild size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
+                <Link href="/shop">Shop now</Link>
+                {/* <ChevronRight className="w-4 h-4 ml-2" /> */}
               </Button>
+
               <Button
                 variant="outline"
                 size="lg"

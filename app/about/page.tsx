@@ -228,19 +228,20 @@ export default function AboutPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {c.closing.ctas.map((cta) => (
-                <Link key={cta.label} href={cta.href}>
-                  <Button
-                    size="lg"
-                    variant={cta.variant === "outline" ? "outline" : "default"}
-                    className={
-                      cta.variant === "outline"
-                        ? "border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
-                        : "bg-stone-800 hover:bg-stone-700 text-white px-8 py-3"
-                    }
-                  >
-                    {cta.label}
-                  </Button>
-                </Link>
+                <Button
+                  key={cta.label} // ✅ key is applied to Button
+                  asChild
+                  size="lg"
+                  variant={cta.variant === "outline" ? "outline" : "default"}
+                  className={
+                    cta.variant === "outline"
+                      ? "border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
+                      : "bg-stone-800 hover:bg-stone-700 text-white px-8 py-3"
+                  }
+                >
+                  <Link href={cta.href}>{cta.label}</Link>
+                </Button>
+
               ))}
             </div>
           </div>
