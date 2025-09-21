@@ -19,7 +19,7 @@ export const footerContent = {
     customerCare: [
       { label: "FAQ", href: "/faq" as Route },
       { label: "Contact Us", href: "/contact" as Route },
-      { label: "Shipping & Returns", href: "/shipping" as Route },
+      { label: "Shipping & Returns", href: "/shipping-returns" as Route },
       { label: "Size Guide", href: "/size-guide" as Route },
       { label: "Care Guide", href: "/care-guide" as Route },
     ],

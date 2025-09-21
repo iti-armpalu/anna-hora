@@ -4,7 +4,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-export const buttonVariants = cva(
+const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
@@ -32,84 +32,161 @@ export const buttonVariants = cva(
   }
 )
 
-type CommonProps = VariantProps<typeof buttonVariants> & {
-  asChild?: boolean
-  className?: string
-}
+// type CommonProps = VariantProps<typeof buttonVariants> & {
+//   asChild?: boolean
+//   className?: string
+// }
 
-/** Button (onClick) variant */
-type ButtonAsButton = CommonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    href?: undefined
-  }
+// /** Button (onClick) variant */
+// type ButtonAsButton = CommonProps &
+//   React.ButtonHTMLAttributes<HTMLButtonElement> & {
+//     href?: undefined
+//   }
 
-/** Link variant (internal or external; uses Next Link for internal) */
-type ButtonAsLink = CommonProps &
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
-    href: string
-  }
+// /** Link variant (internal or external; uses Next Link for internal) */
+// type ButtonAsLink = CommonProps &
+//   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+//     href: string
+//   }
 
-export type ButtonProps = ButtonAsButton | ButtonAsLink
+// export type ButtonProps = ButtonAsButton | ButtonAsLink
 
-export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, href, ...props }, ref) => {
-    const classes = cn(buttonVariants({ variant, size, className }))
+// export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+//   ({ className, variant, size, asChild = false, href, ...props }, ref) => {
+//     const classes = cn(buttonVariants({ variant, size, className }))
 
-    // Radix Slot path (you control the rendered element)
+//     // Radix Slot path (you control the rendered element)
+//     if (asChild) {
+//       return (
+//         <Slot
+//           data-slot="button"
+//           className={classes}
+//           ref={ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>}
+//           {...props}
+//         />
+//       )
+//     }
+
+//     // Link mode
+//     if (href) {
+//       const isInternal = href.startsWith("/")
+//       // For internal links, use Next.js Link
+//       if (isInternal) {
+//         const anchorProps = props as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">
+//         return (
+//           <Link
+//             href={href}
+//             className={classes}
+//             ref={ref as React.Ref<HTMLAnchorElement>}
+//             {...anchorProps}
+//           />
+//         )
+//       }
+
+//       // External link: ensure safe rel if opening a new tab
+//       const { target, rel, ...rest } = props as React.AnchorHTMLAttributes<HTMLAnchorElement>
+//       const safeRel = target === "_blank" ? rel ?? "noopener noreferrer" : rel
+//       return (
+//         <a
+//           href={href}
+//           target={target}
+//           rel={safeRel}
+//           className={classes}
+//           ref={ref as React.Ref<HTMLAnchorElement>}
+//           {...rest}
+//         />
+//       )
+//     }
+
+//     // Button element mode
+//     const buttonProps = props as React.ButtonHTMLAttributes<HTMLButtonElement>
+//     return (
+//       <button
+//         data-slot="button"
+//         className={classes}
+//         ref={ref as React.Ref<HTMLButtonElement>}
+//         {...buttonProps}
+//       />
+//     )
+//   }
+// )
+
+// Button.displayName = "Button"
+
+type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+  } & (
+    | {
+      // Regular button with onClick
+      href?: never
+      external?: never
+    }
+    | {
+      // Internal link
+      href: string
+      external?: false
+      onClick?: never
+    }
+    | {
+      // External link
+      href: string
+      external: true
+      onClick?: never
+    }
+  )
+
+function Button({ className, variant, size, asChild = false, href, external, children, ...props }: ButtonProps) {
+  const baseClassName = cn(buttonVariants({ variant, size, className }))
+
+  if (href && external) {
     if (asChild) {
       return (
-        <Slot
-          data-slot="button"
-          className={classes}
-          ref={ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>}
-          {...props}
-        />
+        <Slot data-slot="button" className={baseClassName} {...props}>
+          {children}
+        </Slot>
       )
     }
 
-    // Link mode
-    if (href) {
-      const isInternal = href.startsWith("/")
-      // For internal links, use Next.js Link
-      if (isInternal) {
-        const anchorProps = props as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">
-        return (
-          <Link
-            href={href}
-            className={classes}
-            ref={ref as React.Ref<HTMLAnchorElement>}
-            {...anchorProps}
-          />
-        )
-      }
-
-      // External link: ensure safe rel if opening a new tab
-      const { target, rel, ...rest } = props as React.AnchorHTMLAttributes<HTMLAnchorElement>
-      const safeRel = target === "_blank" ? rel ?? "noopener noreferrer" : rel
-      return (
-        <a
-          href={href}
-          target={target}
-          rel={safeRel}
-          className={classes}
-          ref={ref as React.Ref<HTMLAnchorElement>}
-          {...rest}
-        />
-      )
-    }
-
-    // Button element mode
-    const buttonProps = props as React.ButtonHTMLAttributes<HTMLButtonElement>
     return (
-      <button
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
         data-slot="button"
-        className={classes}
-        ref={ref as React.Ref<HTMLButtonElement>}
-        {...buttonProps}
-      />
+        className={baseClassName}
+        {...(props as React.ComponentProps<"a">)}
+      >
+        {children}
+      </a>
     )
   }
-)
 
-Button.displayName = "Button"
+  if (href && !external) {
+    if (asChild) {
+      return (
+        <Slot data-slot="button" className={baseClassName} {...props}>
+          {children}
+        </Slot>
+      )
+    }
+
+    return (
+      <Link href={href} data-slot="button" className={baseClassName}>
+        {children}
+      </Link>
+    )
+  }
+
+  const Comp = asChild ? Slot : "button"
+
+  return (
+    <Comp data-slot="button" className={baseClassName} {...props}>
+      {children}
+    </Comp>
+  )
+}
+
+export { Button, buttonVariants }
+
 

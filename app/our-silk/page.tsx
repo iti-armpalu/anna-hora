@@ -1,75 +1,43 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
+import { useState } from "react";
+import Image from "next/image";
+import * as Icons from "lucide-react";
 import {
-  Download,
-  Play,
-  Pause,
-  // ChevronRight,
   Droplets,
   Thermometer,
   Shield,
   Clock,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+import silkData from "@/data/silk-content";
 
 export default function OurSilkPage() {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const careSteps = [
-    {
-      step: 1,
-      title: "Gentle Cleansing",
-      description:
-        "Hand wash in cool water with silk-specific detergent, or choose professional dry cleaning for best results.",
-      icon: <Droplets className="w-6 h-6" />,
-    },
-    {
-      step: 2,
-      title: "Careful Drying",
-      description: "Lay flat on a clean towel, away from direct sunlight. Never wring or twist the delicate fibers.",
-      icon: <Thermometer className="w-6 h-6" />,
-    },
-    {
-      step: 3,
-      title: "Proper Storage",
-      description: "Store in a breathable garment bag, away from direct light. Cedar sachets help maintain freshness.",
-      icon: <Shield className="w-6 h-6" />,
-    },
-    {
-      step: 4,
-      title: "Mindful Wearing",
-      description:
-        "Allow silk to breathe between wears. The natural fibers will maintain their beauty with proper rest.",
-      icon: <Clock className="w-6 h-6" />,
-    },
-  ]
+  const getIcon = (iconName: string) => {
+    const icons = {
+      droplets: <Droplets className="w-6 h-6" />,
+      thermometer: <Thermometer className="w-6 h-6" />,
+      shield: <Shield className="w-6 h-6" />,
+      clock: <Clock className="w-6 h-6" />,
+    };
+    return icons[iconName as keyof typeof icons] || <Clock className="w-6 h-6" />;
+  };
 
   return (
     <div className="min-h-screen bg-stone-50">
-
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-gradient-to-b from-stone-100 to-stone-200"
-          style={{
-            transform: `translateY(${scrollY * 0.5}px)`,
-          }}
         >
           <Image
-            src="/placeholder.svg?height=1080&width=1920&text=Macro shot of silk fibers in golden light"
+            src={silkData.hero.bgImage}
             alt="Silk texture in natural light"
             fill
             className="object-cover opacity-70"
@@ -78,13 +46,12 @@ export default function OurSilkPage() {
         </div>
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-800 mb-6 leading-tight">
-            The Language of
+            {silkData.hero.titleTop}
             <br />
-            <em className="font-serif italic">Silk</em>
+            <em className="font-serif italic">{silkData.hero.titleEm}</em>
           </h2>
           <p className="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto font-light leading-relaxed">
-            More than fabric, silk is poetry written in fiber—a whispered promise of luxury that speaks to the skin
-            before it touches the soul.
+            {silkData.hero.subtitle}
           </p>
         </div>
       </section>
@@ -95,30 +62,26 @@ export default function OurSilkPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">
-                Like Water
+                {silkData.feel.headingTop}
                 <br />
-                <em className="font-serif italic">Against the Skin</em>
+                <em className="font-serif italic">{silkData.feel.headingEm}</em>
               </h3>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-6">
-                <p className="text-lg text-stone-600 leading-relaxed">
-                  Imagine the first touch of morning air, cool and gentle against your skin. This is silk—a fabric that
-                  doesn&apos;t merely cover, but caresses. Each thread is spun from the cocoon of the mulberry silkworm,
-                  creating a material so fine it seems to float rather than rest.
-                </p>
-                <p className="text-lg text-stone-600 leading-relaxed">
-                  The weight is perfect—substantial enough to drape beautifully, yet light enough to move with your body
-                  like a second skin. As you slip into silk, you feel the day&apos;s tensions dissolve, replaced by a sense
-                  of being held, cherished, understood.
-                </p>
+                {silkData.feel.paragraphs.map((p, i) => (
+                  <p key={i} className="text-lg text-stone-600 leading-relaxed">
+                    {p}
+                  </p>
+                ))}
               </div>
+
               <div className="relative">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
                   <Image
-                    src="/placeholder.svg?height=600&width=480&text=Close-up of silk draping over skin in soft light"
-                    alt="Silk draping naturally"
+                    src={silkData.feel.media.image}
+                    alt={silkData.feel.media.alt}
                     fill
                     className="object-cover"
                   />
@@ -129,9 +92,9 @@ export default function OurSilkPage() {
                     onClick={() => setIsVideoPlaying(!isVideoPlaying)}
                   >
                     {isVideoPlaying ? (
-                      <Pause className="w-6 h-6 text-stone-800" />
+                      <Icons.Pause className="w-6 h-6 text-stone-800" />
                     ) : (
-                      <Play className="w-6 h-6 text-stone-800 ml-1" />
+                      <Icons.Play className="w-6 h-6 text-stone-800 ml-1" />
                     )}
                   </Button>
                 </div>
@@ -148,64 +111,27 @@ export default function OurSilkPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">
-                The Art of
+                {silkData.craftsmanship.headingTop}
                 <br />
-                <em className="font-serif italic">Perfection</em>
+                <em className="font-serif italic">
+                  {silkData.craftsmanship.headingEm}
+                </em>
               </h3>
               <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-                Every thread tells a story of ancient wisdom and modern precision, woven together to create something
-                truly extraordinary.
+                {silkData.craftsmanship.intro}
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div className="text-center">
-                <div className="relative aspect-square mb-6 overflow-hidden rounded-lg">
-                  <Image
-                    src="/placeholder.svg?height=300&width=300&text=Mulberry silkworms on leaves"
-                    alt="Mulberry silkworms"
-                    fill
-                    className="object-cover"
-                  />
+              {silkData.craftsmanship.cards.map((c, i) => (
+                <div key={i} className="text-center">
+                  <div className="relative aspect-square mb-6 overflow-hidden rounded-lg">
+                    <Image src={c.image} alt={c.alt} fill className="object-cover" />
+                  </div>
+                  <h4 className="text-xl font-light text-stone-800 mb-4">{c.title}</h4>
+                  <p className="text-stone-600 leading-relaxed">{c.text}</p>
                 </div>
-                <h4 className="text-xl font-light text-stone-800 mb-4">Grade 6A Mulberry Silk</h4>
-                <p className="text-stone-600 leading-relaxed">
-                  Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers
-                  nature can provide.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="relative aspect-square mb-6 overflow-hidden rounded-lg">
-                  <Image
-                    src="/placeholder.svg?height=300&width=300&text=Silk weaving loom in action"
-                    alt="Silk weaving process"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h4 className="text-xl font-light text-stone-800 mb-4">22 Momme Weight</h4>
-                <p className="text-stone-600 leading-relaxed">
-                  The perfect balance of durability and drape, heavy enough for structure yet light enough for the most
-                  delicate touch.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="relative aspect-square mb-6 overflow-hidden rounded-lg">
-                  <Image
-                    src="/placeholder.svg?height=300&width=300&text=Artisan hands finishing silk fabric"
-                    alt="Artisan craftsmanship"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h4 className="text-xl font-light text-stone-800 mb-4">Artisan Finished</h4>
-                <p className="text-stone-600 leading-relaxed">
-                  Each piece is carefully inspected and finished by skilled artisans who understand that true luxury
-                  lies in the details.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -217,76 +143,29 @@ export default function OurSilkPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">
-                Beauty That
+                {silkData.benefits.headingTop}
                 <br />
-                <em className="font-serif italic">Serves You</em>
+                <em className="font-serif italic">{silkData.benefits.headingEm}</em>
               </h3>
-              <p className="text-lg text-stone-600">
-                Silk&apos;s elegance is matched only by its intelligence—a fabric that adapts, protects, and enhances your
-                natural beauty.
-              </p>
+              <p className="text-lg text-stone-600">{silkData.benefits.intro}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card className="border-0 shadow-sm bg-white p-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Thermometer className="w-6 h-6 text-stone-600" />
+              {silkData.benefits.items.map((b, i) => (
+                <Card key={i} className="border-0 shadow-sm bg-white p-8">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
+                      {getIcon(b.icon)}
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-light text-stone-800 mb-3">
+                        {b.title}
+                      </h4>
+                      <p className="text-stone-600 leading-relaxed">{b.text}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-lg font-light text-stone-800 mb-3">Temperature Regulation</h4>
-                    <p className="text-stone-600 leading-relaxed">
-                      Silk&apos;s natural protein fibers adjust to your body temperature, keeping you cool in summer and warm
-                      in winter—the perfect companion for every season.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-white p-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-6 h-6 text-stone-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-light text-stone-800 mb-3">Naturally Hypoallergenic</h4>
-                    <p className="text-stone-600 leading-relaxed">
-                      Silk&apos;s smooth surface and natural properties resist dust mites, mold, and allergens, making it
-                      ideal for sensitive skin.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-white p-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Droplets className="w-6 h-6 text-stone-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-light text-stone-800 mb-3">Skin & Hair Care</h4>
-                    <p className="text-stone-600 leading-relaxed">
-                      The smooth surface reduces friction, preventing hair tangles and skin irritation while you
-                      sleep—beauty rest, literally.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-white p-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-stone-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-light text-stone-800 mb-3">Timeless Durability</h4>
-                    <p className="text-stone-600 leading-relaxed">
-                      With proper care, silk becomes more beautiful with age, developing a unique patina that tells the
-                      story of cherished moments.
-                    </p>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
@@ -299,46 +178,38 @@ export default function OurSilkPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-6">
                 <h3 className="text-3xl lg:text-4xl font-light text-stone-800">
-                  Ethical
+                  {silkData.sourcing.headingTop}
                   <br />
-                  <em className="font-serif italic">by Design</em>
+                  <em className="font-serif italic">
+                    {silkData.sourcing.headingEm}
+                  </em>
                 </h3>
-                <p className="text-lg text-stone-600 leading-relaxed">
-                  Our silk is sourced from family-owned farms that have perfected their craft over generations. These
-                  artisans understand that true luxury cannot exist without respect—for the silkworms, for the
-                  environment, and for the people who bring this ancient art to life.
-                </p>
-                <p className="text-lg text-stone-600 leading-relaxed">
-                  We believe in the philosophy of &quot;slow luxury&quot; — creating pieces that are meant to be treasured for
-                  years, not seasons. Every purchase supports sustainable practices and fair wages, ensuring that beauty
-                  and ethics walk hand in hand.
-                </p>
+
+                {silkData.sourcing.paragraphs.map((p, i) => (
+                  <p key={i} className="text-lg text-stone-600 leading-relaxed">
+                    {p}
+                  </p>
+                ))}
+
                 <div className="pt-4">
-                  <h4 className="font-medium text-stone-800 mb-3">Our Commitments</h4>
+                  <h4 className="font-medium text-stone-800 mb-3">
+                    {silkData.sourcing.commitmentsTitle}
+                  </h4>
                   <ul className="space-y-2 text-stone-600">
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      Partnership with certified sustainable silk farms
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      Fair wages and working conditions for all artisans
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      Minimal environmental impact through traditional methods
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      Long-term relationships built on mutual respect
-                    </li>
+                    {silkData.sourcing.commitments.map((c, i) => (
+                      <li key={i} className="flex items-start">
+                        <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
+                        {c}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
+
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=600&width=500&text=Silk farm with mulberry trees and traditional buildings"
-                  alt="Sustainable silk farm"
+                  src={silkData.sourcing.image}
+                  alt={silkData.sourcing.imageAlt}
                   width={500}
                   height={600}
                   className="rounded-lg"
@@ -356,43 +227,57 @@ export default function OurSilkPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">
-                Caring for Your
+                {silkData.careGuide.headingTop}
                 <br />
-                <em className="font-serif italic">Silk Treasures</em>
+                <em className="font-serif italic">{silkData.careGuide.headingEm}</em>
               </h3>
               <p className="text-lg text-stone-600 max-w-2xl mx-auto mb-8">
-                With gentle care, your silk pieces will remain beautiful for years, becoming more precious with each
-                wear.
+                {silkData.careGuide.intro}
               </p>
-              <Button variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
-                <Download className="w-4 h-4 mr-2" />
-                Download Care Guide
+              <Button
+                variant="outline"
+                className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
+              >
+                <Icons.Download className="w-4 h-4 mr-2" />
+                {silkData.careGuide.ctaDownload.text}
               </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {careSteps.map((step) => (
-                <Card key={step.step} className="border-0 shadow-sm bg-stone-50 p-6 text-center">
+              {silkData.careGuide.steps.map((step) => (
+                <Card
+                  key={step.step}
+                  className="border-0 shadow-sm bg-stone-50 p-6 text-center"
+                >
                   <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                    <div className="text-stone-600">{step.icon}</div>
+                    <div className="text-stone-600">{getIcon(step.icon)}</div>
                   </div>
-                  <Badge variant="outline" className="mb-3 border-stone-300 text-stone-600">
+                  <Badge
+                    variant="outline"
+                    className="mb-3 border-stone-300 text-stone-600"
+                  >
                     Step {step.step}
                   </Badge>
-                  <h4 className="text-lg font-light text-stone-800 mb-3">{step.title}</h4>
-                  <p className="text-sm text-stone-600 leading-relaxed">{step.description}</p>
+                  <h4 className="text-lg font-light text-stone-800 mb-3">
+                    {step.title}
+                  </h4>
+                  <p className="text-sm text-stone-600 leading-relaxed">
+                    {step.description}
+                  </p>
                 </Card>
               ))}
             </div>
 
             <div className="mt-16 p-8 bg-stone-100 rounded-lg text-center">
-              <h4 className="text-xl font-light text-stone-800 mb-4">Need Expert Care?</h4>
-              <p className="text-stone-600 mb-6">
-                We partner with specialist silk cleaners who understand the delicate nature of our fabrics. Contact us
-                for recommendations in your area.
-              </p>
-              <Button variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
-                Find a Specialist
+              <h4 className="text-xl font-light text-stone-800 mb-4">
+                {silkData.careGuide.expert.title}
+              </h4>
+              <p className="text-stone-600 mb-6">{silkData.careGuide.expert.text}</p>
+              <Button
+                variant="outline"
+                className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
+              >
+                {silkData.careGuide.expert.ctaText}
               </Button>
             </div>
           </div>
@@ -404,32 +289,34 @@ export default function OurSilkPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-3xl lg:text-5xl font-light text-stone-800 mb-8 leading-tight">
-              Experience the
+              {silkData.closing.headingTop}
               <br />
-              <em className="font-serif italic">Difference</em>
+              <em className="font-serif italic">{silkData.closing.headingEm}</em>
             </h3>
             <p className="text-xl text-stone-600 leading-relaxed mb-12">
-              Now that you understand the story behind our silk, we invite you to feel it for yourself. Discover how
-              this ancient luxury can transform your daily rituals into moments of pure indulgence.
+              {silkData.closing.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* Primary CTA */}
 
-              <Button asChild size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
-                <Link href="/shop">Shop now</Link>
-                {/* <ChevronRight className="w-4 h-4 ml-2" /> */}
+
+              <Button href={silkData.closing.primaryCta.href} data-slot="button" size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
+                Show Now
+                <Icons.ChevronRight className="w-4 h-4 ml-2" />
               </Button>
 
+              {/* Secondary CTA */}
               <Button
                 variant="outline"
                 size="lg"
                 className="border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
               >
-                Request Fabric Samples
+                {silkData.closing.secondaryCta.text}
               </Button>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
