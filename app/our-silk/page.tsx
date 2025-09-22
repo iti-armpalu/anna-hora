@@ -40,7 +40,7 @@ export default function OurSilkPage() {
             src={silkData.hero.bgImage}
             alt="Silk texture in natural light"
             fill
-            className="object-cover opacity-70"
+            className="object-cover opacity-90"
             priority
           />
         </div>

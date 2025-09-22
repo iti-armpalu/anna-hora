@@ -3,7 +3,7 @@
 const silkData = {
     hero: {
       bgImage:
-        "/placeholder.svg?height=1080&width=1920&text=Macro shot of silk fibers in golden light",
+        "/anna-hora-hero-2.webp",
       titleTop: "The Language of",
       titleEm: "Silk",
       subtitle:
