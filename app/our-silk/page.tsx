@@ -15,6 +15,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 import silkData from "@/data/silk-content";
+import Link from "next/link";
 
 export default function OurSilkPage() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -299,10 +300,9 @@ export default function OurSilkPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {/* Primary CTA */}
 
-
-              <Button href={silkData.closing.primaryCta.href} data-slot="button" size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
-                Show Now
-                <Icons.ChevronRight className="w-4 h-4 ml-2" />
+              <Button asChild data-slot="button" size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
+                <Link href={silkData.closing.primaryCta.href}>Show Now
+                  <Icons.ChevronRight className="w-4 h-4 ml-2" /></Link>
               </Button>
 
               {/* Secondary CTA */}

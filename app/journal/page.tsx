@@ -110,12 +110,9 @@ export default function JournalPage() {
                                             <span>{featuredArticle.readTime}</span>
                                         </div>
                                     </div>
-                                    <Link href={`/journal/${featuredArticle.slug}`}>
-                                        <Button className="bg-stone-800 hover:bg-stone-700 text-white">
-                                            Read Story
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </Button>
-                                    </Link>
+                                    <Button asChild className="bg-stone-800 hover:bg-stone-700 text-white">
+                                        <Link href={`/journal/${featuredArticle.slug}`}>Read Story</Link>
+                                    </Button>
                                 </CardContent>
                             </div>
                         </Card>
@@ -163,12 +160,12 @@ export default function JournalPage() {
                                         </div>
                                     </div>
                                     <div className="mt-4 pt-4 border-t border-stone-100">
-                                        <Link href={`/journal/${article.slug}`}>
-                                            <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900 p-0">
+                                        <Button asChild variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900 p-0">
+                                            <Link href={`/journal/${article.slug}`}>
                                                 Read More
                                                 <ArrowRight className="w-3 h-3 ml-1" />
-                                            </Button>
-                                        </Link>
+                                            </Link>
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>

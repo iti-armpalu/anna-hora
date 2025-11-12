@@ -41,6 +41,34 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* ANNA green */
+  --color-anna-green-50: #f5f8f8;
+  --color-anna-green-100: #dcebe7;
+  --color-anna-green-200: #b9d6cf;
+  --color-anna-green-300: #8fb9b1;
+  --color-anna-green-400: #679a91;
+  --color-anna-green-500: #4d7f77;
+  --color-anna-green-600: #3c655f;
+  --color-anna-green-700: #33524f;
+  --color-anna-green-800: #2c4341;
+  --color-anna-green-900: #2a3d3b; /* ANNA green original */
+  --color-anna-green-950: #132020;
+
+    /* ANNA green */
+  --color-anna-cement-50: #f5f4f1;
+  --color-anna-cement-100: #e7e4da;
+  --color-anna-cement-200: #d1c9b7;
+  --color-anna-cement-300: #b7a88d;
+  --color-anna-cement-400: #a18d6e;
+  --color-anna-cement-500: #927d60;
+  --color-anna-cement-600: #846c55; /* ANNA cement original */
+  --color-anna-cement-700: #655143;
+  --color-anna-cement-800: #57453c;
+  --color-anna-cement-900: #4c3d37;
+  --color-anna-cement-950: #2b201d;
+  
+  
 }
 
 :root {
@@ -116,6 +144,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

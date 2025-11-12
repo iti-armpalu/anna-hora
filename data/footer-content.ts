@@ -27,6 +27,7 @@ export const footerContent = {
       { label: "Our Story", href: "/about" as Route },
       { label: "Our Silk", href: "/our-silk" as Route },
       { label: "Journal", href: "/journal" as Route },
+      { label: "Press", href: "/press" as Route },
       { label: "Sustainability", href: "/sustainability" as Route },
     ],
     legal: [

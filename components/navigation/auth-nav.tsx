@@ -11,19 +11,22 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { User, LogOut, Package, Heart, Settings } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
+import { Avatar, AvatarFallback } from "../ui/avatar"
 
 export function AuthNav() {
     const { user, isAuthenticated, logout } = useAuth()
 
     if (!isAuthenticated) {
         return (
-            <Link href="/signin">
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Button variant="ghost" size="icon" className="hover:bg-stone-100">
-                        <User className="h-5 w-5" />
-                    </Button>
-                </Button>
-            </Link>
+            <Button asChild variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Link href="/signin">
+                    <Avatar className="h-8 w-8">
+                        <AvatarFallback className="bg-stone-200 text-stone-600">
+                            <User className="h-4 w-4" />
+                        </AvatarFallback>
+                    </Avatar>
+                </Link>
+            </Button>
         )
     }
 

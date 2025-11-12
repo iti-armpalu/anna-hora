@@ -1,7 +1,7 @@
 import * as React from "react"
-import Link from "next/link"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
@@ -9,13 +9,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost:
+          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -23,6 +25,8 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
+        "icon-sm": "size-8",
+        "icon-lg": "size-10",
       },
     },
     defaultVariants: {
@@ -32,161 +36,25 @@ const buttonVariants = cva(
   }
 )
 
-// type CommonProps = VariantProps<typeof buttonVariants> & {
-//   asChild?: boolean
-//   className?: string
-// }
-
-// /** Button (onClick) variant */
-// type ButtonAsButton = CommonProps &
-//   React.ButtonHTMLAttributes<HTMLButtonElement> & {
-//     href?: undefined
-//   }
-
-// /** Link variant (internal or external; uses Next Link for internal) */
-// type ButtonAsLink = CommonProps &
-//   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
-//     href: string
-//   }
-
-// export type ButtonProps = ButtonAsButton | ButtonAsLink
-
-// export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-//   ({ className, variant, size, asChild = false, href, ...props }, ref) => {
-//     const classes = cn(buttonVariants({ variant, size, className }))
-
-//     // Radix Slot path (you control the rendered element)
-//     if (asChild) {
-//       return (
-//         <Slot
-//           data-slot="button"
-//           className={classes}
-//           ref={ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>}
-//           {...props}
-//         />
-//       )
-//     }
-
-//     // Link mode
-//     if (href) {
-//       const isInternal = href.startsWith("/")
-//       // For internal links, use Next.js Link
-//       if (isInternal) {
-//         const anchorProps = props as Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">
-//         return (
-//           <Link
-//             href={href}
-//             className={classes}
-//             ref={ref as React.Ref<HTMLAnchorElement>}
-//             {...anchorProps}
-//           />
-//         )
-//       }
-
-//       // External link: ensure safe rel if opening a new tab
-//       const { target, rel, ...rest } = props as React.AnchorHTMLAttributes<HTMLAnchorElement>
-//       const safeRel = target === "_blank" ? rel ?? "noopener noreferrer" : rel
-//       return (
-//         <a
-//           href={href}
-//           target={target}
-//           rel={safeRel}
-//           className={classes}
-//           ref={ref as React.Ref<HTMLAnchorElement>}
-//           {...rest}
-//         />
-//       )
-//     }
-
-//     // Button element mode
-//     const buttonProps = props as React.ButtonHTMLAttributes<HTMLButtonElement>
-//     return (
-//       <button
-//         data-slot="button"
-//         className={classes}
-//         ref={ref as React.Ref<HTMLButtonElement>}
-//         {...buttonProps}
-//       />
-//     )
-//   }
-// )
-
-// Button.displayName = "Button"
-
-type ButtonProps = React.ComponentProps<"button"> &
+function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-  } & (
-    | {
-      // Regular button with onClick
-      href?: never
-      external?: never
-    }
-    | {
-      // Internal link
-      href: string
-      external?: false
-      onClick?: never
-    }
-    | {
-      // External link
-      href: string
-      external: true
-      onClick?: never
-    }
-  )
-
-function Button({ className, variant, size, asChild = false, href, external, children, ...props }: ButtonProps) {
-  const baseClassName = cn(buttonVariants({ variant, size, className }))
-
-  if (href && external) {
-    if (asChild) {
-      return (
-        <Slot data-slot="button" className={baseClassName} {...props}>
-          {children}
-        </Slot>
-      )
-    }
-
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-slot="button"
-        className={baseClassName}
-        {...(props as React.ComponentProps<"a">)}
-      >
-        {children}
-      </a>
-    )
-  }
-
-  if (href && !external) {
-    if (asChild) {
-      return (
-        <Slot data-slot="button" className={baseClassName} {...props}>
-          {children}
-        </Slot>
-      )
-    }
-
-    return (
-      <Link href={href} data-slot="button" className={baseClassName}>
-        {children}
-      </Link>
-    )
-  }
-
+  }) {
   const Comp = asChild ? Slot : "button"
 
   return (
-    <Comp data-slot="button" className={baseClassName} {...props}>
-      {children}
-    </Comp>
+    <Comp
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
   )
 }
 
 export { Button, buttonVariants }
-
-

@@ -23,7 +23,7 @@ export function CartButton() {
       </Button>
       {totalItems > 0 && (
         <span
-          className="pointer-events-none absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full bg-stone-800 text-white text-xs"
+          className="pointer-events-none absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full bg-anna-green-950 text-white text-xs"
           aria-live="polite"
         >
           {totalItems}

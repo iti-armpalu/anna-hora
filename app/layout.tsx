@@ -5,6 +5,7 @@ import Footer from "@/components/footer/Footer";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "@/components/ui/sonner"
 import Header from "@/components/header/Header";
+import { WishlistProvider } from "@/contexts/wishlist-context";
 
 
 export const metadata: Metadata = {
@@ -22,10 +23,12 @@ export default function RootLayout({
       <body className="min-h-screen bg-stone-50">
         <AuthProvider>
           <CartProvider>
-            <Header />
-            {children}
-            <Toaster />
-            <Footer />
+            <WishlistProvider>
+              <Header />
+              {children}
+              <Toaster />
+              <Footer />
+            </WishlistProvider>
           </CartProvider>
         </AuthProvider>
       </body>

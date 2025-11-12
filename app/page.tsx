@@ -3,110 +3,59 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, Star, ChevronRight, Play } from "lucide-react"
+import { Heart, Star } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { CartDrawer } from "@/components/cart/cart-drawer"
+import AsSeenIn from "@/components/press/as-seen-in"
 
 export default function HomePage() {
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("all")
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null)
 
   const products = [
     {
       id: 1,
-      name: "Midnight Silk Robe",
+      name: "Off White Pure Silk Lounge Shirt",
       price: 298,
       originalPrice: null,
       category: "robes",
       color: "Midnight Navy",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
+      image: "/off-white-pure-silk-lounge-shirt.webp",
+      hoverImage: "/off-white-pure-silk-lounge-shirt.webp",
       isNew: true,
       rating: 4.9,
       reviews: 127,
     },
     {
       id: 2,
-      name: "Morning Mist Camisole Set",
+      name: "Verdant Panther Pure Silk Lounge Shirt",
       price: 189,
       originalPrice: null,
       category: "sleepwear",
       color: "Pearl Grey",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
+      image: "/verdant-panther-pure-silk-lounge-shirt.webp",
+      hoverImage: "/verdant-panther-pure-silk-lounge-shirt.webp",
       isNew: false,
       rating: 4.8,
       reviews: 89,
     },
     {
       id: 3,
-      name: "Champagne Dreams Lounge Set",
+      name: "Pure Silk Lounge",
       price: 245,
       originalPrice: 295,
       category: "lounge",
       color: "Champagne",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
+      image: "/pure-silk-lounge-shorts.webp",
+      hoverImage: "/pure-silk-lounge-shorts.webp",
       isNew: false,
       rating: 4.9,
       reviews: 203,
     },
-    {
-      id: 4,
-      name: "Sage Serenity Short Set",
-      price: 165,
-      originalPrice: null,
-      category: "sleepwear",
-      color: "Muted Sage",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
-      isNew: true,
-      rating: 4.7,
-      reviews: 56,
-    },
-    {
-      id: 5,
-      name: "Ivory Elegance Slip Dress",
-      price: 225,
-      originalPrice: null,
-      category: "sleepwear",
-      color: "Soft Ivory",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
-      isNew: false,
-      rating: 4.8,
-      reviews: 142,
-    },
-    {
-      id: 6,
-      name: "Cashmere Touch Eye Mask",
-      price: 45,
-      originalPrice: null,
-      category: "accessories",
-      color: "Warm Beige",
-      image: "/placeholder.svg?height=400&width=300",
-      hoverImage: "/placeholder.svg?height=400&width=300",
-      isNew: false,
-      rating: 4.9,
-      reviews: 78,
-    },
-  ]
-
-  const filteredProducts =
-    selectedCategory === "all" ? products : products.filter((product) => product.category === selectedCategory)
-
-  const categories = [
-    { id: "all", name: "All" },
-    { id: "robes", name: "Robes" },
-    { id: "sleepwear", name: "Sleepwear" },
-    { id: "lounge", name: "Lounge Sets" },
-    { id: "accessories", name: "Accessories" },
   ]
 
   return (
@@ -123,30 +72,6 @@ export default function HomePage() {
             priority
           />
         </div>
-        {/* <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-800 mb-6 leading-tight">
-            For the moments
-            <br />
-            <em className="font-serif italic">you keep to yourself</em>
-          </h2>
-          <p className="text-lg md:text-xl text-stone-600 mb-8 max-w-2xl mx-auto font-light">
-            Discover our collection of premium silk loungewear, crafted for those who understand that true luxury lies
-            in the quiet moments of self-care.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
-              Explore Collection
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Watch Our Story
-            </Button>
-          </div>
-        </div> */}
 
 
         <div className="relative z-10 w-full text-left px-8">
@@ -162,19 +87,16 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-start">
-            {/* <Button href="/shop" size="lg" className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3">
-              Explore Collection
-            </Button> */}
             <Button asChild size="lg" className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3">
               <Link href="/shop">Explore Collection</Link>
             </Button>
             <Button
+              asChild
               variant="outline"
               size="lg"
               className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
             >
-              <Play className="w-4 h-4 mr-2" />
-              Watch Our Story
+              <Link href="/about">Our Story</Link>
             </Button>
           </div>
         </div>
@@ -188,26 +110,33 @@ export default function HomePage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Curated for Comfort</h3>
+            <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Curated for <em className="font-serif italic">Uncomplicated Happiness</em></h3>
             <p className="text-stone-600 max-w-2xl mx-auto">
-              Each piece is thoughtfully designed to elevate your most intimate moments, crafted from the finest
-              mulberry silk.
+              Each piece is thoughtfully designed to elevate your most intimate moments, a dialogue between texture, form, and feeling.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
+            <Card className="group border-0 shadow-none bg-transparent overflow-hidden">
               <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg?height=500&width=375"
-                  alt="Robes Collection"
+                  src="/velvet-trousers.webp"
+                  alt="Velvet Collection"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                 <div className="absolute bottom-6 left-6 text-white">
-                  <h4 className="text-2xl font-light mb-2">Robes</h4>
-                  <p className="text-sm opacity-90">Wrap yourself in luxury</p>
+                  <h4 className="text-2xl font-light mb-2">Indulgent Velvet</h4>
+                  <p className="text-sm opacity-90">Soft depth, warm touch. Sumptuous textures for unhurried evenings</p>
+                  <div className="flex justify-start mt-8">
+                    <Button
+                      asChild
+                      className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
+                    >
+                      <Link href="/collections/velvet">Explore Velvet Collection</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -215,15 +144,23 @@ export default function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
               <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg?height=500&width=375"
+                  src="/silk-trousers.webp"
                   alt="Sleepwear Collection"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                 <div className="absolute bottom-6 left-6 text-white">
-                  <h4 className="text-2xl font-light mb-2">Sleepwear</h4>
-                  <p className="text-sm opacity-90">Dreams in silk</p>
+                  <h4 className="text-2xl font-light mb-2">Pure Silk Moments</h4>
+                  <p className="text-sm opacity-90">Light, fluid, and timeless. Breathable luxury crafted from the finest mulberry silk.</p>
+                  <div className="flex justify-start mt-8">
+                    <Button
+                      asChild
+                      className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
+                    >
+                      <Link href="/collections/velvet">Explore Silk Collection</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -231,15 +168,23 @@ export default function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
               <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg?height=500&width=375"
+                  src="/silk-set.webp"
                   alt="Lounge Sets Collection"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                 <div className="absolute bottom-6 left-6 text-white">
-                  <h4 className="text-2xl font-light mb-2">Lounge Sets</h4>
-                  <p className="text-sm opacity-90">Effortless elegance</p>
+                  <h4 className="text-2xl font-light mb-2">Effortless Pairings</h4>
+                  <p className="text-sm opacity-90">Wear them together or apart. Separate pieces designed to move in harmony.</p>
+                  <div className="flex justify-start mt-8">
+                    <Button
+                      asChild
+                      className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
+                    >
+                      <Link href="/collections/velvet">Explore Sets Collection</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -262,9 +207,9 @@ export default function HomePage() {
             </div>
             <div className="space-y-6">
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800">
-                The Art of <em className="font-serif italic">Mulberry Silk</em>
+                The art of <em className="font-serif italic">Mulberry Silk</em>
               </h3>
-              <p className="text-stone-600 leading-relaxed">
+              {/* <p className="text-stone-600 leading-relaxed">
                 Our silk is sourced from the finest mulberry trees, where silkworms are nurtured in pristine conditions.
                 Each thread is carefully selected for its lustrous sheen, incredible softness, and natural
                 temperature-regulating properties.
@@ -272,6 +217,17 @@ export default function HomePage() {
               <p className="text-stone-600 leading-relaxed">
                 The result is fabric that feels like a gentle caress against your skin, naturally hypoallergenic and
                 breathable, perfect for those precious moments of rest and reflection.
+              </p> */
+              }
+              <p className="text-stone-600 leading-relaxed">
+                Our silk reflects everything ANNA HORA stands for: timeless elegance, integrity, 
+                and a devotion to quality that can be felt in every detail. We work with skilled artisans who honour time-honoured techniques, transforming this natural wonder into pieces that embody refinement and ease.
+              </p>
+              <p className="text-stone-600 leading-relaxed">
+                It took us 18 months to find the silk we truly believed in, one that met our standards for beauty, 
+                comfort, and sustainability. The result is a fabric that feels effortlessly luxurious against the skin, 
+                created for moments of calm, confidence, and uncomplicated happiness, a quiet expression of the ANNA HORA 
+                way of living.
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div>
@@ -283,10 +239,6 @@ export default function HomePage() {
                   <p className="text-sm text-stone-600">The highest grade of mulberry silk</p>
                 </div>
               </div>
-              {/* <Button href="our-silk" variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
-                Learn More About Our Silk
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button> */}
               <Button asChild variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
                 <Link href="/our-silk"> Learn More About Our Silk</Link>
               </Button>
@@ -303,24 +255,10 @@ export default function HomePage() {
               <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Featured Pieces</h3>
               <p className="text-stone-600">Handpicked selections for your most cherished moments</p>
             </div>
-            <div className="flex items-center space-x-4 mt-6 sm:mt-0">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-40 border-stone-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product) => (
+            {products.map((product) => (
               <Link href={`/product/${product.id}`} key={product.id}>
                 <Card
                   className="group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden"
@@ -387,12 +325,14 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Button
+              asChild
               variant="outline"
               size="lg"
               className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
             >
-              View All Products
-              <ChevronRight className="w-4 h-4 ml-2" />
+              <Link href="/shop">
+                View All Products
+              </Link>
             </Button>
           </div>
         </div>
@@ -404,8 +344,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Thoughtful Gifting</h3>
             <p className="text-stone-600 max-w-2xl mx-auto">
-              Give the gift of quiet luxury. Each piece arrives beautifully packaged, ready to create moments of joy and
-              self-care.
+              A gesture of grace and intention. Each ANNA HORA piece is beautifully presented, crafted to bring a sense of calm, warmth, and quiet joy to the moments that matter most.
             </p>
           </div>
 
@@ -413,25 +352,28 @@ export default function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/anna-hora-giftcard-2.webp?height=300&width=400"
                   alt="Luxury Gift Set"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <CardContent className="p-6">
-                <h4 className="text-xl font-light text-stone-800 mb-2">The Self-Care Collection</h4>
+                <h4 className="text-xl font-light text-stone-800 mb-2">Gift Cards</h4>
                 <p className="text-stone-600 mb-4">
-                  A curated selection of our most beloved pieces, perfect for creating a complete ritual of relaxation.
+                  Let them choose their perfect piece. Our digital gift cards arrive instantly and never expire, making them the perfect last-minute gift.
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium text-stone-800">From $395</span>
+                  <span className="text-lg font-medium text-stone-800">From $50</span>
                   <Button
+                    asChild
                     variant="outline"
                     size="sm"
                     className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
                   >
-                    Shop Collection
+                    <Link href="/gift-guide">
+                      View Gift Guide
+                    </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -440,14 +382,19 @@ export default function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=300&width=400"
+                  src="/gift-wrapping.webp?height=300&width=400"
                   alt="Gift Wrapping"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <CardContent className="p-6">
-                <h4 className="text-xl font-light text-stone-800 mb-2">Complimentary Gift Wrapping</h4>
+                <div className="flex flex-wrap items-center gap-4 mb-3">
+                  <h4 className="text-xl font-light text-stone-800">Complimentary Gift Wrapping</h4>
+                  <Badge variant="secondary" className="bg-stone-100 text-stone-700 hover:bg-stone-300 font-normal">
+                    FSC-certified recycled paper
+                  </Badge>
+                </div>
                 <p className="text-stone-600 mb-4">
                   Every gift is wrapped in our signature packaging with a handwritten note, making each delivery a
                   moment to treasure.
@@ -468,14 +415,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      <AsSeenIn />
+
       {/* Newsletter Section */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
             <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Me-Time Letters</h3>
             <p className="text-stone-600 mb-8">
               Join our community and receive thoughtful notes about self-care, styling tips, and exclusive access to new
-              collections.
+              collections. Sent occasionally, always with intention.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
@@ -483,14 +432,13 @@ export default function HomePage() {
                 placeholder="Your email address"
                 className="flex-1 border-stone-300 focus:border-stone-500"
               />
-              <Button className="bg-stone-800 hover:bg-stone-700 text-white px-8">Subscribe</Button>
+              <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8">Subscribe</Button>
             </div>
             <p className="text-xs text-stone-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
           </div>
         </div>
       </section>
 
-      {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   )
