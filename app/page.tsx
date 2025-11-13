@@ -96,7 +96,7 @@ export default function HomePage() {
               size="lg"
               className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
             >
-              <Link href="/about">Our Story</Link>
+              <Link href="/about">About ANNA</Link>
             </Button>
           </div>
         </div>

@@ -9,13 +9,13 @@ import { FiltersPanel } from "./_components/filters-panel"
 import { SortControl } from "./_components/sort-control"
 import { ViewToggle } from "./_components/view-toggle"
 
-import { ProductNode } from "@/queries/get-products"
 import { ProductCard } from "@/components/shop/product-card"
+import { ProductNode } from "@/lib/shopify/products"
 
 
 
 export default function ShopClient({ initialProducts }: { initialProducts: ProductNode[] }) {
-    const [selectedCategory, setSelectedCategory] = useState("all")
+  const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedSort, setSelectedSort] = useState<"newest" | "price-low" | "price-high" | "bestsellers">("newest")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -77,9 +77,8 @@ export default function ShopClient({ initialProducts }: { initialProducts: Produ
       {/* Products */}
       <main className="container mx-auto px-4 py-8">
         <div
-          className={`grid gap-8 ${
-            viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
-          }`}
+          className={`grid gap-8 items-stretch ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
+            }`}
         >
           {initialProducts.map(p => <ProductCard key={p.id} product={p} />)}
         </div>

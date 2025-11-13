@@ -1,5 +1,5 @@
 // app/products/page.tsx
-import { getProducts } from "@/queries/get-products"
+import { getProducts } from "@/lib/queries/get-products"
 import Image from "next/image"
 import Link from "next/link"
 

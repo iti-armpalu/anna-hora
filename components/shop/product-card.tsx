@@ -1,39 +1,132 @@
 "use client"
 
-import Image from "next/image"
-import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import { ProductNode } from "@/queries/get-products"
+import { ProductNode } from "@/lib/shopify/products"
+import { Plus } from "lucide-react"
+import { Button } from "../ui/button"
+// import { WishlistButton } from "../wishlist-button"
+import { toast } from "sonner"
+import ProductImageCarousel from "../product-image-carousel"
+import { Badge } from "../ui/badge"
+import { useState } from "react"
 
 export function ProductCard({ product }: { product: ProductNode }) {
-  const price = product.priceRange.minVariantPrice
-  const imageUrl = product.featuredImage?.url
-  const alt = product.featuredImage?.altText ?? product.title
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+
+  const sizeOption = product.options?.find(opt => opt.name.toLowerCase() === "size");
+
+  const sizes = sizeOption
+    ? sizeOption.values.map((size) => {
+      const variantForSize = product.variants?.edges.find((v) =>
+        v.node.selectedOptions.some(
+          (opt) => opt.name.toLowerCase() === "size" && opt.value === size
+        )
+      );
+
+      return {
+        size,
+        inStock: variantForSize?.node.availableForSale ?? false,
+      };
+    })
+    : [];
+
+  function formatPrice(amount: string, currency: string) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency,
+      minimumFractionDigits: 2,
+    }).format(parseFloat(amount));
+  }
+
+
+  // --- Handle Quick Add ---
+  const handleQuickAdd = () => {
+    // For now, no cart logic — just a toast confirmation
+    toast.success(`"${product.title}" added to your bag`);
+
+  };
+
+  const BADGE_MAP = {
+    bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
+    limited: { label: "Limited", color: "bg-anna-green-900" },
+    new: { label: "New", color: "bg-anna-green-900" },
+  };
 
   return (
-    <Card className="border-0 shadow-sm bg-white overflow-hidden group">
-      <Link href={`/products/${product.handle}`}>
-        {/* Product image */}
-        <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
-          {imageUrl && (
-            <Image
-              src={imageUrl}
-              alt={alt}
-              fill
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          )}
+
+    // <Link href={`/product/${product.handle}`} prefetch={false}>
+    <Card className="flex flex-col h-full group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
+      <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
+
+        <ProductImageCarousel product={product} />
+
+
+        {/* Badges */}
+        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+          {product.metafields?.map((mf) => {
+            const badge = BADGE_MAP[mf.key as keyof typeof BADGE_MAP];
+            if (badge && mf.value === "true") {
+              return (
+                <Badge key={mf.key} className={`${badge.color} text-white`}>
+                  {badge.label}
+                </Badge>
+              );
+            }
+            return null;
+          })}
         </div>
 
-        {/* Product info */}
-        <CardContent className="p-4 text-center">
-          <h3 className="text-sm font-medium text-stone-800 mb-1">{product.title}</h3>
-          <p className="text-sm text-stone-600">
-            {price.amount} {price.currencyCode}
+        {/* Quick Add */}
+        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Button
+            onClick={handleQuickAdd}
+            className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Quick Add
+          </Button>
+        </div>
+      </div>
+
+      <CardContent className="flex flex-col justify-between flex-1 p-0">
+        <div className="space-y-2">
+          <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">{product.title}</h3>
+          <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">{product.description}</p>
+
+          <p className="text-medium text-stone-800 font-medium">
+            {formatPrice(
+              product.priceRange.minVariantPrice.amount,
+              product.priceRange.minVariantPrice.currencyCode
+            )}
           </p>
-        </CardContent>
-      </Link>
+
+          <div className="flex flex-wrap gap-2 mt-4">
+            {sizes.map(({ size, inStock }) => (
+              <button
+                key={size}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (inStock) {
+                    setSelectedSize(size);
+                  }
+                }}
+                disabled={!inStock}
+                className={`px-3 py-1.5 text-xs font-medium rounded border transition-all ${selectedSize === size
+                  ? "bg-stone-800 text-white border-stone-800"
+                  : inStock
+                    ? "bg-white text-stone-800 border-stone-300 hover:border-stone-800"
+                    : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
+                  }
+                `}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+      </CardContent>
     </Card>
+    // </Link>
   )
 }
