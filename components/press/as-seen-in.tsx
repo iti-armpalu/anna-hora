@@ -32,7 +32,7 @@ const publications: Publication[] = [
 
 export default function AsSeenIn() {
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+    // const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
     const [isAutoPlaying, setIsAutoPlaying] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -133,8 +133,8 @@ export default function AsSeenIn() {
                                     key={index}
                                     className="flex-shrink-0 px-4 md:px-6"
                                     style={{ width: `${100 / visibleCount}%` }}
-                                    onMouseEnter={() => setHoveredIndex(index)}
-                                    onMouseLeave={() => setHoveredIndex(null)}
+                                    // onMouseEnter={() => setHoveredIndex(index)}
+                                    // onMouseLeave={() => setHoveredIndex(null)}
                                 >
                                     <a href={publication.url} target="_blank" rel="noopener noreferrer" className="block group">
                                         <div className="flex flex-col items-center justify-center min-h-[120px] md:min-h-[140px] px-4 py-4 rounded-lg transition-colors duration-300 hover:bg-muted/30">

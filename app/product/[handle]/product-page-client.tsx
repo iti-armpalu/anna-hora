@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { WishlistButton } from "@/components/wishlist-button";
+// import { WishlistButton } from "@/components/wishlist-button";
 import { Product } from "@/lib/types/product";
 import { Eye, Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
 import Image from "next/image";
@@ -43,13 +43,13 @@ export default function ProductPageClient({ product }: { product: Product }) {
         console.log("Added to bag:", { product: product.id, size: selectedSize, quantity })
     }
 
-    function formatPrice(amount: string, currency: string) {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency,
-            minimumFractionDigits: 2,
-        }).format(parseFloat(amount));
-    }
+    // function formatPrice(amount: string, currency: string) {
+    //     return new Intl.NumberFormat("en-US", {
+    //         style: "currency",
+    //         currency,
+    //         minimumFractionDigits: 2,
+    //     }).format(parseFloat(amount));
+    // }
 
     const price = product.priceRange.minVariantPrice;
 

@@ -37,7 +37,7 @@ interface ProductCardProps {
   viewMode?: "grid" | "list"
 }
 
-export function ProductCard({ product, onQuickView, viewMode = "grid" }: ProductCardProps) {
+export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const [imageError, setImageError] = useState(false)
 
   const handleQuickView = (e: React.MouseEvent) => {

@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { X, Check } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useCart } from "@/contexts/cart-context"
 import { wishlistContent } from "@/data/wishlist-content"
-import { getProducts, type Product } from "@/data/products"
+// import { getProducts, type Product } from "@/data/products"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -33,21 +33,21 @@ interface WishlistItem {
 }
 
 export default function WishlistPage() {
-  const { user, isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth()
   const { cartItems, setCartItems } = useCart()
-  const { wishlistItems, removeFromWishlist, wishlistCount } = useWishlist()
-  const [products, setProducts] = useState<Product[]>([])
+  const { wishlistItems, removeFromWishlist } = useWishlist()
+  // const [products, setProducts] = useState<Product[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [showAccountModal, setShowAccountModal] = useState(false)
   const [showToastPrompt, setShowToastPrompt] = useState(false)
 
-  useEffect(() => {
-    const loadData = async () => {
-      const allProducts = await getProducts()
-      setProducts(allProducts)
-    }
-    loadData()
-  }, [])
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     const allProducts = await getProducts()
+  //     setProducts(allProducts)
+  //   }
+  //   loadData()
+  // }, [])
 
   const addToBag = (item: WishlistItem) => {
     const cartItem = {

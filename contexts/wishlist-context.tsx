@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { useAuth } from "./auth-context"
+// import { useAuth } from "./auth-context"
 import { toast } from "sonner"
 
 interface WishlistItem {
@@ -29,15 +29,15 @@ interface WishlistContextType {
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined)
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const authContext = useAuth()
-  const { isAuthenticated, isLoading } = authContext
+  // const authContext = useAuth()
+  // const { isLoading } = authContext
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([])
 
-  useEffect(() => {
-    if (!isLoading) {
-      loadWishlistFromStorage()
-    }
-  }, [isLoading])
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     loadWishlistFromStorage()
+  //   }
+  // }, [isLoading])
 
   // Save to localStorage whenever wishlist changes
   useEffect(() => {
@@ -46,26 +46,26 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     }
   }, [wishlistItems])
 
-  const loadWishlistFromStorage = () => {
-    try {
-      const stored = localStorage.getItem("guest-wishlist")
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        // Filter out expired items (older than 30 days)
-        const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000
-        const validItems = parsed.filter((item: WishlistItem) => item.addedAt > thirtyDaysAgo)
-        setWishlistItems(validItems)
+  // const loadWishlistFromStorage = () => {
+  //   try {
+  //     const stored = localStorage.getItem("guest-wishlist")
+  //     if (stored) {
+  //       const parsed = JSON.parse(stored)
+  //       // Filter out expired items (older than 30 days)
+  //       const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000
+  //       const validItems = parsed.filter((item: WishlistItem) => item.addedAt > thirtyDaysAgo)
+  //       setWishlistItems(validItems)
 
-        // Update storage with filtered items
-        if (validItems.length !== parsed.length) {
-          localStorage.setItem("guest-wishlist", JSON.stringify(validItems))
-        }
-      }
-    } catch (error) {
-      console.error("Failed to load wishlist from storage:", error)
-      localStorage.removeItem("guest-wishlist")
-    }
-  }
+  //       // Update storage with filtered items
+  //       if (validItems.length !== parsed.length) {
+  //         localStorage.setItem("guest-wishlist", JSON.stringify(validItems))
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to load wishlist from storage:", error)
+  //     localStorage.removeItem("guest-wishlist")
+  //   }
+  // }
 
   const saveWishlistToStorage = (items: WishlistItem[]) => {
     try {
