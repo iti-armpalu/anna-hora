@@ -1,16 +1,17 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { ProductNode } from "@/lib/shopify/products"
-import { Plus } from "lucide-react"
 import { Button } from "../ui/button"
 // import { WishlistButton } from "../wishlist-button"
 import { toast } from "sonner"
 import ProductImageCarousel from "../product-image-carousel"
 import { Badge } from "../ui/badge"
 import { useState } from "react"
+import Link from "next/link"
+import { Plus } from "lucide-react"
+import { Product } from "@/lib/types/product"
 
-export function ProductCard({ product }: { product: ProductNode }) {
+export function ProductCard({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
 
   const sizeOption = product.options?.find(opt => opt.name.toLowerCase() === "size");
@@ -54,7 +55,7 @@ export function ProductCard({ product }: { product: ProductNode }) {
 
   return (
 
-    // <Link href={`/product/${product.handle}`} prefetch={false}>
+
     <Card className="flex flex-col h-full group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
       <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
 
@@ -87,46 +88,47 @@ export function ProductCard({ product }: { product: ProductNode }) {
           </Button>
         </div>
       </div>
+      <Link href={`/product/${product.handle}`} prefetch={false}>
+        <CardContent className="flex flex-col justify-between flex-1 p-0">
+          <div className="space-y-2">
+            <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">{product.title}</h3>
+            <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">{product.description}</p>
 
-      <CardContent className="flex flex-col justify-between flex-1 p-0">
-        <div className="space-y-2">
-          <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">{product.title}</h3>
-          <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">{product.description}</p>
+            <p className="text-medium text-stone-800 font-medium">
+              {formatPrice(
+                product.priceRange.minVariantPrice.amount,
+                product.priceRange.minVariantPrice.currencyCode
+              )}
+            </p>
 
-          <p className="text-medium text-stone-800 font-medium">
-            {formatPrice(
-              product.priceRange.minVariantPrice.amount,
-              product.priceRange.minVariantPrice.currencyCode
-            )}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mt-4">
-            {sizes.map(({ size, inStock }) => (
-              <button
-                key={size}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  if (inStock) {
-                    setSelectedSize(size);
-                  }
-                }}
-                disabled={!inStock}
-                className={`px-3 py-1.5 text-xs font-medium rounded border transition-all ${selectedSize === size
-                  ? "bg-stone-800 text-white border-stone-800"
-                  : inStock
-                    ? "bg-white text-stone-800 border-stone-300 hover:border-stone-800"
-                    : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
-                  }
+            <div className="flex flex-wrap gap-2 mt-4">
+              {sizes.map(({ size, inStock }) => (
+                <button
+                  key={size}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (inStock) {
+                      setSelectedSize(size);
+                    }
+                  }}
+                  disabled={!inStock}
+                  className={`px-3 py-1.5 text-xs font-medium rounded border transition-all ${selectedSize === size
+                    ? "bg-stone-800 text-white border-stone-800"
+                    : inStock
+                      ? "bg-white text-stone-800 border-stone-300 hover:border-stone-800"
+                      : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
+                    }
                 `}
-              >
-                {size}
-              </button>
-            ))}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      </Link>
     </Card>
-    // </Link>
+
   )
 }

@@ -10,11 +10,10 @@ import { SortControl } from "./_components/sort-control"
 import { ViewToggle } from "./_components/view-toggle"
 
 import { ProductCard } from "@/components/shop/product-card"
-import { ProductNode } from "@/lib/shopify/products"
+import { Product } from "@/lib/types/product"
 
 
-
-export default function ShopClient({ initialProducts }: { initialProducts: ProductNode[] }) {
+export default function ShopClient({ initialProducts }: { initialProducts: Product[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedSort, setSelectedSort] = useState<"newest" | "price-low" | "price-high" | "bestsellers">("newest")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")

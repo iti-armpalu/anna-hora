@@ -1,0 +1,34 @@
+// ----- TYPES -----
+
+export type ProductImage = {
+    url: string;
+    altText?: string | null;
+  };
+  
+  export type ProductVariant = {
+    id: string;
+    title: string;
+    availableForSale: boolean;
+    selectedOptions: { name: string; value: string }[];
+    price: { amount: string; currencyCode: string };
+  };
+  
+  export type Metafield = {
+    key: string;
+    value: string;
+  };
+  
+  export type Product = {
+    id: string;
+    handle: string;
+    title: string;
+    description: string;
+    featuredImage?: ProductImage | null;
+    options?: { id: string; name: string; values: string[]; }[];
+    images: { edges: { node: ProductImage }[] };
+    variants: { edges: { node: ProductVariant }[] };
+    priceRange: {
+      minVariantPrice: { amount: string; currencyCode: string };
+    };
+    metafields?: Metafield[];
+  };
