@@ -5,11 +5,11 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import useEmblaCarousel from "embla-carousel-react"
-import { ProductNode } from "@/lib/shopify/product"
+import { Product } from "@/lib/types/product"
 
 
 type ProductImageCarouselProps = {
-    product: ProductNode;
+    product: Product;
 };
 
 export default function ProductImageCarousel({ product }: ProductImageCarouselProps) {
