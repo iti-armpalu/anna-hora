@@ -10,6 +10,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Plus } from "lucide-react"
 import { Product } from "@/lib/types/product"
+import { formatPrice } from "@/hooks/use-price"
 
 export function ProductCard({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
@@ -31,13 +32,10 @@ export function ProductCard({ product }: { product: Product }) {
     })
     : [];
 
-  function formatPrice(amount: string, currency: string) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency,
-      minimumFractionDigits: 2,
-    }).format(parseFloat(amount));
-  }
+  const price = formatPrice({
+    amount: product.priceRange.minVariantPrice.amount,
+    currencyCode: product.priceRange.minVariantPrice.currencyCode
+  });
 
 
   // --- Handle Quick Add ---
@@ -95,10 +93,7 @@ export function ProductCard({ product }: { product: Product }) {
             <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">{product.description}</p>
 
             <p className="text-medium text-stone-800 font-medium">
-              {formatPrice(
-                product.priceRange.minVariantPrice.amount,
-                product.priceRange.minVariantPrice.currencyCode
-              )}
+              {price}
             </p>
 
             <div className="flex flex-wrap gap-2 mt-4">

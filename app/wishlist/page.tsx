@@ -4,8 +4,8 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { X, Check } from "lucide-react"
-import { useAuth } from "@/contexts/auth-context"
-import { useCart } from "@/contexts/cart-context"
+import { useAuth } from "@/context/auth-context"
+import { useCart } from "@/context/cart-context"
 import { wishlistContent } from "@/data/wishlist-content"
 // import { getProducts, type Product } from "@/data/products"
 import { toast } from "sonner"
@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 
 
-import { useWishlist } from "@/contexts/wishlist-context"
+import { useWishlist } from "@/context/wishlist-context"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 
 interface WishlistItem {

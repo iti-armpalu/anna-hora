@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { User, LogOut, Package, Heart, Settings } from "lucide-react"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/context/auth-context"
 import { Avatar, AvatarFallback } from "../ui/avatar"
 
 export function AuthNav() {

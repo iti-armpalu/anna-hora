@@ -1,6 +1,6 @@
 "use client"
 
-import { useWishlist } from "@/contexts/wishlist-context"
+import { useWishlist } from "@/context/wishlist-context"
 import { toast } from "sonner"
 
 interface WishlistItem {

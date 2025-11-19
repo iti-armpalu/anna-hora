@@ -1,20 +1,47 @@
 'use client'
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/cart-context";
+import { usePrice } from "@/hooks/use-price";
 // import { WishlistButton } from "@/components/wishlist-button";
 import { Product } from "@/lib/types/product";
 import { Eye, Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const revalidate = 60; // ISR every 60 seconds
 
-
 export default function ProductPageClient({ product }: { product: Product }) {
+    const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string | null>(null)
     const [quantity, setQuantity] = useState(1)
     const [selectedImage, setSelectedImage] = useState(0)
 
+
+    // --- Add to Bag handler ---
+    async function handleAddToBag() {
+        console.log("🔥 Add to Bag clicked");
+
+        if (!selectedSize) {
+            toast.error("Please select a size before adding to bag.");
+            return;
+        }
+
+        const selected = sizes.find((s) => s.size === selectedSize);
+
+        if (!selected?.variantId) {
+            toast.error("Selected size is not available.");
+            return;
+        }
+
+        await addToCart(selected.variantId, quantity); // 💡 talk to Context ONLY
+
+        toast.success(
+            `${product.title} (Size: ${selectedSize}, Qty: ${quantity}) added to bag!`
+        );
+    }
 
     const sizeOption = product.options?.find(opt => opt.name.toLowerCase() === "size");
 
@@ -34,33 +61,48 @@ export default function ProductPageClient({ product }: { product: Product }) {
         })
         : [];
 
-    const handleAddToBag = () => {
-        if (!selectedSize) {
-            alert("Please select a size")
-            return
-        }
-        // Add to bag logic here
-        console.log("Added to bag:", { product: product.id, size: selectedSize, quantity })
-    }
+    // Get the price from the selected variant:
+    const selectedVariant = product.variants?.edges.find(v =>
+        v.node.selectedOptions.some(
+            opt => opt.name.toLowerCase() === "size" && opt.value === selectedSize
+        )
+    );
 
-    // function formatPrice(amount: string, currency: string) {
-    //     return new Intl.NumberFormat("en-US", {
-    //         style: "currency",
-    //         currency,
-    //         minimumFractionDigits: 2,
-    //     }).format(parseFloat(amount));
-    // }
+    const basePrice =
+        selectedVariant?.node.price?.amount ??
+        product.priceRange.minVariantPrice?.amount ??
+        "0";
 
-    const price = product.priceRange.minVariantPrice;
+    const currency =
+        selectedVariant?.node.price?.currencyCode ??
+        product.priceRange.minVariantPrice?.currencyCode ??
+        "GBP";
 
-    const unitPrice = Number(price.amount);
+    const formattedPrice = usePrice({
+        amount: basePrice,
+        currencyCode: currency,
+    });
+
+    const total = Number(basePrice) * quantity;
+
+    const formattedTotal = usePrice({
+        amount: total,
+        currencyCode: currency
+    });
 
     const images = product.images?.edges.map(e => e.node) || [];
 
+    const sensoryDescription = product.metafields?.find(
+        (mf) => mf.key === "sensory_description"
+    )?.value;
 
+    const lifestyleDescription = product.metafields?.find(
+        (mf) => mf.key === "lifestyle_description"
+    )?.value;
 
-
-
+    const styleDescription = product.metafields?.find(
+        (mf) => mf.key === "style_description"
+    )?.value;
 
     return (
         <div className="min-h-screen bg-stone-50">
@@ -81,21 +123,6 @@ export default function ProductPageClient({ product }: { product: Product }) {
                                 className="object-cover"
                                 priority
                             />
-
-                            {/* {selectedImage === 0 && (
-                                <Button
-                                    variant="secondary"
-                                    size="icon"
-                                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/90 hover:bg-white shadow-lg"
-                                    onClick={() => setIsVideoPlaying(!isVideoPlaying)}
-                                >
-                                    {isVideoPlaying ? (
-                                        <Pause className="w-6 h-6 text-stone-800" />
-                                    ) : (
-                                        <Play className="w-6 h-6 text-stone-800 ml-1" />
-                                    )}
-                                </Button>
-                            )} */}
                         </div>
 
                         {/* Thumbnail Gallery */}
@@ -141,10 +168,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
                             <div className="flex items-center space-x-4">
                                 {/* <span className="text-3xl font-light text-stone-800">${product.price}</span> */}
                                 <p className="text-xl font-medium text-stone-800">
-                                    {new Intl.NumberFormat("en-US", {
-                                        style: "currency",
-                                        currency: product.priceRange.minVariantPrice.currencyCode,
-                                    }).format(parseFloat(product.priceRange.minVariantPrice.amount))}
+                                    {formattedPrice}
                                 </p>
                             </div>
                         </div>
@@ -216,7 +240,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
                                     onClick={handleAddToBag}
                                     className="w-full bg-stone-800 hover:bg-stone-700 text-white py-4"
                                 >
-                                    Add to Bag – ${unitPrice * quantity}
+                                    Add to Bag – {formattedTotal}
                                 </Button>
                                 {/* <WishlistButton
                                     product={{
@@ -248,11 +272,81 @@ export default function ProductPageClient({ product }: { product: Product }) {
                         <h2 className="text-3xl lg:text-4xl font-light text-stone-800 font-serif">
                             For mornings when the world can wait
                         </h2>
+                        <div className="space-y-4 text-lg text-stone-600 leading-relaxed max-w-3xl mx-auto whitespace-pre-line">
+                            <p>{sensoryDescription}</p>
+                            <p>{lifestyleDescription}</p>
+                            <p>{styleDescription}</p>
+                        </div>
 
                     </section>
 
                     {/* Technical Details */}
                     <section>
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="details" className="border-stone-200">
+                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+                                    Product Details
+                                </AccordionTrigger>
+                                <AccordionContent className="space-y-3 text-stone-600">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <h4 className="font-medium text-stone-800 mb-2">Fabric & Construction</h4>
+                                            {/* <ul className="space-y-1 text-sm">
+                                                <li>• {product.specifications.fabric}</li>
+                                                <li>• {product.specifications.weight} weight</li>
+                                                <li>• {product.specifications.origin}</li>
+                                            </ul> */}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-medium text-stone-800 mb-2">Care & Sustainability</h4>
+                                            {/* <ul className="space-y-1 text-sm">
+                                                <li>• {product.specifications.care}</li>
+                                                <li>• {product.specifications.sustainability}</li>
+                                                <li>
+                                                    •{" "}
+                                                    <Link href="/our-silk" className="text-stone-700 hover:text-stone-900 underline">
+                                                        Learn about our silk
+                                                    </Link>
+                                                </li>
+                                            </ul> */}
+                                        </div>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+
+                            <AccordionItem value="fit" className="border-stone-200">
+                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+                                    Fit & Sizing
+                                </AccordionTrigger>
+                                <AccordionContent className="space-y-3 text-stone-600">
+                                    {/* <div className="space-y-2 text-sm">
+                                        <p>• {product.fit.type}</p>
+                                        <p>• {product.fit.modelInfo}</p>
+                                        <p>• {product.fit.notes}</p>
+                                    </div> */}
+                                </AccordionContent>
+                            </AccordionItem>
+
+                            <AccordionItem value="shipping" className="border-stone-200">
+                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+                                    Shipping & Returns
+                                </AccordionTrigger>
+                                <AccordionContent className="space-y-3 text-stone-600">
+                                    <div className="space-y-2 text-sm">
+                                        <p>• Free shipping on orders over $200</p>
+                                        <p>• Standard delivery: 3-5 business days</p>
+                                        <p>• Express delivery: 1-2 business days</p>
+                                        <p>• 30-day returns for unworn items</p>
+                                        <p>• Signature eco-friendly packaging with every order (recyclable materials)</p>
+                                        <p>
+                                            • Premium gift wrapping available (includes silk ribbon, handwritten note on recycled paper, and
+                                            sustainable tissue wrap)
+                                        </p>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
 
                     </section>
 

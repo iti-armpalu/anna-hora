@@ -5,50 +5,65 @@
 // GraphQL
 
 export const PRODUCTS_QUERY = `
-  query ProductsWithVariants($first: Int! = 12) {
-  products(first: $first) {
-    nodes {
-      id
-      handle
-      title
-      description
-
-      images(first: 5) {
-        edges {
-          node {
-            url
-            altText
-          }
-        }
-      }
-
-      featuredImage { url altText }
-
-      options {
+  query ProductsWithVariants($first: Int! = 12, $country: CountryCode)
+  @inContext(country: $country) 
+  {
+    products(first: $first) {
+      nodes {
         id
-        name
-        values
-      }
-    
-      priceRange {
-        minVariantPrice { amount currencyCode }
-        maxVariantPrice { amount currencyCode }
-      }
+        handle
+        title
+        description
 
-      variants(first: 100) {
-        edges {
-          node {
-            id
-            availableForSale
-            selectedOptions {
-              name
-              value
+        images(first: 5) {
+          edges {
+            node {
+              url
+              altText
             }
           }
         }
-      }
 
-      metafields(identifiers: [
+        featuredImage {
+          url
+          altText
+        }
+
+        options {
+          id
+          name
+          values
+        }
+      
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+
+        variants(first: 100) {
+          edges {
+            node {
+              id
+              availableForSale
+              selectedOptions {
+                name
+                value
+              }
+              price {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+
+        metafields(identifiers: [
           { namespace: "custom", key: "bestseller" },
           { namespace: "custom", key: "limited" },
           { namespace: "custom", key: "new" }
@@ -56,22 +71,23 @@ export const PRODUCTS_QUERY = `
           key
           value
         }
-
+      }
     }
   }
-}
-`
+`;
+
 
 
 export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
-  query ProductByHandle($handle: String!) {
+  query ProductByHandle($handle: String!, $country: CountryCode)
+  @inContext(country: $country) 
+  {
     product(handle: $handle) {
       id
       title
       description
 
-
-     images(first: 8) {
+      images(first: 8) {
         edges {
           node {
             url
@@ -96,6 +112,10 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
           amount
           currencyCode
         }
+        maxVariantPrice {
+          amount
+          currencyCode
+        }
       }
 
       variants(first: 100) {
@@ -107,19 +127,28 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
               name
               value
             }
+            price {
+              amount
+              currencyCode
+            }
           }
         }
       }
 
-      metafields(identifiers: [
+      metafields(
+        identifiers: [
           { namespace: "custom", key: "bestseller" },
           { namespace: "custom", key: "limited" },
-          { namespace: "custom", key: "new" }
-        ]) {
-          key
-          value
-        }
-
+          { namespace: "custom", key: "new" },
+          { namespace: "custom", key: "sensory_description" },
+          { namespace: "custom", key: "lifestyle_description" },
+          { namespace: "custom", key: "style_description" }
+        ]
+      ) {
+        key
+        value
+      }
     }
   }
 `;
+

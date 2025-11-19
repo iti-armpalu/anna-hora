@@ -4,7 +4,7 @@ import type React from "react"
 
 import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useWishlist } from "@/contexts/wishlist-context"
+import { useWishlist } from "@/context/wishlist-context"
 import { toast } from "sonner"
 
 interface WishlistItem {

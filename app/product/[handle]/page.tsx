@@ -15,6 +15,13 @@ export default async function ProductPage({
     const { handle } = await params;          // access safely
     const product = await getProductByHandle(handle);
 
+    // ⭐ DEBUG LOG HERE ⭐
+    console.log(
+        "📦 PRODUCT DATA:",
+        JSON.stringify(product, null, 2)
+      );
+  
+
     if (!product) {
         notFound(); // automatically shows app/not-found.tsx
     }
