@@ -3,7 +3,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
-import { usePrice } from "@/hooks/use-price";
+import { formatPrice } from "@/hooks/use-price";
 // import { WishlistButton } from "@/components/wishlist-button";
 import { Product } from "@/lib/types/product";
 import { Eye, Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
@@ -78,14 +78,14 @@ export default function ProductPageClient({ product }: { product: Product }) {
         product.priceRange.minVariantPrice?.currencyCode ??
         "GBP";
 
-    const formattedPrice = usePrice({
+    const formattedPrice = formatPrice({
         amount: basePrice,
         currencyCode: currency,
     });
 
     const total = Number(basePrice) * quantity;
 
-    const formattedTotal = usePrice({
+    const formattedTotal = formatPrice({
         amount: total,
         currencyCode: currency
     });
