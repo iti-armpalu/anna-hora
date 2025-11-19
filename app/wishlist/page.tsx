@@ -34,7 +34,7 @@ interface WishlistItem {
 
 export default function WishlistPage() {
   const { isAuthenticated } = useAuth()
-  const { cartItems, setCartItems } = useCart()
+  // const { cartItems, setCartItems } = useCart()
   const { wishlistItems, removeFromWishlist } = useWishlist()
   // const [products, setProducts] = useState<Product[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -49,35 +49,35 @@ export default function WishlistPage() {
   //   loadData()
   // }, [])
 
-  const addToBag = (item: WishlistItem) => {
-    const cartItem = {
-      id: item.id,
-      name: item.name,
-      color: item.color,
-      size: item.size || "M",
-      price: item.price,
-      quantity: 1,
-      image: item.image,
-      stock: item.stock,
-    }
+  // const addToBag = (item: WishlistItem) => {
+  //   const cartItem = {
+  //     id: item.id,
+  //     name: item.name,
+  //     color: item.color,
+  //     size: item.size || "M",
+  //     price: item.price,
+  //     quantity: 1,
+  //     image: item.image,
+  //     stock: item.stock,
+  //   }
 
-    const existingItem = cartItems.find(
-      (ci) => ci.id === item.id && ci.color === item.color && ci.size === cartItem.size,
-    )
+  //   const existingItem = cartItems.find(
+  //     (ci) => ci.id === item.id && ci.color === item.color && ci.size === cartItem.size,
+  //   )
 
-    if (existingItem) {
-      const updatedItems = cartItems.map((ci) =>
-        ci.id === item.id && ci.color === item.color && ci.size === cartItem.size
-          ? { ...ci, quantity: ci.quantity + 1 }
-          : ci,
-      )
-      setCartItems(updatedItems)
-    } else {
-      setCartItems([...cartItems, cartItem])
-    }
+  //   if (existingItem) {
+  //     const updatedItems = cartItems.map((ci) =>
+  //       ci.id === item.id && ci.color === item.color && ci.size === cartItem.size
+  //         ? { ...ci, quantity: ci.quantity + 1 }
+  //         : ci,
+  //     )
+  //     setCartItems(updatedItems)
+  //   } else {
+  //     setCartItems([...cartItems, cartItem])
+  //   }
 
-    toast.success("Added to bag")
-  }
+  //   toast.success("Added to bag")
+  // }
 
   const getStockMessage = (stock: number) => {
     if (stock === 0) return wishlistContent.stockMessages.outOfStock
@@ -229,7 +229,7 @@ export default function WishlistPage() {
                         </div>
 
                         <Button
-                          onClick={() => addToBag(item)}
+                          // onClick={() => addToBag(item)}
                           disabled={item.stock === 0}
                           className="w-full bg-stone-800 hover:bg-stone-700 text-white disabled:bg-stone-300"
                         >
