@@ -9,7 +9,6 @@ import { Eye, Plus, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { WishlistButton } from "@/components/wishlist-button"
 
 interface Product {
   id: number
@@ -77,19 +76,6 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
           {/* Action Buttons */}
           <div className="absolute top-4 right-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <WishlistButton
-              product={{
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                originalPrice: product.originalPrice,
-                image: product.image,
-                color: product.color,
-                stock: product.stock,
-                category: product.category,
-              }}
-              variant="icon"
-            />
             {onQuickView && (
               <Button size="icon" variant="secondary" onClick={handleQuickView} className="bg-white/90 hover:bg-white">
                 <Eye className="w-4 h-4 text-stone-600" />
