@@ -4,31 +4,40 @@ import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/queries/product";
 import type { Product } from "@/lib/types/product";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
-// ----- FETCH SINGLE PRODUCT -----
-
-export async function getProductByHandle(
-  handle: string
-): Promise<Product | null> {
+// --------------------------------------------------
+// Fetch MULTIPLE products
+// --------------------------------------------------
+export async function getProducts(first: number = 12): Promise<Product[]> {
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "GB";
 
-  const data = await shopifyFetch<{ product: Product }>(
-    PRODUCT_BY_HANDLE_QUERY,
-    { handle, country }
-  );
+  const res = await shopifyFetch<{
+    products: {
+      nodes: Product[];
+    };
+  }>({
+    query: PRODUCTS_QUERY,
+    variables: { first, country },
+  });
 
-  return data.product ?? null;
+  return res.products?.nodes ?? [];
 }
 
-// ----- FETCH MULTIPLE PRODUCTS -----
-
-export async function getProducts(first = 12): Promise<Product[]> {
+// --------------------------------------------------
+// Fetch SINGLE product by handle
+// --------------------------------------------------
+export async function getProductByHandle(handle: string): Promise<Product | null> {
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "US";
+  const country = cookieStore.get("country")?.value || "GB";
 
-  const data = await shopifyFetch<{
-    products: { nodes: Product[] };
-  }>(PRODUCTS_QUERY, { first, country });
+  const res = await shopifyFetch<{
+    product: Product | null;
+  }>({
+    query: PRODUCT_BY_HANDLE_QUERY,
+    variables: { handle, country },
+  });
 
-  return data.products?.nodes ?? [];
+  return res.product ?? null;
 }
+
+

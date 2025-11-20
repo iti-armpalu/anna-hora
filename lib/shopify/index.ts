@@ -1,4 +1,4 @@
 export { shopifyClient } from "./client";
 export { shopifyFetch } from "./fetch";
-export { getProducts } from "./product";
-export { getProductByHandle } from "./product";
+export { getProducts, getProductByHandle } from "./product";
+export { getCollections, getCollectionByHandle } from "./collection";

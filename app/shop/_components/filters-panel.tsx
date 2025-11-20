@@ -7,12 +7,18 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 type Props = {
   open: boolean
   onOpenChange: (open: boolean) => void
-  categories: { id: string; name: string }[]
-  selected: string
-  onSelect: (id: string) => void
+  collections: { handle: string; title: string }[];
+  selected: string;
+  onSelect: (handle: string) => void;
 }
 
-export function FiltersPanel({ open, onOpenChange, categories, selected, onSelect }: Props) {
+export function FiltersPanel({ open, onOpenChange, collections, selected, onSelect }: Props) {
+
+  // Remove Shopify Home Page + sort alphabetically
+  const filteredCollections = [...collections]
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+
   return (
     <>
       {/* Mobile Filter Drawer */}
@@ -27,18 +33,17 @@ export function FiltersPanel({ open, onOpenChange, categories, selected, onSelec
             <SheetTitle>Filters</SheetTitle>
           </SheetHeader>
           <div className="mt-6 space-y-6">
-            {categories.map(c => (
+            {collections.map((col) => (
               <button
-                key={c.id}
-                className={`block w-full text-left py-2 text-sm ${
-                  selected === c.id ? "font-medium text-stone-900" : "text-stone-600"
-                }`}
+                key={col.handle}
                 onClick={() => {
-                  onSelect(c.id)
+                  onSelect(col.handle)
                   onOpenChange(false)
                 }}
+                className={`block w-full text-left py-2 text-sm ${selected === col.handle ? "font-medium text-stone-900" : "text-stone-600"
+                  }`}
               >
-                {c.name}
+                {col.title}
               </button>
             ))}
           </div>
@@ -47,17 +52,16 @@ export function FiltersPanel({ open, onOpenChange, categories, selected, onSelec
 
       {/* Desktop */}
       <div className="hidden lg:flex items-center space-x-6">
-        {categories.map(c => (
+        {filteredCollections.map(col => (
           <button
-            key={c.id}
-            onClick={() => onSelect(c.id)}
-            className={`text-sm transition-colors ${
-              selected === c.id
-                ? "text-stone-900 font-medium border-b border-stone-300"
-                : "text-stone-600 hover:text-stone-900"
-            }`}
+            key={col.handle}
+            onClick={() => onSelect(col.handle)}
+            className={`text-sm transition-colors ${selected === col.handle
+              ? "text-stone-900 font-medium border-b border-stone-300"
+              : "text-stone-600 hover:text-stone-900"
+              }`}
           >
-            {c.name}
+            {col.title}
           </button>
         ))}
       </div>

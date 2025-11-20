@@ -1,17 +1,21 @@
 import { shopifyClient } from "./client";
 import { cookies } from "next/headers";
 
-export async function shopifyFetch<TData = unknown>(
-  query: string,
-  variables: Record<string, unknown> = {}
-): Promise<TData> {
-  // FIX: cookies() must be awaited in your environment
+interface ShopifyFetchParams {
+  query: string;
+  variables?: Record<string, unknown>;
+}
+
+export async function shopifyFetch<TData = unknown>({
+  query,
+  variables = {},
+}: ShopifyFetchParams): Promise<TData> {
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "US";
+  const country = cookieStore.get("country")?.value || "GB";
 
   const res = await shopifyClient.request<TData>(query, {
     variables: {
-      country,       // inject country automatically
+      country,
       ...variables,
     },
   });

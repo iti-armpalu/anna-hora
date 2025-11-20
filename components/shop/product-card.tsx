@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "../ui/button"
-// import { WishlistButton } from "../wishlist-button"
+import { WishlistButton } from "../wishlist-button"
 import { toast } from "sonner"
 import ProductImageCarousel from "../product-image-carousel"
 import { Badge } from "../ui/badge"
@@ -57,6 +57,9 @@ export function ProductCard({ product }: { product: Product }) {
     <Card className="flex flex-col h-full group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden">
       <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
 
+        {/* Wishlist heart */}
+        <WishlistButton product={product} />
+        
         <ProductImageCarousel product={product} />
 
 

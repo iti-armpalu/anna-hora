@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { CartDrawer } from "@/components/cart/cart-drawer"
@@ -11,37 +11,64 @@ import { ViewToggle } from "./_components/view-toggle"
 
 import { ProductCard } from "@/components/shop/product-card"
 import { Product } from "@/lib/types/product"
+import { ShopifyCollection } from "@/lib/types/collection"
 
 
-export default function ShopClient({ initialProducts }: { initialProducts: Product[] }) {
-  const [selectedCategory, setSelectedCategory] = useState("all")
+export default function ShopClient({ initialProducts, collections }: { initialProducts: Product[]; collections: ShopifyCollection[]; }) {
+  const [selectedCollection, setSelectedCollection] = useState("all")
   const [selectedSort, setSelectedSort] = useState<"newest" | "price-low" | "price-high" | "bestsellers">("newest")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
 
-  const categories = [
-    { id: "all", name: "All Products" },
-    { id: "loungewear", name: "Loungewear" },
-    { id: "sleepwear", name: "Sleepwear" },
-    { id: "robes", name: "Robes" },
-    { id: "accessories", name: "Accessories" },
-  ]
+  // const collections = [
+  //   { id: "all", name: "All Products" },
+  //   { id: "loungewear", name: "Loungewear" },
+  //   { id: "sleepwear", name: "Sleepwear" },
+  //   { id: "robes", name: "Robes" },
+  //   { id: "accessories", name: "Accessories" },
+  // ]
 
-  // const filtered = useMemo(
-  //   () => initialProducts.filter(p => selectedCategory === "all" || p.category === selectedCategory),
-  //   [initialProducts, selectedCategory]
-  // )
+  const filteredProducts = useMemo(() => {
+    if (selectedCollection === "all") return initialProducts;
 
-  // const products = useMemo(() => {
-  //   const arr = [...filtered]
-  //   switch (selectedSort) {
-  //     case "price-low": return arr.sort((a, b) => a.price - b.price)
-  //     case "price-high": return arr.sort((a, b) => b.price - a.price)
-  //     case "bestsellers": return arr.sort((a, b) => (b.isBestseller ? 1 : 0) - (a.isBestseller ? 1 : 0))
-  //     default: return arr.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
-  //   }
-  // }, [filtered, selectedSort])
+    return initialProducts.filter((p) =>
+      p.options?.some(
+        (o) =>
+          o.name.toLowerCase() === "category" &&
+          o.values.includes(selectedCollection)
+      )
+    );
+  }, [initialProducts, selectedCollection]);
+
+  function getProductPrice(product: Product) {
+    return Number(product.priceRange.minVariantPrice.amount);
+  }
+
+  function hasFlag(product: Product, key: string) {
+    return product.metafields?.some((m) => m.key === key && m.value === "true");
+  }
+
+  const sortedProducts = useMemo(() => {
+    return [...filteredProducts].sort((a, b) => {
+      switch (selectedSort) {
+        case "price-low":
+          return getProductPrice(a) - getProductPrice(b);
+
+        case "price-high":
+          return getProductPrice(b) - getProductPrice(a);
+
+        case "bestsellers":
+          return (
+            Number(hasFlag(b, "bestseller")) - Number(hasFlag(a, "bestseller"))
+          );
+
+        case "newest":
+        default:
+          return Number(hasFlag(b, "new")) - Number(hasFlag(a, "new"));
+      }
+    });
+  }, [filteredProducts, selectedSort]);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -62,9 +89,9 @@ export default function ShopClient({ initialProducts }: { initialProducts: Produ
           <FiltersPanel
             open={isFilterOpen}
             onOpenChange={setIsFilterOpen}
-            categories={categories}
-            selected={selectedCategory}
-            onSelect={setSelectedCategory}
+            collections={collections}
+            selected={selectedCollection}
+            onSelect={setSelectedCollection}
           />
           <div className="flex items-center gap-3">
             <SortControl value={selectedSort} onChange={setSelectedSort} />
@@ -79,7 +106,7 @@ export default function ShopClient({ initialProducts }: { initialProducts: Produ
           className={`grid gap-8 items-stretch ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
             }`}
         >
-          {initialProducts.map(p => <ProductCard key={p.id} product={p} />)}
+          {sortedProducts.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
 
         <div className="text-center mt-12">

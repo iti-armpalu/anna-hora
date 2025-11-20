@@ -1,92 +1,64 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { Heart } from "lucide-react";
+import { useWishlist } from "@/context/wishlist-context";
+import type { Product } from "@/lib/types/product";
+import { Button } from "./ui/button";
 
-import { Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useWishlist } from "@/context/wishlist-context"
-import { toast } from "sonner"
+type WishlistButtonProps = {
+  product: Product;
+};
 
-interface WishlistItem {
-  id: number
-  name: string
-  price: number
-  originalPrice?: number | null
-  image: string
-  color?: string
-  size?: string
-  stock?: number
-  category?: string
+function getPrimaryImage(product: Product): string {
+  return (
+    product.featuredImage?.url ??
+    product.images?.edges?.[0]?.node.url ??
+    "/placeholder.svg"
+  );
 }
 
-interface WishlistButtonProps {
-  product: WishlistItem
-  variant?: "icon" | "full"
-  size?: "sm" | "default" | "lg"
-  className?: string
-  onClick?: (e: React.MouseEvent) => void
-}
+export function WishlistButton({ product }: WishlistButtonProps) {
+  const { isInWishlist, add, remove } = useWishlist();
 
-export function WishlistButton({
-  product,
-  variant = "icon",
-  size = "default",
-  className = "",
-  onClick,
-}: WishlistButtonProps) {
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+  // Product-level wishlist for now (you can switch to variant later)
+  const wishlistId = product.id;
+  const active = isInWishlist(wishlistId);
 
-  const isWishlisted = isInWishlist(product.id)
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // prevent navigation from <Link>
 
-  const handleToggle = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if (onClick) {
-      onClick(e)
-    }
-
-    if (isWishlisted) {
-      removeFromWishlist(product.id)
-      toast.success("Removed from wishlist")
+    if (active) {
+      remove(wishlistId);
     } else {
-      addToWishlist({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        originalPrice: product.originalPrice,
-        image: product.image,
-        color: product.color || "Default",
-        size: product.size,
-        stock: product.stock || 10,
-        category: product.category || "general",
-      })
-      toast.success("Added to wishlist")
-    }
-  }
+      const priceInfo = product.priceRange.minVariantPrice;
 
-  if (variant === "icon") {
-    return (
-      <Button
-        size="icon"
-        variant="secondary"
-        onClick={handleToggle}
-        className={`bg-white/90 hover:bg-white ${className}`}
-      >
-        <Heart className={`w-4 h-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-stone-600"}`} />
-      </Button>
-    )
-  }
+      add({
+        id: wishlistId,
+        title: product.title,
+        price: priceInfo.amount,
+        currencyCode: priceInfo.currencyCode,
+        image: getPrimaryImage(product),
+        size: undefined,
+      });
+    }
+  };
 
   return (
     <Button
-      variant="outline"
-      size={size}
-      onClick={handleToggle}
-      className={`border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent ${className}`}
+      size="icon"
+      variant="secondary"
+      onClick={handleClick}
+      aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
+      className="absolute top-3 right-3 z-10 rounded-md bg-white/90 shadow-sm p-2
+                 transition-all duration-200 hover:bg-white hover:shadow-md active:scale-95"
     >
-      <Heart className={`w-4 h-4 mr-2 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`} />
-      {isWishlisted ? "Remove from" : "Add to"} Wishlist
+      <Heart
+        className={`h-5 w-5 transition-transform duration-200 ${active
+            ? "fill-red-500 stroke-red-500 scale-110"
+            : "stroke-stone-700"
+          }`}
+      />
     </Button>
-  )
+  );
 }
