@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import Header from "@/components/header/Header";
 import { WishlistProvider } from "@/context/wishlist-context";
 import { DevCurrencyTester } from "@/components/dev-currency-tester";
+import { GlobalCartDrawer } from "@/components/cart/global-cart-drawer";
 
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
               <DevCurrencyTester /> {/* 👈 Always available in dev */}
               <Toaster />
               <Footer />
+              <GlobalCartDrawer />
             </WishlistProvider>
           </CartProvider>
         </AuthProvider>

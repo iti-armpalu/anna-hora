@@ -66,6 +66,12 @@ type CartContextType = {
   addToCart: (variantId: string, quantity: number) => Promise<void>;
   updateQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeFromCart: (lineId: string) => Promise<void>;
+
+  // Cart Drawer UI state
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
 };
 
 
@@ -151,6 +157,13 @@ function normalizeCart(shopifyCart: unknown): CartType | null {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartType | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // UI State
+  const [isOpen, setIsOpen] = useState(false);
+
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  const toggle = () => setIsOpen((prev) => !prev);
 
   // -----------------------------
   // HELPERS
@@ -260,6 +273,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         updateQuantity,
         removeFromCart,
+        isOpen,
+        open,
+        close,
+        toggle,
       }}
     >
       {children}

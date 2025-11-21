@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
-import { CartDrawer } from "@/components/cart/cart-drawer"
+// import { CartDrawer } from "@/components/cart/cart-drawer"
 
 import { FiltersPanel } from "./_components/filters-panel"
 import { SortControl } from "./_components/sort-control"
@@ -18,16 +18,8 @@ export default function ShopClient({ initialProducts, collections }: { initialPr
   const [selectedCollection, setSelectedCollection] = useState("all")
   const [selectedSort, setSelectedSort] = useState<"newest" | "price-low" | "price-high" | "bestsellers">("newest")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const [isCartOpen, setIsCartOpen] = useState(false)
+  // const [isCartOpen, setIsCartOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-
-  // const collections = [
-  //   { id: "all", name: "All Products" },
-  //   { id: "loungewear", name: "Loungewear" },
-  //   { id: "sleepwear", name: "Sleepwear" },
-  //   { id: "robes", name: "Robes" },
-  //   { id: "accessories", name: "Accessories" },
-  // ]
 
   const filteredProducts = useMemo(() => {
     if (selectedCollection === "all") return initialProducts;
@@ -102,21 +94,17 @@ export default function ShopClient({ initialProducts, collections }: { initialPr
 
       {/* Products */}
       <main className="container mx-auto px-4 py-8">
-        <div
-          className={`grid gap-8 items-stretch ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
-            }`}
-        >
+        <div className={`grid gap-8 items-stretch ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}>
           {sortedProducts.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
-
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" onClick={() => setIsCartOpen(true)}>
+          <Button variant="outline" size="lg" onClick={() => console.log("test")}>
             Load More Products
           </Button>
         </div>
       </main>
 
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      {/* <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} /> */}
     </div>
   )
 }

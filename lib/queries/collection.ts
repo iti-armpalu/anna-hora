@@ -22,19 +22,83 @@ export const COLLECTIONS_QUERY = /* GraphQL */ `
    (for /collections/[handle] pages)
 ---------------------------------------- */
 export const COLLECTION_BY_HANDLE_QUERY = /* GraphQL */ `
-  query CollectionByHandle($handle: String!, $first: Int!) {
-  collection(handle: $handle) {
-    id
-    title
-    handle
-    description
-    products(first: $first) {
-      nodes {
-        id
-        title
-        handle
+  query CollectionByHandle($handle: String!, $first: Int!, $country: CountryCode) 
+  @inContext(country: $country) 
+  {
+    collection(handle: $handle) {
+      id
+      title
+      handle
+
+      products(first: $first) {
+        nodes {
+          id
+          handle
+          title
+          description
+
+          featuredImage {
+            url
+            altText
+          }
+
+          images(first: 8) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+
+          options {
+            id
+            name
+            values
+          }
+
+          variants(first: 100) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                selectedOptions {
+                  name
+                  value
+                }
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+
+          metafields(
+            identifiers: [
+              { namespace: "custom", key: "bestseller" },
+              { namespace: "custom", key: "limited" },
+              { namespace: "custom", key: "new" }
+            ]
+          ) {
+            key
+            value
+          }
+
+        }
       }
     }
-  }
   }
 `;

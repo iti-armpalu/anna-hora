@@ -1,11 +1,11 @@
+import type { Product } from "./product";
+
 export interface ShopifyCollection {
-    id: string;
-    handle: string;
-    title: string;
-    description?: string | null;
-    image?: {
-      url: string;
-      altText?: string | null;
-    } | null;
-  }
-  
+  id: string;
+  title: string;
+  handle: string;
+
+  products?: {
+    nodes: Product[];
+  };
+}

@@ -34,12 +34,16 @@ export async function getCollections() {
 // --------------------------------------------------
 export async function getCollectionByHandle(handle: string) {
 
+  console.log("Fetching collection:", handle);
+
   const res = await shopifyFetch<{
     collection: ShopifyCollection | null;
   }>({
     query: COLLECTION_BY_HANDLE_QUERY,
-    variables: { handle, first:50 },
+    variables: { handle, first: 50 },
   });
+
+  console.log("Collection response:", res);
 
   return res.collection ?? null;
 }

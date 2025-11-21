@@ -1,62 +1,17 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, Star } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { CartDrawer } from "@/components/cart/cart-drawer"
 import AsSeenIn from "@/components/press/as-seen-in"
+import { getCollectionByHandle } from "@/lib/shopify"
+import { ProductCard } from "@/components/shop/product-card"
 
-export default function HomePage() {
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null)
+export default async function HomePage() {
 
-  const products = [
-    {
-      id: 1,
-      name: "Off White Pure Silk Lounge Shirt",
-      price: 298,
-      originalPrice: null,
-      category: "robes",
-      color: "Midnight Navy",
-      image: "/off-white-pure-silk-lounge-shirt.webp",
-      hoverImage: "/off-white-pure-silk-lounge-shirt.webp",
-      isNew: true,
-      rating: 4.9,
-      reviews: 127,
-    },
-    {
-      id: 2,
-      name: "Verdant Panther Pure Silk Lounge Shirt",
-      price: 189,
-      originalPrice: null,
-      category: "sleepwear",
-      color: "Pearl Grey",
-      image: "/verdant-panther-pure-silk-lounge-shirt.webp",
-      hoverImage: "/verdant-panther-pure-silk-lounge-shirt.webp",
-      isNew: false,
-      rating: 4.8,
-      reviews: 89,
-    },
-    {
-      id: 3,
-      name: "Pure Silk Lounge",
-      price: 245,
-      originalPrice: 295,
-      category: "lounge",
-      color: "Champagne",
-      image: "/pure-silk-lounge-shorts.webp",
-      hoverImage: "/pure-silk-lounge-shorts.webp",
-      isNew: false,
-      rating: 4.9,
-      reviews: 203,
-    },
-  ]
+  const featuredCollection = await getCollectionByHandle("Featured");
+  const featuredProducts = featuredCollection?.products?.nodes ?? [];
 
   return (
     <div>
@@ -220,13 +175,13 @@ export default function HomePage() {
               </p> */
               }
               <p className="text-stone-600 leading-relaxed">
-                Our silk reflects everything ANNA HORA stands for: timeless elegance, integrity, 
+                Our silk reflects everything ANNA HORA stands for: timeless elegance, integrity,
                 and a devotion to quality that can be felt in every detail. We work with skilled artisans who honour time-honoured techniques, transforming this natural wonder into pieces that embody refinement and ease.
               </p>
               <p className="text-stone-600 leading-relaxed">
-                It took us 18 months to find the silk we truly believed in, one that met our standards for beauty, 
-                comfort, and sustainability. The result is a fabric that feels effortlessly luxurious against the skin, 
-                created for moments of calm, confidence, and uncomplicated happiness, a quiet expression of the ANNA HORA 
+                It took us 18 months to find the silk we truly believed in, one that met our standards for beauty,
+                comfort, and sustainability. The result is a fabric that feels effortlessly luxurious against the skin,
+                created for moments of calm, confidence, and uncomplicated happiness, a quiet expression of the ANNA HORA
                 way of living.
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
@@ -258,68 +213,12 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <Link href={`/product/${product.id}`} key={product.id}>
-                <Card
-                  className="group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden"
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
-                >
-                  <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
-                    <Image
-                      src={hoveredProduct === product.id ? product.hoverImage : product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-all duration-500"
-                    />
-                    {product.isNew && <Badge className="absolute top-4 left-4 bg-stone-800 text-white">New</Badge>}
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        // Add wishlist logic here
-                      }}
-                      className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white"
-                    >
-                      <Heart className="w-4 h-4" />
-                    </Button>
-                    {product.originalPrice && (
-                      <Badge variant="destructive" className="absolute bottom-4 left-4">
-                        Sale
-                      </Badge>
-                    )}
-                  </div>
-                  <CardContent className="p-0">
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">
-                        {product.name}
-                      </h4>
-                      <div className="flex items-center space-x-2">
-                        {product.originalPrice && (
-                          <span className="text-sm text-stone-400 line-through">${product.originalPrice}</span>
-                        )}
-                        <span className="font-medium text-stone-800">${product.price}</span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-stone-600 mb-2">{product.color}</p>
-                    <div className="flex items-center space-x-2">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3 h-3 ${i < Math.floor(product.rating) ? "fill-stone-400 text-stone-400" : "text-stone-300"
-                              }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-xs text-stone-500">
-                        {product.rating} ({product.reviews})
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+            {featuredProducts.map((product) => (
+              // <Link
+              //   href={`/product/${product.id}`}
+              //   key={product.id}>
+                  <ProductCard key={product.id} product={product} />
+              // </Link>
             ))}
           </div>
 
@@ -438,8 +337,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   )
 }

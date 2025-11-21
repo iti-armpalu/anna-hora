@@ -5,7 +5,7 @@
 // GraphQL
 
 export const PRODUCTS_QUERY = `
-  query ProductsWithVariants($first: Int! = 12, $country: CountryCode)
+  query ProductsWithVariants($first: Int! = 50, $country: CountryCode)
   @inContext(country: $country) 
   {
     products(first: $first) {
@@ -14,6 +14,12 @@ export const PRODUCTS_QUERY = `
         handle
         title
         description
+
+
+          featuredImage {
+          url
+          altText
+        }
 
         images(first: 5) {
           edges {
@@ -24,26 +30,10 @@ export const PRODUCTS_QUERY = `
           }
         }
 
-        featuredImage {
-          url
-          altText
-        }
-
         options {
           id
           name
           values
-        }
-      
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-          maxVariantPrice {
-            amount
-            currencyCode
-          }
         }
 
         variants(first: 100) {
@@ -62,15 +52,29 @@ export const PRODUCTS_QUERY = `
             }
           }
         }
-
-        metafields(identifiers: [
-          { namespace: "custom", key: "bestseller" },
-          { namespace: "custom", key: "limited" },
-          { namespace: "custom", key: "new" }
-        ]) {
+      
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+  
+        metafields(
+          identifiers: [
+            { namespace: "custom", key: "bestseller" },
+            { namespace: "custom", key: "limited" },
+            { namespace: "custom", key: "new" }
+          ]
+        ) {
           key
           value
         }
+          
       }
     }
   }
