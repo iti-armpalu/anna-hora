@@ -23,7 +23,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
   const totalItems = cart?.totalQuantity ?? 0;
 
-  const subtotal = Number(cart?.cost.subtotalAmount ?? 0); 
+  const subtotal = Number(cart?.cost.subtotalAmount ?? 0);
   const currencyCode = cart?.cost.currencyCode ?? "GBP";
 
   const needsForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -188,7 +188,15 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               </span>
             </div>
             <div className="space-y-3">
-              <Button className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3" size="lg">
+              <Button
+                onClick={() => {
+                  if (cart?.checkoutUrl) {
+                    window.location.href = cart.checkoutUrl;
+                  }
+                }}
+                className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3"
+                disabled={!cart || cart.totalQuantity === 0}
+              >
                 Proceed to Checkout
               </Button>
               <Link href="/cart" onClick={onClose}>

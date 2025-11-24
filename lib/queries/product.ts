@@ -5,10 +5,16 @@
 // GraphQL
 
 export const PRODUCTS_QUERY = `
-  query ProductsWithVariants($first: Int! = 50, $country: CountryCode)
+  query ProductsWithVariants($first: Int!, $after: String, $country: CountryCode)
   @inContext(country: $country) 
   {
-    products(first: $first) {
+    products(first: $first, after: $after) {
+
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+
       nodes {
         id
         handle

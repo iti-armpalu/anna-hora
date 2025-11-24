@@ -2,6 +2,7 @@
 import { COLLECTION_BY_HANDLE_QUERY, COLLECTIONS_QUERY } from "@/lib/queries/collection";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import { ShopifyCollection } from "../types/collection";
+import { Product } from "../types/product";
 
 // --------------------------------------------------
 // Fetch ALL collections
@@ -33,17 +34,20 @@ export async function getCollections() {
 // Fetch a SINGLE collection
 // --------------------------------------------------
 export async function getCollectionByHandle(handle: string) {
-
-  console.log("Fetching collection:", handle);
-
   const res = await shopifyFetch<{
-    collection: ShopifyCollection | null;
+    collection: ShopifyCollection & {
+      products: {
+        nodes: Product[];
+        pageInfo: {
+          hasNextPage: boolean;
+          endCursor: string | null;
+        };
+      }
+    }
   }>({
     query: COLLECTION_BY_HANDLE_QUERY,
-    variables: { handle, first: 50 },
+    variables: { handle, first: 100 }
   });
-
-  console.log("Collection response:", res);
 
   return res.collection ?? null;
 }

@@ -232,12 +232,18 @@ export default function CartPageClient() {
 
                   {/* Checkout Button */}
                   <Button
-                    className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3 mb-4"
+                    onClick={() => {
+                      if (cart?.checkoutUrl) {
+                        window.location.href = cart.checkoutUrl;
+                      }
+                    }}
+                    className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3 mt-4"
                     size="lg"
-                    asChild
+                    disabled={!cart || cart.totalQuantity === 0}
                   >
-                    <a href={cart.checkoutUrl}>Proceed to Checkout</a>
+                    Proceed to Checkout
                   </Button>
+
 
                   <p className="text-xs text-stone-500 text-center">
                     Sustainable gift wrapping available at checkout.

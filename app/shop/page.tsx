@@ -1,13 +1,20 @@
-import { getCollections, getProducts } from "@/lib/shopify";
-import ShopClient from "./shop-client"
+// /app/(store)/shop/page.tsx
 
-export const revalidate = 60 // ISR every 60s
+import { getCollections, getProducts } from "@/lib/shopify";
+import ShopClient from "./shop-client";
+
+export const revalidate = 60;
 
 export default async function Page() {
-  const collections = await getCollections(); // real Shopify data
-  const products = await getProducts(8)
+  const collections = await getCollections();
+  const { products, pageInfo } = await getProducts(3);
 
-  console.log(collections);
-
-  return <ShopClient initialProducts={products} collections={collections} />
+  return (
+    <ShopClient
+      initialProducts={products}
+      initialPageInfo={pageInfo}
+      collections={collections}
+      initialCollectionHandle="all"
+    />
+  );
 }
