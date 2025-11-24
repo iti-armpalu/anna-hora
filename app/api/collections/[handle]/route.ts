@@ -21,10 +21,10 @@ import { getCollectionByHandle } from "@/lib/shopify";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { handle: string } }
+  context: { params: Promise<{ handle: string }> }
 ) {
   try {
-    const { handle } = context.params;
+    const { handle } = await context.params;
 
     if (!handle) {
       return NextResponse.json(
@@ -54,4 +54,5 @@ export async function GET(
     );
   }
 }
+
 
