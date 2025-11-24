@@ -16,32 +16,42 @@
  * }
  */
 
-import { NextResponse } from "next/server";
-import { getCollectionByHandle } from "@/lib/shopify/collection";
+import { NextRequest, NextResponse } from "next/server";
+import { getCollectionByHandle } from "@/lib/shopify";
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { handle: string } }
+  req: NextRequest,
+  context: { params: { handle: string } }
 ) {
   try {
-    const handle = params.handle;
+    const { handle } = context.params;
+
+    if (!handle) {
+      return NextResponse.json(
+        { error: "Missing collection handle" },
+        { status: 400 }
+      );
+    }
 
     const collection = await getCollectionByHandle(handle);
 
-    // If the collection doesn't exist
     if (!collection) {
-      return NextResponse.json({ products: [] });
+      return NextResponse.json(
+        { error: `Collection '${handle}' not found` },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({
-      products: collection.products.nodes || [],
-    });
-  } catch (err) {
-    console.error("Error fetching collection:", err);
+    const products = collection.products?.nodes ?? [];
+
+    return NextResponse.json({ products });
+  } catch (error) {
+    console.error("API /collections error:", error);
 
     return NextResponse.json(
-      { products: [], error: "Failed to load collection" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
+
