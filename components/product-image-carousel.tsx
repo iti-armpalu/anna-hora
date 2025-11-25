@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import useEmblaCarousel from "embla-carousel-react"
 import { Product } from "@/lib/types/product"
 
-
 type ProductImageCarouselProps = {
     product: Product;
 };
@@ -100,7 +99,7 @@ export default function ProductImageCarousel({ product }: ProductImageCarouselPr
             )}
 
             {images.length > 1 && (
-                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
                     {images.map((_, index) => (
                         <div
                             key={index}

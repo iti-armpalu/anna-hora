@@ -16,10 +16,10 @@ export default async function ProductPage({
     const product = await getProductByHandle(handle);
 
     // ⭐ DEBUG LOG HERE ⭐
-    console.log(
-        "📦 PRODUCT DATA:",
-        JSON.stringify(product, null, 2)
-      );
+    // console.log(
+    //     "PRODUCT DATA:",
+    //     JSON.stringify(product, null, 2)
+    //   );
   
 
     if (!product) {

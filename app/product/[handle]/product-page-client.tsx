@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/hooks/use-price";
 // import { WishlistButton } from "@/components/wishlist-button";
-import { Product } from "@/lib/types/product";
-import { Eye, Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
-import Image from "next/image";
+import { Product, ProductImage } from "@/lib/types/product";
+import { Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ProductGallery } from "./_components/product-gallery";
 
 export const revalidate = 60; // ISR every 60 seconds
 
@@ -17,8 +17,6 @@ export default function ProductPageClient({ product }: { product: Product }) {
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string | null>(null)
     const [quantity, setQuantity] = useState(1)
-    const [selectedImage, setSelectedImage] = useState(0)
-
 
     // --- Add to Bag handler ---
     async function handleAddToBag() {
@@ -90,7 +88,10 @@ export default function ProductPageClient({ product }: { product: Product }) {
         currencyCode: currency
     });
 
-    const images = product.images?.edges.map(e => e.node) || [];
+    // const images = product.images?.edges.map(e => e.node) || [];
+
+    const images: ProductImage[] =
+        product.images?.edges.map((e) => e.node) ?? [];
 
     const sensoryDescription = product.metafields?.find(
         (mf) => mf.key === "sensory_description"
@@ -108,56 +109,12 @@ export default function ProductPageClient({ product }: { product: Product }) {
         <div className="min-h-screen bg-stone-50">
 
             {/* Main Product Section */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="container mx-auto py-12">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     {/* Product Gallery */}
-                    {/* Product Gallery */}
-                    <div className="space-y-4">
-
-                        {/* Main Image */}
-                        <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-white">
-                            <Image
-                                src={images[selectedImage]?.url || "/placeholder.svg"}
-                                alt={images[selectedImage]?.altText || product.title}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-
-                        {/* Thumbnail Gallery */}
-                        <div className="grid grid-cols-4 gap-2">
-                            {images.slice(0, 4).map((image, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setSelectedImage(index)}
-                                    className={`relative aspect-square overflow-hidden rounded-lg border-2 transition-colors ${selectedImage === index
-                                        ? "border-stone-800"
-                                        : "border-stone-200 hover:border-stone-400"
-                                        }`}
-                                >
-                                    <Image
-                                        src={image.url}
-                                        alt={image.altText || `${product.title} view ${index + 1}`}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Additional Images Button */}
-                        {images.length > 4 && (
-                            <Button
-                                variant="outline"
-                                className="w-full border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                            >
-                                <Eye className="w-4 h-4 mr-2" />
-                                View All {images.length} Images
-                            </Button>
-                        )}
+                    <div className="lg:col-span-2">
+                        <ProductGallery images={images} />
                     </div>
-
 
                     {/* Product Info */}
                     <div className="space-y-8">

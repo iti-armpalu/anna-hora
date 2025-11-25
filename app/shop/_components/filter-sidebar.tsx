@@ -29,7 +29,7 @@ function FilterSection({ title, options, selected, onChange }: FilterSectionProp
   };
 
   return (
-    <div className="border-b border-stone-200 py-4">
+    <div className="py-4">
       <button
         onClick={() => setOpen(!open)}
         className="flex w-full items-center justify-between"
@@ -88,7 +88,7 @@ export function FilterSidebar({
   setSelectedPrice,
 }: FilterSidebarProps) {
   return (
-    <aside className="hidden lg:block w-64 bg-white border-r border-stone-200 p-6 sticky top-24">
+    <aside className="hidden lg:block w-64 p-6 sticky top-24">
 
       {/* FABRIC */}
       <FilterSection
@@ -109,7 +109,6 @@ export function FilterSidebar({
           { label: "S", value: "S" },
           { label: "M", value: "M" },
           { label: "L", value: "L" },
-          { label: "XL", value: "XL" },
         ]}
         selected={selectedSizes}
         onChange={setSelectedSizes}
