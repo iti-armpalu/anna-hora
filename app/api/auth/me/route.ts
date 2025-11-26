@@ -1,3 +1,4 @@
+// app/api/auth/me/route.ts
 import { NextResponse } from "next/server";
 import { getCustomer } from "@/lib/shopify/get-customer";
 

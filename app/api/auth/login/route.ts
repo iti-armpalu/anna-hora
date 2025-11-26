@@ -1,3 +1,4 @@
+// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 
@@ -12,8 +13,8 @@ export async function GET() {
     state,
   });
 
-  // IMPORTANT: Shopify new customer accounts use tenant ID identity domain
-  const authorizeUrl = `https://shopify.com/authentication/98007613781/oauth/authorize?${params}`;
+  const tenantId = process.env.SHOPIFY_TENANT_ID!;
+  const authorizeUrl = `https://shopify.com/authentication/${tenantId}/oauth/authorize?${params}`;
 
   return NextResponse.redirect(authorizeUrl);
 }
