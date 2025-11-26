@@ -1,14 +1,10 @@
-// app/api/auth/logout/route.ts
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function GET() {
-  const tenantId = process.env.SHOPIFY_TENANT_ID!;
+  const res = NextResponse.redirect("/");
 
-  const cookieStore = await cookies();
-  cookieStore.delete("shopify_customer_token");
+  res.cookies.delete("shopify_customer_token");
+  res.cookies.delete("shopify_customer_access_token");
 
-  const logoutUrl = `https://shopify.com/authentication/${tenantId}/account/logout`;
-
-  return NextResponse.redirect(logoutUrl);
+  return res;
 }

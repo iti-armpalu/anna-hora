@@ -1,20 +1,30 @@
-// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
-import { randomUUID } from "crypto";
+import crypto from "crypto";
 
 export async function GET() {
-  const state = randomUUID();
+  const state = crypto.randomUUID();
 
-  const params = new URLSearchParams({
-    client_id: process.env.SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID!,
-    redirect_uri: process.env.SHOPIFY_CUSTOMER_ACCOUNT_REDIRECT_URI!,
-    response_type: "code",
-    scope: process.env.SHOPIFY_CUSTOMER_ACCOUNT_SCOPES!,
-    state,
+  const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback`;
+  const authUrl = new URL(process.env.SHOPIFY_CUSTOMER_API_AUTH_URL!);
+
+  authUrl.searchParams.set("client_id", process.env.SHOPIFY_CUSTOMER_API_CLIENT_ID!);
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("response_type", "code");
+  authUrl.searchParams.set(
+    "scope",
+    "openid email customer_read_customers customer_write_customers"
+  );
+  authUrl.searchParams.set("state", state);
+
+  const res = NextResponse.redirect(authUrl.toString());
+
+  res.cookies.set("shopify_oauth_state", state, {
+    httpOnly: true,
+    secure: true,
+    path: "/",
+    sameSite: "lax",
+    maxAge: 600,
   });
 
-  const tenantId = process.env.SHOPIFY_TENANT_ID!;
-  const authorizeUrl = `https://shopify.com/authentication/${tenantId}/account/oauth/authorize?${params}`;
-
-  return NextResponse.redirect(authorizeUrl);
+  return res;
 }
