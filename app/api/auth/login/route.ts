@@ -14,7 +14,7 @@ export async function GET() {
   });
 
   const tenantId = process.env.SHOPIFY_TENANT_ID!;
-  const authorizeUrl = `https://shopify.com/authentication/${tenantId}/oauth/authorize?${params}`;
+  const authorizeUrl = `https://shopify.com/authentication/${tenantId}/account/oauth/authorize?${params}`;
 
   return NextResponse.redirect(authorizeUrl);
 }

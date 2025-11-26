@@ -11,21 +11,20 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing code" }, { status: 400 });
   }
 
-  const tokenRes = await fetch(
-    `https://shopify.com/authentication/${tenantId}/oauth/token`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        client_id: process.env.SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID!,
-        grant_type: "authorization_code",
-        redirect_uri: process.env.SHOPIFY_CUSTOMER_ACCOUNT_REDIRECT_URI!,
-        code,
-      }),
-    }
-  );
+  const tokenEndpoint = `https://shopify.com/authentication/${tenantId}/account/oauth/token`;
+
+  const tokenRes = await fetch(tokenEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      client_id: process.env.SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID!,
+      grant_type: "authorization_code",
+      redirect_uri: process.env.SHOPIFY_CUSTOMER_ACCOUNT_REDIRECT_URI!,
+      code,
+    }),
+  });
 
   const tokenData = await tokenRes.json();
 
@@ -38,6 +37,7 @@ export async function GET(req: Request) {
   }
 
   const cookieStore = await cookies();
+
   cookieStore.set("shopify_customer_token", tokenData.id_token, {
     httpOnly: true,
     secure: true,

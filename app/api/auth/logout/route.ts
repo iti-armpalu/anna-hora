@@ -8,7 +8,7 @@ export async function GET() {
   const cookieStore = await cookies();
   cookieStore.delete("shopify_customer_token");
 
-  const logoutUrl = `https://shopify.com/authentication/${tenantId}/logout`;
+  const logoutUrl = `https://shopify.com/authentication/${tenantId}/account/logout`;
 
   return NextResponse.redirect(logoutUrl);
 }
