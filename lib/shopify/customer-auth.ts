@@ -10,15 +10,35 @@ type OpenIdConfig = {
   issuer: string;
 };
 
+// export async function getOpenIdConfig(): Promise<OpenIdConfig> {
+//   const res = await fetch(`https://${STORE_DOMAIN}/.well-known/openid-configuration`, {
+//     cache: "force-cache",
+//   });
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch Shopify OpenID configuration");
+//   }
+//   return res.json();
+// }
+
 export async function getOpenIdConfig(): Promise<OpenIdConfig> {
   const res = await fetch(`https://${STORE_DOMAIN}/.well-known/openid-configuration`, {
     cache: "force-cache",
   });
+
   if (!res.ok) {
     throw new Error("Failed to fetch Shopify OpenID configuration");
   }
-  return res.json();
+
+  const json = await res.json();
+
+  // Fix 2025 Shopify rollout where issuer includes `/authentication`
+  if (json.issuer.includes("/authentication/")) {
+    json.issuer = json.issuer.replace("/authentication", "");
+  }
+
+  return json;
 }
+
 
 // ---- PKCE helpers (direct from Shopify docs, adapted for Node/Next) ----
 // https://shopify.dev/docs/api/customer/latest#authentication :contentReference[oaicite:3]{index=3}
