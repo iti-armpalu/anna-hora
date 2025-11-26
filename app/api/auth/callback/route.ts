@@ -7,27 +7,24 @@ export async function GET(req: Request) {
   const state = url.searchParams.get("state");
 
   const cookieStore = await cookies();
-
   const storedState = cookieStore.get("shopify_oauth_state")?.value;
+
   if (!code || !state || state !== storedState) {
     return NextResponse.json({ error: "Invalid OAuth state" }, { status: 400 });
   }
 
-  const tokenUrl = process.env.SHOPIFY_CUSTOMER_API_TOKEN_URL!;
   const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback`;
 
-  const params = new URLSearchParams({
-    grant_type: "authorization_code",
-    client_id: process.env.SHOPIFY_CUSTOMER_API_CLIENT_ID!,
-    client_secret: process.env.SHOPIFY_CUSTOMER_API_CLIENT_SECRET!,
-    redirect_uri: redirectUri,
-    code,
-  });
-
-  const tokenRes = await fetch(tokenUrl, {
+  const tokenRes = await fetch(process.env.SHOPIFY_CUSTOMER_API_TOKEN_URL!, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: params.toString(),
+    body: new URLSearchParams({
+      grant_type: "authorization_code",
+      code,
+      client_id: process.env.SHOPIFY_CUSTOMER_API_CLIENT_ID!,
+      client_secret: process.env.SHOPIFY_CUSTOMER_API_CLIENT_SECRET!,
+      redirect_uri: redirectUri,
+    }),
   });
 
   if (!tokenRes.ok) {
@@ -37,30 +34,28 @@ export async function GET(req: Request) {
     );
   }
 
-  const tokenData = (await tokenRes.json()) as {
-    id_token: string;
-    access_token: string;
-    refresh_token?: string;
-  };
+  const tokenData = await tokenRes.json();
 
   const res = NextResponse.redirect("/account");
 
+  // set cookies INSIDE handler
   res.cookies.set("shopify_customer_token", tokenData.id_token, {
     httpOnly: true,
     secure: true,
-    path: "/",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7,
+    path: "/",
   });
 
   res.cookies.set("shopify_customer_access_token", tokenData.access_token, {
     httpOnly: true,
     secure: true,
-    path: "/",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7,
+    path: "/",
   });
 
+  // remove temp cookie
   cookieStore.delete("shopify_oauth_state");
 
   return res;
