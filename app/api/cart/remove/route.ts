@@ -3,9 +3,9 @@ import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { cookies } from "next/headers";
 
 const client = createStorefrontApiClient({
-  storeDomain: `https://${process.env.SHOPIFY_STORE_DOMAIN}`,
+  storeDomain: `https://${process.env.SHOPIFY_STORE_URL}`,
   apiVersion: process.env.SHOPIFY_API_VERSION ?? "2025-04",
-  publicAccessToken: process.env.SHOPIFY_STOREFRONT_TOKEN!,
+  publicAccessToken: process.env.SHOPIFY_STOREFRONT_API_KEY!,
 });
 
 const CART_LINES_REMOVE = `

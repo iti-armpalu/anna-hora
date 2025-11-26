@@ -14,8 +14,8 @@ export async function shopifyFetch<TData = unknown>({
   const country = cookieStore.get("country")?.value || "GB";
 
   // Debug: log query + variables
-  console.log("🛒 ShopifyFetch → Running Query:");
-  console.log({ query, variables: { country, ...variables } });
+  // console.log("🛒 ShopifyFetch → Running Query:");
+  // console.log({ query, variables: { country, ...variables } });
 
   const res = await shopifyClient.request<TData>(query, {
     variables: {
