@@ -98,13 +98,13 @@ function mergeWishlists(a: WishlistItem[], b: WishlistItem[]) {
 // ---------------------------------------------------
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const { user, isLoading } = useAuth(); // optional for now
-  const isLoggedIn = Boolean(user);
+  const { customer, loading } = useAuth(); // optional for now
+  const isLoggedIn = Boolean(customer);
   const [items, setItems] = useState<WishlistItem[]>([]);
 
   // Load wishlist on init
   useEffect(() => {
-    if (isLoading) return;
+    if (loading) return;
 
     async function init() {
       if (isLoggedIn) {
@@ -126,7 +126,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     }
 
     init();
-  }, [isLoading, isLoggedIn]);
+  }, [loading, isLoggedIn]);
 
   // Sync to localStorage only for guest users
   useEffect(() => {

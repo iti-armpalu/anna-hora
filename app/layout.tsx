@@ -7,6 +7,7 @@ import Header from "@/components/header/Header";
 import { WishlistProvider } from "@/context/wishlist-context";
 import { DevCurrencyTester } from "@/components/dev-currency-tester";
 import { GlobalCartDrawer } from "@/components/cart/global-cart-drawer";
+import { AuthProvider } from "@/context/auth-context";
 
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
+        <AuthProvider>
           <CartProvider>
             <WishlistProvider>
               <Header />
@@ -32,6 +34,7 @@ export default function RootLayout({
               <GlobalCartDrawer />
             </WishlistProvider>
           </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

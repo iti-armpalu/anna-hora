@@ -1,71 +1,65 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import type { User } from "@/data/auth"
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-interface AuthContextType {
-  user: User | null
-  isLoading: boolean
-  isAuthenticated: boolean
-  login: (user: User) => void
-  logout: () => void
+interface Customer {
+  id: string;
+  email: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  emailVerified: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+interface AuthContextType {
+  customer: Customer | null;
+  isLoggedIn: boolean;
+  loading: boolean;
+  refresh: () => Promise<void>;
+}
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-  // Check for stored user on mount
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user")
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser))
-      } catch (error) {
-        console.error("Failed to parse stored user:", error)
-        localStorage.removeItem("user")
-      }
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  async function refresh() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/me", { cache: "no-store" });
+      const data = await res.json();
+
+      setCustomer(data.customer || null);
+    } catch (error) {
+      console.error("Auth refresh error:", error);
+      setCustomer(null);
     }
-    setIsLoading(false)
-  }, [])
-
-  const login = (userData: User) => {
-    setUser(userData)
-    localStorage.setItem("user", JSON.stringify(userData))
+    setLoading(false);
   }
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem("user")
-    localStorage.removeItem("userToken")
-    localStorage.removeItem("userProfile")
-    localStorage.removeItem("userPreferences")
-    sessionStorage.clear()
-  }
-
-  const isAuthenticated = !!user
+  useEffect(() => {
+    refresh();
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        isLoading,
-        isAuthenticated,
-        login,
-        logout,
+        customer,
+        isLoggedIn: !!customer,
+        loading,
+        refresh,
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider")
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used inside <AuthProvider />");
   }
-  return context
+  return context;
 }
