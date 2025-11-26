@@ -1,24 +1,34 @@
-"use client";
+import Link from "next/link";
 
-export default function SignupPage() {
+// app/signup/page.tsx
+export default function SignUpPage() {
   return (
-    <div className="max-w-md mx-auto py-20 text-center">
-      <h1 className="text-3xl font-semibold mb-6">Create your account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8 space-y-8">
+        
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">Create your account</h1>
+          <p className="text-gray-600">
+            Join us to unlock personalized shopping and faster checkout.
+          </p>
+        </div>
 
-      <p className="text-gray-600 mb-8">
-        Your account will let you track orders, manage addresses, and more.
-      </p>
+        <form action="/api/auth/login" method="GET">
+          <button
+            type="submit"
+            className="w-full py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-900 transition"
+          >
+            Continue
+          </button>
+        </form>
 
-      <a
-        href="/auth/customer/login"
-        className="px-6 py-3 bg-black text-white rounded-md"
-      >
-        Continue to Signup
-      </a>
-
-      <p className="mt-4 text-sm text-gray-500">
-        You will be redirected to our secure Shopify account page.
-      </p>
+        <p className="text-center text-gray-600">
+          Already have an account?{" "}
+          <Link href="/signin" className="text-blue-600 underline">
+            Sign in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

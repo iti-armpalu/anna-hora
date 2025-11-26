@@ -1,0 +1,20 @@
+// This redirects the user to Shopify’s hosted login.
+
+import { NextResponse } from "next/server";
+import { randomUUID } from "crypto";
+
+export async function GET() {
+  const state = randomUUID();
+
+  const params = new URLSearchParams({
+    client_id: process.env.SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID!,
+    redirect_uri: process.env.SHOPIFY_CUSTOMER_ACCOUNT_REDIRECT_URI!,
+    response_type: "code",
+    scope: process.env.SHOPIFY_CUSTOMER_ACCOUNT_SCOPES!,
+    state,
+  });
+
+  const url = `https://${process.env.SHOPIFY_STORE_DOMAIN}/auth/authorize?${params}`;
+
+  return NextResponse.redirect(url);
+}
