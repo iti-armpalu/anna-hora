@@ -2,7 +2,6 @@ import Link from "next/link"
 import { headerContent } from "@/data/header-content" // or { siteContent } if you prefer
 import { MobileMenu } from "./mobile-menu"
 import { NavDesktop } from "./nav-desktop"
-import { AuthNav } from "../navigation/auth-nav" // remains client
 import { CartButton } from "../cart/cart-button"
 
 export default function Header() {
@@ -59,7 +58,6 @@ export default function Header() {
 
             {/* Cart button + drawer (client island) */}
             <CartButton />
-            <AuthNav />
           </div>
         </div>
       </div>
