@@ -10,6 +10,8 @@ import { Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ProductGallery } from "./_components/product-gallery";
+import { ProductDetailsAccordion } from "./_components/product-detail-accordion";
+import { CustomerAssurance } from "./_components/customer-assurance";
 
 export const revalidate = 60; // ISR every 60 seconds
 
@@ -20,7 +22,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
 
     // --- Add to Bag handler ---
     async function handleAddToBag() {
-        console.log("🔥 Add to Bag clicked");
+        console.log("Add to Bag clicked");
 
         if (!selectedSize) {
             toast.error("Please select a size before adding to bag.");
@@ -88,8 +90,6 @@ export default function ProductPageClient({ product }: { product: Product }) {
         currencyCode: currency
     });
 
-    // const images = product.images?.edges.map(e => e.node) || [];
-
     const images: ProductImage[] =
         product.images?.edges.map((e) => e.node) ?? [];
 
@@ -106,100 +106,101 @@ export default function ProductPageClient({ product }: { product: Product }) {
     )?.value;
 
     return (
-        <div className="min-h-screen bg-stone-50">
+        <div className="min-h-screen">
 
             {/* Main Product Section */}
             <div className="container mx-auto py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
                     {/* Product Gallery */}
-                    <div className="lg:col-span-2">
+                    <div className="lg:col-span-3">
                         <ProductGallery images={images} />
                     </div>
 
-                    {/* Product Info */}
-                    <div className="space-y-8">
-                        {/* Product Header */}
-                        <div className="space-y-4">
-                            <h1 className="text-3xl lg:text-4xl font-light text-stone-800 font-serif">{product.title}</h1>
-                            <p className="text-lg text-stone-600 italic">{product.description}</p>
-                            <div className="flex items-center space-x-4">
-                                {/* <span className="text-3xl font-light text-stone-800">${product.price}</span> */}
-                                <p className="text-xl font-medium text-stone-800">
-                                    {formattedPrice}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Size Selection */}
-                        <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-sm font-medium text-stone-800">Size</h3>
-
-                            </div>
-                            <div className="grid grid-cols-5 gap-2">
-                                {sizes.map(({ size, inStock, variantId }) => (
-                                    <Button
-                                        key={variantId}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            if (inStock) {
-                                                setSelectedSize(size);
-                                            }
-                                        }}
-                                        variant={selectedSize === variantId ? "default" : "outline"}
-                                        disabled={!inStock}
-                                        className={`${selectedSize === size
-                                            ? "bg-stone-800 text-white"
-                                            : inStock
-                                                ? "bg-white text-stone-800 border-stone-300"
-                                                : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
-                                            }
-                                        `}
-                                    >
-                                        {size}
-                                    </Button>
-                                ))}
-                            </div>
-                            {!sizes.find((s) => s.variantId === "l")?.inStock && (
-                                <p className="text-sm text-stone-500">
-                                    Size L is currently out of stock.
-                                    <Button variant="ghost" size="sm" className="text-stone-600 hover:text-stone-800 p-0 ml-1">
-                                        Get notified when available
-                                    </Button>
-                                </p>
-                            )}
-                        </div>
-
-                        {/* Quantity & Add to Bag */}
-                        <div className="space-y-4">
-                            <div className="flex items-center space-x-4">
-                                <span className="text-sm font-medium text-stone-800">Quantity:</span>
-                                <div className="flex items-center border border-stone-300 rounded-md">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                        className="px-3"
-                                    >
-                                        <Minus className="w-4 h-4" />
-                                    </Button>
-                                    <span className="px-4 py-2 text-sm">{quantity}</span>
-                                    <Button variant="ghost" size="sm" onClick={() => setQuantity(quantity + 1)} className="px-3">
-                                        <Plus className="w-4 h-4" />
-                                    </Button>
+                    <div className="lg:col-span-2">
+                        {/* Product Info */}
+                        <div className="space-y-8">
+                            {/* Product Header */}
+                            <div className="space-y-4">
+                                <h1 className="text-3xl lg:text-4xl font-light text-stone-800 font-serif">{product.title}</h1>
+                                <p className="text-lg text-stone-600 italic">{product.description}</p>
+                                <div className="flex items-center space-x-4">
+                                    {/* <span className="text-3xl font-light text-stone-800">${product.price}</span> */}
+                                    <p className="text-xl font-medium text-stone-800">
+                                        {formattedPrice}
+                                    </p>
                                 </div>
                             </div>
 
+                            {/* Size Selection */}
                             <div className="space-y-3">
-                                <Button
-                                    size="lg"
-                                    onClick={handleAddToBag}
-                                    className="w-full bg-stone-800 hover:bg-stone-700 text-white py-4"
-                                >
-                                    Add to Bag – {formattedTotal}
-                                </Button>
-                                {/* <WishlistButton
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-sm font-medium text-stone-800">Size</h3>
+
+                                </div>
+                                <div className="grid grid-cols-5 gap-2">
+                                    {sizes.map(({ size, inStock, variantId }) => (
+                                        <Button
+                                            key={variantId}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                if (inStock) {
+                                                    setSelectedSize(size);
+                                                }
+                                            }}
+                                            variant={selectedSize === variantId ? "default" : "outline"}
+                                            disabled={!inStock}
+                                            className={`${selectedSize === size
+                                                ? "bg-stone-800 text-white"
+                                                : inStock
+                                                    ? "bg-white text-stone-800 border-stone-300"
+                                                    : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
+                                                }
+                                        `}
+                                        >
+                                            {size}
+                                        </Button>
+                                    ))}
+                                </div>
+                                {!sizes.find((s) => s.variantId === "l")?.inStock && (
+                                    <p className="text-sm text-stone-500">
+                                        Size L is currently out of stock.
+                                        <Button variant="ghost" size="sm" className="text-stone-600 hover:text-stone-800 p-0 ml-1">
+                                            Get notified when available
+                                        </Button>
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Quantity & Add to Bag */}
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-4">
+                                    <span className="text-sm font-medium text-stone-800">Quantity:</span>
+                                    <div className="flex items-center border border-stone-300 rounded-md">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                            className="px-3"
+                                        >
+                                            <Minus className="w-4 h-4" />
+                                        </Button>
+                                        <span className="px-4 py-2 text-sm">{quantity}</span>
+                                        <Button variant="ghost" size="sm" onClick={() => setQuantity(quantity + 1)} className="px-3">
+                                            <Plus className="w-4 h-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <Button
+                                        size="lg"
+                                        onClick={handleAddToBag}
+                                        className="w-full bg-stone-800 hover:bg-stone-700 text-white py-4"
+                                    >
+                                        Add to Bag – {formattedTotal}
+                                    </Button>
+                                    {/* <WishlistButton
                                     product={{
                                         id: product.id,
                                         name: product.name,
@@ -215,7 +216,27 @@ export default function ProductPageClient({ product }: { product: Product }) {
                                     size="lg"
                                     className="w-full"
                                 /> */}
+                                </div>
                             </div>
+
+                            {/* Customer Assurance */}
+                            <CustomerAssurance />
+
+                            {/* Product Description */}
+                            <div className="pt-8 space-y-6 border-t border-stone-200">
+                                <h2 className="text-2xl font-light text-stone-800 font-serif">For mornings when the world can wait</h2>
+                                <div className="space-y-4 text-stone-600 leading-relaxed">
+                                    {/* <p>{sensoryDescription}</p> */}
+                                    <p>{lifestyleDescription}</p>
+                                    <p>{styleDescription}</p>
+                                </div>
+                            </div>
+                            {/* Product Details Accordion */}
+                            <div className="border-t border-stone-200 pt-8">
+                                <ProductDetailsAccordion product={product} />
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -224,88 +245,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
             {/* Product Details Sections */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="max-w-4xl mx-auto space-y-16">
-                    {/* Sensory Description */}
-                    <section className="text-center space-y-6">
-                        <h2 className="text-3xl lg:text-4xl font-light text-stone-800 font-serif">
-                            For mornings when the world can wait
-                        </h2>
-                        <div className="space-y-4 text-lg text-stone-600 leading-relaxed max-w-3xl mx-auto whitespace-pre-line">
-                            <p>{sensoryDescription}</p>
-                            <p>{lifestyleDescription}</p>
-                            <p>{styleDescription}</p>
-                        </div>
 
-                    </section>
-
-                    {/* Technical Details */}
-                    <section>
-                        <Accordion type="single" collapsible className="w-full">
-                            <AccordionItem value="details" className="border-stone-200">
-                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
-                                    Product Details
-                                </AccordionTrigger>
-                                <AccordionContent className="space-y-3 text-stone-600">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div>
-                                            <h4 className="font-medium text-stone-800 mb-2">Fabric & Construction</h4>
-                                            {/* <ul className="space-y-1 text-sm">
-                                                <li>• {product.specifications.fabric}</li>
-                                                <li>• {product.specifications.weight} weight</li>
-                                                <li>• {product.specifications.origin}</li>
-                                            </ul> */}
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-stone-800 mb-2">Care & Sustainability</h4>
-                                            {/* <ul className="space-y-1 text-sm">
-                                                <li>• {product.specifications.care}</li>
-                                                <li>• {product.specifications.sustainability}</li>
-                                                <li>
-                                                    •{" "}
-                                                    <Link href="/our-silk" className="text-stone-700 hover:text-stone-900 underline">
-                                                        Learn about our silk
-                                                    </Link>
-                                                </li>
-                                            </ul> */}
-                                        </div>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-
-                            <AccordionItem value="fit" className="border-stone-200">
-                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
-                                    Fit & Sizing
-                                </AccordionTrigger>
-                                <AccordionContent className="space-y-3 text-stone-600">
-                                    {/* <div className="space-y-2 text-sm">
-                                        <p>• {product.fit.type}</p>
-                                        <p>• {product.fit.modelInfo}</p>
-                                        <p>• {product.fit.notes}</p>
-                                    </div> */}
-                                </AccordionContent>
-                            </AccordionItem>
-
-                            <AccordionItem value="shipping" className="border-stone-200">
-                                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
-                                    Shipping & Returns
-                                </AccordionTrigger>
-                                <AccordionContent className="space-y-3 text-stone-600">
-                                    <div className="space-y-2 text-sm">
-                                        <p>• Free shipping on orders over $200</p>
-                                        <p>• Standard delivery: 3-5 business days</p>
-                                        <p>• Express delivery: 1-2 business days</p>
-                                        <p>• 30-day returns for unworn items</p>
-                                        <p>• Signature eco-friendly packaging with every order (recyclable materials)</p>
-                                        <p>
-                                            • Premium gift wrapping available (includes silk ribbon, handwritten note on recycled paper, and
-                                            sustainable tissue wrap)
-                                        </p>
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-
-
-                    </section>
 
                     {/* Customer Assurance */}
                     <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-stone-200">
