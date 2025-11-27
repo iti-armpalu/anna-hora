@@ -1,4 +1,4 @@
-import Link from "next/link"
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Product } from "@/lib/types/product"
 

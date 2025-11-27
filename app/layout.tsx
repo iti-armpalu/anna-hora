@@ -8,6 +8,7 @@ import { WishlistProvider } from "@/context/wishlist-context";
 import { DevCurrencyTester } from "@/components/dev-currency-tester";
 import { GlobalCartDrawer } from "@/components/cart/global-cart-drawer";
 import { AuthProvider } from "@/context/auth-context";
+import { cookies } from "next/headers";
 
 
 export const metadata: Metadata = {
@@ -15,15 +16,20 @@ export const metadata: Metadata = {
   description: "A luxury lifestyle concept",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const cookieStore = await cookies()
+  const token = cookieStore.get("customerAccessToken")?.value;
+  const isAuthenticated = Boolean(token);
+
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
-        <AuthProvider>
+        <AuthProvider initialAuth={isAuthenticated}>
           <CartProvider>
             <WishlistProvider>
               <Header />

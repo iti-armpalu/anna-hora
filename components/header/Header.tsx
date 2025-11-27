@@ -3,6 +3,7 @@ import { headerContent } from "@/data/header-content" // or { siteContent } if y
 import { MobileMenu } from "./mobile-menu"
 import { NavDesktop } from "./nav-desktop"
 import { CartButton } from "../cart/cart-button"
+import AuthNav from "./auth-nav"
 
 export default function Header() {
   const { brand, navigation } = headerContent // or siteContent.navigation.main
@@ -58,6 +59,7 @@ export default function Header() {
 
             {/* Cart button + drawer (client island) */}
             <CartButton />
+            <AuthNav />
           </div>
         </div>
       </div>

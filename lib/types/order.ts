@@ -36,4 +36,25 @@ export interface CustomerOrderLineItem {
       customer: ShopifyCustomer | null;
     };
   }
+
+
+  export interface ShopifyUserError {
+    field?: string[] | null;
+    message: string;
+  }
+  
+  export interface AccessToken {
+    accessToken: string;
+    expiresAt: string;
+  }
+  
+  export interface TokenCreateResponse {
+    data: {
+      customerAccessTokenCreate: {
+        customerAccessToken: AccessToken | null;
+        customerUserErrors: ShopifyUserError[];
+      };
+    };
+  }
+  
   

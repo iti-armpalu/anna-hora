@@ -1,7 +1,7 @@
 // lib/shopify/storefront.ts
 export async function storefrontFetch<T>(
     query: string,
-    variables?: Record<string, any>
+    variables?: Record<string, unknown>
   ): Promise<T> {
     const endpoint = `https://${process.env.SHOPIFY_STORE_URL}/api/2025-10/graphql.json`;
   

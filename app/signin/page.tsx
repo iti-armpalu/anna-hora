@@ -1,77 +1,94 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useAuth } from "@/context/auth-context";
+
 
 export default function SigninPage() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/account"; // default
 
-  async function submit(e: React.FormEvent) {
+  const { setAuthenticated } = useAuth();
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError(null);
+    setError("");
     setLoading(true);
 
-    const res = await fetch("/api/auth/login", {
+    const form = e.currentTarget;
+
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement)
+      .value;
+
+    const res = await fetch("/api/auth/signin", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
-    setLoading(false);
-
     if (!res.ok) {
-      const json = await res.json();
-      setError(json.error || "Invalid email or password");
+      const data = await res.json();
+      setError(data.errors?.[0] ?? "Invalid login.");
+      setLoading(false);
       return;
     }
 
-    // Redirect to the account page
-    window.location.href = "/account";
+    // Update UI auth state (client-side convenience only)
+    setAuthenticated(true);
+
+    // Redirect to original page or account dashboard
+    window.location.href = redirect;
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 px-4">
-      <h1 className="text-2xl font-semibold mb-6">Sign in to your account</h1>
+    <div className="max-w-md mx-auto py-16 px-4">
+      <h1 className="text-2xl font-semibold mb-6">Sign In</h1>
 
-      <form onSubmit={submit} className="flex flex-col gap-4">
+      {redirect !== "/account" && (
+        <p className="text-sm text-gray-600 mb-4">
+          You must be signed in to view <span className="font-medium">{redirect}</span>
+        </p>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
+          name="email"
           type="email"
-          className="border p-3 rounded-md"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
+          className="w-full border px-3 py-2 rounded bg-white"
+          placeholder="Email"
         />
 
         <input
+          name="password"
           type="password"
-          className="border p-3 rounded-md"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           required
+          className="w-full border px-3 py-2 rounded bg-white"
+          placeholder="Password"
         />
+
+        {error && (
+          <p className="text-red-600 text-sm whitespace-pre-line">{error}</p>
+        )}
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-black text-white p-3 rounded-md hover:bg-gray-800 disabled:opacity-50"
+          className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
-
-        {error && (
-          <p className="text-red-600 text-sm mt-2">{error}</p>
-        )}
       </form>
 
       <p className="text-sm mt-4 text-gray-600">
         Don’t have an account?{" "}
         <a
-          href="/signup"
-          className="text-black underline hover:opacity-70"
+          href={`/signup?redirect=${encodeURIComponent(redirect)}`}
+          className="underline"
         >
           Create one
         </a>

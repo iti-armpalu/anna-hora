@@ -24,3 +24,18 @@ export const CUSTOMER_ORDERS_QUERY = `
     }
   }
 `;
+
+
+export const CREATE_CUSTOMER_TOKEN = `
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        message
+      }
+    }
+  }
+`;

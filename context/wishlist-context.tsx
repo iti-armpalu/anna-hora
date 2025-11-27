@@ -98,46 +98,59 @@ function mergeWishlists(a: WishlistItem[], b: WishlistItem[]) {
 // ---------------------------------------------------
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const { customer, loading } = useAuth(); // optional for now
-  const isLoggedIn = Boolean(customer);
+  const { isAuthenticated } = useAuth();
   const [items, setItems] = useState<WishlistItem[]>([]);
 
-  // Load wishlist on init
+  /**
+   * Load wishlist on mount or when login state changes.
+   * Because isAuthenticated comes from the server during hydration,
+   * there's no loading/flicker issue.
+   */
   useEffect(() => {
-    if (loading) return;
-
     async function init() {
-      if (isLoggedIn) {
+      if (isAuthenticated) {
+        // 1. Load guest wishlist (localStorage)
         const guest = loadGuestWishlist();
+
+        // 2. Load Shopify wishlist
         const shopify = await fetchShopifyWishlist();
 
+        // 3. Merge them
         const merged = mergeWishlists(guest, shopify);
         setItems(merged);
 
+        // 4. Sync merged wishlist back to Shopify
         if (merged.length > 0) {
           await updateShopifyWishlist(merged);
         }
 
-        // Clear guest localStorage after sync
+        // 5. Clear guest wishlist as it's now merged
         localStorage.removeItem(LOCAL_KEY);
       } else {
+        // Guest mode — local only
         setItems(loadGuestWishlist());
       }
     }
 
     init();
-  }, [loading, isLoggedIn]);
+  }, [isAuthenticated]);
 
-  // Sync to localStorage only for guest users
+  /**
+   * Save guest wishlist updates to localStorage
+   */
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isAuthenticated) {
       saveGuestWishlist(items);
     }
-  }, [items, isLoggedIn]);
+  }, [items, isAuthenticated]);
 
-  // Add item
+  /**
+   * Add item to wishlist
+   */
   const add = (item: Omit<WishlistItem, "addedAt">) => {
-    if (isInWishlist(item.id)) return toast.error("Already in wishlist");
+    if (isInWishlist(item.id)) {
+      return toast.error("Already in wishlist");
+    }
 
     const newItem: WishlistItem = {
       ...item,
@@ -147,37 +160,50 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     const updated = [...items, newItem];
     setItems(updated);
 
-    if (isLoggedIn) updateShopifyWishlist(updated);
+    if (isAuthenticated) {
+      updateShopifyWishlist(updated);
+    }
 
     toast.success("Added to wishlist");
   };
 
-  // Remove item
+  /**
+   * Remove item from wishlist
+   */
   const remove = (variantId: string) => {
     const updated = items.filter((i) => i.id !== variantId);
     setItems(updated);
 
-    if (isLoggedIn) updateShopifyWishlist(updated);
+    if (isAuthenticated) {
+      updateShopifyWishlist(updated);
+    }
 
     toast.success("Removed from wishlist");
   };
 
-  // Clear all
+  /**
+   * Clear all wishlist items
+   */
   const clear = () => {
     setItems([]);
 
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       updateShopifyWishlist([]);
     } else {
       localStorage.removeItem(LOCAL_KEY);
     }
   };
 
+  /**
+   * Check if item is already in wishlist
+   */
   const isInWishlist = (variantId: string) =>
     items.some((i) => i.id === variantId);
 
   return (
-    <WishlistContext.Provider value={{ items, isInWishlist, add, remove, clear }}>
+    <WishlistContext.Provider
+      value={{ items, isInWishlist, add, remove, clear }}
+    >
       {children}
     </WishlistContext.Provider>
   );
