@@ -5,7 +5,7 @@ import { storefrontFetch } from "@/lib/shopify/storefront";
 
 import AccountClientPage from "./account-page-client";
 import { CUSTOMER_ORDERS_QUERY } from "@/lib/queries/order";
-import { CustomerQueryResponse } from "@/lib/types/order";
+import { CustomerOrdersQueryResponse } from "@/lib/types/order";
 
 export default async function AccountPage() {
   const cookieStore = await cookies()
@@ -16,7 +16,7 @@ export default async function AccountPage() {
     return <div>Unauthorized. Please sign in.</div>;
   }
 
-  const response = await storefrontFetch<CustomerQueryResponse>(
+  const response = await storefrontFetch<CustomerOrdersQueryResponse>(
     CUSTOMER_ORDERS_QUERY,
     { token }
   );

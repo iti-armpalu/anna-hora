@@ -9,6 +9,8 @@ import { z } from "zod";
 const SignupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
 });
 
 type SignupInput = z.infer<typeof SignupSchema>;
@@ -37,11 +39,11 @@ interface TokenResponse {
   data: {
     customerAccessTokenCreate: {
       customerAccessToken:
-        | {
-            accessToken: string;
-            expiresAt: string;
-          }
-        | null;
+      | {
+        accessToken: string;
+        expiresAt: string;
+      }
+      | null;
       customerUserErrors: ShopifyUserError[];
     };
   };
@@ -56,6 +58,8 @@ const CREATE_CUSTOMER = `
       customer {
         id
         email
+        firstName
+        lastName
       }
       customerUserErrors {
         field
@@ -94,12 +98,12 @@ export async function POST(req: Request) {
     );
   }
 
-  const { email, password } = parseResult.data;
+  const { email, password, firstName, lastName } = parseResult.data;
 
   // 1. Create Customer
   const createResult = await storefrontFetch<CustomerCreateResponse>(
     CREATE_CUSTOMER,
-    { input: { email, password } }
+    { input: { email, password, firstName, lastName } }
   );
 
   const userErrors = createResult.data.customerCreate.customerUserErrors;

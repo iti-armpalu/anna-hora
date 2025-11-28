@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { serializeOrder } from "@/lib/serializers/serializeOrder";
 import { ShopifyCustomer } from "@/lib/types/order";
+import { Badge } from "lucide-react";
 import Link from "next/link";
+import { OrderCard } from "./order-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
   const orders = customer.orders.edges;
@@ -22,18 +25,26 @@ export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
     );
   }
 
-  return (
+  const serialized = orders
+    // 1. Sort by newest first
+    .sort((a, b) => {
+      const dateA = new Date(a.node.processedAt).getTime();
+      const dateB = new Date(b.node.processedAt).getTime();
+      return dateB - dateA; // newest → oldest
+    })
+    // 2. Convert to UI-friendly structure
+    .map(({ node }) => serializeOrder(node));
 
+
+  return (
     <Card className="border-0 shadow-sm bg-white">
       <CardHeader>
         <CardTitle className="font-serif text-xl text-stone-800">Order History</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {orders.map(({ node }) => (
-            <div key={node.name} className="border border-stone-200 rounded-lg p-6">
-
-            </div>
+          {serialized.map((order) => (
+            <OrderCard key={order.id} order={order} />
           ))}
         </div>
       </CardContent>

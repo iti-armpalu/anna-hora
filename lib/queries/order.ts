@@ -4,17 +4,65 @@ export const CUSTOMER_ORDERS_QUERY = `
       firstName
       lastName
       email
+
       orders(first: 20) {
         edges {
           node {
+            id
             name
+            orderNumber
             processedAt
-            fulfillmentStatus
             financialStatus
-            lineItems(first: 10) {
+            fulfillmentStatus
+            statusUrl
+
+            shippingAddress {
+              firstName
+              lastName
+              address1
+              address2
+              city
+              province
+              zip
+              country
+            }
+
+            subtotalPrice {
+              amount
+              currencyCode
+            }
+
+            totalPrice {
+              amount
+              currencyCode
+            }
+
+            totalShippingPrice {
+              amount
+              currencyCode
+            }
+
+            totalTax {
+              amount
+              currencyCode
+            }
+
+            lineItems(first: 20) {
               edges {
                 node {
+                  quantity
                   title
+                  variant {
+                    title
+                    price {
+                      amount
+                      currencyCode
+                    }
+                    image {
+                      url
+                      altText
+                    }
+                  }
                 }
               }
             }
@@ -24,6 +72,7 @@ export const CUSTOMER_ORDERS_QUERY = `
     }
   }
 `;
+
 
 
 export const CREATE_CUSTOMER_TOKEN = `

@@ -23,10 +23,12 @@ export default function SignupPage() {
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement)
       .value;
+    const firstName = (form.elements.namedItem("firstName") as HTMLInputElement).value;
+    const lastName = (form.elements.namedItem("lastName") as HTMLInputElement).value;
 
     const res = await fetch("/api/auth/signup", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, firstName, lastName }),
     });
 
     if (!res.ok) {
@@ -56,6 +58,22 @@ export default function SignupPage() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          name="firstName"
+          type="text"
+          required
+          className="w-full border px-3 py-2 rounded bg-white"
+          placeholder="First name"
+        />
+
+        <input
+          name="lastName"
+          type="text"
+          required
+          className="w-full border px-3 py-2 rounded bg-white"
+          placeholder="Last name"
+        />
+
         <input
           name="email"
           type="email"

@@ -13,10 +13,10 @@ export default function AuthNav() {
 
     if (!isAuthenticated) {
         return (
-            <Button asChild variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Button asChild variant="ghost" className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-stone-100">
                 <Link href="/signin">
                     <Avatar className="h-8 w-8">
-                        <AvatarFallback className="bg-stone-200 text-stone-600">
+                        <AvatarFallback>
                             <User className="h-4 w-4" />
                         </AvatarFallback>
                     </Avatar>

@@ -4,22 +4,28 @@ import { MobileMenu } from "./mobile-menu"
 import { NavDesktop } from "./nav-desktop"
 import { CartButton } from "../cart/cart-button"
 import AuthNav from "./auth-nav"
+import Image from "next/image"
 
 export default function Header() {
   const { brand, navigation } = headerContent // or siteContent.navigation.main
 
   return (
-    <header className="sticky top-0 z-50 bg-stone-50/95 backdrop-blur-sm border-b border-stone-200">
+    <header className="sticky top-0 z-50 bg-neutral-50/95 backdrop-blur-sm border-b border-stone-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Mobile menu trigger + panel (client island) */}
           <MobileMenu items={navigation} />
 
           {/* Logo */}
-          <Link href="/" className="flex-1 lg:flex-none">
-            <h1 className="text-2xl lg:text-3xl font-light tracking-wide text-stone-800">
-              {brand.name}
-            </h1>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/anna-hora-logo.png"
+              alt="ANNA HORA"
+              width={160}
+              height={32}
+              className="h-18 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop navigation (server markup + tiny client links for active state) */}
