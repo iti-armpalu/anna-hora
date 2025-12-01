@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 import { shopifyFetch } from "@/lib/shopify/fetch";
-import { GraphQLResponse } from "@/lib/shopify/types";
 import { CUSTOMER_DELETE_ADDRESS } from "@/lib/queries/address";
 import type { ShopifyUserError } from "@/lib/shopify/types";
 

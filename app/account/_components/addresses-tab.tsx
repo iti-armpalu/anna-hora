@@ -4,7 +4,7 @@ import { useState } from "react";
 
 
 import { Button } from "@/components/ui/button";
-import { ShopifyCustomer } from "@/lib/shopify/types";
+import { ShopifyAddress, ShopifyCustomer } from "@/lib/shopify/types";
 import AddAddressDialog from "./add-address-dialog";
 import EditAddressDialog from "./edit-address-dialog";
 import { DeleteAddressDialog } from "./delete-address-dialog";
@@ -15,7 +15,7 @@ export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
 
-    const [selectedAddress, setSelectedAddress] = useState<any>(null);
+    const [selectedAddress, setSelectedAddress] = useState<ShopifyAddress | null>(null);
 
     const router = useRouter();
 
