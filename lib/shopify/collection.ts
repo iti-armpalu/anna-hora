@@ -1,8 +1,8 @@
 // lib/shopify/product.ts
 import { COLLECTION_BY_HANDLE_QUERY, COLLECTIONS_QUERY } from "@/lib/queries/collection";
 import { shopifyFetch } from "@/lib/shopify/fetch";
-import { ShopifyCollection } from "../types/collection";
-import { Product } from "../types/product";
+import { ShopifyCollection } from "./types/collection";
+import { Product } from "./types/product";
 
 // --------------------------------------------------
 // Fetch ALL collections

@@ -9,8 +9,8 @@ import { ViewToggle } from "./_components/view-toggle";
 import { ProductCard } from "@/components/shop/product-card";
 import { FilterSidebar } from "./_components/filter-sidebar";
 
-import { Product } from "@/lib/types/product";
-import { ShopifyCollection } from "@/lib/types/collection";
+import { Product } from "@/lib/shopify/types/product";
+import { ShopifyCollection } from "@/lib/shopify/types/collection";
 
 interface Props {
   initialProducts: Product[];

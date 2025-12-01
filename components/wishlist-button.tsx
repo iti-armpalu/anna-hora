@@ -2,7 +2,7 @@
 
 import { Heart } from "lucide-react";
 import { useWishlist } from "@/context/wishlist-context";
-import type { Product } from "@/lib/types/product";
+import type { Product } from "@/lib/shopify/types/product";
 import { Button } from "./ui/button";
 
 type WishlistButtonProps = {

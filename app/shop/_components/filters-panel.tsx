@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShopifyCollection } from "@/lib/types/collection";
+import { ShopifyCollection } from "@/lib/shopify/types/collection";
 import { Filter } from "lucide-react";
 
 export function FiltersPanel({

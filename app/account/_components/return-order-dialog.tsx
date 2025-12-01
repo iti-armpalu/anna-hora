@@ -15,9 +15,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
-import type { Order } from "@/data/account"
 import Image from "next/image"
-import { OrderItemProps } from "@/lib/types/order"
+import { OrderItemProps } from "@/lib/serializers/order"
 
 interface ReturnOrderDialogProps {
     open: boolean;

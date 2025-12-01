@@ -1,30 +1,14 @@
 // app/account/page.tsx (SERVER COMPONENT)
-
-import { cookies } from "next/headers";
-import { storefrontFetch } from "@/lib/shopify/storefront";
-
+import { redirect } from "next/navigation";
+import { getCustomer } from "@/lib/shopify/customer";
 import AccountClientPage from "./account-page-client";
-import { CUSTOMER_ORDERS_QUERY } from "@/lib/queries/order";
-import { CustomerOrdersQueryResponse } from "@/lib/types/order";
 
 export default async function AccountPage() {
-  const cookieStore = await cookies()
-  const token = cookieStore.get("customerAccessToken")?.value;
-
-  if (!token) {
-    // Middleware SHOULD prevent this, but it's good fallback
-    return <div>Unauthorized. Please sign in.</div>;
-  }
-
-  const response = await storefrontFetch<CustomerOrdersQueryResponse>(
-    CUSTOMER_ORDERS_QUERY,
-    { token }
-  );
-
-  const customer = response.data.customer;
+  const customer = await getCustomer();
 
   if (!customer) {
-    return <div>Session expired. Please sign in again.</div>;
+    // Middleware will usually redirect already, but just in case
+    redirect("/signin");
   }
 
   // Pass Shopify customer data to the client component

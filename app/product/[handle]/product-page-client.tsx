@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/hooks/use-price";
 // import { WishlistButton } from "@/components/wishlist-button";
-import { Product, ProductImage } from "@/lib/types/product";
+import { Product, ProductImage } from "@/lib/shopify/types/product";
 import { Minus, Plus, RotateCcw, Shield, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";

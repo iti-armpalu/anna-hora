@@ -1,12 +1,12 @@
 "use client";
 
-import { OrderCardProps } from "@/lib/types/order";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Package } from "lucide-react";
 import ReturnOrderDialog from "./return-order-dialog";
+import { OrderCardProps } from "@/lib/serializers/order";
 
 export function OrderCard({ order }: { order: OrderCardProps }) {
     const [returnDialogOpen, setReturnDialogOpen] = useState(false)

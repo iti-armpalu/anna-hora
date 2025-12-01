@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import ProductLightbox from "./product-lightbox"
-import { ProductImage } from "@/lib/types/product"
+import { ProductImage } from "@/lib/shopify/types/product"
 
 interface ProductGalleryProps {
     images: ProductImage[];

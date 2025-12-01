@@ -1,7 +1,9 @@
-import { Order, OrderCardProps, OrderItemProps } from "../types/order";
-import { formatMoney } from "../utils/format-money";
 
-export function serializeOrder(order: Order): OrderCardProps {
+import { ShopifyOrder } from "../shopify/types";
+import { formatMoney } from "../utils/format-money";
+import { OrderCardProps, OrderItemProps } from "./order";
+
+export function serializeOrder(order: ShopifyOrder): OrderCardProps {
   const currency = order.totalPrice.currencyCode;
 
   const items: OrderItemProps[] = order.lineItems.edges.map(({ node }) => {

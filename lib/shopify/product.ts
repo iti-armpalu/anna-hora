@@ -1,7 +1,7 @@
 // lib/shopify/product.ts
 import { cookies } from "next/headers";
 import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/queries/product";
-import type { Product } from "@/lib/types/product";
+import type { Product } from "@/lib/shopify/types/product";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
 export type ProductsResponse = {

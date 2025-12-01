@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { serializeOrder } from "@/lib/serializers/serializeOrder";
-import { ShopifyCustomer } from "@/lib/types/order";
-import { Badge } from "lucide-react";
+import { ShopifyCustomer } from "@/lib/shopify/types";
 import Link from "next/link";
 import { OrderCard } from "./order-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 
 export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
   const orders = customer.orders.edges;

@@ -1,6 +1,6 @@
 "use client";
 
-import { ShopifyCustomer } from "@/lib/types/order";
+import { ShopifyCustomer } from "@/lib/shopify/types";
 import AccountHeader from "./_components/account-header";
 import AccountTabs from "./_components/account-tabs";
 

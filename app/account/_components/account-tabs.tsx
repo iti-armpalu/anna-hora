@@ -1,8 +1,11 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ShopifyCustomer } from "@/lib/types/order";
+
 import { OrdersTab } from "./orders-tab";
+import { ProfileTab } from "./profile-tab";
+import { AddressesTab } from "./addresses-tab";
+import { ShopifyCustomer } from "@/lib/shopify/types";
 
 
 export default function AccountTabs({ customer }: { customer: ShopifyCustomer }) {
@@ -47,33 +50,6 @@ export default function AccountTabs({ customer }: { customer: ShopifyCustomer })
  *  ----------------------------- 
 **/
 
-
-function ProfileTab({ customer }: { customer: ShopifyCustomer }) {
-  return (
-    <div>
-      <p className="text-gray-700 mb-2">
-        <strong>First Name:</strong> {customer.firstName ?? "-"}
-      </p>
-      <p className="text-gray-700 mb-2">
-        <strong>Last Name:</strong> {customer.lastName ?? "-"}
-      </p>
-      <p className="text-gray-700 mb-2">
-        <strong>Email:</strong> {customer.email}
-      </p>
-    </div>
-  );
-}
-
-function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
-  return (
-    <div>
-      <p className="mb-2 font-medium">Addresses</p>
-      <p className="text-gray-600 text-sm">
-        Shopify Storefront API supports addresses — you can add add/edit here.
-      </p>
-    </div>
-  );
-}
 
 function SettingsTab({ customer }: { customer: ShopifyCustomer }) {
   return (

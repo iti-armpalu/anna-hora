@@ -1,5 +1,10 @@
 // ----- TYPES -----
 
+export interface MoneyV2 {
+  amount: string;
+  currencyCode: string;
+}
+
 export type ProductImage = {
     url: string;
     altText?: string | null;

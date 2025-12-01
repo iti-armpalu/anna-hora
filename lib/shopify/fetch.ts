@@ -13,10 +13,6 @@ export async function shopifyFetch<TData = unknown>({
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "GB";
 
-  // Debug: log query + variables
-  // console.log("🛒 ShopifyFetch → Running Query:");
-  // console.log({ query, variables: { country, ...variables } });
-
   const res = await shopifyClient.request<TData>(query, {
     variables: {
       country,
@@ -24,8 +20,7 @@ export async function shopifyFetch<TData = unknown>({
     },
   });
 
-  // Debug: log raw Shopify response
-  console.log("ShopifyFetch → Raw Response:", res);
+  // console.log("ShopifyFetch → Raw Response:", res);
 
   if (res.errors) {
     console.error("[Shopify errors]", res.errors);

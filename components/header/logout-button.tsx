@@ -1,6 +1,8 @@
 "use client";
 
 import { useAuth } from "@/context/auth-context";
+import { Button } from "../ui/button";
+import { LogOut } from "lucide-react";
 
 export default function LogoutButton() {
   const { setAuthenticated } = useAuth();
@@ -22,11 +24,13 @@ export default function LogoutButton() {
   }
 
   return (
-    <button
+    <Button
+      variant="outline"
+      className="mt-4 sm:mt-0 border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
       onClick={handleLogout}
-      className="text-sm text-red-600 hover:underline ml-4"
     >
+      <LogOut className="w-4 h-4 mr-2" />
       Logout
-    </button>
+    </Button>
   );
 }

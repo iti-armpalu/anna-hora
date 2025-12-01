@@ -5,7 +5,7 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import useEmblaCarousel from "embla-carousel-react"
-import { Product } from "@/lib/types/product"
+import { Product } from "@/lib/shopify/types/product"
 
 type ProductImageCarouselProps = {
     product: Product;
