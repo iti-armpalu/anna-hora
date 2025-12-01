@@ -4,7 +4,8 @@ import { useState } from "react";
 
 
 import { Button } from "@/components/ui/button";
-import { ShopifyAddress, ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { ShopifyAddress } from "@/lib/shopify/types/address";
 import AddAddressDialog from "./add-address-dialog";
 import EditAddressDialog from "./edit-address-dialog";
 import { DeleteAddressDialog } from "./delete-address-dialog";
