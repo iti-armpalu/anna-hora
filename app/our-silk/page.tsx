@@ -41,24 +41,26 @@ export default function OurSilkPage() {
             src={silkData.hero.bgImage}
             alt="Silk texture in natural light"
             fill
-            className="object-cover opacity-90"
+            className="object-cover"
             priority
           />
         </div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-800 mb-6 leading-tight">
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 ">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-anna-cement-100 mb-6 leading-tight">
             {silkData.hero.titleTop}
             <br />
             <em className="font-serif italic">{silkData.hero.titleEm}</em>
           </h2>
-          <p className="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-anna-cement-300 max-w-2xl mx-auto font-light leading-relaxed">
             {silkData.hero.subtitle}
           </p>
         </div>
-      </section>
+      </section >
 
       {/* The Feel Section */}
-      <section className="py-24 lg:py-32">
+      < section className="py-24 lg:py-32" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
@@ -104,10 +106,10 @@ export default function OurSilkPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* The Craftsmanship Section */}
-      <section className="py-16 lg:py-24 bg-white">
+      < section className="py-16 lg:py-24 bg-white" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -136,10 +138,10 @@ export default function OurSilkPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* The Benefits Section */}
-      <section className="py-16 lg:py-24">
+      < section className="py-16 lg:py-24" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
@@ -155,8 +157,8 @@ export default function OurSilkPage() {
               {silkData.benefits.items.map((b, i) => (
                 <Card key={i} className="border-0 shadow-sm bg-white p-8">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center flex-shrink-0">
-                      {getIcon(b.icon)}
+                    <div className="w-12 h-12 bg-anna-cement-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="text-anna-cement-600">{getIcon(b.icon)}</div>
                     </div>
                     <div>
                       <h4 className="text-lg font-light text-stone-800 mb-3">
@@ -170,10 +172,10 @@ export default function OurSilkPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* The Sourcing Section */}
-      <section className="py-16 lg:py-24 bg-stone-100">
+      < section className="py-16 lg:py-24 bg-stone-100" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -220,10 +222,10 @@ export default function OurSilkPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Silk Care Guide */}
-      <section className="py-16 lg:py-24 bg-white">
+      < section className="py-16 lg:py-24 bg-white" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -244,22 +246,17 @@ export default function OurSilkPage() {
               </Button>
             </div>
 
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {silkData.careGuide.steps.map((step) => (
                 <Card
                   key={step.step}
-                  className="border-0 shadow-sm bg-stone-50 p-6 text-center"
+                  className="border-0 shadow-sm bg-stone-50 p-6 text-center items-center"
                 >
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                    <div className="text-stone-600">{getIcon(step.icon)}</div>
+                  <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <span className="text-3xl md:text-5xl lg:text-7xl font-serif italic text-anna-cement-600 leading-none translate-y-[-8px]">{step.step}</span>
                   </div>
-                  <Badge
-                    variant="outline"
-                    className="mb-3 border-stone-300 text-stone-600"
-                  >
-                    Step {step.step}
-                  </Badge>
-                  <h4 className="text-lg font-light text-stone-800 mb-3">
+                  <h4 className="text-lg font-light text-stone-800 mb-1">
                     {step.title}
                   </h4>
                   <p className="text-sm text-stone-600 leading-relaxed">
@@ -283,10 +280,10 @@ export default function OurSilkPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Closing Statement */}
-      <section className="py-24 lg:py-32">
+      < section className="py-24 lg:py-32" >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-3xl lg:text-5xl font-light text-stone-800 mb-8 leading-tight">
@@ -300,7 +297,7 @@ export default function OurSilkPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {/* Primary CTA */}
 
-              <Button asChild data-slot="button" size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3">
+              <Button asChild data-slot="button" size="lg" className="bg-anna-green-950 hover:bg-stone-700 text-white px-8 py-3">
                 <Link href={silkData.closing.primaryCta.href}>Show Now
                   <Icons.ChevronRight className="w-4 h-4 ml-2" /></Link>
               </Button>
@@ -309,14 +306,14 @@ export default function OurSilkPage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
+                className="border-anna-green-800 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
               >
                 {silkData.closing.secondaryCta.text}
               </Button>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }

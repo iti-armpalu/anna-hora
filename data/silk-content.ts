@@ -7,7 +7,7 @@ const silkData = {
       titleTop: "The Language of",
       titleEm: "Silk",
       subtitle:
-        "More than fabric, silk is poetry written in fiber—a whispered promise of luxury that speaks to the skin before it touches the soul.",
+        "A gentle verse of light and movement, crafted to grace the skin with a tenderness that lingers long after the moment of touch.",
     },
   
     feel: {
@@ -19,7 +19,7 @@ const silkData = {
       ],
       media: {
         image:
-          "/placeholder.svg?height=600&width=480&text=Close-up of silk draping over skin in soft light",
+          "/silk-draping-naturally.webp?height=600&width=480&text=Close-up of silk draping over skin in soft light",
         alt: "Silk draping naturally",
       },
     },
@@ -32,7 +32,7 @@ const silkData = {
       cards: [
         {
           image:
-            "/placeholder.svg?height=300&width=300&text=Mulberry silkworms on leaves",
+            "/silk-shirts.webp?height=300&width=300&text=Mulberry silkworms on leaves",
           alt: "Mulberry silkworms",
           title: "Grade 6A Mulberry Silk",
           text:
@@ -40,7 +40,7 @@ const silkData = {
         },
         {
           image:
-            "/placeholder.svg?height=300&width=300&text=Silk weaving loom in action",
+            "/22-momme-weight.webp?height=300&width=300&text=Silk weaving loom in action",
           alt: "Silk weaving process",
           title: "22 Momme Weight",
           text:
@@ -48,7 +48,7 @@ const silkData = {
         },
         {
           image:
-            "/placeholder.svg?height=300&width=300&text=Artisan hands finishing silk fabric",
+            "/artisan-finished.webp?height=300&width=300&text=Artisan hands finishing silk fabric",
           alt: "Artisan craftsmanship",
           title: "Artisan Finished",
           text:
@@ -105,7 +105,7 @@ const silkData = {
         "Long-term relationships built on mutual respect",
       ],
       image:
-        "/placeholder.svg?height=600&width=500&text=Silk farm with mulberry trees and traditional buildings",
+        "/ethical-by-design.webp?height=600&width=500&text=Silk farm with mulberry trees and traditional buildings",
       imageAlt: "Sustainable silk farm",
     },
   
@@ -121,28 +121,24 @@ const silkData = {
       steps: [
         {
           step: 1,
-          icon: "droplets",
           title: "Gentle Cleansing",
           description:
             "Hand wash in cool water with silk-specific detergent, or choose professional dry cleaning for best results.",
         },
         {
           step: 2,
-          icon: "thermometer",
           title: "Careful Drying",
           description:
             "Lay flat on a clean towel, away from direct sunlight. Never wring or twist the delicate fibers.",
         },
         {
           step: 3,
-          icon: "shield",
           title: "Proper Storage",
           description:
             "Store in a breathable garment bag, away from direct light. Cedar sachets help maintain freshness.",
         },
         {
           step: 4,
-          icon: "clock",
           title: "Mindful Wearing",
           description:
             "Allow silk to breathe between wears. The natural fibers will maintain their beauty with proper rest.",
