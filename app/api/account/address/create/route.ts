@@ -2,9 +2,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { CUSTOMER_ADD_ADDRESS } from "@/lib/queries/address";
-import { ShopifyAddress, ShopifyUserError } from "@/lib/shopify/types";
+import { ShopifyAddress } from "@/lib/shopify/types/address";
+import { ShopifyUserError } from "@/lib/shopify/types/auth";
 import { shopifyFetch } from "@/lib/shopify";
-
 
 // ------------------------------
 // Mutation Response Type

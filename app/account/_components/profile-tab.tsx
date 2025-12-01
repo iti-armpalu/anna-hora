@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Calendar } from "lucide-react"
-import { ShopifyCustomer } from "@/lib/shopify/types"
+import { ShopifyCustomer } from "@/lib/shopify/types/customer"
 
 
 export function ProfileTab({ customer }: { customer: ShopifyCustomer }) {

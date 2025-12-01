@@ -5,8 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { OrdersTab } from "./orders-tab";
 import { ProfileTab } from "./profile-tab";
 import { AddressesTab } from "./addresses-tab";
-import { ShopifyCustomer } from "@/lib/shopify/types";
-
+import { ShopifyCustomer } from "@/lib/shopify/types/customer";
 
 export default function AccountTabs({ customer }: { customer: ShopifyCustomer }) {
   return (

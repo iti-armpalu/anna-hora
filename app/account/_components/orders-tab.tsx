@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { serializeOrder } from "@/lib/serializers/serializeOrder";
-import { ShopifyCustomer } from "@/lib/shopify/types";
+import { ShopifyCustomer } from "@/lib/shopify/types/customer";
 import Link from "next/link";
 import { OrderCard } from "./order-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

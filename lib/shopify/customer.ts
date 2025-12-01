@@ -2,9 +2,8 @@
 
 import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
-import { CustomerData, ShopifyCustomer } from "@/lib/shopify/types";
+import { CustomerData, ShopifyCustomer } from "./types/customer";
 import { GET_CUSTOMER_QUERY } from "../queries/customer";
-
 
 /**
  * Fetch the authenticated Shopify customer.

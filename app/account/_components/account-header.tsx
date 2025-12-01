@@ -1,7 +1,8 @@
 "use client"
 
-import { ShopifyCustomer } from "@/lib/shopify/types/order";
+
 import LogoutButton from "@/components/header/logout-button";
+import { ShopifyCustomer } from "@/lib/shopify/types/customer";
 
 export default function AccountHeader({ customer }: { customer: ShopifyCustomer }) {
     const name = customer.firstName || "Customer";
