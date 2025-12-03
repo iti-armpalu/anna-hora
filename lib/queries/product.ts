@@ -74,7 +74,8 @@ export const PRODUCTS_QUERY = `
           identifiers: [
             { namespace: "custom", key: "bestseller" },
             { namespace: "custom", key: "limited" },
-            { namespace: "custom", key: "new" }
+            { namespace: "custom", key: "new" },
+            { namespace: "custom", key: "fabric" },
           ]
         ) {
           key
@@ -150,9 +151,10 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
           { namespace: "custom", key: "bestseller" },
           { namespace: "custom", key: "limited" },
           { namespace: "custom", key: "new" },
+          { namespace: "custom", key: "fabric" },
           { namespace: "custom", key: "sensory_description" },
           { namespace: "custom", key: "lifestyle_description" },
-          { namespace: "custom", key: "style_description" }
+          { namespace: "custom", key: "style_description" },
         ]
       ) {
         key

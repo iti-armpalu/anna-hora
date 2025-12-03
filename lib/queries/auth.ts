@@ -11,3 +11,26 @@ export const CUSTOMER_ACCESS_TOKEN_CREATE = `
     }
   }
 `;
+
+export const CUSTOMER_PASSWORD_UPDATE_MUTATION = `
+  mutation customerUpdatePassword(
+    $customerAccessToken: String!
+    $password: String!
+    $passwordConfirm: String!
+  ) {
+    customerUpdatePassword(
+      customerAccessToken: $customerAccessToken
+      password: $password
+      passwordConfirm: $passwordConfirm
+    ) {
+      customerUserErrors {
+        field
+        message
+      }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+    }
+  }
+`;

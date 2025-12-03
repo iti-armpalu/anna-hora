@@ -19,8 +19,8 @@ export type ProductImage = {
   };
   
   export type Metafield = {
-    key: string;
-    value: string;
+    key: string | null;
+    value: string | null;
   };
   
   export type Product = {

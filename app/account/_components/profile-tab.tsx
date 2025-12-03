@@ -9,14 +9,61 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Calendar } from "lucide-react"
 import { ShopifyCustomer } from "@/lib/shopify/types/customer"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner";
 
 
 export function ProfileTab({ customer }: { customer: ShopifyCustomer }) {
+    const router = useRouter();
+
+    // State fields
     const [firstName, setFirstName] = useState(customer.firstName ?? "");
     const [lastName, setLastName] = useState(customer.lastName ?? "");
     const [email, setEmail] = useState(customer.email);
+    const [phone, setPhone] = useState(customer.phone ?? "");
+    const [password, setPassword] = useState("");
+    const [confirm, setConfirm] = useState("");
 
-    const [showPassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false);
+
+    async function handleSave() {
+
+        if (password !== confirm) {
+            toast.error("Passwords do not match", {
+                description: "Please re-enter your password.",
+            });
+            return;
+        }
+
+        setLoading(true);
+
+        const res = await fetch("/api/account/update", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                phone,
+                password,
+                passwordConfirm: confirm,
+            }),
+        });
+
+        const data = await res.json();
+
+        if (data.ok) {
+            router.refresh(); // re-fetch updated customer data
+        } else {
+            console.error("Update errors:", data.errors);
+        }
+
+        setLoading(false);
+
+        toast.success("Profile updated", {
+            description: "Your personal information has been saved.",
+        });
+    }
 
     return (
         <Card className="border-0 shadow-sm bg-white">
@@ -63,13 +110,14 @@ export function ProfileTab({ customer }: { customer: ShopifyCustomer }) {
 
                 <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
-                    {/* <Input
+                    <Input
                         id="phone"
                         type="tel"
-                        value={userProfile.phone}
-                        onChange={(e) => onUpdateProfile({ ...userProfile, phone: e.target.value })}
+                        value={phone}
+                        placeholder="+44 7700 900123"
+                        onChange={(e) => setPhone(e.target.value)}
                         className="border-stone-300"
-                    /> */}
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -134,22 +182,37 @@ export function ProfileTab({ customer }: { customer: ShopifyCustomer }) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="newPassword">New Password</Label>
-                            {/* <Input id="newPassword" type="password" placeholder="Enter new password" className="border-stone-300" /> */}
+                            <Input
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="border-stone-300"
+                                placeholder="••••••••"
+                            />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="confirmPassword">Confirm Password</Label>
-                            {/* <Input
-                                id="confirmPassword"
+                            <Input
+                                id="confirm"
                                 type="password"
-                                placeholder="Confirm new password"
+                                value={confirm}
+                                onChange={(e) => setConfirm(e.target.value)}
                                 className="border-stone-300"
-                            /> */}
+                                placeholder="••••••••"
+                            />
                         </div>
                     </div>
                 </div>
 
                 <div className="flex justify-end">
-                    <Button className="bg-stone-800 hover:bg-stone-700 text-white">Save Changes</Button>
+                    <Button
+                        onClick={handleSave}
+                        disabled={loading}
+                        className="bg-stone-800 hover:bg-stone-700 text-white"
+                    >
+                        {loading ? "Saving..." : "Save Changes"}
+                    </Button>
                 </div>
             </CardContent>
         </Card>

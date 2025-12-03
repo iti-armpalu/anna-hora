@@ -92,6 +92,10 @@ export default function ProductPageClient({ product }: { product: Product }) {
     const images: ProductImage[] =
         product.images?.edges.map((e) => e.node) ?? [];
 
+    const fabric = product.metafields?.find(
+        (mf) => mf.key === "fabric"
+    )?.value;
+
     const sensoryDescription = product.metafields?.find(
         (mf) => mf.key === "sensory_description"
     )?.value;
@@ -118,7 +122,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
                     </div>
 
                     {/* <div className="lg:col-span-2"> */}
-                        <div>
+                    <div>
                         {/* Product Info */}
                         <div className="space-y-8">
                             {/* Product Header */}
@@ -164,14 +168,14 @@ export default function ProductPageClient({ product }: { product: Product }) {
                                         </Button>
                                     ))}
                                 </div>
-                                {!sizes.find((s) => s.variantId === "l")?.inStock && (
+                                {/* {!sizes.find((s) => s.variantId === "l")?.inStock && (
                                     <p className="text-sm text-stone-500">
                                         Size L is currently out of stock.
                                         <Button variant="ghost" size="sm" className="text-stone-600 hover:text-stone-800 p-0 ml-1">
                                             Get notified when available
                                         </Button>
                                     </p>
-                                )}
+                                )} */}
                             </div>
 
                             {/* Quantity & Add to Bag */}

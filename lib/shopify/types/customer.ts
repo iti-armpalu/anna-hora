@@ -9,6 +9,7 @@ export interface ShopifyCustomer {
   firstName: string | null;
   lastName: string | null;
   email: string;
+  phone: string;
 
   defaultAddress: ShopifyAddress | null;
 

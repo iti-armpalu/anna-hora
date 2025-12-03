@@ -22,18 +22,40 @@ export function ProductCard({
     currencyCode: product.priceRange.minVariantPrice.currencyCode,
   })
 
+  const fabric = product.metafields?.find(
+    (mf) => mf.key === "fabric"
+  )?.value;
+
   const BADGE_MAP = {
-    bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
+    // bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
     limited: { label: "Limited", color: "bg-anna-green-900" },
-    new: { label: "New", color: "bg-anna-green-900" },
+    // new: { label: "New", color: "bg-anna-green-900" },
   }
+
+  const sizeOption = product.options?.find(opt => opt.name.toLowerCase() === "size");
+
+  const sizes = sizeOption
+    ? sizeOption.values.map((size) => {
+      const variantForSize = product.variants?.edges.find((v) =>
+        v.node.selectedOptions.some(
+          (opt) => opt.name.toLowerCase() === "size" && opt.value === size
+        )
+      );
+
+      return {
+        size,
+        inStock: variantForSize?.node.availableForSale ?? false,
+        variantId: variantForSize?.node.id,
+      };
+    })
+    : [];
 
   // -------------------------
   // LIST VIEW
   // -------------------------
   if (viewMode === "list") {
     return (
-      <Card className="group cursor-pointer border border-stone-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+      <Card className="group border border-stone-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
           {/* Image */}
           <div className="relative aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
@@ -50,20 +72,34 @@ export function ProductCard({
                 )
               })}
             </div>
+
           </div>
 
           {/* Info */}
-          <CardContent className="p-6 flex flex-col justify-between">
+          <CardContent className="px-6 flex flex-col justify-between">
             <div className="space-y-4">
+              <div className="flex flex-row justify-start items-start gap-2">
+                <p className="text-xs text-stone-500">
+                  {fabric}
+                </p>
+                <p className="text-xs text-stone-500">•</p>
+                {sizes.length > 0 && (
+                  <div className="flex items-center gap-4 flex-wrap">
+                    {sizes.map(({ size, inStock, variantId }) => (
+                      <span key={variantId} className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""}`}>
+                        {size}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
               <div>
                 <h3 className="text-2xl font-light text-stone-800 group-hover:text-stone-600 transition-colors mb-2">
                   {product.title}
                 </h3>
 
                 <p className="text-stone-600 mb-3">{product.description}</p>
-                <p className="text-sm text-stone-500">
-                  Midnight Navy • Mulberry silk
-                </p>
+
               </div>
             </div>
 
@@ -76,13 +112,10 @@ export function ProductCard({
             {/* Actions */}
             <div className="relative flex items-center gap-3 mt-6">
               <WishlistButton product={product} />
-              <Button
-                size="icon"
-                variant="outline"
-                // onClick={handleQuickView}
-                className="border-stone-300 text-stone-600 hover:bg-stone-100 bg-transparent"
-              >
-                <Eye className="w-4 h-4" />
+              <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
+                <Link href={`/product/${product.handle}`} prefetch={false}>
+                  View Details
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -95,9 +128,12 @@ export function ProductCard({
   // GRID VIEW (default)
   // -------------------------
   return (
-    <Card className="flex flex-col h-full group cursor-pointer border-0 shadow-none bg-transparent overflow-hidden gap-0">
+    <Card className="flex flex-col h-full group border-0 shadow-none bg-transparent overflow-hidden gap-0">
       <div className="relative aspect-[3/4] mb-4 overflow-hidden">
-        <WishlistButton product={product} />
+        <div className="absolute top-3 right-3 z-10 ">
+          <WishlistButton product={product} />
+        </div>
+
         <ProductImageCarousel product={product} />
 
         <div className="absolute top-4 left-4 flex flex-wrap gap-2">
@@ -113,23 +149,58 @@ export function ProductCard({
         </div>
       </div>
 
-      <Link href={`/product/${product.handle}`} prefetch={false}>
-        <CardContent className="flex flex-col justify-between flex-1 p-0 mx-4">
-          <div className="space-y-2">
-            <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">
-              {product.title}
-            </h3>
+      {/* <Link href={`/product/${product.handle}`} prefetch={false}> */}
+      <CardContent className="flex flex-col justify-between flex-1 p-0">
+        <div className="space-y-2">
 
-            <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">
-              {product.description}
+          <div className="flex flex-row justify-start items-start gap-2 mt-4">
+            <p className="text-xs text-stone-500">
+              {fabric}
             </p>
-
-            <div className="flex flex-row justify-between items-start mt-4">
-              <p className="text-medium text-stone-800 font-medium">{price}</p>
-            </div>
+            <p className="text-xs text-stone-500">•</p>
+            {sizes.length > 0 && (
+              <div className="flex items-center gap-4 flex-wrap">
+                {sizes.map(({ size, inStock, variantId }) => (
+                  <span key={variantId} className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""}`}>
+                    {size}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
-        </CardContent>
-      </Link>
+
+
+          <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">
+            {product.title}
+          </h3>
+
+          {/* <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">
+              {product.description}
+            </p> */}
+
+          <div className="flex flex-row justify-between items-start mt-4">
+            {/* {sizes.length > 0 && (
+              <div className="flex items-center gap-4 flex-wrap">
+                {sizes.map(({ size, inStock, variantId }) => (
+                  <span key={variantId} className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""}`}>
+                    {size}
+                  </span>
+                ))}
+              </div>
+            )} */}
+            <p className="text-medium text-stone-800 font-medium">{price}</p>
+            <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
+              <Link href={`/product/${product.handle}`} prefetch={false}>
+                View Details
+              </Link>
+            </Button>
+          </div>
+
+
+
+        </div>
+      </CardContent>
+      {/* </Link> */}
     </Card>
   )
 }

@@ -4,6 +4,7 @@ export const GET_CUSTOMER_QUERY = `
             firstName
             lastName
             email
+            phone
 
             orders(first: 20) {
                 edges {
@@ -100,9 +101,11 @@ export const CUSTOMER_CREATE_MUTATION = `
     customerCreate(input: $input) {
       customer {
         id
-        email
         firstName
         lastName
+        email
+        phone
+        
       }
       customerUserErrors {
         field
@@ -123,6 +126,7 @@ export const CUSTOMER_UPDATE_MUTATION = `
         firstName
         lastName
         email
+        phone
       }
       customerUserErrors {
         field
