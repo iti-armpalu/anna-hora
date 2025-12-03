@@ -90,7 +90,8 @@ export const COLLECTION_BY_HANDLE_QUERY = /* GraphQL */ `
             identifiers: [
               { namespace: "custom", key: "bestseller" },
               { namespace: "custom", key: "limited" },
-              { namespace: "custom", key: "new" }
+              { namespace: "custom", key: "new" },
+              { namespace: "custom", key: "fabric" },
             ]
           ) {
             key

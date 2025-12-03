@@ -64,6 +64,10 @@ function FilterSection({ title, options, selected, onChange }: FilterSectionProp
 }
 
 export interface FilterSidebarProps {
+  fabrics: string[];
+  sizes: string[];
+  colors: string[];
+
   selectedFabric: string[];
   setSelectedFabric: (value: string[]) => void;
 
@@ -78,6 +82,9 @@ export interface FilterSidebarProps {
 }
 
 export function FilterSidebar({
+  fabrics,
+  sizes,
+  colors,
   selectedFabric,
   setSelectedFabric,
   selectedSizes,
@@ -93,10 +100,7 @@ export function FilterSidebar({
       {/* FABRIC */}
       <FilterSection
         title="Fabric"
-        options={[
-          { label: "100% Mulberry Silk", value: "silk" },
-          { label: "Silk Blend", value: "blend" },
-        ]}
+        options={fabrics.map((f) => ({ label: f, value: f }))}
         selected={selectedFabric}
         onChange={setSelectedFabric}
       />
@@ -104,12 +108,7 @@ export function FilterSidebar({
       {/* SIZE */}
       <FilterSection
         title="Size"
-        options={[
-          { label: "XS", value: "XS" },
-          { label: "S", value: "S" },
-          { label: "M", value: "M" },
-          { label: "L", value: "L" },
-        ]}
+        options={sizes.map((s) => ({ label: s, value: s }))}
         selected={selectedSizes}
         onChange={setSelectedSizes}
       />
@@ -117,12 +116,7 @@ export function FilterSidebar({
       {/* COLOR */}
       <FilterSection
         title="Color"
-        options={[
-          { label: "Black", value: "black" },
-          { label: "Ivory", value: "ivory" },
-          { label: "Emerald Green", value: "green" },
-          { label: "Champagne", value: "champagne" },
-        ]}
+        options={colors.map((c) => ({ label: c, value: c }))}
         selected={selectedColors}
         onChange={setSelectedColors}
       />

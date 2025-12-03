@@ -217,7 +217,7 @@ export default async function HomePage() {
               // <Link
               //   href={`/product/${product.id}`}
               //   key={product.id}>
-                  <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} />
               // </Link>
             ))}
           </div>

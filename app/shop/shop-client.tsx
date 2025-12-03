@@ -99,30 +99,94 @@ export default function ShopClient({
   // -------------------------------------------------
   // FILTERING (fabric, size, color, price)
   // -------------------------------------------------
+  const filterData = useMemo(() => {
+    const sizeSet = new Set<string>();
+    const colorSet = new Set<string>();
+    const fabricSet = new Set<string>();
+
+    for (const product of products) {
+
+      // ----- SIZE (from variants with availability) -----
+      for (const { node: variant } of product.variants?.edges ?? []) {
+        if (!variant.availableForSale) continue;
+
+        const sizeOpt = variant.selectedOptions?.find(
+          (opt) => opt.name.toLowerCase() === "size"
+        );
+
+        if (sizeOpt?.value) {
+          sizeSet.add(sizeOpt.value);
+        }
+      }
+
+      // ----- SIZE & COLOR from VARIANT OPTIONS -----
+      for (const opt of product.options ?? []) {
+        const name = opt.name.toLowerCase();
+
+        // if (name === "size") {
+        //   opt.values.forEach((v) => sizeSet.add(v));
+        // }
+
+        if (name === "color") {
+          opt.values.forEach((v) => colorSet.add(v));
+        }
+      }
+
+      // ----- FABRIC from METAFIELD -----
+      const fabricField = product.metafields?.find(
+        (mf) => mf.key === "fabric"
+      );
+
+      if (fabricField?.value) {
+        fabricSet.add(fabricField.value);
+      }
+    }
+
+    return {
+      sizes: Array.from(sizeSet),
+      colors: Array.from(colorSet),
+      fabrics: Array.from(fabricSet),
+    };
+  }, [products]);
+
+
   const filteredProducts = useMemo(() => {
     let arr = [...products];
 
     // FABRIC — multi-select
+    // FABRIC — now from METAFIELD
     if (fabric.length > 0) {
-      arr = arr.filter((p) =>
-        p.options?.some(
-          (opt) =>
-            opt.name.toLowerCase() === "fabric" &&
-            opt.values.some((value) => fabric.includes(value))
-        )
-      );
+      arr = arr.filter((p) => {
+        const m = p.metafields?.find(
+          (mf) => mf.key === "fabric"
+        );
+
+        if (!m?.value) return false;
+
+        // If your metafield is a single value (string)
+        return fabric.includes(m.value);
+
+        // If you might store multiple comma-separated values:
+        // return m.value.split(",").some((v) => fabric.includes(v.trim()));
+      });
     }
 
 
+
     // SIZES — multi-select
+    // SIZE FILTER — WITH availability
     if (sizes.length > 0) {
-      arr = arr.filter((p) =>
-        p.options?.some(
-          (opt) =>
-            opt.name.toLowerCase() === "size" &&
-            opt.values.some((value) => sizes.includes(value))
-        )
-      );
+      arr = arr.filter((product) => {
+        return product.variants?.edges.some(({ node: variant }) => {
+          if (!variant.availableForSale) return false;
+
+          const sizeOpt = variant.selectedOptions?.find(
+            (opt) => opt.name.toLowerCase() === "size"
+          );
+
+          return sizeOpt && sizes.includes(sizeOpt.value);
+        });
+      });
     }
 
     // COLOR — multi-select
@@ -148,6 +212,9 @@ export default function ShopClient({
 
     return arr;
   }, [products, fabric, sizes, colors, priceRange]);
+
+
+
 
   // -------------------------------------------------
   // Sorting
@@ -233,6 +300,9 @@ export default function ShopClient({
           {/* LEFT SIDEBAR */}
           <aside className="hidden lg:block">
             <FilterSidebar
+              fabrics={filterData.fabrics}
+              sizes={filterData.sizes}
+              colors={filterData.colors}
               selectedFabric={fabric}
               setSelectedFabric={setFabric}
               selectedSizes={sizes}
