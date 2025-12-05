@@ -1,9 +1,9 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Product } from "@/lib/shopify/types/product"
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 
 interface ProductDetailsAccordionProps {
-  product: Product
+  product: ProductNormalized
 }
 
 export function ProductDetailsAccordion({ product }: ProductDetailsAccordionProps) {

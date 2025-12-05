@@ -5,9 +5,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { OrdersTab } from "./orders-tab";
 import { ProfileTab } from "./profile-tab";
 import { AddressesTab } from "./addresses-tab";
-import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { Customer } from "@/lib/shopify/types/customer-normalized";
 
-export default function AccountTabs({ customer }: { customer: ShopifyCustomer }) {
+export default function AccountTabs({ customer }: { customer: Customer }) {
   return (
     <Tabs defaultValue="orders" className="mt-8">
 
@@ -50,7 +50,7 @@ export default function AccountTabs({ customer }: { customer: ShopifyCustomer })
 **/
 
 
-function SettingsTab({ customer }: { customer: ShopifyCustomer }) {
+function SettingsTab({ customer }: { customer: Customer }) {
   return (
     <div>
       <p className="mb-2 font-medium">Settings</p>

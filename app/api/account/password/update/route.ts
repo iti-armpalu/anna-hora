@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import { ShopifyAccessToken, ShopifyUserError } from "@/lib/shopify/types/auth";
-import { CUSTOMER_PASSWORD_UPDATE_MUTATION } from "@/lib/queries/auth";
+import { CUSTOMER_PASSWORD_UPDATE_MUTATION } from "@/lib/shopify/queries/auth";
 
 
 interface PasswordUpdateData {

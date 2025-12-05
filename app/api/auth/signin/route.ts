@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import type { TokenCreateData } from "@/lib/shopify/types/auth";
-import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/queries/auth";
+import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/shopify/queries/auth";
 
 // -------------------------------------
 // Zod schema

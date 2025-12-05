@@ -4,51 +4,55 @@ import { Card, CardContent } from "@/components/ui/card"
 import { WishlistButton } from "../wishlist-button"
 import ProductImageCarousel from "../product-image-carousel"
 import { Badge } from "../ui/badge"
-import { Product } from "@/lib/shopify/types/product"
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { formatPrice } from "@/hooks/use-price"
 import { Button } from "../ui/button"
-import { Eye } from "lucide-react"
 import Link from "next/link"
+
 
 export function ProductCard({
   product,
   viewMode = "grid",
 }: {
-  product: Product
+  product: ProductNormalized;
   viewMode?: "grid" | "list"
 }) {
   const price = formatPrice({
-    amount: product.priceRange.minVariantPrice.amount,
-    currencyCode: product.priceRange.minVariantPrice.currencyCode,
-  })
+    amount: product.minPrice,
+    currencyCode: product.currencyCode,
+  });
 
-  const fabric = product.metafields?.find(
-    (mf) => mf.key === "fabric"
-  )?.value;
+  const fabric = product.metafields.fabric;
 
-  const BADGE_MAP = {
-    // bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
-    limited: { label: "Limited", color: "bg-anna-green-900" },
-    // new: { label: "New", color: "bg-anna-green-900" },
-  }
+  // const BADGE_MAP = {
+  //   // bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
+  //   limited: { label: "Limited", color: "bg-anna-green-900" },
+  //   // new: { label: "New", color: "bg-anna-green-900" },
+  // } as const;
 
-  const sizeOption = product.options?.find(opt => opt.name.toLowerCase() === "size");
+
+  // Find the "size" option (normalized)
+  const sizeOption = product.options.find(
+    (opt) => opt.name.toLowerCase() === "size"
+  );
 
   const sizes = sizeOption
     ? sizeOption.values.map((size) => {
-      const variantForSize = product.variants?.edges.find((v) =>
-        v.node.selectedOptions.some(
+      // Find the variant that has this size & is available
+      const variantForSize = product.variants.find((variant) =>
+        variant.selectedOptions.some(
           (opt) => opt.name.toLowerCase() === "size" && opt.value === size
         )
       );
 
       return {
         size,
-        inStock: variantForSize?.node.availableForSale ?? false,
-        variantId: variantForSize?.node.id,
+        inStock: variantForSize?.availableForSale ?? false,
+        variantId: variantForSize?.id ?? null,
       };
     })
     : [];
+
 
   // -------------------------
   // LIST VIEW
@@ -61,17 +65,18 @@ export function ProductCard({
           <div className="relative aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
             <ProductImageCarousel product={product} />
 
-            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-              {product.metafields?.map((mf) => {
-                const badge = BADGE_MAP[mf.key as keyof typeof BADGE_MAP]
-                if (!badge || mf.value !== "true") return null
-                return (
-                  <Badge key={mf.key} className={`${badge.color} text-white`}>
-                    {badge.label}
-                  </Badge>
-                )
-              })}
-            </div>
+            {/* <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+              {(Object.keys(BADGE_MAP) as BadgeKey[])
+                .filter((key) => product.metafields[key] === true)
+                .map((key) => {
+                  const badge = BADGE_MAP[key];
+                  return (
+                    <Badge key={key} className={`${badge.color} text-white`}>
+                      {badge.label}
+                    </Badge>
+                  );
+                })}
+            </div> */}
 
           </div>
 
@@ -136,7 +141,7 @@ export function ProductCard({
 
         <ProductImageCarousel product={product} />
 
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+        {/* <div className="absolute top-4 left-4 flex flex-wrap gap-2">
           {product.metafields?.map((mf) => {
             const badge = BADGE_MAP[mf.key as keyof typeof BADGE_MAP]
             if (!badge || mf.value !== "true") return null
@@ -146,7 +151,7 @@ export function ProductCard({
               </Badge>
             )
           })}
-        </div>
+        </div> */}
       </div>
 
       {/* <Link href={`/product/${product.handle}`} prefetch={false}> */}

@@ -11,7 +11,7 @@ import { ProductCard } from "@/components/shop/product-card"
 export default async function HomePage() {
 
   const featuredCollection = await getCollectionByHandle("Featured");
-  const featuredProducts = featuredCollection?.products?.nodes ?? [];
+  const featuredProducts = featuredCollection?.products ?? [];
 
   return (
     <div>
@@ -37,8 +37,7 @@ export default async function HomePage() {
           </h2>
 
           <p className="text-lg md:text-xl text-stone-400 mb-8 max-w-2xl font-light text-left">
-            Discover our collection of premium silk loungewear, crafted for those who understand that true luxury lies
-            in the quiet moments of self-care.
+            Not just silk. A ritual. A feeling. A way to come home to yourself..
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-start">
@@ -51,7 +50,7 @@ export default async function HomePage() {
               size="lg"
               className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
             >
-              <Link href="/about">About ANNA</Link>
+              <Link href="/about">About ANNA HORA</Link>
             </Button>
           </div>
         </div>
@@ -65,9 +64,9 @@ export default async function HomePage() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Curated for <em className="font-serif italic">Uncomplicated Happiness</em></h3>
+            <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Designed for <em className="font-serif italic">Moments That Are Yours Alone</em></h3>
             <p className="text-stone-600 max-w-2xl mx-auto">
-              Each piece is thoughtfully designed to elevate your most intimate moments, a dialogue between texture, form, and feeling.
+              Velvet, silk, and effortless sets — each made to move with you. Comfortable, confident, and always intentional.
             </p>
           </div>
 
@@ -81,10 +80,10 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h4 className="text-2xl font-light mb-2">Indulgent Velvet</h4>
-                  <p className="text-sm opacity-90">Soft depth, warm touch. Sumptuous textures for unhurried evenings</p>
-                  <div className="flex justify-start mt-8">
+                <div className="absolute bottom-6 left-6 mr-6 text-white">
+                  <h4 className="text-2xl font-light mb-2">Velvet, Rewritten</h4>
+                  <p className="text-sm opacity-90">Plush. Confident. Unrushed. Our signature velvet brings softness with weight — made for nights in, slow mornings, and everything in between.</p>
+                  <div className="flex justify-start mt-4">
                     <Button
                       asChild
                       className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
@@ -105,10 +104,10 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                <div className="absolute bottom-6 left-6 text-white">
+                <div className="absolute bottom-6 left-6 mr-6 text-white">
                   <h4 className="text-2xl font-light mb-2">Pure Silk Moments</h4>
-                  <p className="text-sm opacity-90">Light, fluid, and timeless. Breathable luxury crafted from the finest mulberry silk.</p>
-                  <div className="flex justify-start mt-8">
+                  <p className="text-sm opacity-90">Light, breathable, and quietly powerful — each piece is crafted from 100% mulberry silk. Designed to feel effortless, look elevated, and last for years.</p>
+                  <div className="flex justify-start mt-4">
                     <Button
                       asChild
                       className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
@@ -129,10 +128,10 @@ export default async function HomePage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h4 className="text-2xl font-light mb-2">Effortless Pairings</h4>
-                  <p className="text-sm opacity-90">Wear them together or apart. Separate pieces designed to move in harmony.</p>
-                  <div className="flex justify-start mt-8">
+                <div className="absolute bottom-6 left-6 mr-6 text-white">
+                  <h4 className="text-2xl font-light mb-2">Put Together, without the Effort</h4>
+                  <p className="text-sm opacity-90">Designed in pairs. Worn your way. Our silk sets are made to flow together — or stand strong apart. Always easy. Always elevated.</p>
+                  <div className="flex justify-start mt-4">
                     <Button
                       asChild
                       className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
@@ -175,14 +174,15 @@ export default async function HomePage() {
               </p> */
               }
               <p className="text-stone-600 leading-relaxed">
-                Our silk reflects everything ANNA HORA stands for: timeless elegance, integrity,
-                and a devotion to quality that can be felt in every detail. We work with skilled artisans who honour time-honoured techniques, transforming this natural wonder into pieces that embody refinement and ease.
+                Our silk reflects everything ANNA HORA stands for — quiet luxury, integrity, and thoughtful design.
+                It’s chosen with care, crafted with intention, and worn with ease. We only partner with skilled artisans
+                who honour tradition while designing for those who value beauty with purpose.
               </p>
               <p className="text-stone-600 leading-relaxed">
-                It took us 18 months to find the silk we truly believed in, one that met our standards for beauty,
-                comfort, and sustainability. The result is a fabric that feels effortlessly luxurious against the skin,
-                created for moments of calm, confidence, and uncomplicated happiness, a quiet expression of the ANNA HORA
-                way of living.
+                It took 18 months to find a silk that felt right — not just to the touch, but in principle. It had to meet
+                our standards for comfort, quality, and consciousness. The result? A fabric that moves like water, wears like
+                second skin, and elevates the everyday. It’s silk that speaks to confidence, calm, and the freedom
+                to feel — the ANNA HORA way of living.
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div>
@@ -214,11 +214,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
-              // <Link
-              //   href={`/product/${product.id}`}
-              //   key={product.id}>
               <ProductCard key={product.id} product={product} />
-              // </Link>
             ))}
           </div>
 
@@ -243,7 +239,10 @@ export default async function HomePage() {
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Thoughtful Gifting</h3>
             <p className="text-stone-600 max-w-2xl mx-auto">
-              A gesture of grace and intention. Each ANNA HORA piece is beautifully presented, crafted to bring a sense of calm, warmth, and quiet joy to the moments that matter most.
+              Because the best gifts feel personal.
+            </p>
+            <p className="text-stone-600 max-w-2xl mx-auto">
+              Each piece is carefully wrapped and ready to honour her rituals, her milestones, or simply, Her.
             </p>
           </div>
 
@@ -260,7 +259,7 @@ export default async function HomePage() {
               <CardContent className="p-6">
                 <h4 className="text-xl font-light text-stone-800 mb-2">Gift Cards</h4>
                 <p className="text-stone-600 mb-4">
-                  Let them choose their perfect piece. Our digital gift cards arrive instantly and never expire, making them the perfect last-minute gift.
+                  Instant. Effortless. Always right. The easiest way to gift her something she’ll love — in her own time, in her own style.
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-medium text-stone-800">From $50</span>
@@ -295,8 +294,7 @@ export default async function HomePage() {
                   </Badge>
                 </div>
                 <p className="text-stone-600 mb-4">
-                  Every gift is wrapped in our signature packaging with a handwritten note, making each delivery a
-                  moment to treasure.
+                  Every order arrives in our signature packaging, complete with a handwritten note— because the unboxing should feel as special as what’s inside.
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-medium text-stone-800">Always Included</span>

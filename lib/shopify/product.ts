@@ -1,67 +1,80 @@
-// lib/shopify/product.ts
+"use server";
+
 import { cookies } from "next/headers";
-import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/queries/product";
-import type { Product } from "@/lib/shopify/types/product";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
-export type ProductsResponse = {
-  products: Product[];
-  pageInfo: {
-    hasNextPage: boolean;
-    endCursor: string | null;
+import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/shopify/queries/product";
+import type { Product } from "@/lib/shopify/types/product";
+import { ProductNormalized } from "./types/product-normalized";
+import { normalizeProduct, normalizeProducts } from "../normalizers/product";
+
+// Response shape Shopify returns
+interface ShopifyProductsQueryResponse {
+  products: {
+    nodes: Product[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string | null;
+    };
   };
-};
+}
 
 // --------------------------------------------------
 // Fetch MULTIPLE products
 // --------------------------------------------------
+export interface GetProductsOptions {
+  first?: number;
+  after?: string | null;
+}
+
+export interface GetProductsResult {
+  products: ProductNormalized[];
+  pageInfo: {
+    hasNextPage: boolean;
+    endCursor: string | null;
+  };
+}
+
 export async function getProducts(
   first: number = 12,
-  after?: string
-): Promise<{
-  products: Product[];
-  pageInfo: { hasNextPage: boolean; endCursor: string | null };
-}> {
+  after?: null
+): Promise<GetProductsResult> {
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "GB";
 
-  const res = await shopifyFetch<{
-    products: {
-      nodes: Product[];
-      pageInfo: {
-        hasNextPage: boolean;
-        endCursor: string | null;
-      };
-    };
-  }>({
+  const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
     variables: { first, after, country },
   });
 
   return {
-    products: res.products.nodes,
+    products: normalizeProducts(res.products.nodes),
     pageInfo: res.products.pageInfo,
   };
 }
 
 
 
-
 // --------------------------------------------------
 // Fetch SINGLE product by handle
 // --------------------------------------------------
-export async function getProductByHandle(handle: string): Promise<Product | null> {
+interface ShopifyProductQueryResponse {
+  product: Product | null;
+}
+
+export async function getProductByHandle(handle: string): Promise<ProductNormalized | null> {
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "GB";
 
-  const res = await shopifyFetch<{
-    product: Product | null;
-  }>({
+  const res = await shopifyFetch<ShopifyProductQueryResponse>({
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle, country },
   });
 
-  return res.product ?? null;
+
+  if (!res.product) return null;
+
+  return normalizeProduct(res.product);
 }
 
 

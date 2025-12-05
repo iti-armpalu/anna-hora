@@ -5,10 +5,10 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import useEmblaCarousel from "embla-carousel-react"
-import { Product } from "@/lib/shopify/types/product"
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 
 type ProductImageCarouselProps = {
-    product: Product;
+    product: ProductNormalized;
 };
 
 export default function ProductImageCarousel({ product }: ProductImageCarouselProps) {
@@ -16,9 +16,10 @@ export default function ProductImageCarousel({ product }: ProductImageCarouselPr
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
     const [currentIndex, setCurrentIndex] = useState(0)
 
-    const images = product.images?.edges.map((e) => e.node) ?? [
-        { url: "/placeholder.svg", altText: "Placeholder" },
-    ];
+    const images =
+        product.images.length > 0
+            ? product.images
+            : [{ url: "/placeholder.svg", altText: "Placeholder" }];
 
     const scrollPrev = useCallback(
         (e: React.MouseEvent) => {

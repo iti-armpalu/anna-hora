@@ -34,6 +34,7 @@ export type ProductImage = {
     variants: { edges: { node: ProductVariant }[] };
     priceRange: {
       minVariantPrice: { amount: string; currencyCode: string };
+      maxVariantPrice: { amount: string; currencyCode: string };
     };
     metafields?: Metafield[];
   };

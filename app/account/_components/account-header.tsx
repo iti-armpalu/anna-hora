@@ -2,9 +2,10 @@
 
 
 import LogoutButton from "@/components/header/logout-button";
-import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { Customer } from "@/lib/shopify/types/customer-normalized";
 
-export default function AccountHeader({ customer }: { customer: ShopifyCustomer }) {
+
+export default function AccountHeader({ customer }: { customer: Customer }) {
     const name = customer.firstName || "Customer";
 
     return (
@@ -15,7 +16,7 @@ export default function AccountHeader({ customer }: { customer: ShopifyCustomer 
                 </h2>
                 <p className="text-stone-600">Manage your account and track your orders</p>
             </div>
-           <LogoutButton />
+            <LogoutButton />
         </div>
     )
 }

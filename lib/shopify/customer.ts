@@ -2,27 +2,31 @@
 
 import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
-import { CustomerData, ShopifyCustomer } from "./types/customer";
-import { GET_CUSTOMER_QUERY } from "../queries/customer";
 
-/**
- * Fetch the authenticated Shopify customer.
- * Returns `ShopifyCustomer | null`.
- */
-export async function getCustomer(): Promise<ShopifyCustomer | null> {
+import type { ShopifyCustomer, CustomerData } from "@/lib/shopify/types/customer";
+import type { Customer } from "@/lib/shopify/types/customer-normalized";
+
+import { GET_CUSTOMER_QUERY } from "@/lib/shopify/queries/customer";
+import { normalizeCustomer } from "../normalizers/customer";
+
+export async function getCustomer(): Promise<Customer | null> {
   const cookieStore = await cookies();
-  const token = cookieStore.get("customerAccessToken")?.value;
+  const accessToken = cookieStore.get("customerAccessToken")?.value;
 
-  if (!token) return null;
+  console.log("[getCustomer] token =", accessToken);
 
-  // shopifyFetch returns ONLY the inner "data" object
+  if (!accessToken) return null;
+
+  console.log("[getCustomer] Fetching customer...");
+
   const res = await shopifyFetch<CustomerData>({
     query: GET_CUSTOMER_QUERY,
-    variables: { token },
+    variables: { customerAccessToken: accessToken },
   });
 
-  // Shopify returns `customer: null` if token is invalid / expired
-  if (!res.customer) return null;
+  const raw: ShopifyCustomer | null = res.customer;
 
-  return res.customer;
+  if (!raw) return null; // token expired or invalid
+
+  return normalizeCustomer(raw, accessToken);
 }

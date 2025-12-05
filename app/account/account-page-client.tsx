@@ -1,6 +1,6 @@
 "use client";
 
-import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { Customer } from "@/lib/shopify/types/customer-normalized";
 import AccountHeader from "./_components/account-header";
 import AccountTabs from "./_components/account-tabs";
 
@@ -8,7 +8,7 @@ import AccountTabs from "./_components/account-tabs";
 export default function AccountClientPage({
   customer,
 }: {
-  customer: ShopifyCustomer;
+  customer: Customer;
 }) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">

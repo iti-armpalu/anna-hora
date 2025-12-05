@@ -8,8 +8,8 @@ import { shopifyFetch } from "@/lib/shopify/fetch";
 import type { ShopifyUserError } from "@/lib/shopify/types/auth";
 import type { ShopifyCustomer } from "@/lib/shopify/types/customer";
 import type { TokenCreateData } from "@/lib/shopify/types/auth";
-import { CUSTOMER_CREATE_MUTATION } from "@/lib/queries/customer";
-import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/queries/auth";
+import { CUSTOMER_CREATE_MUTATION } from "@/lib/shopify/queries/customer";
+import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/shopify/queries/auth";
 
 // -------------------------------------
 // Zod schema for request body

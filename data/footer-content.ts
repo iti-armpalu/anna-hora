@@ -6,7 +6,7 @@ export const footerContent = {
   brand: {
     name: "ANNA HORA",
     description:
-      "Crafting moments of quiet luxury through the finest silk loungewear, designed for those who understand that true elegance is found in simplicity.",
+      "Crafted with care. Worn with intention. Thank you for being here — for choosing slower moments, thoughtful design, and pieces that feel as good as they look. We're honoured to be part of your ritual.",
   },
   navigation: {
     shop: [

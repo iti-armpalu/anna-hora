@@ -2,20 +2,21 @@
 
 import { Heart } from "lucide-react";
 import { useWishlist } from "@/context/wishlist-context";
-import type { Product } from "@/lib/shopify/types/product";
 import { Button } from "./ui/button";
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 
 type WishlistButtonProps = {
-  product: Product;
+  product: ProductNormalized;
 };
 
-function getPrimaryImage(product: Product): string {
+function getPrimaryImage(product: ProductNormalized): string {
   return (
     product.featuredImage?.url ??
-    product.images?.edges?.[0]?.node.url ??
+    product.images[0]?.url ??
     "/placeholder.svg"
   );
 }
+
 
 export function WishlistButton({ product }: WishlistButtonProps) {
   const { isInWishlist, add, remove } = useWishlist();
@@ -31,14 +32,12 @@ export function WishlistButton({ product }: WishlistButtonProps) {
     if (active) {
       remove(wishlistId);
     } else {
-      const priceInfo = product.priceRange.minVariantPrice;
-
       add({
         id: wishlistId,
         title: product.title,
-        price: priceInfo.amount,
-        currencyCode: priceInfo.currencyCode,
-        image: getPrimaryImage(product),
+        price: product.minPrice,           // normalized
+        currencyCode: product.currencyCode, // normalized
+        image: getPrimaryImage(product), 
         size: undefined,
       });
     }

@@ -3,13 +3,14 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { X, Gift, Plus, Minus } from "lucide-react"
+import { X, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { useCart } from "@/context/cart-context"
 import { useEffect } from "react"
 import { formatPrice } from "@/hooks/use-price"
+import { QuantitySelector } from "../quantity-selector"
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -17,7 +18,7 @@ interface CartDrawerProps {
 }
 
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
-  const { cart, updateQuantity, removeFromCart, loading } = useCart();
+  const { cart, removeFromCart, loading } = useCart();
 
   const FREE_SHIPPING_THRESHOLD = 200;
 
@@ -29,12 +30,9 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const needsForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
 
 
-
-
-  console.log("CartDrawer cart:", cart);
-
   useEffect(() => {
-    console.log("🔄 Cart updated:", cart);
+    console.log("CartDrawer cart:", cart);
+    console.log("Cart updated:", cart);
   }, [cart]);
 
   return (
@@ -116,37 +114,15 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <p className="text-xs text-stone-600 mb-2">
                         {line.size} - Test
                       </p>
-
-                      {/* {item.stock <= 3 && (
-                        <p className="text-xs text-amber-600 mb-2">Only {item.stock} left in stock</p>
-                      )} */}
-
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center border border-stone-300 rounded-md">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 rounded-none"
-                            // onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                          // disabled={item.quantity <= 1}
-                          >
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">
-                            {line.quantity}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 rounded-none"
-                            // onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                          // disabled={item.quantity >= item.stock}
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
-                        </div>
+
+                        <QuantitySelector
+                          value={line.quantity}
+                          lineId={line.id}          // enables cart context mode
+                          variant="compact"
+                          loading={loading}         // from CartContext
+                        />
+
 
                         <span className="font-medium text-stone-800">{formattedLineTotal}</span>
                       </div>

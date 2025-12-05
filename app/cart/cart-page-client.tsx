@@ -9,10 +9,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { X, Minus, Plus, ShoppingBag, Gift } from "lucide-react";
+import { X, ShoppingBag, Gift } from "lucide-react";
+import { QuantitySelector } from "@/components/quantity-selector";
 
 export default function CartPageClient() {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart, removeFromCart, loading } = useCart();
 
   const FREE_SHIPPING_THRESHOLD = 200; // TEMP — can be dynamic later
 
@@ -131,35 +132,12 @@ export default function CartPageClient() {
                           {/* Quantity + Price */}
                           <div className="flex items-center justify-between mt-4">
 
-                            {/* Quantity */}
-                            <div className="flex items-center border border-stone-300 rounded-md">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-10 w-10 rounded-none"
-                                onClick={() =>
-                                  updateQuantity(line.id, line.quantity - 1)
-                                }
-                                disabled={line.quantity <= 1}
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-
-                              <span className="px-4 py-2 text-sm font-medium min-w-[3rem] text-center">
-                                {line.quantity}
-                              </span>
-
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-10 w-10 rounded-none"
-                                onClick={() =>
-                                  updateQuantity(line.id, line.quantity + 1)
-                                }
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
+                            <QuantitySelector
+                              value={line.quantity}
+                              lineId={line.id}
+                              variant="large"
+                              loading={loading}
+                            />
 
                             {/* Line Price */}
                             <span className="font-medium text-xl text-stone-800">

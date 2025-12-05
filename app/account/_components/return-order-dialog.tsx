@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -15,18 +16,18 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 import Image from "next/image"
-import { OrderItemProps } from "@/lib/serializers/order"
+import { Order } from "@/lib/normalizers/order"
 
 interface ReturnOrderDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    items: OrderItemProps[];
+    order: Order;
 }
 
 export default function ReturnOrderDialog({
     open,
     onOpenChange,
-    items,
+    order,
 }: ReturnOrderDialogProps) {
     const [selectedItems, setSelectedItems] = useState<number[]>([])
     const [returnReason, setReturnReason] = useState("")
@@ -72,9 +73,9 @@ export default function ReturnOrderDialog({
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className="font-serif text-2xl text-stone-800">Initiate Return</DialogTitle>
-                    {/* <DialogDescription className="text-stone-600">
+                    <DialogDescription className="text-stone-600">
                         Order {order.id} - Select items to return and provide details
-                    </DialogDescription> */}
+                    </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-6 py-4">
@@ -82,7 +83,7 @@ export default function ReturnOrderDialog({
                     <div className="space-y-3">
                         <Label className="text-base font-medium text-stone-800">Select items to return</Label>
                         <div className="space-y-3">
-                            {items.map((item, index) => (
+                            {order.items.map((item, index) => (
                                 <div
                                     key={index}
                                     className="flex items-start gap-4 p-3 border border-stone-200 rounded-lg hover:bg-stone-50 transition-colors"

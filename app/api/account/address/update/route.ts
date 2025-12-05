@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import { ShopifyAddress } from "@/lib/shopify/types/address";
 import type { ShopifyUserError } from "@/lib/shopify/types/auth";
-import { CUSTOMER_UPDATE_ADDRESS } from "@/lib/queries/address";
+import { CUSTOMER_UPDATE_ADDRESS } from "@/lib/shopify/queries/address";
 
 
 // ----------------------------------------

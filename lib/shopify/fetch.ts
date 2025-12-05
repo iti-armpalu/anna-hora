@@ -1,5 +1,5 @@
 import { shopifyClient } from "./client";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 interface ShopifyFetchParams {
   query: string;
@@ -21,12 +21,16 @@ export async function shopifyFetch<TData = unknown>({
   });
 
   // console.log("ShopifyFetch → Raw Response:", res);
+  // console.log("[SHOPIFY FETCH] Query:", query.slice(0, 200) + "...");
+  // console.log("[SHOPIFY FETCH] Variables:", variables);
+  // console.log("[SHOPIFY FETCH] Headers:", headers);
+
 
   if (res.errors) {
     console.error("[Shopify errors]", res.errors);
     throw new Error(
       "Shopify Storefront API error: " +
-        JSON.stringify(res.errors, null, 2)
+      JSON.stringify(res.errors, null, 2)
     );
   }
 

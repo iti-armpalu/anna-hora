@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
-import { CUSTOMER_UPDATE_MUTATION } from "@/lib/queries/customer";
+import { CUSTOMER_UPDATE_MUTATION } from "@/lib/shopify/queries/customer";
 import type { ShopifyUserError, ShopifyCustomer } from "@/lib/shopify/types";
 
 

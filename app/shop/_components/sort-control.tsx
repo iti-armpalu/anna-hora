@@ -10,7 +10,7 @@ type Props = {
 export function SortControl({ value, onChange }: Props) {
   return (
     <Select value={value} onValueChange={v => onChange(v as Props["value"])}>
-      <SelectTrigger className="w-40 border-stone-300">
+      <SelectTrigger className="w-45 border-stone-300">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>

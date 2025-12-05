@@ -8,12 +8,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Calendar } from "lucide-react"
-import { ShopifyCustomer } from "@/lib/shopify/types/customer"
+
 import { useRouter } from "next/navigation"
 import { toast } from "sonner";
+import { Customer } from "@/lib/shopify/types/customer-normalized"
 
 
-export function ProfileTab({ customer }: { customer: ShopifyCustomer }) {
+export function ProfileTab({ customer }: { customer: Customer }) {
     const router = useRouter();
 
     // State fields

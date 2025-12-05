@@ -6,9 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Package } from "lucide-react";
 import ReturnOrderDialog from "./return-order-dialog";
-import { OrderCardProps } from "@/lib/serializers/order";
+import { Order } from "@/lib/normalizers/order";
 
-export function OrderCard({ order }: { order: OrderCardProps }) {
+export function OrderCard({ order }: { order: Order }) {
     const [returnDialogOpen, setReturnDialogOpen] = useState(false)
 
     return (
@@ -33,8 +33,8 @@ export function OrderCard({ order }: { order: OrderCardProps }) {
                 </div>
 
                 <div className="space-y-3">
-                    {order.items.map((item) => (
-                        <div key={item.id} className="flex gap-4">
+                    {order.items.map((item, index) => (
+                        <div key={index} className="flex gap-4">
                             <div className="relative w-16 h-20 flex-shrink-0 overflow-hidden rounded-md">
                                 <Image src={item.imageUrl || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
                             </div>
@@ -75,7 +75,7 @@ export function OrderCard({ order }: { order: OrderCardProps }) {
             <ReturnOrderDialog
                 open={returnDialogOpen}
                 onOpenChange={setReturnDialogOpen}
-                items={order.items}
+                order={order}
             />
         </>
     );

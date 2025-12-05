@@ -84,10 +84,12 @@ export default function AsSeenIn() {
         <section className="py-16 lg:py-24 bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-8 md:mb-12">
-                    <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">As Featured In</h2>
-                    <p className="text-stone-600 max-w-2xl mx-auto">
-                        ANNA HORA has been featured in leading publications celebrating craftsmanship, timeless design, and the art
-                        of quiet living.
+                    <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">As Featured In vs As Seen In</h2>
+                    <p className="text-stone-600 max-w-4xl mx-auto">
+                        ANNA HORA has been recognised by leading fashion and lifestyle publications for its quiet approach
+                        to luxury, its dedication to thoughtful design, and its celebration of self-expression through craft.
+                        From silk loungewear to lifestyle rituals — our story continues to resonate. And we’re so grateful you’re
+                        part of that journey.
                     </p>
                 </div>
 
@@ -133,8 +135,6 @@ export default function AsSeenIn() {
                                     key={index}
                                     className="flex-shrink-0 px-4 md:px-6"
                                     style={{ width: `${100 / visibleCount}%` }}
-                                    // onMouseEnter={() => setHoveredIndex(index)}
-                                    // onMouseLeave={() => setHoveredIndex(null)}
                                 >
                                     <a href={publication.url} target="_blank" rel="noopener noreferrer" className="block group">
                                         <div className="flex flex-col items-center justify-center min-h-[120px] md:min-h-[140px] px-4 py-4 rounded-lg transition-colors duration-300 hover:bg-muted/30">

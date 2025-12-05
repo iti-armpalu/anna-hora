@@ -5,7 +5,7 @@ import { shopifyFetch } from "@/lib/shopify/fetch";
 import { GraphQLResponse } from "@/lib/shopify/types/graphql";
 import { ShopifyAddress } from "@/lib/shopify/types/address";
 import { ShopifyUserError } from "@/lib/shopify/types/auth";
-import { CUSTOMER_SET_DEFAULT_ADDRESS } from "@/lib/queries/address";
+import { CUSTOMER_SET_DEFAULT_ADDRESS } from "@/lib/shopify/queries/address";
 
 
 

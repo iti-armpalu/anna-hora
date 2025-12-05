@@ -1,5 +1,3 @@
-// /app/(store)/shop/page.tsx
-
 import { getCollections, getProducts } from "@/lib/shopify";
 import ShopClient from "./shop-client";
 

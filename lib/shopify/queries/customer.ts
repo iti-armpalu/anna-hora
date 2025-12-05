@@ -1,6 +1,6 @@
 export const GET_CUSTOMER_QUERY = `
-    query getCustomerData($token: String!) {
-        customer(customerAccessToken: $token) {
+    query getCustomerData($customerAccessToken: String!) {
+        customer(customerAccessToken: $customerAccessToken) {
             firstName
             lastName
             email

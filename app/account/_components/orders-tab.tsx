@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { serializeOrder } from "@/lib/serializers/serializeOrder";
-import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { Customer } from "@/lib/shopify/types/customer-normalized";
 import Link from "next/link";
 import { OrderCard } from "./order-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 
-export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
-  const orders = customer.orders.edges;
+
+export function OrdersTab({ customer }: { customer: Customer }) {
+  const orders = [...customer.orders].sort(
+    (a, b) =>
+      new Date(b.processedAt).getTime() - new Date(a.processedAt).getTime()
+  );
 
   if (orders.length === 0) {
     return (
@@ -25,17 +28,6 @@ export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
     );
   }
 
-  const serialized = orders
-    // 1. Sort by newest first
-    .sort((a, b) => {
-      const dateA = new Date(a.node.processedAt).getTime();
-      const dateB = new Date(b.node.processedAt).getTime();
-      return dateB - dateA; // newest → oldest
-    })
-    // 2. Convert to UI-friendly structure
-    .map(({ node }) => serializeOrder(node));
-
-
   return (
     <Card className="border-0 shadow-sm bg-white">
       <CardHeader>
@@ -43,7 +35,7 @@ export function OrdersTab({ customer }: { customer: ShopifyCustomer }) {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {serialized.map((order) => (
+          {orders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
         </div>

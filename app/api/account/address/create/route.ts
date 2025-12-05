@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { CUSTOMER_ADD_ADDRESS } from "@/lib/queries/address";
+import { CUSTOMER_ADD_ADDRESS } from "@/lib/shopify/queries/address";
 import { ShopifyAddress } from "@/lib/shopify/types/address";
 import { ShopifyUserError } from "@/lib/shopify/types/auth";
 import { shopifyFetch } from "@/lib/shopify";

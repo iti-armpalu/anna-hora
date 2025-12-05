@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 
-
 import { Button } from "@/components/ui/button";
-import { ShopifyCustomer } from "@/lib/shopify/types/customer";
+import { Customer } from "@/lib/shopify/types/customer-normalized";
 import { ShopifyAddress } from "@/lib/shopify/types/address";
 import AddAddressDialog from "./add-address-dialog";
 import EditAddressDialog from "./edit-address-dialog";
 import { DeleteAddressDialog } from "./delete-address-dialog";
 import { useRouter } from "next/navigation";
 
-export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
+
+export function AddressesTab({ customer }: { customer: Customer }) {
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -20,13 +20,12 @@ export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
 
     const router = useRouter();
 
-    const addresses = customer.addresses?.edges ?? [];
-    const defaultId = customer.defaultAddress?.id;
+    const addresses = customer.addresses;
+    const defaultId = customer.defaultAddress?.id ?? null;
 
     function handleSuccess() {
         router.refresh(); // ⬅ The correct way in App Router
     }
-
 
     return (
         <div className="space-y-6">
@@ -40,21 +39,21 @@ export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
             )}
 
             <div className="grid gap-4 md:grid-cols-2">
-                {addresses.map(({ node }) => (
-                    <div key={node.id} className="border rounded p-4 bg-white shadow-sm">
+                {addresses.map((address) => (
+                    <div key={address.id} className="border rounded p-4 bg-white shadow-sm">
 
                         <p className="font-medium">
-                            {node.firstName} {node.lastName}
+                            {address.firstName} {address.lastName}
                         </p>
-                        <p>{node.address1}</p>
-                        {node.address2 && <p>{node.address2}</p>}
+                        <p>{address.address1}</p>
+                        {address.address2 && <p>{address.address2}</p>}
                         <p>
-                            {node.city}, {node.province} {node.zip}
+                            {address.city}, {address.province} {address.zip}
                         </p>
-                        <p>{node.country}</p>
-                        {node.phone && <p>📞 {node.phone}</p>}
+                        <p>{address.country}</p>
+                        {address.phone && <p>📞 {address.phone}</p>}
 
-                        {node.id === defaultId && (
+                        {address.id === defaultId && (
                             <p className="text-sm text-green-600 font-medium mt-2">Default Address</p>
                         )}
 
@@ -62,7 +61,7 @@ export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
                             <Button
                                 variant="outline"
                                 onClick={() => {
-                                    setSelectedAddress(node);
+                                    setSelectedAddress(address);
                                     setEditOpen(true);
                                 }}
                             >
@@ -72,19 +71,19 @@ export function AddressesTab({ customer }: { customer: ShopifyCustomer }) {
                             <Button
                                 variant="destructive"
                                 onClick={() => {
-                                    setSelectedAddress(node);
+                                    setSelectedAddress(address);
                                     setDeleteOpen(true);
                                 }}
                             >
                                 Delete
                             </Button>
 
-                            {node.id !== defaultId && (
+                            {address.id !== defaultId && (
                                 <Button
                                     onClick={async () => {
                                         await fetch("/api/account/address/default", {
                                             method: "POST",
-                                            body: JSON.stringify({ id: node.id }),
+                                            body: JSON.stringify({ id: address.id }),
                                         });
                                         handleSuccess();
                                     }}

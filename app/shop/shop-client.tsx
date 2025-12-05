@@ -9,11 +9,12 @@ import { ViewToggle } from "./_components/view-toggle";
 import { ProductCard } from "@/components/shop/product-card";
 import { FilterSidebar } from "./_components/filter-sidebar";
 
-import { Product } from "@/lib/shopify/types/product";
+
 import { ShopifyCollection } from "@/lib/shopify/types/collection";
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 
 interface Props {
-  initialProducts: Product[];
+  initialProducts: ProductNormalized[];
   initialPageInfo: { hasNextPage: boolean; endCursor: string | null };
   collections: ShopifyCollection[];
   initialCollectionHandle?: string;
@@ -32,7 +33,7 @@ export default function ShopClient({
     initialCollectionHandle || "all"
   );
 
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<ProductNormalized[]>(initialProducts);
 
   const [pageInfo, setPageInfo] = useState(initialPageInfo);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -88,12 +89,14 @@ export default function ShopClient({
   // -------------------------------------------------
   // Helpers
   // -------------------------------------------------
-  function getProductPrice(product: Product) {
-    return Number(product.priceRange.minVariantPrice.amount);
+  function getProductPrice(product: ProductNormalized) {
+    return Number(product.minPrice);
   }
 
-  function hasFlag(product: Product, key: string) {
-    return product.metafields?.some((m) => m.key === key && m.value === "true");
+  type ProductBooleanFlag = "bestseller" | "limited" | "new";
+
+  function hasFlag(product: ProductNormalized, key: ProductBooleanFlag) {
+    return product.metafields[key] === true;
   }
 
   // -------------------------------------------------
@@ -107,25 +110,23 @@ export default function ShopClient({
     for (const product of products) {
 
       // ----- SIZE (from variants with availability) -----
-      for (const { node: variant } of product.variants?.edges ?? []) {
-        if (!variant.availableForSale) continue;
+      product.variants.forEach((variant) => {
+        if (!variant.availableForSale) return;
 
-        const sizeOpt = variant.selectedOptions?.find(
+        const sizeOpt = variant.selectedOptions.find(
           (opt) => opt.name.toLowerCase() === "size"
         );
 
         if (sizeOpt?.value) {
           sizeSet.add(sizeOpt.value);
         }
-      }
+      });
+
 
       // ----- SIZE & COLOR from VARIANT OPTIONS -----
-      for (const opt of product.options ?? []) {
+      for (const opt of product.options) {
         const name = opt.name.toLowerCase();
 
-        // if (name === "size") {
-        //   opt.values.forEach((v) => sizeSet.add(v));
-        // }
 
         if (name === "color") {
           opt.values.forEach((v) => colorSet.add(v));
@@ -133,12 +134,8 @@ export default function ShopClient({
       }
 
       // ----- FABRIC from METAFIELD -----
-      const fabricField = product.metafields?.find(
-        (mf) => mf.key === "fabric"
-      );
-
-      if (fabricField?.value) {
-        fabricSet.add(fabricField.value);
+      if (product.metafields.fabric) {
+        fabricSet.add(product.metafields.fabric);
       }
     }
 
@@ -153,40 +150,33 @@ export default function ShopClient({
   const filteredProducts = useMemo(() => {
     let arr = [...products];
 
-    // FABRIC — multi-select
     // FABRIC — now from METAFIELD
     if (fabric.length > 0) {
       arr = arr.filter((p) => {
-        const m = p.metafields?.find(
-          (mf) => mf.key === "fabric"
-        );
+        const fabricValue = p.metafields.fabric;
 
-        if (!m?.value) return false;
+        if (!fabricValue) return false;
 
-        // If your metafield is a single value (string)
-        return fabric.includes(m.value);
-
-        // If you might store multiple comma-separated values:
-        // return m.value.split(",").some((v) => fabric.includes(v.trim()));
+        return fabric.includes(fabricValue);
       });
     }
 
 
 
-    // SIZES — multi-select
     // SIZE FILTER — WITH availability
     if (sizes.length > 0) {
       arr = arr.filter((product) => {
-        return product.variants?.edges.some(({ node: variant }) => {
+        return product.variants.some((variant) => {
           if (!variant.availableForSale) return false;
 
-          const sizeOpt = variant.selectedOptions?.find(
+          const sizeOpt = variant.selectedOptions.find(
             (opt) => opt.name.toLowerCase() === "size"
           );
 
           return sizeOpt && sizes.includes(sizeOpt.value);
         });
       });
+
     }
 
     // COLOR — multi-select
@@ -205,7 +195,7 @@ export default function ShopClient({
       const [min, max] = priceRange;
 
       arr = arr.filter((p) => {
-        const price = Number(p.priceRange.minVariantPrice.amount);
+        const price = Number(p.minPrice);
         return price >= min && price <= max;
       });
     }
@@ -241,22 +231,23 @@ export default function ShopClient({
     });
   }, [filteredProducts, selectedSort]);
 
+
   // -------------------------------------------------
   // LOAD MORE (only "ALL" collection)
   // -------------------------------------------------
-  async function loadMore() {
-    if (!pageInfo?.hasNextPage) return;
+  // async function loadMore() {
+  //   if (!pageInfo?.hasNextPage) return;
 
-    setLoadingMore(true);
+  //   setLoadingMore(true);
 
-    const res = await fetch(`/api/products?after=${pageInfo.endCursor}`);
-    const data = await res.json();
+  //   const res = await fetch(`/api/products?after=${pageInfo.endCursor}`);
+  //   const data = await res.json();
 
-    setProducts((prev) => [...prev, ...data.products]);
-    setPageInfo(data.pageInfo);
+  //   setProducts((prev) => [...prev, ...data.products]);
+  //   setPageInfo(data.pageInfo);
 
-    setLoadingMore(false);
-  }
+  //   setLoadingMore(false);
+  // }
 
   // -------------------------------------------------
   // Render
@@ -327,7 +318,7 @@ export default function ShopClient({
               ))}
             </div>
 
-            {selectedCollection === "all" && pageInfo.hasNextPage && (
+            {/* {selectedCollection === "all" && pageInfo.hasNextPage && (
               <div className="text-center mt-12">
                 <Button
                   variant="outline"
@@ -338,7 +329,7 @@ export default function ShopClient({
                   {loadingMore ? "Loading..." : "Load More Products"}
                 </Button>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </main>

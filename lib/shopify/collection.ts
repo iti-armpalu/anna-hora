@@ -1,11 +1,12 @@
 // lib/shopify/product.ts
-import { COLLECTION_BY_HANDLE_QUERY, COLLECTIONS_QUERY } from "@/lib/queries/collection";
+import { COLLECTION_BY_HANDLE_QUERY, COLLECTIONS_QUERY } from "@/lib/shopify/queries/collection";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import { ShopifyCollection } from "./types/collection";
 import { Product } from "./types/product";
+import { normalizeCollection, normalizeCollections } from "../normalizers/collection";
 
 // --------------------------------------------------
-// Fetch ALL collections
+// Fetch ALL collections — normalized
 // --------------------------------------------------
 export async function getCollections() {
 
@@ -18,23 +19,20 @@ export async function getCollections() {
     variables: { first: 20 },
   });
 
-  const collections =
-    res?.collections?.edges?.map((edge) => edge.node) ?? [];
+  const collections = res.collections.edges.map((e) => e.node);
 
   // Filter out Shopify's default "frontpage" collection
-  const filtered = collections.filter(
-    (c) => c.handle !== "frontpage"
-  );
+  const filtered = collections.filter((c) => c.handle !== "frontpage");
 
-  return filtered;
+  return normalizeCollections(filtered);
 }
 
 
 // --------------------------------------------------
-// Fetch a SINGLE collection
+// Fetch a SINGLE collection — normalized
 // --------------------------------------------------
 export async function getCollectionByHandle(handle: string) {
-  const res = await shopifyFetch<{
+  const { collection } = await shopifyFetch<{
     collection: ShopifyCollection & {
       products: {
         nodes: Product[];
@@ -49,5 +47,7 @@ export async function getCollectionByHandle(handle: string) {
     variables: { handle, first: 100 }
   });
 
-  return res.collection ?? null;
+  if (!collection) return null;
+
+  return normalizeCollection(collection);
 }
