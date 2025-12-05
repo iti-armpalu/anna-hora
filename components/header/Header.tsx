@@ -7,7 +7,7 @@ import AuthNav from "./auth-nav"
 import Image from "next/image"
 
 export default function Header() {
-  const { brand, navigation } = headerContent // or siteContent.navigation.main
+  const { navigation } = headerContent // or siteContent.navigation.main
 
   return (
     <header className="sticky top-0 z-50 bg-neutral-50/95 backdrop-blur-sm border-b border-stone-200">

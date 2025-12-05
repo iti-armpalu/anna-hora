@@ -85,8 +85,6 @@ export function normalizeProduct(
 
   const metafields = normalizeMetafields(product.metafields);
 
-  const collections = product.collections?.nodes?.map((c) => c.handle) ?? [];
-
   return {
     id: product.id,
     handle: product.handle,
@@ -114,8 +112,6 @@ export function normalizeProduct(
     currencyCode: product.priceRange.minVariantPrice.currencyCode,
 
     metafields,
-
-    collections,
   };
 }
 

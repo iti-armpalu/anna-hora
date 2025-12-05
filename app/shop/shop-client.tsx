@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { FiltersPanel } from "./_components/filters-panel";
 import { SortControl } from "./_components/sort-control";
 import { ViewToggle } from "./_components/view-toggle";
@@ -15,22 +14,17 @@ import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized"
 interface Props {
   initialProducts: ProductNormalized[];
   collections: CollectionNormalized[];
-  initialCollectionHandle?: string;
+  activeCollection: string | null;
 }
 
 export default function ShopClient({
   initialProducts,
   collections,
-  initialCollectionHandle
+  activeCollection
 }: Props) {
-  // ----------------------------------
-  // COLLECTION + PRODUCTS
-  // ----------------------------------
-  const [selectedCollection, setSelectedCollection] = useState(
-    initialCollectionHandle || "all"
-  );
 
-  const [products, setProducts] = useState<ProductNormalized[]>(initialProducts);
+  // This is allowed — for client-side filtering (fabric, size, etc.)
+  const [products] = useState<ProductNormalized[]>(initialProducts);
 
   // ----------------------------------
   // SORT + VIEW
@@ -50,42 +44,6 @@ export default function ShopClient({
   const [sizes, setSizes] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
-
-  // -------------------------------------------------
-  // Fetch products when a collection is selected
-  // -------------------------------------------------
-  // useEffect(() => {
-  //   if (selectedCollection === "all") {
-  //     setProducts(initialProducts);
-  //     return;
-  //   }
-
-  //   const collection = collections.find(
-  //     (c) => c.handle === selectedCollection
-  //   );
-
-  //   setProducts(collection ? collection.products : []);
-  // }, [selectedCollection, initialProducts, collections]);
-
-  useEffect(() => {
-    console.log("→ Selected collection:", selectedCollection);
-
-    if (selectedCollection === "all") {
-      console.log("→ Using ALL products");
-      setProducts(initialProducts);
-      return;
-    }
-
-    const filtered = initialProducts.filter((p) =>
-      p.collections.includes(selectedCollection)
-    );
-
-    console.log("→ Filtered products:", filtered);
-
-    setProducts(filtered);
-  }, [selectedCollection, initialProducts]);
-
-
 
   // -------------------------------------------------
   // Helpers
@@ -234,23 +192,6 @@ export default function ShopClient({
 
 
   // -------------------------------------------------
-  // LOAD MORE (only "ALL" collection)
-  // -------------------------------------------------
-  // async function loadMore() {
-  //   if (!pageInfo?.hasNextPage) return;
-
-  //   setLoadingMore(true);
-
-  //   const res = await fetch(`/api/products?after=${pageInfo.endCursor}`);
-  //   const data = await res.json();
-
-  //   setProducts((prev) => [...prev, ...data.products]);
-  //   setPageInfo(data.pageInfo);
-
-  //   setLoadingMore(false);
-  // }
-
-  // -------------------------------------------------
   // Render
   // -------------------------------------------------
   return (
@@ -259,10 +200,10 @@ export default function ShopClient({
       <section className="py-12 lg:py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
-            The Collection
+            {activeCollection ? "Collection" : "The Collection"}
           </h2>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-            Discover pieces crafted from the finest mulberry silk.
+            Discover pieces designed to elevate the everyday.
           </p>
         </div>
       </section>
@@ -274,8 +215,7 @@ export default function ShopClient({
             open={isFilterOpen}
             onOpenChange={setIsFilterOpen}
             collections={collections}
-            selected={selectedCollection}
-            onSelect={setSelectedCollection}
+            activeCollection={activeCollection}
           />
 
           <div className="flex items-center gap-3">
@@ -318,19 +258,6 @@ export default function ShopClient({
                 <ProductCard key={product.id} product={product} viewMode={viewMode} />
               ))}
             </div>
-
-            {/* {selectedCollection === "all" && pageInfo.hasNextPage && (
-              <div className="text-center mt-12">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  disabled={loadingMore}
-                  onClick={loadMore}
-                >
-                  {loadingMore ? "Loading..." : "Load More Products"}
-                </Button>
-              </div>
-            )} */}
           </div>
         </div>
       </main>

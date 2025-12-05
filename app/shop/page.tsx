@@ -11,7 +11,7 @@ export default async function Page() {
     <ShopClient
       initialProducts={products}
       collections={collections}
-      initialCollectionHandle="all"
+      activeCollection={null}
     />
   );
 }

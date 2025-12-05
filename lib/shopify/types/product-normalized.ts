@@ -69,5 +69,4 @@ export interface ProductNormalized {
   currencyCode: string;    // "GBP"
 
   metafields: ProductMetafieldsNormalized;
-  collections: string[];
 }

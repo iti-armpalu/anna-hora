@@ -23,11 +23,6 @@ export type Metafield = {
   value: string | null;
 };
 
-export type ProductCollectionRef = {
-  handle: string;
-};
-
-
 export type Product = {
   id: string;
   handle: string;
@@ -42,7 +37,4 @@ export type Product = {
     maxVariantPrice: { amount: string; currencyCode: string };
   };
   metafields?: Metafield[];
-  collections?: {
-    nodes: ProductCollectionRef[];
-  };
 };

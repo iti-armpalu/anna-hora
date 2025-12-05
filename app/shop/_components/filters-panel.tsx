@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,31 +14,30 @@ import {
 import { Filter } from "lucide-react";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 
+interface Props {
+  open: boolean;
+  onOpenChange: (value: boolean) => void;
+  collections: CollectionNormalized[];
+  activeCollection: string | null; // ← server-driven
+}
+
 export function FiltersPanel({
   open,
   onOpenChange,
   collections,
-  selected,
-  onSelect,
-}: {
-  open: boolean;
-  onOpenChange: (value: boolean) => void;
-  collections: CollectionNormalized[];
-  selected: string;
-  onSelect: (handle: string) => void;
-}) {
-
+  activeCollection,
+}: Props) {
   // -----------------------------------------
   // Sort Shopify collections alphabetically
   // -----------------------------------------
   const sortedCollections = useMemo(() => {
     return [...collections]
-      .filter((c) => c.handle !== "all") // avoid duplicate if client added one manually
+      .filter((c) => c.handle !== "all")
       .sort((a, b) => a.title.localeCompare(b.title));
   }, [collections]);
 
   // -----------------------------------------
-  // Final list including "All Products"
+  // Include "All Products" entry (Shop All)
   // -----------------------------------------
   const finalCollections = [
     { handle: "all", title: "All Products" },
@@ -49,7 +49,7 @@ export function FiltersPanel({
   // -----------------------------------------
   return (
     <>
-      {/* Mobile Filter Drawer */}
+      {/* MOBILE FILTER DRAWER */}
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetTrigger asChild>
           <Button
@@ -67,39 +67,57 @@ export function FiltersPanel({
           </SheetHeader>
 
           <div className="mt-6 space-y-6">
-            {finalCollections.map((col) => (
-              <button
-                key={col.handle}
-                onClick={() => {
-                  onSelect(col.handle);
-                  onOpenChange(false);
-                }}
-                className={`block w-full text-left py-2 text-sm ${selected === col.handle
-                    ? "font-medium text-stone-900"
-                    : "text-stone-600"
+            {finalCollections.map((col) => {
+              const isActive =
+                (col.handle === "all" && activeCollection === null) ||
+                col.handle === activeCollection;
+
+              const href =
+                col.handle === "all" ? "/shop" : `/collections/${col.handle}`;
+
+              return (
+                <Link
+                  key={col.handle}
+                  href={href}
+                  onClick={() => onOpenChange(false)}
+                  className={`block w-full text-left py-2 text-sm ${
+                    isActive
+                      ? "font-medium text-stone-900"
+                      : "text-stone-600 hover:text-stone-900"
                   }`}
-              >
-                {col.title}
-              </button>
-            ))}
+                >
+                  {col.title}
+                </Link>
+              );
+            })}
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Desktop */}
+      {/* DESKTOP LINKS */}
       <div className="hidden lg:flex items-center space-x-6">
-        {finalCollections.map((col) => (
-          <button
-            key={col.handle}
-            onClick={() => onSelect(col.handle)}
-            className={`text-sm transition-colors ${selected === col.handle
-                ? "text-stone-900 font-medium border-b border-stone-300"
-                : "text-stone-600 hover:text-stone-900"
+        {finalCollections.map((col) => {
+          const isActive =
+            (col.handle === "all" && activeCollection === null) ||
+            col.handle === activeCollection;
+
+          const href =
+            col.handle === "all" ? "/shop" : `/collections/${col.handle}`;
+
+          return (
+            <Link
+              key={col.handle}
+              href={href}
+              className={`text-sm transition-colors pb-1 ${
+                isActive
+                  ? "text-stone-900 font-medium border-b border-stone-300"
+                  : "text-stone-600 hover:text-stone-900"
               }`}
-          >
-            {col.title}
-          </button>
-        ))}
+            >
+              {col.title}
+            </Link>
+          );
+        })}
       </div>
     </>
   );
