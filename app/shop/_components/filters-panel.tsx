@@ -9,8 +9,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShopifyCollection } from "@/lib/shopify/types/collection";
+
 import { Filter } from "lucide-react";
+import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 
 export function FiltersPanel({
   open,
@@ -21,10 +22,11 @@ export function FiltersPanel({
 }: {
   open: boolean;
   onOpenChange: (value: boolean) => void;
-  collections: ShopifyCollection[];
+  collections: CollectionNormalized[];
   selected: string;
   onSelect: (handle: string) => void;
 }) {
+
   // -----------------------------------------
   // Sort Shopify collections alphabetically
   // -----------------------------------------
@@ -72,11 +74,10 @@ export function FiltersPanel({
                   onSelect(col.handle);
                   onOpenChange(false);
                 }}
-                className={`block w-full text-left py-2 text-sm ${
-                  selected === col.handle
+                className={`block w-full text-left py-2 text-sm ${selected === col.handle
                     ? "font-medium text-stone-900"
                     : "text-stone-600"
-                }`}
+                  }`}
               >
                 {col.title}
               </button>
@@ -91,11 +92,10 @@ export function FiltersPanel({
           <button
             key={col.handle}
             onClick={() => onSelect(col.handle)}
-            className={`text-sm transition-colors ${
-              selected === col.handle
+            className={`text-sm transition-colors ${selected === col.handle
                 ? "text-stone-900 font-medium border-b border-stone-300"
                 : "text-stone-600 hover:text-stone-900"
-            }`}
+              }`}
           >
             {col.title}
           </button>

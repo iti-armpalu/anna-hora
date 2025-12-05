@@ -81,6 +81,12 @@ export const PRODUCTS_QUERY = `
           key
           value
         }
+
+        collections(first: 20) {
+          nodes {
+            handle
+          }
+        }
           
       }
     }
@@ -160,6 +166,13 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
         key
         value
       }
+
+      collections(first: 20) {
+        nodes {
+          handle
+        }
+      }
+        
     }
   }
 `;

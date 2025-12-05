@@ -9,20 +9,17 @@ import { ViewToggle } from "./_components/view-toggle";
 import { ProductCard } from "@/components/shop/product-card";
 import { FilterSidebar } from "./_components/filter-sidebar";
 
-
-import { ShopifyCollection } from "@/lib/shopify/types/collection";
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
+import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 
 interface Props {
   initialProducts: ProductNormalized[];
-  initialPageInfo: { hasNextPage: boolean; endCursor: string | null };
-  collections: ShopifyCollection[];
+  collections: CollectionNormalized[];
   initialCollectionHandle?: string;
 }
 
 export default function ShopClient({
   initialProducts,
-  initialPageInfo,
   collections,
   initialCollectionHandle
 }: Props) {
@@ -34,9 +31,6 @@ export default function ShopClient({
   );
 
   const [products, setProducts] = useState<ProductNormalized[]>(initialProducts);
-
-  const [pageInfo, setPageInfo] = useState(initialPageInfo);
-  const [loadingMore, setLoadingMore] = useState(false);
 
   // ----------------------------------
   // SORT + VIEW
@@ -57,34 +51,41 @@ export default function ShopClient({
   const [colors, setColors] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
 
-
   // -------------------------------------------------
   // Fetch products when a collection is selected
   // -------------------------------------------------
+  // useEffect(() => {
+  //   if (selectedCollection === "all") {
+  //     setProducts(initialProducts);
+  //     return;
+  //   }
+
+  //   const collection = collections.find(
+  //     (c) => c.handle === selectedCollection
+  //   );
+
+  //   setProducts(collection ? collection.products : []);
+  // }, [selectedCollection, initialProducts, collections]);
+
   useEffect(() => {
-    async function load() {
-      // Reset pagination whenever filter changes
-      setPageInfo(initialPageInfo);
+    console.log("→ Selected collection:", selectedCollection);
 
-      if (selectedCollection === "all") {
-        setProducts(initialProducts);
-        return;
-      }
-
-      const res = await fetch(`/api/collections/${selectedCollection}`);
-      const data = await res.json();
-
-      setProducts(data.products ?? []);
-
-      // collections do NOT paginate
-      setPageInfo({
-        hasNextPage: false,
-        endCursor: null
-      });
+    if (selectedCollection === "all") {
+      console.log("→ Using ALL products");
+      setProducts(initialProducts);
+      return;
     }
 
-    load();
-  }, [selectedCollection, initialProducts, initialPageInfo]);
+    const filtered = initialProducts.filter((p) =>
+      p.collections.includes(selectedCollection)
+    );
+
+    console.log("→ Filtered products:", filtered);
+
+    setProducts(filtered);
+  }, [selectedCollection, initialProducts]);
+
+
 
   // -------------------------------------------------
   // Helpers

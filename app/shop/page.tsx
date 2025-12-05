@@ -5,12 +5,11 @@ export const revalidate = 60;
 
 export default async function Page() {
   const collections = await getCollections();
-  const { products, pageInfo } = await getProducts(250);
+  const { products } = await getProducts(250);
 
   return (
     <ShopClient
       initialProducts={products}
-      initialPageInfo={pageInfo}
       collections={collections}
       initialCollectionHandle="all"
     />

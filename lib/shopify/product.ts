@@ -12,6 +12,7 @@ import { normalizeProduct, normalizeProducts } from "../normalizers/product";
 interface ShopifyProductsQueryResponse {
   products: {
     nodes: Product[];
+    
     pageInfo: {
       hasNextPage: boolean;
       endCursor: string | null;
