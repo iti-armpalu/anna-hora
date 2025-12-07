@@ -3,7 +3,7 @@ import "./globals.css";
 
 import { cookies } from "next/headers";
 
-import Header from "@/components/header/Header";
+
 import Footer from "@/components/footer/Footer";
 import { Toaster } from "@/components/ui/sonner"
 import { DevCurrencyTester } from "@/components/dev-currency-tester";
@@ -15,6 +15,9 @@ import { AuthProvider } from "@/context/auth-context";
 
 import { getCustomer } from "@/lib/shopify/customer";
 import { getCartAction } from "@/lib/actions/cart/get-cart";
+import Header from "@/components/header/Header";
+
+
 
 
 export const metadata: Metadata = {

@@ -37,7 +37,7 @@ export default async function HomePage() {
           </h2>
 
           <p className="text-lg md:text-xl text-stone-400 mb-8 max-w-2xl font-light text-left">
-            Not just silk. A ritual. A feeling. A way to come home to yourself..
+            Not just silk. A ritual. A feeling. A way to come home to yourself.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-start">

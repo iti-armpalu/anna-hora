@@ -12,7 +12,7 @@ import { normalizeProduct, normalizeProducts } from "../normalizers/product";
 interface ShopifyProductsQueryResponse {
   products: {
     nodes: Product[];
-    
+
     pageInfo: {
       hasNextPage: boolean;
       endCursor: string | null;
@@ -45,7 +45,12 @@ export async function getProducts(
 
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
-    variables: { first, after, country },
+    variables: {
+      first,
+      after,
+      country,
+      query: '-tag:"gift-card"', // exclude gift cards
+    },
   });
 
   return {
@@ -76,6 +81,24 @@ export async function getProductByHandle(handle: string): Promise<ProductNormali
   if (!res.product) return null;
 
   return normalizeProduct(res.product);
+}
+
+// --------------------------------------------------
+// Fetch gift card product
+// --------------------------------------------------
+export async function getGiftCardProduct() {
+  const res = await shopifyFetch<ShopifyProductsQueryResponse>({
+    query: PRODUCTS_QUERY,
+    variables: {
+      first: 1,              // only one product expected
+      query: 'tag:"gift-card"', // fetch *only* the product with this tag
+    },
+  });
+
+  const productNode = res.products.nodes[0];
+  if (!productNode) return null;
+
+  return normalizeProduct(productNode);
 }
 
 

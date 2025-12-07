@@ -26,6 +26,8 @@ export default function ShopClient({
   // This is allowed — for client-side filtering (fabric, size, etc.)
   const [products] = useState<ProductNormalized[]>(initialProducts);
 
+  console.log(products)
+
   // ----------------------------------
   // SORT + VIEW
   // ----------------------------------
