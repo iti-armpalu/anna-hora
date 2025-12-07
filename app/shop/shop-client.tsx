@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { FiltersPanel } from "./_components/filters-panel";
 import { SortControl } from "./_components/sort-control";
@@ -56,9 +56,17 @@ export default function ShopClient({
 
   type ProductBooleanFlag = "bestseller" | "limited" | "new";
 
-  function hasFlag(product: ProductNormalized, key: ProductBooleanFlag) {
-    return product.metafields[key] === true;
-  }
+  // function hasFlag(product: ProductNormalized, key: ProductBooleanFlag) {
+  //   return product.metafields[key] === true;
+  // }
+
+  const hasFlag = useCallback(
+    (product: ProductNormalized, key: ProductBooleanFlag) => {
+      return product.metafields[key] === true;
+    },
+    []
+  );
+
 
   // -------------------------------------------------
   // FILTERING (fabric, size, color, price)
@@ -190,7 +198,7 @@ export default function ShopClient({
           return Number(hasFlag(b, "new")) - Number(hasFlag(a, "new"));
       }
     });
-  }, [filteredProducts, selectedSort]);
+  }, [filteredProducts, selectedSort, hasFlag]);
 
 
   // -------------------------------------------------

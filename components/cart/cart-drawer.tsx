@@ -4,13 +4,18 @@
 import Image from "next/image"
 import Link from "next/link"
 import { X, Gift } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { useCart } from "@/context/cart-context"
+import { Button } from "../ui/button"
+
+
+
 import { useEffect } from "react"
-import { formatPrice } from "@/hooks/use-price"
+
 import { QuantitySelector } from "../quantity-selector"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet"
+import { formatPrice } from "../../hooks/use-price"
+import { Separator } from "../ui/separator"
+import { useCart } from "../../context/cart-context"
+
 
 interface CartDrawerProps {
   isOpen: boolean

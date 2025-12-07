@@ -2,9 +2,10 @@
 
 import Image from "next/image"
 import { X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+
 import { Money } from "./money";
 import { QuantityControl } from "./quantity-control";
+import { Button } from "../ui/button";
 
 
 export interface CartLine {

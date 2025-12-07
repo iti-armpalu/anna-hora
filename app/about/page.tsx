@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { SEO, formatTitle } from "@/config/seo"
-import { aboutContent as c } from "@/data/about-content"
+
+import { SEO, formatTitle } from "../../config/seo"
+import { aboutContent as c } from "../../data/about-content"
+import { Button } from "../../components/ui/button"
 
 export const metadata: Metadata = {
   title: formatTitle("About"),
