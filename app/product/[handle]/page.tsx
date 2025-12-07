@@ -10,13 +10,13 @@ export const dynamic = "force-dynamic";
 export default async function ProductPage({
     params,
 }: {
-    params: { handle: string } | Promise<{ handle: string }>;
+    params: { handle: string };
 }) {
-    const { handle } = await params;          // access safely
+    const { handle } = params;
     const product = await getProductByHandle(handle);
 
     if (!product) {
-        notFound(); // automatically shows app/not-found.tsx
+        notFound();
     }
 
     return (
