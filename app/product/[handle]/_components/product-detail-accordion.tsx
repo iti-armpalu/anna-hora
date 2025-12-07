@@ -17,11 +17,11 @@ export function ProductDetailsAccordion({ product }: ProductDetailsAccordionProp
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <h4 className="font-medium text-stone-800 mb-2">Fabric & Construction</h4>
-                    {/* <ul className="space-y-1 text-sm">
-                        <li>• {product.specifications.fabric}</li>
-                        <li>• {product.specifications.weight} weight</li>
-                        <li>• {product.specifications.origin}</li>
-                    </ul> */}
+                    <ul className="space-y-1 text-sm">
+                        <li>• {product.metafields.fabric}</li>
+                        {/* <li>• {product.specifications.weight} weight</li> */}
+                        {/* <li>• {product.specifications.origin}</li> */}
+                    </ul>
                 </div>
                 <div>
                     <h4 className="font-medium text-stone-800 mb-2">Care & Sustainability</h4>

@@ -36,7 +36,7 @@ export default function AccountTabs({ customer }: { customer: Customer }) {
 
       {/* SETTINGS TAB */}
       <TabsContent value="settings" className="py-6">
-        <SettingsTab customer={customer} />
+        {/* <SettingsTab customer={customer} /> */}
       </TabsContent>
 
     </Tabs>
@@ -50,13 +50,13 @@ export default function AccountTabs({ customer }: { customer: Customer }) {
 **/
 
 
-function SettingsTab({ customer }: { customer: Customer }) {
-  return (
-    <div>
-      <p className="mb-2 font-medium">Settings</p>
-      <p className="text-gray-600 text-sm">
-        This can include password change, notification settings, etc.
-      </p>
-    </div>
-  );
-}
+// function SettingsTab({ customer }: { customer: Customer }) {
+//   return (
+//     <div>
+//       <p className="mb-2 font-medium">Settings</p>
+//       <p className="text-gray-600 text-sm">
+//         This can include password change, notification settings, etc.
+//       </p>
+//     </div>
+//   );
+// }

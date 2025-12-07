@@ -1,5 +1,5 @@
 import { shopifyClient } from "./client";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
 interface ShopifyFetchParams {
   query: string;

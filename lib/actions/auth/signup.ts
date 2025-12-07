@@ -9,7 +9,7 @@ import type { ShopifyCustomer } from "@/lib/shopify/types/customer";
 import { CUSTOMER_CREATE_MUTATION } from "@/lib/shopify/queries/customer";
 import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/shopify/queries/auth";
 
-import { SignupState, initialSignupState } from "./signup-state";
+import { SignupState } from "./signup-state";
 
 const SignupSchema = z.object({
   email: z.string().email(),

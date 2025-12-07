@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { FiltersPanel } from "./_components/filters-panel";
 import { SortControl } from "./_components/sort-control";

@@ -115,8 +115,8 @@ export default function ProductPageClient({ product }: Props) {
 
     const images = product.images;
 
-    const fabric = product.metafields.fabric;
-    const sensoryDescription = product.metafields.sensoryDescription;
+    // const fabric = product.metafields.fabric;
+    // const sensoryDescription = product.metafields.sensoryDescription;
     const lifestyleDescription = product.metafields.lifestyleDescription;
     const styleDescription = product.metafields.styleDescription;
 

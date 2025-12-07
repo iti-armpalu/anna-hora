@@ -79,9 +79,9 @@ async function fetchShopifyWishlist(): Promise<WishlistItem[]> {
   return [];
 }
 
-async function updateShopifyWishlist(_items: WishlistItem[]) {
+// async function updateShopifyWishlist(_items: WishlistItem[]) {
   // TODO: Replace with Shopify metafield mutation
-}
+// }
 
 // ---------------------------------------------------
 // Merge logic: dedupe by variant ID
@@ -121,7 +121,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
         // 4. Sync merged wishlist back to Shopify
         if (merged.length > 0) {
-          await updateShopifyWishlist(merged);
+          // await updateShopifyWishlist(merged);
         }
 
         // 5. Clear guest wishlist as it's now merged
@@ -161,7 +161,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     setItems(updated);
 
     if (isAuthenticated) {
-      updateShopifyWishlist(updated);
+      // updateShopifyWishlist(updated);
     }
 
     toast.success("Added to wishlist");
@@ -175,7 +175,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     setItems(updated);
 
     if (isAuthenticated) {
-      updateShopifyWishlist(updated);
+      // updateShopifyWishlist(updated);
     }
 
     toast.success("Removed from wishlist");
@@ -188,7 +188,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     setItems([]);
 
     if (isAuthenticated) {
-      updateShopifyWishlist([]);
+      // updateShopifyWishlist([]);
     } else {
       localStorage.removeItem(LOCAL_KEY);
     }
