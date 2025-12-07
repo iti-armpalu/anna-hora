@@ -1,13 +1,6 @@
-import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { getGiftCardProduct } from "@/lib/shopify/product"
 import GiftGuidePageClient from "./gift-guide-page-client"
-
-export function getGiftCardAmounts(product: ProductNormalized): number[] {
-  return product.variants
-    .map((variant) => Number(variant.price.amount))
-    .filter((value) => !Number.isNaN(value))
-    .sort((a, b) => a - b);
-}
+import { getGiftCardAmounts } from "@/lib/shopify/utils/gift-card";
 
 export default async function GiftGuidePage() {
   const product = await getGiftCardProduct();
@@ -17,7 +10,6 @@ export default async function GiftGuidePage() {
   }
 
   const giftCardAmounts = getGiftCardAmounts(product);
-
 
   return (
     <GiftGuidePageClient
