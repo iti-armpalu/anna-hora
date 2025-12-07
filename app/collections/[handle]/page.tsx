@@ -7,13 +7,13 @@ import { notFound } from "next/navigation";
 // SEO Metadata
 // -------------------------------
 export async function generateMetadata(
-  { params }: { params: Promise<{ handle: string }> }
+  { params }: { params: { handle: string } }
 ): Promise<Metadata> {
-  const { handle } = await params;
+
+  const { handle } = params;
 
   const collection = await getCollectionByHandle(handle);
 
-  // If collection doesn't exist → return a fallback title
   if (!collection) {
     return {
       title: "Collection Not Found | Your Store Name",
@@ -23,25 +23,17 @@ export async function generateMetadata(
   }
 
   const title = collection.title;
-  // const description =
-  //   collection.description?.replace(/(<([^>]+)>)/gi, "") || // strip HTML if Shopify returns it
-  //   `Explore products from the ${title} collection.`;
 
   return {
     title: `${title} | Your Store Name`,
-    // description,
-
     openGraph: {
       title: `${title} | Your Store Name`,
-      // description,
       url: `/collections/${handle}`,
       type: "website",
     },
-
     twitter: {
       card: "summary_large_image",
       title: `${title} | Your Store Name`,
-      // description,
     },
   };
 }
@@ -52,22 +44,17 @@ export async function generateMetadata(
 export default async function CollectionPage({
   params,
 }: {
-  params: Promise<{ handle: string }>;
+  params: { handle: string };
 }) {
-  const { handle } = await params;
+  const { handle } = params;
 
-  // Fetch specific collection
   const collection = await getCollectionByHandle(handle);
 
-  // Handle invalid collection handles
   if (!collection) {
-    return notFound();
+    notFound();
   }
 
-  // Fetch all collections (for FiltersPanel + navigation)
   const collections = await getCollections();
-
-  // Products are already normalized by your Shopify layer
   const products = collection.products ?? [];
 
   return (
