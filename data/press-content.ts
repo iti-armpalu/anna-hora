@@ -26,7 +26,7 @@ export interface PressArticle {
       {
         id: "vogue-1",
         publication: "Vogue",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Vogue",
+        publicationLogo: "",
         title: "The New Wave of Quiet Luxury",
         quote: "A masterclass in quiet luxury — pieces that move with elegance and ease.",
         date: "March 2025",
@@ -36,7 +36,7 @@ export interface PressArticle {
       {
         id: "harpers-1",
         publication: "Harper's Bazaar",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Harper's Bazaar",
+        publicationLogo: "",
         title: "Emerging Luxury Brands to Watch",
         quote: "ANNA HORA redefines intimate luxury with unparalleled craftsmanship.",
         date: "February 2025",
@@ -45,7 +45,7 @@ export interface PressArticle {
       {
         id: "elle-1",
         publication: "Elle",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Elle",
+        publicationLogo: "",
         title: "The Silk Edit: Loungewear Elevated",
         quote: "A celebration of timeless sensuality and conscious design.",
         date: "January 2025",
@@ -54,7 +54,7 @@ export interface PressArticle {
       {
         id: "marie-claire-1",
         publication: "Marie Claire",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Marie Claire",
+        publicationLogo: "",
         title: "Mindful Living Through Fashion",
         quote: "Where sustainability meets sophistication in every thread.",
         date: "December 2024",
@@ -63,7 +63,7 @@ export interface PressArticle {
       {
         id: "porter-1",
         publication: "Porter",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Porter",
+        publicationLogo: "",
         title: "The Art of Slow Fashion",
         quote: "ANNA HORA proves that true luxury is timeless, not trendy.",
         date: "November 2024",
@@ -72,7 +72,7 @@ export interface PressArticle {
       {
         id: "grazia-1",
         publication: "Grazia",
-        publicationLogo: "/placeholder.svg?height=40&width=120&text=Grazia",
+        publicationLogo: "",
         title: "The Silk Revolution",
         quote: "Pieces designed for how you feel, not just how you look.",
         date: "October 2024",

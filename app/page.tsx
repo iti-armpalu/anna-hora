@@ -112,7 +112,7 @@ export default async function HomePage() {
                       asChild
                       className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3"
                     >
-                      <Link href="/collections/velvet">Explore Silk Collection</Link>
+                      <Link href="/collections/silk">Explore Silk Collection</Link>
                     </Button>
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export default async function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src="/anna-hora-giftcard-2.webp?height=300&width=400"
+                  src="/anna-hora-giftcard-2.webp"
                   alt="Luxury Gift Set"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -280,7 +280,7 @@ export default async function HomePage() {
             <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src="/gift-wrapping.webp?height=300&width=400"
+                  src="/gift-wrapping.webp"
                   alt="Gift Wrapping"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"

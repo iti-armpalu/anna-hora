@@ -169,13 +169,13 @@ export default function AboutPage() {
 
             <div className="relative order-1 lg:order-2">
               <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
-                <Image
+                {/* <Image
                   src={c.experience.mediaImage.src}
                   alt={c.experience.mediaImage.alt}
                   fill
                   className="object-cover"
                   sizes="(min-width:1024px) 480px, 90vw"
-                />
+                /> */}
               </div>
               <div className="absolute -top-8 -left-8 w-24 h-24 bg-stone-200 rounded-full opacity-30 -z-10" />
             </div>

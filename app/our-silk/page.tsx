@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import * as Icons from "lucide-react";
 import {
@@ -13,12 +12,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 // import { Badge } from "@/components/ui/badge";
-
-import silkData from "@/data/silk-content";
 import Link from "next/link";
+import silkData from "./_data";
 
 export default function OurSilkPage() {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const getIcon = (iconName: string) => {
     const icons = {
@@ -88,18 +85,6 @@ export default function OurSilkPage() {
                     fill
                     className="object-cover"
                   />
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/90 hover:bg-white shadow-lg"
-                    onClick={() => setIsVideoPlaying(!isVideoPlaying)}
-                  >
-                    {isVideoPlaying ? (
-                      <Icons.Pause className="w-6 h-6 text-stone-800" />
-                    ) : (
-                      <Icons.Play className="w-6 h-6 text-stone-800 ml-1" />
-                    )}
-                  </Button>
                 </div>
                 <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-stone-200 rounded-full opacity-30 -z-10" />
               </div>
@@ -303,13 +288,13 @@ export default function OurSilkPage() {
               </Button>
 
               {/* Secondary CTA */}
-              <Button
+              {/* <Button
                 variant="outline"
                 size="lg"
                 className="border-anna-green-800 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
               >
                 {silkData.closing.secondaryCta.text}
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

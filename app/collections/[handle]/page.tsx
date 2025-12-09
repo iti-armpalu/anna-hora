@@ -7,16 +7,16 @@ import { notFound } from "next/navigation";
 // SEO Metadata
 // -------------------------------
 export async function generateMetadata(
-  { params }: { params: { handle: string } }
+  { params }: { params: Promise<{ handle: string }> }
 ): Promise<Metadata> {
 
-  const { handle } = params;
+  const { handle } = await params;
 
   const collection = await getCollectionByHandle(handle);
 
   if (!collection) {
     return {
-      title: "Collection Not Found | Your Store Name",
+      title: "Collection Not Found | ANNA HORA",
       description: "This collection does not exist.",
       robots: "noindex",
     };
@@ -25,15 +25,15 @@ export async function generateMetadata(
   const title = collection.title;
 
   return {
-    title: `${title} | Your Store Name`,
+    title: `${title} | ANNA HORA`,
     openGraph: {
-      title: `${title} | Your Store Name`,
+      title: `${title} | ANNA HORA`,
       url: `/collections/${handle}`,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Your Store Name`,
+      title: `${title} | ANNA HORA`,
     },
   };
 }
@@ -44,14 +44,15 @@ export async function generateMetadata(
 export default async function CollectionPage({
   params,
 }: {
-  params: { handle: string };
+  params: Promise<{ handle: string }>;
 }) {
-  const { handle } = params;
+
+  const { handle } = await params;
 
   const collection = await getCollectionByHandle(handle);
 
   if (!collection) {
-    notFound();
+    return notFound();
   }
 
   const collections = await getCollections();

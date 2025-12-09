@@ -33,7 +33,7 @@ export default function ArticlePage() {
     author: "Elena Chen",
     date: "December 15, 2024",
     readTime: "5 min read",
-    image: "/placeholder.svg?height=600&width=1200&text=Morning ritual with silk robe and coffee",
+    image: "",
     content: `
       <p>There's something almost ceremonial about the first moments of morning—that liminal space between sleep and wakefulness where the day's possibilities still shimmer with potential. It's in these precious minutes that we have the opportunity to set the tone for everything that follows.</p>
 
@@ -82,7 +82,7 @@ export default function ArticlePage() {
       slug: "evening-wind-down-rituals", // Added slug property
       title: "Evening Wind-Down: Creating Rituals That Restore",
       category: "Self-Care & Rituals",
-      image: "/placeholder.svg?height=200&width=300&text=Evening routine",
+      image: "",
       readTime: "4 min read",
     },
     {
@@ -90,7 +90,7 @@ export default function ArticlePage() {
       slug: "perfect-gift-curating-joy", // Added slug property
       title: "The Perfect Gift: Curating Moments of Joy",
       category: "Gift Guides",
-      image: "/placeholder.svg?height=200&width=300&text=Gift wrapping",
+      image: "",
       readTime: "5 min read",
     },
     {
@@ -98,7 +98,7 @@ export default function ArticlePage() {
       slug: "creating-sanctuary-texture-spaces", // Added slug property
       title: "Creating Sanctuary: The Power of Texture in Serene Spaces",
       category: "Home & Atmosphere",
-      image: "/placeholder.svg?height=200&width=300&text=Serene bedroom",
+      image: "",
       readTime: "6 min read",
     },
   ]

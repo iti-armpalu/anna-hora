@@ -20,12 +20,6 @@ export async function shopifyFetch<TData = unknown>({
     },
   });
 
-  // console.log("ShopifyFetch → Raw Response:", res);
-  // console.log("[SHOPIFY FETCH] Query:", query.slice(0, 200) + "...");
-  // console.log("[SHOPIFY FETCH] Variables:", variables);
-  // console.log("[SHOPIFY FETCH] Headers:", headers);
-
-
   if (res.errors) {
     console.error("[Shopify errors]", res.errors);
     throw new Error(

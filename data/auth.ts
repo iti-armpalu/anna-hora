@@ -109,7 +109,7 @@ export interface User {
       email: `user@${provider}.com`,
       firstName: "Social",
       lastName: "User",
-      avatar: `/placeholder.svg?height=40&width=40&query=${provider} user avatar`,
+      avatar: ``,
       createdAt: new Date().toISOString(),
     }
   

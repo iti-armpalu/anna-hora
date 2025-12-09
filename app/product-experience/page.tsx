@@ -287,7 +287,7 @@ export default function ProductExperiencePage() {
                 <div className="flex flex-col md:flex-row gap-6 mb-8">
                   <div className="flex-shrink-0">
                     <Image
-                      src="/placeholder.svg?height=200&width=200&text=Silk & Serenity Playlist Cover"
+                      src=""
                       alt="Silk & Serenity Playlist"
                       className="w-48 h-48 rounded-lg shadow-md mx-auto md:mx-0"
                     />

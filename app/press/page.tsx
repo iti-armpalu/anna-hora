@@ -30,7 +30,7 @@ export default function PressPage() {
                             {["Vogue", "Harper's Bazaar", "Elle", "Marie Claire", "Porter"].map((publication) => (
                                 <div key={publication} className="grayscale hover:grayscale-0 transition-all duration-300">
                                     <Image
-                                        src={`/enerate an image based on the text provided in the query parameters.png?height=40&width=120&text=${publication}`}
+                                        src={``}
                                         alt={publication}
                                         width={120}
                                         height={40}
@@ -51,7 +51,7 @@ export default function PressPage() {
                             <div className="grid grid-cols-1 lg:grid-cols-2">
                                 <div className="relative aspect-[4/3] lg:aspect-auto">
                                     <Image
-                                        src="/placeholder.svg?height=600&width=800&text=Featured+Press+Image"
+                                        src=""
                                         alt="Featured press article"
                                         fill
                                         className="object-cover"

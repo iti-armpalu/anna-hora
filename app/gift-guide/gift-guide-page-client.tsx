@@ -100,7 +100,7 @@ export default function GiftGuidePageClient({
                         </div>
                         <div className="relative">
                             <Image
-                                src="/placeholder.svg?height=600&width=500&text=Beautifully wrapped silk gift with ribbon"
+                                src="/placeholder.svg"
                                 alt="Elegant gift wrapping"
                                 width={500}
                                 height={600}

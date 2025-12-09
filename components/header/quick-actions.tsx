@@ -12,7 +12,7 @@ type QuickActionsProps = {
 }
 
 export function QuickActions({
-    showSearch = true,
+    showSearch = false,
     showWishlist = true,
 }: QuickActionsProps) {
     return (

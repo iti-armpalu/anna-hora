@@ -10,9 +10,9 @@ export const dynamic = "force-dynamic";
 export default async function ProductPage({
     params,
 }: {
-    params: { handle: string };
+    params: Promise<{ handle: string }>;
 }) {
-    const { handle } = params;
+    const { handle } = await params;
     const product = await getProductByHandle(handle);
 
     if (!product) {

@@ -6,7 +6,7 @@ export const aboutContent = {
             "ANNA HORA was born from a simple belief: that the most profound luxury is found not in what the world sees, but in how we feel when no one is watching.",
         introText:
             "In those quiet moments—the first sip of morning coffee, the gentle embrace of silk against skin, the pause between day and night—we discover who we truly are.",
-        bgImage: "/placeholder.svg?height=400&width=1200&text=Silk+fabric",
+        bgImage: "",
     },
 
 
@@ -49,7 +49,7 @@ export const aboutContent = {
             "Designed to last and become more beautiful with time",
         ],
         mediaImage: {
-            src: "/placeholder.svg?height=600&width=480&text=Silk+texture",
+            src: "",
             alt: "Silk texture detail",
         },
     },

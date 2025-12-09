@@ -40,7 +40,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Anna Hora Editorial Team",
         date: "September 17, 2025",
         readTime: "3 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Anna%20Hora%20in%20ELLE%20Czechia",
+        image: "",
         featured: true,
     },
     {
@@ -53,7 +53,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Sofia Chen",
         date: "December 12, 2024",
         readTime: "7 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Silk camisole styled for day wear",
+        image: "",
         featured: false,
     },
     {
@@ -66,7 +66,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Guest Editor",
         date: "December 10, 2024",
         readTime: "6 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Serene bedroom with silk textiles",
+        image: "",
         featured: false,
     },
     {
@@ -79,7 +79,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Elena Chen",
         date: "December 8, 2024",
         readTime: "8 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Silk production process and artisans",
+        image: "",
         featured: false,
     },
     {
@@ -92,7 +92,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Sofia Chen",
         date: "December 5, 2024",
         readTime: "4 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Winter morning scene with silk pajamas",
+        image: "",
         featured: false,
     },
     {
@@ -105,7 +105,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Elena Chen",
         date: "December 3, 2024",
         readTime: "5 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Beautifully wrapped silk gifts",
+        image: "",
         featured: false,
     },
     {
@@ -118,7 +118,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Guest Editor",
         date: "November 28, 2024",
         readTime: "6 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Champagne silk pieces in natural light",
+        image: "",
         featured: false,
     },
     {
@@ -131,7 +131,7 @@ export const journalArticles: JournalArticle[] = [
         author: "Sofia Chen",
         date: "November 25, 2024",
         readTime: "5 min read",
-        image: "/placeholder.svg?height=400&width=600&text=Evening routine with silk nightwear",
+        image: "",
         featured: false,
     },
 ]
