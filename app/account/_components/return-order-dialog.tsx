@@ -74,7 +74,7 @@ export default function ReturnOrderDialog({
                 <DialogHeader>
                     <DialogTitle className="font-serif text-2xl text-stone-800">Initiate Return</DialogTitle>
                     <DialogDescription className="text-stone-600">
-                        Order {order.id} - Select items to return and provide details
+                        Order {order.name} - Select items to return and provide details
                     </DialogDescription>
                 </DialogHeader>
 

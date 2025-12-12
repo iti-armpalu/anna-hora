@@ -1,14 +1,14 @@
 import Link from "next/link"
-import { headerContent } from "@/data/header-content" // or { siteContent } if you prefer
+import { navigation } from "@/lib/config/navigation"
 import { MobileNav } from "./mobile-nav"
 import { DesktopNav } from "./desktop-nav"
-// import { CartButton } from "../cart/cart-button"
-// import AuthNav from "./auth-nav"
+
 import Image from "next/image"
 import { QuickActions } from "./quick-actions"
 
+
 export default function Header() {
-  const { navigation } = headerContent // or siteContent.navigation.main
+
 
   return (
     <header className="sticky top-0 z-50 bg-neutral-50/95 backdrop-blur-sm border-b border-stone-200">

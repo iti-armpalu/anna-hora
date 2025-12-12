@@ -3,6 +3,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Mail, Phone, Clock, Instagram } from "lucide-react"
+import { siteConfig } from "@/lib/config/site";
+
 
 import type { Metadata } from "next"
 import { ContactForm } from "./_components/contact-form"
@@ -27,7 +29,7 @@ function ContactInfoCard() {
                         label="Email us directly"
                         content={
                             <a href="mailto:hello@annahora.com" className="text-stone-900 hover:text-stone-700 transition-colors">
-                                hello@annahora.com
+                                {siteConfig.supportEmail}
                             </a>
                         }
                     />
@@ -36,7 +38,7 @@ function ContactInfoCard() {
                         label="Call us"
                         content={
                             <a href="tel:+442071234567" className="text-stone-900 hover:text-stone-700 transition-colors">
-                                +44 (0) 20 7123 4567
+                                 {siteConfig.phone}
                             </a>
                         }
                     />
@@ -99,7 +101,7 @@ function FollowUsCard() {
 
                 <div className="flex space-x-4">
                     <a
-                        href="https://instagram.com/anna_hora_collection"
+                        href={siteConfig.social.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 text-stone-600 hover:text-stone-900 transition-colors"

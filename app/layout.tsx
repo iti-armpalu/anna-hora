@@ -16,12 +16,11 @@ import { AuthProvider } from "@/context/auth-context";
 import { getCustomer } from "@/lib/shopify/customer";
 import { getCartAction } from "@/lib/actions/cart/get-cart";
 import Header from "@/components/header/Header";
-
-
+import { siteConfig } from "@/lib/config/site";
 
 
 export const metadata: Metadata = {
-  title: "Anna Hora",
+  title: siteConfig.name,
   description: "A luxury lifestyle concept",
 };
 
