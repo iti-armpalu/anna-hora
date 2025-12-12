@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/config/site"
 import { PRESS_CONTENT } from "../_data"
 
 export function BrandHighlights() {
@@ -10,7 +11,7 @@ export function BrandHighlights() {
               Moments of <em className="font-serif italic">Recognition</em>
             </h3>
             <p className="text-stone-600 leading-relaxed">
-              ANNA HORA continues to inspire conversations in design, craftsmanship, and the art of refined living —
+              ${siteConfig.name.toUpperCase()} continues to inspire conversations in design, craftsmanship, and the art of refined living —
               featured by leading publications around the world.
             </p>
           </div>

@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/config/site"
+
 export interface ShippingOption {
     name: string
     cost: string
@@ -110,7 +112,7 @@ export interface ShippingOption {
     },
     returns: {
       title: "Effortless Returns",
-      description: "We want you to love your ANNA HORA piece. If it isn't perfect, returns are simple.",
+      description: `We want you to love your ${siteConfig.name.toUpperCase()} piece. If it isn't perfect, returns are simple.`,
       policy: {
         window: "30 days from delivery",
         condition: [

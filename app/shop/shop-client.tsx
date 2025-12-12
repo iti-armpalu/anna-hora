@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FiltersPanel } from "./_components/filters-panel";
 import { SortControl } from "./_components/sort-control";
@@ -20,17 +20,16 @@ interface Props {
 export default function ShopClient({
   initialProducts,
   collections,
-  activeCollection
+  activeCollection,
 }: Props) {
-
-  // This is allowed — for client-side filtering (fabric, size, etc.)
+  // -------------------------------------------------
+  // Base products (never mutated)
+  // -------------------------------------------------
   const [products] = useState<ProductNormalized[]>(initialProducts);
 
-  console.log(products)
-
-  // ----------------------------------
+  // -------------------------------------------------
   // SORT + VIEW
-  // ----------------------------------
+  // -------------------------------------------------
   const [selectedSort, setSelectedSort] = useState<
     "newest" | "price-low" | "price-high" | "bestsellers"
   >("newest");
@@ -38,14 +37,35 @@ export default function ShopClient({
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // ----------------------------------
-  // FILTER STATES (NEW)
-  // ----------------------------------
-
+  // -------------------------------------------------
+  // FILTER STATES
+  // -------------------------------------------------
   const [fabric, setFabric] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [priceRange, setPriceRange] =
+    useState<[number, number] | null>(null);
+
+  // -------------------------------------------------
+  // PRICE BOUNDS (market-aware, derived from data)
+  // -------------------------------------------------
+  const priceBounds = useMemo<[number, number]>(() => {
+    if (products.length === 0) return [0, 0];
+
+    const prices = products
+      .map((p) => Number(p.minPrice))
+      .filter((n) => !Number.isNaN(n));
+
+    return [
+      Math.min(...prices),
+      Math.max(...prices),
+    ];
+  }, [products]);
+
+  // Initialize / reset price range when market or products change
+  useEffect(() => {
+    setPriceRange(priceBounds);
+  }, [priceBounds]);
 
   // -------------------------------------------------
   // Helpers
@@ -56,10 +76,6 @@ export default function ShopClient({
 
   type ProductBooleanFlag = "bestseller" | "limited" | "new";
 
-  // function hasFlag(product: ProductNormalized, key: ProductBooleanFlag) {
-  //   return product.metafields[key] === true;
-  // }
-
   const hasFlag = useCallback(
     (product: ProductNormalized, key: ProductBooleanFlag) => {
       return product.metafields[key] === true;
@@ -67,9 +83,8 @@ export default function ShopClient({
     []
   );
 
-
   // -------------------------------------------------
-  // FILTERING (fabric, size, color, price)
+  // FILTER DATA (for sidebar options)
   // -------------------------------------------------
   const filterData = useMemo(() => {
     const sizeSet = new Set<string>();
@@ -77,8 +92,7 @@ export default function ShopClient({
     const fabricSet = new Set<string>();
 
     for (const product of products) {
-
-      // ----- SIZE (from variants with availability) -----
+      // SIZE — only available variants
       product.variants.forEach((variant) => {
         if (!variant.availableForSale) return;
 
@@ -86,23 +100,17 @@ export default function ShopClient({
           (opt) => opt.name.toLowerCase() === "size"
         );
 
-        if (sizeOpt?.value) {
-          sizeSet.add(sizeOpt.value);
-        }
+        if (sizeOpt?.value) sizeSet.add(sizeOpt.value);
       });
 
-
-      // ----- SIZE & COLOR from VARIANT OPTIONS -----
+      // COLOR
       for (const opt of product.options) {
-        const name = opt.name.toLowerCase();
-
-
-        if (name === "color") {
+        if (opt.name.toLowerCase() === "color") {
           opt.values.forEach((v) => colorSet.add(v));
         }
       }
 
-      // ----- FABRIC from METAFIELD -----
+      // FABRIC
       if (product.metafields.fabric) {
         fabricSet.add(product.metafields.fabric);
       }
@@ -115,27 +123,25 @@ export default function ShopClient({
     };
   }, [products]);
 
-
+  // -------------------------------------------------
+  // FILTERING
+  // -------------------------------------------------
   const filteredProducts = useMemo(() => {
     let arr = [...products];
 
-    // FABRIC — now from METAFIELD
+    // FABRIC
     if (fabric.length > 0) {
-      arr = arr.filter((p) => {
-        const fabricValue = p.metafields.fabric;
-
-        if (!fabricValue) return false;
-
-        return fabric.includes(fabricValue);
-      });
+      arr = arr.filter((p) =>
+        p.metafields.fabric
+          ? fabric.includes(p.metafields.fabric)
+          : false
+      );
     }
 
-
-
-    // SIZE FILTER — WITH availability
+    // SIZE (available variants only)
     if (sizes.length > 0) {
-      arr = arr.filter((product) => {
-        return product.variants.some((variant) => {
+      arr = arr.filter((product) =>
+        product.variants.some((variant) => {
           if (!variant.availableForSale) return false;
 
           const sizeOpt = variant.selectedOptions.find(
@@ -143,23 +149,22 @@ export default function ShopClient({
           );
 
           return sizeOpt && sizes.includes(sizeOpt.value);
-        });
-      });
-
+        })
+      );
     }
 
-    // COLOR — multi-select
+    // COLOR
     if (colors.length > 0) {
       arr = arr.filter((p) =>
-        p.options?.some(
+        p.options.some(
           (opt) =>
             opt.name.toLowerCase() === "color" &&
-            opt.values.some((value) => colors.includes(value))
+            opt.values.some((v) => colors.includes(v))
         )
       );
     }
 
-    // PRICE RANGE — single
+    // PRICE (only if set)
     if (priceRange) {
       const [min, max] = priceRange;
 
@@ -172,11 +177,8 @@ export default function ShopClient({
     return arr;
   }, [products, fabric, sizes, colors, priceRange]);
 
-
-
-
   // -------------------------------------------------
-  // Sorting
+  // SORTING
   // -------------------------------------------------
   const sortedProducts = useMemo(() => {
     return [...filteredProducts].sort((a, b) => {
@@ -199,7 +201,6 @@ export default function ShopClient({
       }
     });
   }, [filteredProducts, selectedSort, hasFlag]);
-
 
   // -------------------------------------------------
   // Render
@@ -238,7 +239,6 @@ export default function ShopClient({
       {/* GRID + SIDEBAR */}
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
           {/* LEFT SIDEBAR */}
           <aside className="hidden lg:block">
             <FilterSidebar
@@ -253,19 +253,26 @@ export default function ShopClient({
               setSelectedColors={setColors}
               selectedPrice={priceRange}
               setSelectedPrice={setPriceRange}
+              priceBounds={priceBounds}
+              currency={products[0]?.currencyCode}
             />
           </aside>
 
           {/* PRODUCT GRID */}
           <div className="lg:col-span-3">
             <div
-              className={`grid gap-8 items-stretch ${viewMode === "grid"
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "grid-cols-1"
-                }`}
+              className={`grid gap-8 items-stretch ${
+                viewMode === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                  : "grid-cols-1"
+              }`}
             >
               {sortedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} viewMode={viewMode} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  viewMode={viewMode}
+                />
               ))}
             </div>
           </div>

@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/config/site"
+
 export interface WishlistContent {
     hero: {
       title: string
@@ -32,7 +34,7 @@ export interface WishlistContent {
   export const wishlistContent: WishlistContent = {
     hero: {
       title: "Your Wishlist",
-      subtitle: "Save your favorite ANNA HORA pieces — create an account to keep them safe across all devices.",
+      subtitle: `Save your favorite ${siteConfig.name.toUpperCase()} pieces — create an account to keep them safe across all devices.`,
     },
     emptyState: {
       title: "Your wishlist is waiting",

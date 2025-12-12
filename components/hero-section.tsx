@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/lib/config/site"
 
 export default function HeroSection() {
   return (
@@ -36,7 +37,7 @@ export default function HeroSection() {
             size="lg"
             className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
           >
-            <Link href="/about">About ANNA HORA</Link>
+            <Link href="/about">About ${siteConfig.name.toUpperCase()}</Link>
           </Button>
         </div>
       </div>

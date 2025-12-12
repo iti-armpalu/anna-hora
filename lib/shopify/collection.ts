@@ -1,4 +1,3 @@
-// lib/shopify/product.ts
 import { COLLECTION_BY_HANDLE_QUERY, COLLECTIONS_QUERY } from "@/lib/shopify/queries/collection";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 import { ShopifyCollection } from "./types/collection";
@@ -17,14 +16,16 @@ export async function getCollections() {
   }>({
     query: COLLECTIONS_QUERY,
     variables: { first: 20 },
+    revalidate: 300,
   });
 
-  const collections = res.collections.edges.map((e) => e.node);
-
   // Filter out Shopify's default "frontpage" collection
-  const filtered = collections.filter((c) => c.handle !== "frontpage");
+  const collections = res.collections.edges
+    .map((e) => e.node)
+    .filter((c) => c.handle !== "frontpage");
 
-  return normalizeCollections(filtered);
+
+  return normalizeCollections(collections);
 }
 
 
@@ -44,7 +45,8 @@ export async function getCollectionByHandle(handle: string) {
     }
   }>({
     query: COLLECTION_BY_HANDLE_QUERY,
-    variables: { handle, first: 100 }
+    variables: { handle, first: 24 },
+    revalidate: 300,
   });
 
   if (!collection) return null;

@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { journalArticles, journalCategories } from "@/data/journal"
+import { siteConfig } from "@/lib/config/site"
 
 export default function JournalPage() {
     const [selectedCategory, setSelectedCategory] = useState("all")
@@ -39,7 +40,7 @@ export default function JournalPage() {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-12">
                         <h2 className="text-4xl lg:text-5xl font-light text-stone-800 mb-6">
-                            The ANNA HORA
+                            The ${siteConfig.name.toUpperCase()}
                             <br />
                             <em className="font-serif italic">Journal</em>
                         </h2>

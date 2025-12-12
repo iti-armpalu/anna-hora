@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/config/site"
 import { ABOUT_CONTENT } from "../_data"
 import { SectionTitle } from "./section-title"
 
@@ -21,7 +22,7 @@ export function ExperienceSection() {
             ))}
 
             <div className="pt-4">
-              <h4 className="font-medium text-stone-800 mb-3">The ANNA HORA Promise</h4>
+              <h4 className="font-medium text-stone-800 mb-3">The ${siteConfig.name.toUpperCase()} Promise</h4>
               <ul className="space-y-2 text-stone-600">
                 {experience.promises.map((promise, i) => (
                   <li key={i} className="flex items-start">

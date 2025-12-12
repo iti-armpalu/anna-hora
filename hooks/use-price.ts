@@ -16,5 +16,6 @@ export function formatPrice({ amount, currencyCode = "GBP" }: PriceArgs) {
   return new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: currencyCode,
+    maximumFractionDigits: 0,
   }).format(numeric);
 }

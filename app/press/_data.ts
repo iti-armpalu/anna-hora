@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/config/site"
+
 // Types
 export interface PressArticle {
     id: string
@@ -43,8 +45,8 @@ export interface PressArticle {
   const PRESS_ARTICLES: PressArticle[] = [
     {
       id: "1",
-      title: "The Art of Timeless Design: ANNA HORA's Vision for Modern Living",
-      quote: "ANNA HORA redefines luxury through minimalist elegance and masterful craftsmanship.",
+      title: `The Art of Timeless Design: ${siteConfig.name.toUpperCase()}'s Vision for Modern Living`,
+      quote: `${siteConfig.name.toUpperCase()} redefines luxury through minimalist elegance and masterful craftsmanship.`,
       publication: "Vogue",
       publicationLogo: "/vogue-logo.jpg",
       url: "https://example.com/article-1",
@@ -53,7 +55,7 @@ export interface PressArticle {
     },
     {
       id: "2",
-      title: "Sustainable Luxury: How ANNA HORA Champions Ethical Fashion",
+      title: `Sustainable Luxury: How ${siteConfig.name.toUpperCase()} Champions Ethical Fashion`,
       quote: "A brand that proves sustainability and style can coexist beautifully.",
       publication: "Harper's Bazaar",
       publicationLogo: "/harpers-bazaar-logo.png",

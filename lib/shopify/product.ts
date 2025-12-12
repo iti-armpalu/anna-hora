@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
 import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/shopify/queries/product";
@@ -40,17 +39,18 @@ export async function getProducts(
   first: number = 12,
   after?: null
 ): Promise<GetProductsResult> {
-  const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "GB";
+  // const cookieStore = await cookies();
+  // const country = cookieStore.get("country")?.value || "GB";
 
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
     variables: {
       first,
       after,
-      country,
+      // country,
       query: '-tag:"gift-card"', // exclude gift cards
     },
+    revalidate: 60,
   });
 
   return {
@@ -69,12 +69,12 @@ interface ShopifyProductQueryResponse {
 }
 
 export async function getProductByHandle(handle: string): Promise<ProductNormalized | null> {
-  const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "GB";
+  // const cookieStore = await cookies();
+  // const country = cookieStore.get("country")?.value || "GB";
 
   const res = await shopifyFetch<ShopifyProductQueryResponse>({
     query: PRODUCT_BY_HANDLE_QUERY,
-    variables: { handle, country },
+    variables: { handle },
   });
 
 
