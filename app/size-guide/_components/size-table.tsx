@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import type { SizeGuideContent } from "@/data/size-guide-content"
+import type { SizeGuideContent } from "../_data"
 
 interface SizeTableProps {
   category: SizeGuideContent["sizeCategories"][0]
