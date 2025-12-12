@@ -159,7 +159,10 @@ export default function GiftGuidePageClient({
                                                                 : "border-stone-300 text-stone-700 hover:bg-stone-100"
                                                         }
                                                     >
-                                                        {amount}
+                                                        {formatPrice({
+                                                            amount,
+                                                            currencyCode: product.currencyCode,
+                                                        })}
                                                     </Button>
                                                 ))}
                                             </div>

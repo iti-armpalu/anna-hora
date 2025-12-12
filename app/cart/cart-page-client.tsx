@@ -12,10 +12,14 @@ import { Separator } from "@/components/ui/separator";
 import { X, ShoppingBag, Gift } from "lucide-react";
 import { QuantitySelector } from "@/components/quantity-selector";
 
-export default function CartPageClient() {
+type CartPageClientProps = {
+  threshold: number;
+  currencyCode?: string; // optional, we can fallback to cart's currency
+};
+
+export default function CartPageClient({ threshold, currencyCode }: CartPageClientProps) {
   const { cart, removeFromCart, loading } = useCart();
 
-  const FREE_SHIPPING_THRESHOLD = 200; // TEMP — can be dynamic later
 
   // If cart not loaded yet
   if (!cart) {
@@ -36,10 +40,10 @@ export default function CartPageClient() {
     currencyCode: currency,
   });
 
-  const needsForFreeShipping = Math.max(
-    0,
-    FREE_SHIPPING_THRESHOLD - subtotal
-  );
+  // const needsForFreeShipping = Math.max(
+  //   0,
+  //   FREE_SHIPPING_THRESHOLD - subtotal
+  // );
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -179,7 +183,7 @@ export default function CartPageClient() {
                   </div>
 
                   {/* Free Shipping Message */}
-                  {needsForFreeShipping > 0 ? (
+                  {/* {needsForFreeShipping > 0 ? (
                     <p className="text-sm text-stone-600 mb-4 p-3 bg-stone-100 rounded-md">
                       Add{" "}
                       <span className="font-medium">
@@ -194,7 +198,19 @@ export default function CartPageClient() {
                     <p className="text-sm text-emerald-700 mb-4 p-3 bg-emerald-50 rounded-md flex items-center">
                       <Gift className="h-4 w-4 mr-2" /> Free shipping included
                     </p>
-                  )}
+                  )} */}
+
+                  {/* Free shipping message */}
+                  <p className="text-sm text-stone-600">
+                    Free shipping from{" "}
+                    <span className="font-medium">
+                      {formatPrice({
+                        amount: threshold,
+                        currencyCode: currencyCode,
+                      })}
+                    </span>{" "}
+                    — applied at checkout.
+                  </p>
 
                   <Separator className="mb-6" />
 

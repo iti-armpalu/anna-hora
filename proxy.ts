@@ -15,8 +15,10 @@ function isTokenExpired(cookie: string | null): boolean {
 
 function resolveCountry(req: NextRequest): string {
   const existing = req.cookies.get("country")?.value;
+  if (existing) return existing;
+
   const geoCountry = req.headers.get("x-vercel-ip-country");
-  return existing || geoCountry || "GB";
+  return geoCountry || "GB";
 }
 
 function applyCountryCookie(res: NextResponse, country: string) {

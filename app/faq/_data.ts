@@ -1,41 +1,45 @@
-// data/faq-content.ts
-
 export interface FAQItem {
-    category: string;
-    question: string;
-    answer: string;
+    category: string
+    question: string
+    answer: string
   }
   
-  export const header = {
+  export interface UITexts {
+    noResultsPrefix: string
+    clearSearchLabel: string
+    contactPromptTitle: string
+    contactPromptText: string
+    contactCtas: {
+      primary: { label: string; href: string }
+      secondary: { label: string; href: string }
+    }
+  }
+  
+  export interface HeaderContent {
+    title: string
+    subtitle: string
+    searchPlaceholder: string
+  }
+  
+  export const HEADER: Readonly<HeaderContent> = {
     title: "Frequently Asked Questions",
     subtitle:
       "We're here to help. Below you'll find answers to our most common questions. If you need a more personal touch, our team would be delighted to assist you.",
     searchPlaceholder: "Search frequently asked questions...",
-  };
+  } as const
   
-  export const uiTexts = {
+  export const UI_TEXTS: Readonly<UITexts> = {
     noResultsPrefix: 'No questions found matching "',
     clearSearchLabel: "Clear search",
     contactPromptTitle: "Still need help?",
-    contactPromptText:
-      "Didn't find what you were looking for? Get in touch—we'd be happy to help.",
+    contactPromptText: "Didn't find what you were looking for? Get in touch—we'd be happy to help.",
     contactCtas: {
       primary: { label: "Contact Us", href: "/contact" },
       secondary: { label: "Learn About Our Silk", href: "/our-silk" },
     },
-  };
+  } as const
   
-  export const categories: string[] = [
-    "Orders & Payments",
-    "Shipping & Delivery",
-    "Returns & Exchanges",
-    "Product Information",
-    "Gift Cards & Wrapping",
-    "Account & Wishlist",
-    "Contact Us",
-  ];
-  
-  export const faqData: FAQItem[] = [
+  export const FAQ_CONTENT: readonly FAQItem[] = [
     // Orders & Payments
     {
       category: "Orders & Payments",
@@ -193,5 +197,82 @@ export interface FAQItem {
       answer:
         "Currently, we're an online-only boutique, allowing us to focus on creating the most beautiful pieces and delivering them directly to you. However, we occasionally host trunk shows and pop-up events—follow us on social media for updates.",
     },
-  ];
+  ] as const
+  
+  let cachedCategories: string[] | null = null
+  
+  /**
+   * Get all unique categories in order of first appearance.
+   * Result is cached after first call for performance.
+   */
+  export function getCategories(): string[] {
+    if (cachedCategories) return cachedCategories
+  
+    const seen = new Set<string>()
+    const categories: string[] = []
+  
+    for (const faq of FAQ_CONTENT) {
+      if (!seen.has(faq.category)) {
+        seen.add(faq.category)
+        categories.push(faq.category)
+      }
+    }
+  
+    cachedCategories = categories
+    return categories
+  }
+  
+  /**
+   * Group FAQs by category for efficient rendering.
+   * Returns a Map for O(1) category lookups.
+   */
+  export function groupFAQsByCategory(faqs: readonly FAQItem[] = FAQ_CONTENT): Map<string, FAQItem[]> {
+    const grouped = new Map<string, FAQItem[]>()
+  
+    for (const faq of faqs) {
+      const categoryFaqs = grouped.get(faq.category)
+      if (categoryFaqs) {
+        categoryFaqs.push(faq)
+      } else {
+        grouped.set(faq.category, [faq])
+      }
+    }
+  
+    return grouped
+  }
+  
+  /**
+   * Search FAQs by query string across question, answer, and category.
+   * Returns empty array for empty queries.
+   */
+  export function searchFAQs(query: string, faqs: readonly FAQItem[] = FAQ_CONTENT): FAQItem[] {
+    const normalized = query.toLowerCase().trim()
+    if (!normalized) return []
+  
+    return faqs.filter(
+      (faq) =>
+        faq.question.toLowerCase().includes(normalized) ||
+        faq.answer.toLowerCase().includes(normalized) ||
+        faq.category.toLowerCase().includes(normalized),
+    )
+  }
+  
+  /**
+   * Get FAQs organized by category with items for each category.
+   * Useful for rendering category groups.
+   */
+  export function getCategorizedFAQs(faqs: readonly FAQItem[] = FAQ_CONTENT): Array<{
+    category: string
+    items: FAQItem[]
+  }> {
+    const grouped = groupFAQsByCategory(faqs)
+    const categories = getCategories()
+  
+    return categories
+      .map((category) => ({
+        category,
+        items: grouped.get(category) || [],
+      }))
+      .filter((group) => group.items.length > 0)
+  }
   

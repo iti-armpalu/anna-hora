@@ -1,6 +1,6 @@
 // data/silk.js
 
-const silkData = {
+export const SILK_CONTENT = {
     hero: {
         bgImage:
             "/anna-hora-hero-2.webp",
@@ -167,5 +167,3 @@ const silkData = {
         },
     },
 };
-
-export default silkData;
