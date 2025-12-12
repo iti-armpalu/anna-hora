@@ -101,7 +101,7 @@ function FollowUsCard() {
 
                 <div className="flex space-x-4">
                     <a
-                        href={siteConfig.social.instagram}
+                        href={siteConfig.social.instagram.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 text-stone-600 hover:text-stone-900 transition-colors"
