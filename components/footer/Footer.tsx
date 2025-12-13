@@ -5,6 +5,7 @@ import { footerNavigation } from "@/lib/config/footer";
 import { footerSections } from "./sections";
 import Year from "./year";
 import InstagramGrid from "./instagram-grid";
+import PaymentMethods from "./payment-methods";
 
 type FooterColumnProps = {
   section: typeof footerSections[number];
@@ -42,11 +43,16 @@ export default function Footer() {
       <div className="container mx-auto">
         {/* Top: Brand + 3 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-4">
-            <h3 className="text-xl mb-4">{siteConfig.name}</h3>
-            <p className="text-sm leading-relaxed text-anna-cement-100">
-              {siteConfig.tagline}
-            </p>
+          <div className="lg:col-span-4 flex flex-col justify-between">
+            <div>
+              <h3 className="text-xl mb-4">{siteConfig.name}</h3>
+              <p className="text-sm leading-relaxed text-anna-cement-100">
+                {siteConfig.tagline}
+              </p>
+            </div>
+            <PaymentMethods />
+
+
           </div>
 
           {footerSections.map((section) => (

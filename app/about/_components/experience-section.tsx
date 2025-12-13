@@ -1,6 +1,7 @@
 import { siteConfig } from "@/lib/config/site"
 import { ABOUT_CONTENT } from "../_data"
 import { SectionTitle } from "./section-title"
+import Image from "next/image"
 
 export function ExperienceSection() {
   const { experience } = ABOUT_CONTENT
@@ -22,7 +23,7 @@ export function ExperienceSection() {
             ))}
 
             <div className="pt-4">
-              <h4 className="font-medium text-stone-800 mb-3">The ${siteConfig.name.toUpperCase()} Promise</h4>
+              <h4 className="font-medium text-stone-800 mb-3">The {siteConfig.name.toUpperCase()} Promise</h4>
               <ul className="space-y-2 text-stone-600">
                 {experience.promises.map((promise, i) => (
                   <li key={i} className="flex items-start">
@@ -35,10 +36,16 @@ export function ExperienceSection() {
           </div>
 
           <div className="relative order-1 lg:order-2">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
-              {/* Image placeholder - add when available */}
+            <div className="relative">
+              <Image
+                src={experience.image.src}
+                alt={experience.image.alt}
+                width={experience.image.width}
+                height={experience.image.height}
+                className="rounded-lg"
+                sizes="(min-width:1024px) 500px, 90vw"
+              />
             </div>
-            <div className="absolute -top-8 -left-8 w-24 h-24 bg-stone-200 rounded-full opacity-30 -z-10" />
           </div>
         </div>
       </div>

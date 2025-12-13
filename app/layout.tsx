@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { cookies } from "next/headers";
-
+import { Analytics } from "@vercel/analytics/next"
 
 import Footer from "@/components/footer/Footer";
 import { Toaster } from "@/components/ui/sonner"
@@ -63,6 +63,7 @@ export default async function RootLayout({
             <WishlistProvider>
               <Header />
               {children}
+              <Analytics />
               <DevCurrencyTester /> {/* 👈 Always available in dev */}
               <Toaster />
               <Footer />

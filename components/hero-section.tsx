@@ -17,7 +17,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 w-full text-left px-8">
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-200 mb-6 leading-tight text-left">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-stone-200 mb-6 leading-none text-left">
           For the moments
           <br />
           <em className="font-serif italic">you keep to yourself</em>
@@ -37,7 +37,7 @@ export default function HeroSection() {
             size="lg"
             className="border-stone-300 text-stone-300 hover:bg-stone-100 px-8 py-3 bg-transparent"
           >
-            <Link href="/about">About ${siteConfig.name.toUpperCase()}</Link>
+            <Link href="/about">About {siteConfig.name.toUpperCase()}</Link>
           </Button>
         </div>
       </div>

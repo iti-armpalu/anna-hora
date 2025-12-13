@@ -1,98 +1,70 @@
-'use client'
+"use client";
 
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/hooks/use-price";
-// import { WishlistButton } from "@/components/wishlist-button";
-import { useState } from "react";
 import { toast } from "sonner";
+
 import { ProductGallery } from "./_components/product-gallery";
 import { ProductDetailsAccordion } from "./_components/product-detail-accordion";
 import { CustomerAssurance } from "./_components/customer-assurance";
-import { ProductNormalized, ProductVariantNormalized } from "@/lib/shopify/types/product-normalized";
 
-export const revalidate = 60; // ISR every 60 seconds
+import {
+    ProductNormalized,
+    ProductVariantNormalized,
+} from "@/lib/shopify/types/product-normalized";
 
 interface Props {
     product: ProductNormalized;
+    freeShipping: {
+        country: string;
+        threshold: number;
+        currency: string;
+    };
 }
 
-export default function ProductPageClient({ product }: Props) {
+export default function ProductPageClient({
+    product,
+    freeShipping,
+}: Props) {
     const { addToCart } = useCart();
-    const [selectedSize, setSelectedSize] = useState<string | null>(null)
-    let selectedVariant: ProductVariantNormalized | null = null;
+    const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-    // --- Add to Bag handler ---
-    async function handleAddToBag() {
-        // console.log("Add to Bag clicked");
+    // -------------------------------------------------
+    // Build SIZE → VARIANT map once
+    // -------------------------------------------------
+    const sizeMap = useMemo(() => {
+        const map = new Map<string, ProductVariantNormalized>();
 
-        if (!selectedSize) {
-            toast.error("Please select a size before adding to bag.");
-            return;
-        }
-
-        const selected = sizes.find((s) => s.size === selectedSize);
-
-        if (!selected?.variantId) {
-            toast.error("Selected size is not available.");
-            return;
-        }
-
-        await addToCart(selected.variantId, 1);
-
-        toast.success(
-            `${product.title} (Size: ${selectedSize}!`
-        );
-    }
-
-    const sizeOption = product.options.find(
-        (opt) => opt.name.toLowerCase() === "size"
-    );
-
-    const sizes = sizeOption
-        ? sizeOption.values.map((size) => {
-            // Find the variant corresponding to this size
-            const variantForSize = product.variants.find((variant) =>
-                variant.selectedOptions.some(
-                    (opt) =>
-                        opt.name.toLowerCase() === "size" &&
-                        opt.value.toLowerCase() === size.toLowerCase()
-                )
+        for (const variant of product.variants) {
+            const sizeOpt = variant.selectedOptions.find(
+                (opt) => opt.name.toLowerCase() === "size"
             );
 
-            return {
-                size,
-                inStock: variantForSize?.availableForSale ?? false,
-                variantId: variantForSize?.id ?? null,
-            };
-        })
-        : [];
+            if (sizeOpt) {
+                map.set(sizeOpt.value, variant);
+            }
+        }
 
+        return map;
+    }, [product.variants]);
 
+    const sizes = useMemo(() => {
+        return Array.from(sizeMap.entries()).map(([size, variant]) => ({
+            size,
+            inStock: variant.availableForSale,
+            variantId: variant.id,
+        }));
+    }, [sizeMap]);
 
+    const selectedVariant = selectedSize
+        ? sizeMap.get(selectedSize) ?? null
+        : null;
 
-    // Get the price from the selected variant:
-    if (selectedSize) {
-        selectedVariant =
-            product.variants.find((variant) =>
-                variant.selectedOptions.some(
-                    (opt) =>
-                        opt.name.toLowerCase() === "size" &&
-                        opt.value.toLowerCase() === selectedSize.toLowerCase()
-                )
-            ) ?? null; // ← converts undefined -> null
-    }
-
-    // const basePrice =
-    //     selectedVariant?.node.price?.amount ??
-    //     product.priceRange.minVariantPrice?.amount ??
-    //     "0";
-
-    // const currency =
-    //     selectedVariant?.node.price?.currencyCode ??
-    //     product.priceRange.minVariantPrice?.currencyCode ??
-    //     "GBP";
-
+    // -------------------------------------------------
+    // Price
+    // -------------------------------------------------
     const basePrice = selectedVariant
         ? selectedVariant.price.amount
         : product.minPrice;
@@ -106,135 +78,89 @@ export default function ProductPageClient({ product }: Props) {
         currencyCode: currency,
     });
 
-    // const total = Number(basePrice) * quantity;
+    // -------------------------------------------------
+    // Add to Cart
+    // -------------------------------------------------
+    async function handleAddToBag() {
+        if (!selectedVariant) {
+            toast.error("Please select a size before adding to bag.");
+            return;
+        }
 
-    // const formattedTotal = formatPrice({
-    //     amount: total,
-    //     currencyCode: currency
-    // });
+        await addToCart(selectedVariant.id, 1);
 
-    const images = product.images;
+        toast.success(
+            `${product.title} (Size: ${selectedSize}) added to your bag`
+        );
+    }
 
-    // const fabric = product.metafields.fabric;
-    // const sensoryDescription = product.metafields.sensoryDescription;
-    const lifestyleDescription = product.metafields.lifestyleDescription;
-    const styleDescription = product.metafields.styleDescription;
-
-
+    // -------------------------------------------------
+    // Render
+    // -------------------------------------------------
     return (
         <div className="min-h-screen">
-
-            {/* Main Product Section */}
             <div className="container mx-auto py-12">
-                {/* <div className="grid grid-cols-1 lg:grid-cols-5 gap-12"> */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* Product Gallery */}
-                    {/* <div className="lg:col-span-3"> */}
-                    <div>
-                        <ProductGallery images={images} />
-                    </div>
+                    {/* Gallery */}
+                    <ProductGallery images={product.images} />
 
-                    {/* <div className="lg:col-span-2"> */}
-                    <div>
-                        {/* Product Info */}
-                        <div className="space-y-8">
-                            {/* Product Header */}
-                            <div className="space-y-4">
-                                <h1 className="text-3xl lg:text-4xl font-light text-stone-800 font-serif">{product.title}</h1>
-                                <p className="text-lg text-stone-600 italic">{product.description}</p>
-                                <div className="flex items-center space-x-4">
-                                    <p className="text-xl font-medium text-stone-800">
-                                        {formattedPrice}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Size Selection */}
-                            <div className="space-y-3">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-sm font-medium text-stone-800">Size</h3>
-
-                                </div>
-                                <div className="grid grid-cols-5 gap-2">
-                                    {sizes.map(({ size, inStock, variantId }) => (
-                                        <Button
-                                            key={variantId}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                                if (inStock) {
-                                                    setSelectedSize(size);
-                                                }
-                                            }}
-                                            variant={selectedSize === variantId ? "default" : "outline"}
-                                            disabled={!inStock}
-                                            className={`${selectedSize === size
-                                                ? "bg-stone-800 text-white"
-                                                : inStock
-                                                    ? "bg-white text-stone-800 border-stone-300"
-                                                    : "bg-stone-100 text-stone-400 border-stone-200 line-through cursor-not-allowed opacity-60"
-                                                }
-                                        `}
-                                        >
-                                            {size}
-                                        </Button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Add to Bag */}
-                            <div className="space-y-4">
-
-                                <div className="space-y-3">
-                                    <Button
-                                        size="lg"
-                                        onClick={handleAddToBag}
-                                        className="w-full bg-stone-800 hover:bg-stone-700 text-white py-4"
-                                    >
-                                        Add to Bag – {formattedPrice}
-                                    </Button>
-                                    {/* <WishlistButton
-                                    product={{
-                                        id: product.id,
-                                        name: product.name,
-                                        price: product.price,
-                                        originalPrice: product.originalPrice,
-                                        image: product.images[0],
-                                        color: product.colors.find((c) => c.id === selectedColor)?.name || "Default",
-                                        size: selectedSize,
-                                        stock: 10,
-                                        category: "robes",
-                                    }}
-                                    variant="full"
-                                    size="lg"
-                                    className="w-full"
-                                /> */}
-                                </div>
-                            </div>
-
-                            {/* Customer Assurance */}
-                            <CustomerAssurance />
-
-                            {/* Product Description */}
-                            <div className="pt-8 space-y-6 border-t border-stone-200">
-                                <h2 className="text-2xl font-light text-stone-800 font-serif">For mornings when the world can wait</h2>
-                                <div className="space-y-4 text-stone-600 leading-relaxed">
-                                    {/* <p>{sensoryDescription}</p> */}
-                                    <p>{lifestyleDescription}</p>
-                                    <p>{styleDescription}</p>
-                                </div>
-                            </div>
-                            {/* Product Details Accordion */}
-                            <div className="border-t border-stone-200 pt-8">
-                                <ProductDetailsAccordion product={product} />
-                            </div>
-
-
+                    {/* Info */}
+                    <div className="space-y-8">
+                        <div className="space-y-4">
+                            <h1 className="text-3xl lg:text-4xl font-light font-serif">
+                                {product.title}
+                            </h1>
+                            <p className="text-lg text-stone-600 italic">
+                                {product.description}
+                            </p>
+                            <p className="text-xl font-medium">{formattedPrice}</p>
                         </div>
+
+                        {/* Size */}
+                        <div className="space-y-3">
+                            <h3 className="text-sm font-medium">Size</h3>
+                            <div className="grid grid-cols-5 gap-2">
+                                {sizes.map(({ size, inStock }) => (
+                                    <Button
+                                        key={size}
+                                        disabled={!inStock}
+                                        onClick={() => inStock && setSelectedSize(size)}
+                                        variant={
+                                            selectedSize === size ? "default" : "outline"
+                                        }
+                                    >
+                                        {size}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Add to Bag */}
+                        <Button
+                            size="lg"
+                            onClick={handleAddToBag}
+                            className="w-full"
+                        >
+                            Add to Bag – {formattedPrice}
+                        </Button>
+
+                        <CustomerAssurance freeShipping={freeShipping} />
+
+                        {/* Description */}
+                        <div className="pt-8 border-t">
+                            <h2 className="text-2xl font-light font-serif">
+                                For mornings when the world can wait
+                            </h2>
+                            <div className="mt-4 space-y-4 text-stone-600">
+                                <p>{product.metafields.lifestyleDescription}</p>
+                                <p>{product.metafields.styleDescription}</p>
+                            </div>
+                        </div>
+
+                        <ProductDetailsAccordion product={product} />
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }

@@ -47,7 +47,7 @@ export interface AboutContent {
         titleLines: TitleLine[]
         paragraphs: string[]
         promises: string[]
-        mediaImage: ImageData
+        image: ImageData
     }
     commitments: {
         introTitle: string
@@ -123,9 +123,11 @@ export const ABOUT_CONTENT: AboutContent = {
             "Ethically sourced and sustainably produced",
             "Designed to last and become more beautiful with time",
         ],
-        mediaImage: {
-            src: "",
+        image: {
+            src: "/ethical-by-design.webp",
             alt: "Silk texture detail",
+            width: 400,
+            height: 500,
         },
     },
 

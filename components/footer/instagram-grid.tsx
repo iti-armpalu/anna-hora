@@ -25,7 +25,7 @@ export default function InstagramGrid() {
             href={`https://instagram.com/${siteConfig.social.instagram.link}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="aspect-square relative overflow-hidden rounded group"
+            className="aspect-square relative overflow-hidden group"
           >
             <img
               src="/silk-set.webp"
