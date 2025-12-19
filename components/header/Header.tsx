@@ -21,7 +21,7 @@ export default function Header() {
             className="relative block h-10 w-32 sm:h-12 sm:w-40 lg:h-16 lg:w-60"
           >
             <Image
-              src="/anna-hora-logo.png"
+              src="/anna-hora-logo-black.png"
               alt="ANNA HORA"
               fill
               priority

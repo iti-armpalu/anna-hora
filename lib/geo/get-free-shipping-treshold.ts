@@ -3,16 +3,20 @@
 import { cookies } from "next/headers";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/config/free-shipping";
 
-export async function getFreeShippingThreshold(): Promise<{
+export type FreeShippingThreshold = {
   country: string;
   threshold: number;
-  currency: string;
-}> {
+  currencyCode: string;
+};
+
+export async function getFreeShippingThreshold(): Promise<FreeShippingThreshold> {
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "GB";
 
   const threshold =
-    FREE_SHIPPING_THRESHOLD[country] ?? FREE_SHIPPING_THRESHOLD["GB"];
+    FREE_SHIPPING_THRESHOLD[country] ??
+    FREE_SHIPPING_THRESHOLD["GB"];
+
 
   const currencyMap: Record<string, string> = {
     GB: "GBP",
@@ -28,6 +32,6 @@ export async function getFreeShippingThreshold(): Promise<{
   return {
     country,
     threshold,
-    currency: currencyMap[country] ?? "GBP",
+    currencyCode: currencyMap[country] ?? "GBP",
   };
 }

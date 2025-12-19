@@ -34,3 +34,13 @@ export const CUSTOMER_PASSWORD_UPDATE_MUTATION = `
     }
   }
 `;
+
+export const CUSTOMER_RECOVER_MUTATION = `
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
+      customerUserErrors {
+        message
+      }
+    }
+  }
+`;

@@ -9,7 +9,7 @@ import type { ShopifyCustomer } from "@/lib/shopify/types/customer";
 import { CUSTOMER_CREATE_MUTATION } from "@/lib/shopify/queries/customer";
 import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/shopify/queries/auth";
 
-import { SignupState } from "./signup-state";
+import { AuthActionState } from "./auth-state";
 
 const SignupSchema = z.object({
   email: z.string().email(),
@@ -27,9 +27,9 @@ interface CustomerCreateData {
 
 // Server Action
 export async function signupAction(
-  prevState: SignupState,
+  _prev: AuthActionState,
   formData: FormData
-): Promise<SignupState> {
+): Promise<AuthActionState> {
   // 1) Parse form data
   const raw = {
     email: formData.get("email"),

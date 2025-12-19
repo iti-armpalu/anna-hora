@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { CartButton } from "../cart/cart-button"
+import { CartButton } from "../../app/cart/_components/cart-button"
 import AuthNav from "./auth-nav"
 import { Button } from "../ui/button"
 import { Heart, Search } from "lucide-react"

@@ -11,9 +11,9 @@ import {
 } from "@/lib/actions/auth/signin";
 
 import {
-    initialSigninState,
-    type SigninState
-} from "@/lib/actions/auth/signin-state";
+    initialAuthState,
+    type AuthActionState,
+  } from "@/lib/actions/auth/auth-state";
 
 export function SigninForm() {
     const searchParams = useSearchParams();
@@ -23,7 +23,7 @@ export function SigninForm() {
     const redirect = searchParams.get("redirect") || "/account";
 
     const [state, formAction, isPending] =
-    useActionState<SigninState, FormData>(signinAction, initialSigninState);
+    useActionState<AuthActionState, FormData>(signinAction, initialAuthState);
 
     const errorMessage =
         state.formError ??

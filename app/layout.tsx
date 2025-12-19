@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/next"
 import Footer from "@/components/footer/Footer";
 import { Toaster } from "@/components/ui/sonner"
 import { DevCurrencyTester } from "@/components/dev-currency-tester";
-import { GlobalCartDrawer } from "@/components/cart/global-cart-drawer";
+import { GlobalCartDrawer } from "@/app/cart/global-cart-drawer";
 
 import { CartProvider } from "@/context/cart-context";
 import { WishlistProvider } from "@/context/wishlist-context";
@@ -17,7 +17,8 @@ import { getCustomer } from "@/lib/shopify/customer";
 import { getCartAction } from "@/lib/actions/cart/get-cart";
 import Header from "@/components/header/Header";
 import { siteConfig } from "@/lib/config/site";
-
+import { CartShippingProvider } from "@/context/cart-shipping-context";
+import { getFreeShippingThreshold } from "@/lib/geo/get-free-shipping-treshold";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -29,6 +30,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const { threshold, currencyCode } =
+  await getFreeShippingThreshold();
 
   const cookieStore = await cookies()
   const cartId = cookieStore.get("cartId")?.value || null;
@@ -53,6 +57,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
+      <CartShippingProvider
+          threshold={threshold}
+          currencyCode={currencyCode}
+        >
 
         <CartProvider
           initialCartId={cartId}
@@ -71,6 +79,7 @@ export default async function RootLayout({
             </WishlistProvider>
           </AuthProvider>
         </CartProvider>
+        </CartShippingProvider>
       </body>
     </html>
   );

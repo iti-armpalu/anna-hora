@@ -13,9 +13,9 @@ import {
 } from "@/lib/actions/auth/signup";
 
 import {
-    initialSignupState,
-    type SignupState
-} from "@/lib/actions/auth/signup-state";
+    initialAuthState,
+    type AuthActionState,
+  } from "@/lib/actions/auth/auth-state";
 
 export function SignupForm() {
     const searchParams = useSearchParams();
@@ -27,7 +27,7 @@ export function SignupForm() {
     const [password, setPassword] = useState("");
 
     const [state, formAction, isPending] =
-        useActionState<SignupState, FormData>(signupAction, initialSignupState);
+        useActionState<AuthActionState, FormData>(signupAction, initialAuthState);
 
     useEffect(() => {
         if (state.ok) {

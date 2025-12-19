@@ -1,9 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
-import type { LogoutState } from "./logout-state";
+import { AuthActionState } from "./auth-state";
 
-export async function logoutAction(): Promise<LogoutState> {
+export async function logoutAction(): Promise<AuthActionState> {
   const cookieStore = await cookies();
 
   // Remove the Shopify customer token cookie

@@ -6,8 +6,9 @@ import { shopifyFetch } from "@/lib/shopify/fetch";
 import type { TokenCreateData } from "@/lib/shopify/types/auth";
 import { CUSTOMER_ACCESS_TOKEN_CREATE } from "@/lib/shopify/queries/auth";
 
-import type { SigninState } from "./signin-state";
+import { AuthActionState } from "./auth-state";
 import { cartSetBuyerIdentityAction } from "../cart/cart-set-buyer-identity";
+
 
 // Zod validation
 const SigninSchema = z.object({
@@ -17,9 +18,9 @@ const SigninSchema = z.object({
 
 // Server Action
 export async function signinAction(
-    prev: SigninState,
+    prev: AuthActionState,
     formData: FormData
-): Promise<SigninState> {
+): Promise<AuthActionState> {
     const parsed = SigninSchema.safeParse({
         email: formData.get("email"),
         password: formData.get("password"),

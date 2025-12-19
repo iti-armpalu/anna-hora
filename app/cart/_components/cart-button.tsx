@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ShoppingBag } from "lucide-react"
 // import { useCart } from "@/context/cart-context"
-import { CartDrawer } from "@/components/cart/cart-drawer"
+import { CartDrawer } from "@/app/cart/cart-drawer"
 
 export function CartButton() {
   const [open, setOpen] = useState(false)
