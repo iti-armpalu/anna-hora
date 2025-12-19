@@ -43,26 +43,19 @@ export async function forgotPasswordAction(
   const { email } = parsed.data;
 
   try {
-    const data = await shopifyFetch<CustomerRecoverData>({
+    await shopifyFetch<CustomerRecoverData>({
       query: CUSTOMER_RECOVER_MUTATION,
       variables: { email },
     });
 
-    const errors = data.customerRecover.customerUserErrors;
-
-    // 🔒 Prevent account enumeration:
-    // Always respond with success if request was accepted
-    if (errors.length > 0) {
-      return {
-        ok: false,
-        formError: errors[0].message,
-      };
-    }
-
-    return { ok: true };
+    // 🔒 Always return success to prevent account enumeration
+    return {
+      ok: true,
+    };
   } catch (err) {
     console.error("forgotPasswordAction error:", err);
 
+    // Only fail on actual transport / server errors
     return {
       ok: false,
       formError: "Something went wrong. Please try again later.",
