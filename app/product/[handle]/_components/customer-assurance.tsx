@@ -1,16 +1,9 @@
+import { useCartShipping } from "@/context/cart-shipping-context";
 import { formatPrice } from "@/hooks/use-price";
 import { Truck, RotateCcw, Shield } from "lucide-react"
 
-interface Props {
-  freeShipping: {
-    threshold: number;
-    currency: string;
-  };
-}
-
-
-export function CustomerAssurance({ freeShipping }: Props) {
-  const { threshold, currency } = freeShipping;
+export function CustomerAssurance() {
+  const { threshold, currencyCode } = useCartShipping();
 
   return (
     <div className="grid grid-cols-3 gap-4 py-6 border-t border-stone-200 mb-0">
@@ -18,9 +11,10 @@ export function CustomerAssurance({ freeShipping }: Props) {
         <Truck className="w-6 h-6 text-stone-600 mx-auto" />
         <h3 className="text-xs font-medium text-stone-800">Free Shipping</h3>
         <p className="text-xs text-stone-600">
-          From {formatPrice({
+        From{" "}
+          {formatPrice({
             amount: threshold,
-            currencyCode: currency,
+            currencyCode,
           })}
         </p>
       </div>

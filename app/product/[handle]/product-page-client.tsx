@@ -17,16 +17,10 @@ import {
 
 interface Props {
     product: ProductNormalized;
-    freeShipping: {
-        country: string;
-        threshold: number;
-        currency: string;
-    };
 }
 
 export default function ProductPageClient({
     product,
-    freeShipping,
 }: Props) {
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -144,7 +138,7 @@ export default function ProductPageClient({
                             Add to Bag – {formattedPrice}
                         </Button>
 
-                        <CustomerAssurance freeShipping={freeShipping} />
+                        <CustomerAssurance />
 
                         {/* Description */}
                         <div className="pt-8 border-t">
