@@ -14,6 +14,8 @@ import {
     initialAuthState,
     type AuthActionState,
   } from "@/lib/actions/auth/auth-state";
+import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/form/password-input";
 
 export function SigninForm() {
     const searchParams = useSearchParams();
@@ -55,13 +57,15 @@ export function SigninForm() {
                     placeholder="Email"
                 />
 
-                <input
+                {/* <input
                     name="password"
                     type="password"
                     required
                     className="w-full border px-3 py-2 rounded bg-white"
                     placeholder="Password"
-                />
+                /> */}
+                
+                <PasswordInput required autoComplete="current-password" />
 
                 {errorMessage && (
                     <p className="text-red-600 text-sm whitespace-pre-line">
@@ -78,13 +82,13 @@ export function SigninForm() {
                     </Link>
                 </div>
 
-                <button
+                <Button
                     type="submit"
                     disabled={isPending}
-                    className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
+                    className="w-full bg-anna-green-950 hover:bg-stone-700 text-white py-2 disabled:opacity-50"
                 >
                     {isPending ? "Signing in..." : "Sign In"}
-                </button>
+                </Button>
             </form>
 
             <div className="text-center text-sm text-muted-foreground mt-4">

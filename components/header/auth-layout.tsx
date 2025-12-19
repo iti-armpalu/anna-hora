@@ -34,7 +34,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
 
             {/* Right Side - Form */}
             <div className="flex-1 flex items-center justify-center p-8 bg-background">
-                <div className="max-w-md mx-auto py-4 px-4">
+                <div className="w-full max-w-md mx-auto py-4 px-4">
                     {/* Form Card */}
                     <Card className="border-stone-200 shadow-sm">
                         <CardHeader className="space-y-1">

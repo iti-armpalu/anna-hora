@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/form/password-input";
 
 import {
     signupAction
@@ -15,7 +16,9 @@ import {
 import {
     initialAuthState,
     type AuthActionState,
-  } from "@/lib/actions/auth/auth-state";
+} from "@/lib/actions/auth/auth-state";
+import { Button } from "@/components/ui/button";
+
 
 export function SignupForm() {
     const searchParams = useSearchParams();
@@ -80,13 +83,19 @@ export function SignupForm() {
 
                 {/* Password w/ live rules */}
                 <div className="space-y-2">
-                    <input
+                    {/* <input
                         name="password"
                         type="password"
                         required
                         className="w-full border px-3 py-2 rounded bg-white"
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
+                    /> */}
+
+                    <PasswordInput
+                        required
+                        autoComplete="new-password"
+                        placeholder="Create password"
                     />
 
                     <ul className="text-xs text-stone-600 space-y-1">
@@ -149,13 +158,13 @@ export function SignupForm() {
                     </p>
                 )}
 
-                <button
+                <Button
                     type="submit"
                     disabled={isPending}
-                    className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
+                    className="w-full bg-anna-green-950 hover:bg-stone-700 text-white py-2 disabled:opacity-50"
                 >
                     {isPending ? "Creating account..." : "Create Account"}
-                </button>
+                </Button>
             </form>
 
             <div className="text-center text-sm text-muted-foreground mt-4">

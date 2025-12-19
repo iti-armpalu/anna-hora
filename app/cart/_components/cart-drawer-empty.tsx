@@ -20,7 +20,7 @@ export function CartDrawerEmpty({ onClose }: CartDrawerEmptyProps) {
 
       <Button
         onClick={onClose}
-        className="bg-stone-800 hover:bg-stone-700 text-white"
+        className="bg-anna-green-950 hover:bg-stone-700 text-white"
       >
         Continue Shopping
       </Button>

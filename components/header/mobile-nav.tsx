@@ -36,7 +36,7 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
                 onClick={() => setIsOpen(false)}
               >
                 <Image
-                  src="/anna-hora-logo.png"
+                  src="/anna-hora-logo-black.png"
                   alt="ANNA HORA"
                   fill
                   priority
