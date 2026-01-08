@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { journalArticles, journalCategories } from "@/data/journal"
+import { journalArticles, journalCategories } from "./_data"
 import { siteConfig } from "@/lib/config/site"
 
 export default function JournalPage() {
@@ -40,7 +40,7 @@ export default function JournalPage() {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto mb-12">
                         <h2 className="text-4xl lg:text-5xl font-light text-stone-800 mb-6">
-                            The ${siteConfig.name.toUpperCase()}
+                            The {siteConfig.name.toUpperCase()}
                             <br />
                             <em className="font-serif italic">Journal</em>
                         </h2>
@@ -83,7 +83,7 @@ export default function JournalPage() {
             {featuredArticle && selectedCategory === "all" && (
                 <section className="pb-16 lg:pb-24">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <Card className="overflow-hidden border-0 shadow-lg bg-white">
+                        <Card className="py-0 gap-0  overflow-hidden border-0 shadow-lg bg-white">
                             <div className="grid grid-cols-1 lg:grid-cols-2">
                                 <div className="relative aspect-[4/3] lg:aspect-auto">
                                     <Image
@@ -128,11 +128,11 @@ export default function JournalPage() {
                         {regularArticles.map((article) => (
                             <Card
                                 key={article.id}
-                                className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300"
+                                className="py-0 gap-0 group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300"
                             >
                                 <div className="relative aspect-[4/3] overflow-hidden">
                                     <Image
-                                        src={article.image || "/placeholder.svg"}
+                                        src={article.image}
                                         alt={article.title}
                                         fill
                                         className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -152,7 +152,7 @@ export default function JournalPage() {
                                     <h4 className="text-lg font-light text-stone-800 mb-3 leading-tight group-hover:text-stone-600 transition-colors">
                                         {article.title}
                                     </h4>
-                                    <p className="text-stone-600 text-sm mb-4 leading-relaxed">{article.excerpt}</p>
+                                    <p className="text-stone-600 h-20 text-sm mb-4 leading-relaxed">{article.excerpt}</p>
                                     <div className="flex items-center justify-between text-xs text-stone-500">
                                         <span>By {article.author}</span>
                                         <div className="flex items-center space-x-2">
