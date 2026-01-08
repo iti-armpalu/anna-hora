@@ -124,7 +124,7 @@ export function CartProvider({
     setCart(res.cart);
 
     setLoading(false);
-    setIsOpen(true); // open drawer automatically
+    // setIsOpen(true); // open drawer automatically
   }
 
   async function updateQuantity(

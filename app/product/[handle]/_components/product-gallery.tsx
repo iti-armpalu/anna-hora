@@ -21,7 +21,6 @@ export function ProductGallery({ images }: ProductGalleryProps) {
     return (
         <>
             <div className="lg:sticky lg:top-24 lg:h-[calc(100vh-8rem)] lg:overflow-y-auto space-y-4 scrollbar-hide">
-                {/* <div className="grid grid-cols-2 gap-1"> */}
                 <div className="grid grid-cols-1 gap-1">
                     {images.map((image, index) => (
                         <div

@@ -7,6 +7,7 @@ import { formatPrice } from "@/hooks/use-price";
 import { toast } from "sonner";
 
 import { ProductGallery } from "./_components/product-gallery";
+import { SizeGuideDialog } from "./_components/size-guide-dialog";
 import { ProductDetailsAccordion } from "./_components/product-detail-accordion";
 import { CustomerAssurance } from "./_components/customer-assurance";
 
@@ -14,6 +15,7 @@ import {
     ProductNormalized,
     ProductVariantNormalized,
 } from "@/lib/shopify/types/product-normalized";
+
 
 interface Props {
     product: ProductNormalized;
@@ -24,6 +26,7 @@ export default function ProductPageClient({
 }: Props) {
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
+    const [showSizeGuide, setShowSizeGuide] = useState(false)
 
     // -------------------------------------------------
     // Build SIZE → VARIANT map once
@@ -83,10 +86,10 @@ export default function ProductPageClient({
 
         await addToCart(selectedVariant.id, 1);
 
-        toast.success(
-            `${product.title} (Size: ${selectedSize}) added to your bag`
-        );
+        toast.success(`${product.title} added to bag • Size ${selectedSize}`)
     }
+    const isSelectedSizeOutOfStock = selectedVariant && !selectedVariant.availableForSale
+
 
     // -------------------------------------------------
     // Render
@@ -94,12 +97,12 @@ export default function ProductPageClient({
     return (
         <div className="min-h-screen">
             <div className="container mx-auto py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* Gallery */}
                     <ProductGallery images={product.images} />
 
                     {/* Info */}
-                    <div className="space-y-8">
+                    <div className="space-y-8 py-6 max-w-lg">
                         <div className="space-y-4">
                             <h1 className="text-3xl lg:text-4xl font-light font-serif">
                                 {product.title}
@@ -112,16 +115,19 @@ export default function ProductPageClient({
 
                         {/* Size */}
                         <div className="space-y-3">
-                            <h3 className="text-sm font-medium">Size</h3>
-                            <div className="grid grid-cols-5 gap-2">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-sm font-medium text-stone-800">Size</h3>
+                                <SizeGuideDialog open={showSizeGuide} onOpenChange={setShowSizeGuide} />
+                            </div>
+                            <div className="grid grid-cols-4 gap-2">
                                 {sizes.map(({ size, inStock }) => (
                                     <Button
                                         key={size}
-                                        disabled={!inStock}
-                                        onClick={() => inStock && setSelectedSize(size)}
+                                        onClick={() => setSelectedSize(size)}
                                         variant={
                                             selectedSize === size ? "default" : "outline"
                                         }
+                                        className={!inStock ? "opacity-50" : ""}
                                     >
                                         {size}
                                     </Button>
@@ -130,12 +136,8 @@ export default function ProductPageClient({
                         </div>
 
                         {/* Add to Bag */}
-                        <Button
-                            size="lg"
-                            onClick={handleAddToBag}
-                            className="w-full"
-                        >
-                            Add to Bag – {formattedPrice}
+                        <Button size="lg" onClick={handleAddToBag} className="w-full" disabled={isSelectedSizeOutOfStock}>
+                            {isSelectedSizeOutOfStock ? "Currently Out of Stock" : `Add to Bag – ${formattedPrice}`}
                         </Button>
 
                         <CustomerAssurance />

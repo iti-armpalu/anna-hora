@@ -180,7 +180,10 @@ export default function ProductLightbox({
                                 key={idx}
                                 className="flex-[0_0_100%] flex items-center justify-center"
                             >
-                                <div className="relative w-full h-full max-h-[80vh]">
+                                <div
+                                    className="relative w-full h-full max-h-[80vh] cursor-pointer"
+                                    onClick={() => emblaMain?.scrollNext()}
+                                >
                                     <Image
                                         src={img.url}
                                         alt={img.altText ?? ""}

@@ -73,7 +73,7 @@ export default async function RootLayout({
               {children}
               <Analytics />
               <DevCurrencyTester /> {/* 👈 Always available in dev */}
-              <Toaster />
+              <Toaster position="top-center" />
               <Footer />
               <GlobalCartDrawer />
             </WishlistProvider>
