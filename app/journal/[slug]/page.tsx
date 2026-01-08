@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { getArticleBySlug, getRelatedArticles } from "../_data"
+import { FeaturedProductCard } from "../_components/featured-product-card"
 
 export default function ArticlePage({
   params,
@@ -55,58 +56,71 @@ export default function ArticlePage({
       <section>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col">
-              <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden mx-auto">
+
+
+            <div className="flex justify-center gap-8 lg:gap-8 items-end mb-12">
+              <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden">
                 <Image src={article.image} alt={article.title} fill className="object-cover" priority />
               </div>
+              {/* Product Card */}
+              {article.image && article.title && (
+                <FeaturedProductCard
+                  productImage={article.image}
+                  productName="Silk Trousers"
+                  productPrice="USD 300"
+                />
+              )}
 
-              {/* Article Content */}
-              <article className="py-16 lg:py-24">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="max-w-3xl mx-auto">
-                    {/* Article Header */}
-                    <header className="mb-12">
-                      <Badge variant="outline" className="mb-4 border-stone-300 text-stone-600">
-                        {article.categoryName}
-                      </Badge>
-                      <h1 className="text-3xl lg:text-5xl font-light text-stone-800 mb-6 leading-tight">{article.title}</h1>
-                      <p className="text-xl text-stone-600 mb-8 leading-relaxed">{article.excerpt}</p>
+            </div>
 
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div className="flex items-center space-x-4 text-sm text-stone-500">
-                          <span>By {article.author}</span>
-                          <span>•</span>
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{article.date}</span>
-                          </div>
-                          <span>•</span>
-                          <div className="flex items-center space-x-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{article.readTime}</span>
-                          </div>
+
+            {/* Article Content */}
+            <article className="py-2 lg:py-4">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-3xl mx-auto">
+                  {/* Article Header */}
+                  <header className="mb-12">
+                    <Badge variant="outline" className="mb-4 border-stone-300 text-stone-600">
+                      {article.categoryName}
+                    </Badge>
+                    <h1 className="text-3xl lg:text-5xl font-light text-stone-800 mb-6 leading-tight">{article.title}</h1>
+                    <p className="text-xl text-stone-600 mb-8 leading-relaxed">{article.excerpt}</p>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center space-x-4 text-sm text-stone-500">
+                        <span>By {article.author}</span>
+                        <span>•</span>
+                        <div className="flex items-center space-x-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{article.date}</span>
                         </div>
-
-                        <div className="flex items-center space-x-2">
-                          <span className="text-sm text-stone-500 mr-2">Share:</span>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Facebook className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Twitter className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Instagram className="h-4 w-4" />
-                          </Button>
+                        <span>•</span>
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-4 h-4" />
+                          <span>{article.readTime}</span>
                         </div>
                       </div>
-                    </header>
 
-                    <Separator className="mb-12" />
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-stone-500 mr-2">Share:</span>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Facebook className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Twitter className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Instagram className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </header>
 
-                    {/* Article Body */}
-                    <div
-                      className="
+                  <Separator className="mb-12" />
+
+                  {/* Article Body */}
+                  <div
+                    className="
                         prose prose-stone prose-lg max-w-none
                         prose-headings:font-light prose-headings:text-stone-900
                         prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4
@@ -119,14 +133,14 @@ export default function ArticlePage({
                         prose-li:my-2
                         prose-blockquote:border-l-stone-300 prose-blockquote:text-stone-700
                       "
-                      dangerouslySetInnerHTML={{ __html: article.content ?? "" }}
-                    />
+                    dangerouslySetInnerHTML={{ __html: article.content ?? "" }}
+                  />
 
 
-                  </div>
                 </div>
-              </article>
-            </div>
+              </div>
+            </article>
+
           </div>
         </div>
       </section>
