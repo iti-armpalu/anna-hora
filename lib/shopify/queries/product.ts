@@ -95,6 +95,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
   {
     product(handle: $handle) {
       id
+      handle
       title
       description
 

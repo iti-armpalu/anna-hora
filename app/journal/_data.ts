@@ -9,6 +9,7 @@ export interface JournalArticle {
     category: string
     categoryName: string
     image: string
+    featuredProductHandles?: string[]
     featured: boolean
     content?: string
 }
@@ -49,6 +50,7 @@ export const journalArticles: JournalArticle[] = [
         date: "January 5, 2026",
         readTime: "5 min read",
         image: "/journal/journal-entry-1.jpeg",
+        featuredProductHandles: ["signature-loose-fit-pure-silk-trousers"],
         featured: true,
         content: `
         <p>When a brand is featured in print, the moment is often framed as an arrival. But sometimes, it reads more like recognition—a quiet acknowledgement of work that has been moving steadily, without urgency or excess.</p>
@@ -99,6 +101,7 @@ export const journalArticles: JournalArticle[] = [
         date: "December 12, 2025",
         readTime: "7 min read",
         image: "/journal/journal-entry-2.jpeg",
+        featuredProductHandles: ["verdant-panther-pure-silk-lounge-shirt"],
         featured: false,
         content: `
 <p>There’s a quiet shift that happens when loungewear leaves the home. What was once reserved for private moments becomes part of public life, asking new questions of comfort, confidence, and intention. The line between inside and outside has blurred, and with it, our understanding of how clothes should function.</p>
@@ -155,6 +158,7 @@ export const journalArticles: JournalArticle[] = [
         date: "December 18, 2025",
         readTime: "6 min read",
         image: "/journal/journal-entry-3.jpeg",
+        featuredProductHandles: ["pure-silk-lounge-trousers"],
         featured: false,
         content: `
     <p>Some of the most meaningful parts of our wardrobe aren’t garments at all. They’re the objects we reach for without thinking—the things that live in our hands, our bags, our pockets. These are the items that quietly accompany us through the day, shaping our routines more than we realize.</p>
@@ -209,6 +213,7 @@ export const journalArticles: JournalArticle[] = [
         date: "December 26, 2025",
         readTime: "5 min read",
         image: "/journal/journal-entry-4.jpeg",
+        featuredProductHandles: ["pure-silk-lounge-trousers"],
         featured: false,
         content: `
         <p>Some days call for structure, others for softness. Most require a balance of both. This edit sits comfortably in that in-between space—where clothing is chosen not for occasion, but for how it supports the rhythm of the day.</p>
