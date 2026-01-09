@@ -58,7 +58,7 @@ export default function WishlistClient() {
                         </p>
 
                         <Link href="/shop">
-                            <Button className="bg-stone-800 hover:bg-stone-700 text-white">
+                            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white">
                                 Start Shopping
                             </Button>
                         </Link>

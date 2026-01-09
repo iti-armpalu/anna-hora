@@ -117,7 +117,7 @@ export default function ShippingReturnsPage() {
 
                 {/* Return Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button asChild className="bg-stone-900 hover:bg-stone-800 text-white flex-1">
+                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white flex-1">
                     <Link href="/account">{shippingReturnsContent.returns.buttons.loggedIn}</Link>
                   </Button>
 
@@ -236,7 +236,7 @@ export default function ShippingReturnsPage() {
                 </div>
 
                 <div className="text-center">
-                  <Button asChild className="bg-stone-900 hover:bg-stone-800 text-white">
+                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white">
                     <Link href="/contact">Contact Form</Link>
                   </Button>
                 </div>

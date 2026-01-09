@@ -22,7 +22,7 @@ export function CTAGroup({ ctas }: CTAGroupProps) {
             className={
               cta.variant === "outline"
                 ? "border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
-                : "bg-stone-800 hover:bg-stone-700 text-white px-8 py-3"
+                : "bg-anna-green-950 hover:bg-stone-700 text-white px-8 py-3"
             }
           >
             {cta.label}

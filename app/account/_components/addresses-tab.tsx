@@ -37,7 +37,7 @@ export function AddressesTab({ customer }: { customer: Customer }) {
                     <CardTitle className="font-serif text-xl text-stone-800">Saved Addresses</CardTitle>
                     <Button
                         onClick={() => setAddOpen(true)}
-                        className="bg-stone-800 hover:bg-stone-700 text-white"
+                        className="bg-anna-green-950 hover:bg-stone-700 text-white"
                     >
                         Add New Address
                     </Button>

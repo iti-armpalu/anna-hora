@@ -128,7 +128,7 @@ export default function ProductExperiencePage() {
               </p>
               <Button
                 onClick={() => (window.location.href = "/shop")}
-                className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3"
+                className="bg-anna-stone-950 hover:bg-stone-700 text-white px-8 py-3"
               >
                 Shop Collection
               </Button>

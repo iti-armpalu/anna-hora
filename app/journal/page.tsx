@@ -111,7 +111,7 @@ export default function JournalPage() {
                                             <span>{featuredArticle.readTime}</span>
                                         </div>
                                     </div>
-                                    <Button asChild className="bg-stone-800 hover:bg-stone-700 text-white">
+                                    <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white">
                                         <Link href={`/journal/${featuredArticle.slug}`}>Read Story</Link>
                                     </Button>
                                 </CardContent>
@@ -197,7 +197,7 @@ export default function JournalPage() {
                                 placeholder="Your email address"
                                 className="flex-1 border-stone-300 focus:border-stone-500"
                             />
-                            <Button className="bg-stone-800 hover:bg-stone-700 text-white px-8">Subscribe</Button>
+                            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8">Subscribe</Button>
                         </div>
                         <p className="text-xs text-stone-500 mt-4">Thoughtful stories, no spam. Unsubscribe at any time.</p>
                     </div>

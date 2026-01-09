@@ -151,7 +151,7 @@ export default function ReturnOrderDialog({
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmitReturn} className="bg-stone-800 hover:bg-stone-700">
+                    <Button onClick={handleSubmitReturn} className="bg-anna-green-950 hover:bg-stone-700">
                         Submit Return Request
                     </Button>
                 </DialogFooter>
