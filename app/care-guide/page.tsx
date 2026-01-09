@@ -200,54 +200,8 @@ export default function CareGuidePage() {
         </div>
       </section>
 
-      {/* Professional Care Section */}
-      <section className="py-16 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <Card className="border-0 shadow-sm bg-stone-50">
-              <CardContent className="p-8 lg:p-12 text-center">
-                <h2 className="text-2xl lg:text-3xl font-light text-stone-800 mb-4">
-                  {careGuideContent.professionalCare.title}
-                </h2>
-                <p className="text-lg text-stone-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-                  {careGuideContent.professionalCare.description}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    variant="outline"
-                    className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                  >
-                    {careGuideContent.professionalCare.buttonText}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                    asChild
-                  >
-                    <a href="mailto:customerservice@annahora.com">
-                      <Mail className="w-4 h-4 mr-2" />
-                      Email Us
-                    </a>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                    asChild
-                  >
-                    <a href="tel:+420773583533">
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call Us
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Download Section */}
-      <section className="py-16 lg:py-24 bg-stone-800">
+      <section className="py-16 lg:py-24 bg-anna-cement-600">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-light text-white mb-6">
@@ -274,7 +228,7 @@ export default function CareGuidePage() {
               <em className="font-serif italic">Pure Silk Luxury?</em>
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-stone-800 hover:bg-stone-700 text-white px-8 py-3" asChild>
+              <Button size="lg" className="bg-anna-green-950 hover:bg-stone-700 text-white px-8 py-3" asChild>
                 <Link href="/shop">Shop Collection</Link>
               </Button>
               <Button

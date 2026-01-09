@@ -36,7 +36,7 @@ export function MediaContact() {
                 </div>
               </div>
 
-              <Button className="bg-stone-800 hover:bg-stone-700 text-white">
+              <Button className="bg-anna-green-950 hover:bg-stone-700 text-white">
                 <Download className="w-4 h-4 mr-2" />
                 Download Press Kit
               </Button>

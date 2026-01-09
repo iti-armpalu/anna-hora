@@ -12,7 +12,7 @@ export function ExploreMore() {
           <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">{exploreMore.title}</h3>
           <p className="text-lg text-stone-600 leading-relaxed mb-8">{exploreMore.description}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="bg-stone-800 hover:bg-stone-700 text-white">
+            <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white">
               <Link href="/journal">{exploreMore.journalCta}</Link>
             </Button>
             <Button

@@ -35,7 +35,7 @@ export function FeaturedArticle({ article }: FeaturedArticleProps) {
                 {article.quote}
               </blockquote>
               <div className="text-sm text-stone-500 mb-6">{article.date}</div>
-              <Button asChild className="bg-stone-800 hover:bg-stone-700 text-white">
+              <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white">
                 <Link href={article.url} target="_blank" rel="noopener noreferrer">
                   Read Feature
                   <ExternalLink className="w-4 h-4 ml-2" />

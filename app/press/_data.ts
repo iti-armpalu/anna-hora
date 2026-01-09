@@ -105,7 +105,7 @@ export interface PressArticle {
     hero: {
       title: "Press & Features",
       subtitle:
-        "Discover how ANNA HORA is shaping conversations around design, craftsmanship, and the art of living beautifully.",
+        `Discover how ${siteConfig.name.toUpperCase()} is shaping conversations around design, craftsmanship, and the art of living beautifully.`,
     },
     highlights: [
       {
@@ -133,8 +133,8 @@ export interface PressArticle {
       title: "Media Inquiries",
       description:
         "For press inquiries, interview requests, or high-resolution imagery, please contact our media relations team.",
-      email: "press@annahora.com",
-      phone: "+1 (555) 123-4567",
+      email: `${siteConfig.supportEmail}`,
+      phone: `${siteConfig.phone}`,
     },
     exploreMore: {
       title: "Explore Our Story",
