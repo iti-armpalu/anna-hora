@@ -13,7 +13,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 lg:mb-12">
           <div>
             <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Featured Pieces</h3>
             <p className="text-stone-600">Handpicked selections for your most cherished moments</p>

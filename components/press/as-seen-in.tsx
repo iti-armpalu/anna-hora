@@ -95,27 +95,6 @@ export default function AsSeenIn() {
 
                 {/* Slider Container */}
                 <div className="relative">
-                    {/* Navigation Buttons */}
-                    <div className="hidden md:block">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={handlePrevious}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 h-10 w-10 rounded-full"
-                            aria-label="Previous publications"
-                        >
-                            <ChevronLeft className="h-5 w-5" />
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={handleNext}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 h-10 w-10 rounded-full"
-                            aria-label="Next publications"
-                        >
-                            <ChevronRight className="h-5 w-5" />
-                        </Button>
-                    </div>
 
                     {/* Publications Slider */}
                     <div
@@ -165,18 +144,6 @@ export default function AsSeenIn() {
                             />
                         ))}
                     </div>
-                </div>
-
-                {/* Mobile Navigation */}
-                <div className="flex md:hidden justify-center gap-4 mt-8">
-                    <Button variant="outline" size="sm" onClick={handlePrevious} aria-label="Previous publications">
-                        <ChevronLeft className="h-4 w-4 mr-1" />
-                        Previous
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={handleNext} aria-label="Next publications">
-                        Next
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
                 </div>
 
                 <div className="text-center mt-12">

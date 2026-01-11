@@ -11,13 +11,13 @@ export default function NewsletterSection() {
             Join our community and receive thoughtful notes about self-care, styling tips, and exclusive access to new
             collections. Sent occasionally, always with intention.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 max-w-xs lg:max-w-md mx-auto">
             <Input
               type="email"
               placeholder="Your email address"
               className="flex-1 border-stone-300 focus:border-stone-500"
             />
-            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8">Subscribe</Button>
+            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8 max-w-xs">Subscribe</Button>
           </div>
           <p className="text-xs text-stone-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
         </div>

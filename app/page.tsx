@@ -42,7 +42,6 @@ export default async function HomePage() {
       {/* Gift Guide Section */}
       <GiftingSection startingAmount={startingAmount} currencyCode={giftCardProduct?.currencyCode} />
 
-
       {/* As Seen In Section */}
       <AsSeenIn />
 

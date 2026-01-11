@@ -10,7 +10,7 @@ export default function InstagramGrid() {
       <div className="flex items-center gap-2 mb-4">
         <h4 className="font-medium">Follow Us</h4>
         <Link
-          href={`https://instagram.com/${siteConfig.social.instagram.link}`}
+          href={`${siteConfig.social.instagram.link}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-anna-cement-200 hover:text-white transition-colors text-sm flex items-center gap-1"

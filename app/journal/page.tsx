@@ -3,8 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, Filter, Calendar, ArrowRight, Share2 } from "lucide-react"
-
+import { Search, Filter, ArrowRight, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -34,7 +33,6 @@ export default function JournalPage() {
 
     return (
         <div>
-
             {/* Hero Section */}
             <section className="py-16 lg:py-24">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,12 +101,13 @@ export default function JournalPage() {
                                     </h3>
                                     <p className="text-stone-600 mb-6 leading-relaxed">{featuredArticle.excerpt}</p>
                                     <div className="flex items-center justify-between mb-6">
-                                        <div className="flex items-center space-x-4 text-sm text-stone-500">
+                                        <div className="flex flex-col gap-2 text-sm text-stone-500">
                                             <span>By {featuredArticle.author}</span>
-                                            <span>•</span>
-                                            <span>{featuredArticle.date}</span>
-                                            <span>•</span>
-                                            <span>{featuredArticle.readTime}</span>
+                                            <div className="flex items-center space-x-4 text-sm text-stone-500">
+                                                <span>{featuredArticle.date}</span>
+                                                <span>•</span>
+                                                <span>{featuredArticle.readTime}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white">
@@ -153,11 +152,14 @@ export default function JournalPage() {
                                         {article.title}
                                     </h4>
                                     <p className="text-stone-600 h-20 text-sm mb-4 leading-relaxed">{article.excerpt}</p>
-                                    <div className="flex items-center justify-between text-xs text-stone-500">
-                                        <span>By {article.author}</span>
-                                        <div className="flex items-center space-x-2">
-                                            <Calendar className="w-3 h-3" />
-                                            <span>{article.date}</span>
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex flex-col gap-2 text-sm text-stone-500">
+                                            <span>By {featuredArticle.author}</span>
+                                            <div className="flex items-center space-x-4 text-sm text-stone-500">
+                                                <span>{featuredArticle.date}</span>
+                                                <span>•</span>
+                                                <span>{featuredArticle.readTime}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="mt-4 pt-4 border-t border-stone-100">

@@ -33,7 +33,7 @@ export function FeaturedProductCard({ product }: { product: ProductNormalized })
           <p className="text-xs text-stone-600 mb-2">{price}</p>
           <Button
             asChild
-            className="w-full bg-stone-800 hover:bg-stone-700 text-white text-xs py-1.5"
+            className="w-full bg-anna-green-950 hover:bg-stone-700 text-white text-xs py-1.5"
           >
             <Link
               href={`/product/${product.handle}`}

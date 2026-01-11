@@ -16,7 +16,7 @@ export default function PaymentMethods() {
                 {paymentMethods.map((method) => (
                     <div
                         key={method.id}
-                        className="bg-anna-cement-200 rounded px-3 py-1.5 h-6 min-w-[50px] flex items-center justify-center"
+                        className="bg-anna-cement-200 opacity-50 rounded px-3 py-1.5 h-6 min-w-[50px] flex items-center justify-center"
                     >
                         <span className={`text-xs text-anna-green-900 whitespace-pre-line text-center ${method.className}`}>
                             {method.label}

@@ -8,15 +8,20 @@ import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { formatPrice } from "@/hooks/use-price"
 import { Button } from "../ui/button"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
+
+type ProductCardProps = {
+  product: ProductNormalized;
+  className?: string
+  viewMode?: "grid" | "list"
+}
 
 export function ProductCard({
   product,
+  className,
   viewMode = "grid",
-}: {
-  product: ProductNormalized;
-  viewMode?: "grid" | "list"
-}) {
+}: ProductCardProps) {
   const price = formatPrice({
     amount: product.minPrice,
     currencyCode: product.currencyCode,
@@ -133,7 +138,12 @@ export function ProductCard({
   // GRID VIEW (default)
   // -------------------------
   return (
-    <Card className="flex flex-col h-full group border-0 shadow-none bg-transparent overflow-hidden gap-0">
+    <Card
+      className={cn(
+        "flex flex-col h-full group border-0 shadow-none bg-transparent overflow-hidden gap-0",
+        className
+      )}
+    >
       <div className="relative aspect-[3/4] mb-4 overflow-hidden">
         <div className="absolute top-3 right-3 z-10 ">
           <WishlistButton product={product} />
@@ -183,7 +193,7 @@ export function ProductCard({
               {product.description}
             </p> */}
 
-          <div className="flex flex-row justify-between items-start mt-4">
+          <div className="flex flex-row justify-between items-center mt-4">
             {/* {sizes.length > 0 && (
               <div className="flex items-center gap-4 flex-wrap">
                 {sizes.map(({ size, inStock, variantId }) => (

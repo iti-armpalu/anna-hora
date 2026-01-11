@@ -18,7 +18,7 @@ export default function OurSilkSection() {
     <section className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="relative">
+          <div className="relative order-2 lg:order-1">
             <Image
               src="/anna-hora-silk.webp"
               alt="Premium silk texture"
@@ -27,7 +27,7 @@ export default function OurSilkSection() {
               className="rounded-lg"
             />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 order-1 lg:order-2">
             <h3 className="text-3xl lg:text-4xl font-light text-stone-800">
               The art of <em className="font-serif italic">Mulberry Silk</em>
             </h3>
