@@ -155,8 +155,8 @@ export default function ProductPageClient({
                                 For mornings when the world can wait
                             </h2>
                             <div className="mt-4 space-y-4 text-stone-600">
-                                <p>{product.metafields.lifestyleDescription}</p>
-                                <p>{product.metafields.styleDescription}</p>
+                                <p>{product.metafields.descriptionLifestyle}</p>
+                                <p>{product.metafields.descriptionStyle}</p>
                             </div>
                         </div>
 
