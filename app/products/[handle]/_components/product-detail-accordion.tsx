@@ -18,7 +18,7 @@ export function ProductDetailsAccordion({ product }: ProductDetailsAccordionProp
                 <div>
                     <h4 className="font-medium text-stone-800 mb-2">Fabric & Construction</h4>
                     <ul className="space-y-1 text-sm">
-                        <li>• {product.metafields.fabric}</li>
+                        <li>• {product.metafields.fabricFull}</li>
                         {/* <li>• {product.specifications.weight} weight</li> */}
                         {/* <li>• {product.specifications.origin}</li> */}
                     </ul>
