@@ -15,14 +15,14 @@ export default async function HomePage() {
   const featuredCollection = await getCollectionByHandle("Featured");
   const featuredProducts = featuredCollection?.products ?? [];
 
-  const giftCardProduct = await getGiftCardProduct();
+  // const giftCardProduct = await getGiftCardProduct();
 
-  if (!giftCardProduct) {
-    return <div>No gift card product found.</div>;
-  }
+  // if (!giftCardProduct) {
+  //   return <div>No gift card product found.</div>;
+  // }
 
-  const giftCardAmounts = giftCardProduct ? getGiftCardAmounts(giftCardProduct) : [];
-  const startingAmount = giftCardAmounts[0] ?? null;
+  // const giftCardAmounts = giftCardProduct ? getGiftCardAmounts(giftCardProduct) : [];
+  // const startingAmount = giftCardAmounts[0] ?? null;
 
   return (
     <div>
@@ -40,7 +40,7 @@ export default async function HomePage() {
       <FeaturedProducts products={featuredProducts} />
 
       {/* Gift Guide Section */}
-      <GiftingSection startingAmount={startingAmount} currencyCode={giftCardProduct?.currencyCode} />
+      {/* <GiftingSection startingAmount={startingAmount} currencyCode={giftCardProduct?.currencyCode} /> */}
 
       {/* As Seen In Section */}
       <AsSeenIn />

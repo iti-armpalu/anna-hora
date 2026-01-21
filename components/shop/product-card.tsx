@@ -27,7 +27,7 @@ export function ProductCard({
     currencyCode: product.currencyCode,
   });
 
-  const fabric = product.metafields.fabric;
+  const fabric = product.metafields.fabricShort;
 
   // const BADGE_MAP = {
   //   // bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
@@ -123,7 +123,7 @@ export function ProductCard({
             <div className="relative flex items-center gap-3 mt-6">
               <WishlistButton product={product} />
               <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
-                <Link href={`/product/${product.handle}`} prefetch={false}>
+                <Link href={`/products/${product.handle}`} prefetch={false}>
                   View Details
                 </Link>
               </Button>
@@ -164,7 +164,7 @@ export function ProductCard({
         </div> */}
       </div>
 
-      {/* <Link href={`/product/${product.handle}`} prefetch={false}> */}
+      {/* <Link href={`/products/${product.handle}`} prefetch={false}> */}
       <CardContent className="flex flex-col justify-between flex-1 p-0">
         <div className="space-y-2">
 
@@ -205,7 +205,7 @@ export function ProductCard({
             )} */}
             <p className="text-medium text-stone-800 font-medium">{price}</p>
             <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
-              <Link href={`/product/${product.handle}`} prefetch={false}>
+              <Link href={`/products/${product.handle}`} prefetch={false}>
                 View Details
               </Link>
             </Button>

@@ -27,15 +27,20 @@ function normalizeMetafields(
   }
 
   return {
-    bestseller: map["bestseller"] === "true",
-    limited: map["limited"] === "true",
-    new: map["new"] === "true",
-
-    fabric: map["fabric"] ?? null,
-
-    sensoryDescription: map["sensory_description"] ?? null,
-    lifestyleDescription: map["lifestyle_description"] ?? null,
-    styleDescription: map["style_description"] ?? null,
+    fabricShort: map["fabric_short"] ?? null,
+    fabricFull: map["fabric_full"] ?? null,
+    fabricCertifications: map["fabric_certifications"] ?? null,
+    descriptionCore: map["description_core"] ?? null,
+    descriptionStyle: map["description_style"] ?? null,
+    descriptionSensory: map["description_sensory"] ?? null,
+    descriptionLifestyle: map["description_lifestyle"] ?? null,
+    isNew: map["is_limited"] === "true",
+    isLimited: map["is_limited"] === "true",
+    isBestseller: map["is_bestseller"] === "true",
+    fitNotes: map["fit_notes"] ?? null,
+    careInstructions: map["care_instructions"] ?? null,
+    madeIn: map["made_in"] ?? null,
+    ethicalNotes: map["ethical_notes"] ?? null,
   };
 }
 

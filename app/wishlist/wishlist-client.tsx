@@ -99,7 +99,7 @@ export default function WishlistClient() {
 
                                             {/* Image */}
                                             <div className="relative mb-4">
-                                                <Link href={`/product/${item.id}`}>
+                                                <Link href={`/products/${item.id}`}>
                                                     <div className="relative aspect-[3/4] overflow-hidden rounded-lg cursor-pointer">
                                                         <Image
                                                             src={item.image || "/placeholder.svg"}
@@ -130,7 +130,7 @@ export default function WishlistClient() {
 
                                             {/* Info */}
                                             <div className="space-y-3">
-                                                <Link href={`/product/${item.id}`}>
+                                                <Link href={`/products/${item.id}`}>
                                                     <h3 className="font-medium text-stone-800 hover:text-stone-600 transition-colors cursor-pointer">
                                                         {item.title}
                                                     </h3>
@@ -140,7 +140,7 @@ export default function WishlistClient() {
                                                     {formattedPrice}
                                                 </div>
 
-                                                <Link href={`/product/${item.id}`}>
+                                                <Link href={`/products/${item.id}`}>
                                                     <Button className="w-full bg-stone-800 hover:bg-stone-700 text-white">
                                                         View Product
                                                     </Button>

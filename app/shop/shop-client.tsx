@@ -111,8 +111,8 @@ export default function ShopClient({
       }
 
       // FABRIC
-      if (product.metafields.fabric) {
-        fabricSet.add(product.metafields.fabric);
+      if (product.metafields.fabricShort) {
+        fabricSet.add(product.metafields.fabricShort);
       }
     }
 
@@ -132,8 +132,8 @@ export default function ShopClient({
     // FABRIC
     if (fabric.length > 0) {
       arr = arr.filter((p) =>
-        p.metafields.fabric
-          ? fabric.includes(p.metafields.fabric)
+        p.metafields.fabricShort
+          ? fabric.includes(p.metafields.fabricShort)
           : false
       );
     }

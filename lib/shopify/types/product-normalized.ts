@@ -37,14 +37,20 @@ export interface ProductOptionNormalized {
  * You can expand this as needed.
  */
 export interface ProductMetafieldsNormalized {
-  bestseller: boolean;
-  limited: boolean;
-  new: boolean;
-  fabric: string | null;
-
-  sensoryDescription: string | null;
-  lifestyleDescription: string | null;
-  styleDescription: string | null;
+  fabricShort: string | null;
+  fabricFull: string | null;
+  fabricCertifications: string | null;
+  descriptionCore: string | null;
+  descriptionStyle: string | null;
+  descriptionSensory: string | null;
+  descriptionLifestyle: string | null;
+  isNew: boolean;
+  isLimited: boolean;
+  isBestseller: boolean;
+  fitNotes: string | null;
+  careInstructions: string | null;
+  madeIn: string | null;
+  ethicalNotes: string | null;
 }
 
 /**

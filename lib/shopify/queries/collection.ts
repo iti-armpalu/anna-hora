@@ -88,10 +88,20 @@ export const COLLECTION_BY_HANDLE_QUERY = /* GraphQL */ `
 
           metafields(
             identifiers: [
-              { namespace: "custom", key: "bestseller" },
-              { namespace: "custom", key: "limited" },
-              { namespace: "custom", key: "new" },
-              { namespace: "custom", key: "fabric" },
+              { namespace: "custom", key: "fabric_short" },
+              { namespace: "custom", key: "fabric_full" },
+              { namespace: "custom", key: "fabric_certifications" },
+              { namespace: "custom", key: "description_core" },
+              { namespace: "custom", key: "description_style" },
+              { namespace: "custom", key: "description_sensory" },
+              { namespace: "custom", key: "description_lifestyle" },
+              { namespace: "custom", key: "is_new" },
+              { namespace: "custom", key: "is_limited" },
+              { namespace: "custom", key: "is_bestseller" },
+              { namespace: "custom", key: "fit_notes" },
+              { namespace: "custom", key: "care_instructions" },
+              { namespace: "custom", key: "made_in" },
+              { namespace: "custom", key: "ethical_notes" },
             ]
           ) {
             key

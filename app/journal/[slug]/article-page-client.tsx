@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { FeaturedProductCard } from "../_components/featured-product-card"
 
 import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import type { JournalArticle, RelatedArticle } from "../_data"

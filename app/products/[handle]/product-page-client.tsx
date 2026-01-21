@@ -15,6 +15,7 @@ import {
     ProductNormalized,
     ProductVariantNormalized,
 } from "@/lib/shopify/types/product-normalized";
+import ProductImageCarousel from "@/components/product-image-carousel";
 
 
 interface Props {
@@ -96,10 +97,16 @@ export default function ProductPageClient({
     // -------------------------------------------------
     return (
         <div className="min-h-screen">
-            <div className="container mx-auto py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-16">
                     {/* Gallery */}
-                    <ProductGallery images={product.images} />
+                    <div className="hidden md:block">
+                        <ProductGallery images={product.images} />
+                    </div>
+
+                    <div className="md:hidden">
+                        <ProductImageCarousel product={product} />
+                    </div>
 
                     {/* Info */}
                     <div className="space-y-8 py-6 max-w-lg">
@@ -157,6 +164,6 @@ export default function ProductPageClient({
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

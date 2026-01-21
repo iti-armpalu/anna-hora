@@ -36,7 +36,7 @@ export function FeaturedProductCard({ product }: { product: ProductNormalized })
             className="w-full bg-anna-green-950 hover:bg-stone-700 text-white text-xs py-1.5"
           >
             <Link
-              href={`/product/${product.handle}`}
+              href={`/products/${product.handle}`}
             >
               Shop Now
             </Link>
