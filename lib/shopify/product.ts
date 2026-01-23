@@ -50,7 +50,8 @@ export async function getProducts(
       // country,
       query: '-tag:"gift-card"', // exclude gift cards
     },
-    revalidate: 60,
+    // revalidate: 60,
+    cache: "no-store",
   });
 
   return {
