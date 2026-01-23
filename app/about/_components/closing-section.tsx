@@ -27,7 +27,7 @@ export function ClosingSection() {
                 className={
                   cta.variant === "outline"
                     ? "border-stone-300 text-stone-700 hover:bg-stone-100 px-8 py-3 bg-transparent"
-                    : "bg-anna-green-950 hover:bg-stone-700 text-white px-8 py-3"
+                    : "bg-anna-green-950 hover:bg-anna-green-800 text-white px-8 py-3"
                 }
               >
                 <Link href={cta.href}>{cta.label}</Link>

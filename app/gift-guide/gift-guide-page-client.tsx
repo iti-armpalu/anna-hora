@@ -77,7 +77,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                             </p>
 
                             <Button
-                                className="bg-anna-green-950 hover:bg-stone-700 text-white"
+                                className="bg-anna-green-950 hover:bg-anna-green-800 text-white"
                                 onClick={() => document.getElementById("gift-card")?.scrollIntoView({ behavior: "smooth" })}
                             >
                                 <Gift className="w-4 h-4 mr-2" />

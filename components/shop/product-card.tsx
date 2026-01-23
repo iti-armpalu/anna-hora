@@ -66,23 +66,10 @@ export function ProductCard({
     return (
       <Card className="group border border-stone-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
+
           {/* Image */}
           <div className="relative aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
             <ProductImageCarousel product={product} />
-
-            {/* <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-              {(Object.keys(BADGE_MAP) as BadgeKey[])
-                .filter((key) => product.metafields[key] === true)
-                .map((key) => {
-                  const badge = BADGE_MAP[key];
-                  return (
-                    <Badge key={key} className={`${badge.color} text-white`}>
-                      {badge.label}
-                    </Badge>
-                  );
-                })}
-            </div> */}
-
           </div>
 
           {/* Info */}
@@ -150,18 +137,6 @@ export function ProductCard({
         </div>
 
         <ProductImageCarousel product={product} />
-
-        {/* <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-          {product.metafields?.map((mf) => {
-            const badge = BADGE_MAP[mf.key as keyof typeof BADGE_MAP]
-            if (!badge || mf.value !== "true") return null
-            return (
-              <Badge key={mf.key} className={`${badge.color} text-white`}>
-                {badge.label}
-              </Badge>
-            )
-          })}
-        </div> */}
       </div>
 
       {/* <Link href={`/products/${product.handle}`} prefetch={false}> */}
@@ -188,21 +163,7 @@ export function ProductCard({
           <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">
             {product.title}
           </h3>
-
-          {/* <p className="text-sm text-stone-600 line-clamp-2 min-h-[2.5rem]">
-              {product.description}
-            </p> */}
-
           <div className="flex flex-row justify-between items-center mt-4">
-            {/* {sizes.length > 0 && (
-              <div className="flex items-center gap-4 flex-wrap">
-                {sizes.map(({ size, inStock, variantId }) => (
-                  <span key={variantId} className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""}`}>
-                    {size}
-                  </span>
-                ))}
-              </div>
-            )} */}
             <p className="text-medium text-stone-800 font-medium">{price}</p>
             <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
               <Link href={`/products/${product.handle}`} prefetch={false}>

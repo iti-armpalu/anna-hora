@@ -177,14 +177,6 @@ export default function OurSilkPage() {
                 <CareGuideStep key={step.step} {...step} />
               ))}
             </div>
-
-            <div className="mt-16 p-8 bg-stone-100 rounded-lg text-center">
-              <h4 className="text-xl font-light text-stone-800 mb-4">{SILK_CONTENT.careGuide.expert.title}</h4>
-              <p className="text-stone-600 mb-6">{SILK_CONTENT.careGuide.expert.text}</p>
-              <Button variant="outline" className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent">
-                {SILK_CONTENT.careGuide.expert.ctaText}
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -204,7 +196,7 @@ export default function OurSilkPage() {
                 asChild
                 data-slot="button"
                 size="lg"
-                className="bg-anna-green-950 hover:bg-stone-700 text-white px-8 py-3"
+                className="bg-anna-green-950 hover:bg-anna-green-800 text-white px-8 py-3"
               >
                 <Link href={SILK_CONTENT.closing.primaryCta.href}>
                   Shop Now

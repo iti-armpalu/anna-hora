@@ -210,7 +210,7 @@ export function ProfileTab({ customer }: { customer: Customer }) {
                     <Button
                         onClick={handleSave}
                         disabled={loading}
-                        className="bg-anna-green-950 hover:bg-stone-700 text-white"
+                        className="bg-anna-green-950 hover:bg-anna-green-800 text-white"
                     >
                         {loading ? "Saving..." : "Save Changes"}
                     </Button>

@@ -19,7 +19,7 @@ export function OrdersTab({ customer }: { customer: Customer }) {
         <p className="text-stone-600 mb-6 max-w-sm">
           Discover our collection of premium silk loungewear, crafted for moments of quiet luxury.
         </p>
-        <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white inline-block">
+        <Button asChild className="bg-anna-green-950 hover:bg-anna-green-800 text-white inline-block">
           <Link href="/shop">
             Start Shopping
           </Link>

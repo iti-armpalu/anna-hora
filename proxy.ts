@@ -4,8 +4,12 @@ import type { NextRequest } from "next/server";
 /**
  * Safely read Shopify customer token
  */
+// function getCustomerToken(req: NextRequest) {
+//   return req.cookies.get("customerAccessToken")?.value ?? null;
+// }
 function getCustomerToken(req: NextRequest) {
-  return req.cookies.get("customerAccessToken")?.value ?? null;
+  // Change "customerAccessToken" to "customer_session"
+  return req.cookies.get("customer_session")?.value ?? null;
 }
 
 function isTokenExpired(cookie: string | null): boolean {

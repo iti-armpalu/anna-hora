@@ -126,7 +126,7 @@ export default function ProductPageClient({
                                 <h3 className="text-sm font-medium text-stone-800">Size</h3>
                                 <SizeGuideDialog open={showSizeGuide} onOpenChange={setShowSizeGuide} />
                             </div>
-                            <div className="grid grid-cols-4 gap-2">
+                            <div className="grid grid-cols-5 gap-2">
                                 {sizes.map(({ size, inStock }) => (
                                     <Button
                                         key={size}
@@ -140,6 +140,9 @@ export default function ProductPageClient({
                                     </Button>
                                 ))}
                             </div>
+                            <div className="text-xs text-stone-400">
+                                <p>{product.metafields.fitNotes}</p>
+                            </div>
                         </div>
 
                         {/* Add to Bag */}
@@ -152,11 +155,14 @@ export default function ProductPageClient({
                         {/* Description */}
                         <div className="pt-8 border-t">
                             <h2 className="text-2xl font-light font-serif">
-                                For mornings when the world can wait
+                                The perfect combination of elegant luxury and practical comfort
                             </h2>
                             <div className="mt-4 space-y-4 text-stone-600">
-                                <p>{product.metafields.descriptionLifestyle}</p>
+                                <p>{product.metafields.descriptionCore}</p>
                                 <p>{product.metafields.descriptionStyle}</p>
+                                <p>{product.metafields.descriptionSensory}</p>
+                                <p>{product.metafields.descriptionLifestyle}</p>
+
                             </div>
                         </div>
 

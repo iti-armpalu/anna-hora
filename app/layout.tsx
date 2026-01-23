@@ -32,20 +32,31 @@ export default async function RootLayout({
 }>) {
 
   const { threshold, currencyCode } =
-  await getFreeShippingThreshold();
+    await getFreeShippingThreshold();
 
   const cookieStore = await cookies()
   const cartId = cookieStore.get("cartId")?.value || null;
 
-  // Customer token
-  const rawToken = cookieStore.get("customerAccessToken")?.value ?? null;
-  console.log("[RootLayout] token from cookies:", rawToken);
+  // // Customer token
+  // const rawToken = cookieStore.get("customerAccessToken")?.value ?? null;
+  // console.log("[RootLayout] token from cookies:", rawToken);
 
-  // Only fetch customer if token exists
+  // // Only fetch customer if token exists
+  // let customer = null;
+  // if (rawToken) {
+  //   customer = await getCustomer();  // safe now
+  // }
+
+  // 1. UPDATE: Change the cookie name to the new one
+  const rawToken = cookieStore.get("customer_session")?.value ?? null;
+  console.log("[RootLayout] New token from cookies:", rawToken);
+
   let customer = null;
   if (rawToken) {
-    customer = await getCustomer();  // safe now
+    // 2. IMPORTANT: getCustomer() needs to be updated for the new API
+    customer = await getCustomer(rawToken);
   }
+
   console.log("[RootLayout] customer:", customer);
 
   const isAuthenticated = Boolean(customer);
@@ -57,28 +68,28 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
-      <CartShippingProvider
+        <CartShippingProvider
           threshold={threshold}
           currencyCode={currencyCode}
         >
 
-        <CartProvider
-          initialCartId={cartId}
-          initialCart={initialCart}
-          initialCustomer={customer}
-        >
-          <AuthProvider initialAuth={isAuthenticated}>
-            <WishlistProvider>
-              <Header />
-              {children}
-              <Analytics />
-              {/* <DevCurrencyTester /> */}
-              <Toaster position="top-center" />
-              <Footer />
-              <GlobalCartDrawer />
-            </WishlistProvider>
-          </AuthProvider>
-        </CartProvider>
+          <CartProvider
+            initialCartId={cartId}
+            initialCart={initialCart}
+            initialCustomer={customer}
+          >
+            <AuthProvider initialAuth={isAuthenticated}>
+              <WishlistProvider>
+                <Header />
+                {children}
+                <Analytics />
+                {/* <DevCurrencyTester /> */}
+                <Toaster position="top-center" />
+                <Footer />
+                <GlobalCartDrawer />
+              </WishlistProvider>
+            </AuthProvider>
+          </CartProvider>
         </CartShippingProvider>
       </body>
     </html>

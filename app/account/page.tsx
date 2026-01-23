@@ -8,7 +8,7 @@ export default async function AccountPage() {
 
   if (!customer) {
     // Middleware will usually redirect already, but just in case
-    redirect("/signin");
+    // redirect("/signin");
   }
 
   // Pass Shopify customer data to the client component

@@ -20,7 +20,9 @@ export function normalizeCustomer(
 ): Customer {
   return {
     id: raw.id,
-    email: raw.email,
+    // email: raw.email,
+    // Notice the change from raw.email to raw.emailAddress?.email
+    email: raw.emailAddress?.email ?? "",
     phone: raw.phone ?? null,
     firstName: raw.firstName,
     lastName: raw.lastName,
