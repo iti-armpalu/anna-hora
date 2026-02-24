@@ -15,8 +15,6 @@ export function ClosingSection() {
             className="text-3xl lg:text-5xl font-light text-stone-800 mb-8 leading-tight"
           />
 
-          <p className="text-xl text-stone-600 leading-relaxed mb-12">{closing.text}</p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {closing.ctas.map((cta) => (
               <Button

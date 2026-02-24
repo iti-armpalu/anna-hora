@@ -1,65 +1,67 @@
-// app/api/auth/callback/route.ts
-import { cookies } from "next/headers";
+import { getOpenIdConfig } from "@/lib/shopify/customer-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const code = searchParams.get("code");
-  const state = searchParams.get("state");
+const CLIENT_ID = process.env.NEXT_PUBLIC_SHOPIFY_CLIENT_ID!;
+const REDIRECT_URI = process.env.SHOPIFY_CUSTOMER_REDIRECT_URI!;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
-  console.log("--- [DEBUG] Callback Route Hit ---");
-  console.log("Code received:", code ? "YES" : "NO");
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
 
-  const cookieStore = await cookies();
-  const verifier = cookieStore.get("shopify_verifier")?.value;
+  const storedState = req.cookies.get("shopify_state")?.value;
+  const verifier = req.cookies.get("shopify_verifier")?.value;
 
-  if (!code || !verifier) {
-    console.error("Missing code or verifier. Verifier exists:", !!verifier);
-    return NextResponse.redirect(new URL("/signin?error=invalid_session", request.url));
+  if (!code || !state || state !== storedState || !verifier) {
+    return NextResponse.redirect(`${BASE_URL}/signin`);
   }
 
-  // Exchange the code for the real access token
-  const shopId = process.env.SHOPIFY_SHOP_ID;
-  const clientId = process.env.NEXT_PUBLIC_SHOPIFY_CLIENT_ID;
+  const config = await getOpenIdConfig();
 
-  try {
-    const res = await fetch(`https://shopify.com/${shopId}/auth/oauth/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: clientId!,
-        redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback`,
-        code,
-        code_verifier: verifier,
-      }),
+  const body = new URLSearchParams();
+  body.set("grant_type", "authorization_code");
+  body.set("client_id", CLIENT_ID);
+  body.set("redirect_uri", REDIRECT_URI);
+  body.set("code", code);
+  body.set("code_verifier", verifier);
+
+  const tokenRes = await fetch(config.token_endpoint, {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body,
+  });
+
+  const tokens = await tokenRes.json();
+
+  if (!tokenRes.ok || !tokens.access_token) {
+    return NextResponse.redirect(`${BASE_URL}/signin`);
+  }
+
+  const secure = req.headers.get("x-forwarded-proto") === "https";
+  const res = NextResponse.redirect(`${BASE_URL}/account`);
+
+  res.cookies.set("shopify_access_token", tokens.access_token, {
+    httpOnly: true,
+    secure,
+    sameSite: "lax",
+    path: "/",
+    maxAge: tokens.expires_in ?? 3600,
+  });
+
+  if (tokens.id_token) {
+    res.cookies.set("shopify_id_token", tokens.id_token, {
+      httpOnly: true,
+      secure,
+      sameSite: "lax",
+      path: "/",
+      maxAge: tokens.expires_in ?? 3600,
     });
-
-    const data = await res.json();
-
-    if (data.access_token) {
-      console.log("Token exchange successful!");
-
-      // Save the session!
-      cookieStore.set("customer_session", data.access_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: data.expires_in,
-      });
-
-      // Cleanup
-      cookieStore.delete("shopify_verifier");
-
-      // Send them to the account page
-      return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/account`);
-    } else {
-      console.error("Token exchange failed:", data);
-      return NextResponse.redirect(new URL("/signin?error=token_failed", request.url));
-    }
-  } catch (err) {
-    console.error("Callback Error:", err);
-    return NextResponse.redirect(new URL("/signin?error=server_error", request.url));
   }
+
+  // cleanup
+  res.cookies.set("shopify_state", "", { path: "/", maxAge: 0 });
+  res.cookies.set("shopify_verifier", "", { path: "/", maxAge: 0 });
+
+  return res;
 }

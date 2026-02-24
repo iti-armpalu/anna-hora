@@ -23,7 +23,7 @@ export type CartCreateResult = {
 
 export async function cartCreateAction(): Promise<CartCreateResult> {
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "GB";
+  const country = cookieStore.get("country")?.value || "CZ";
 
   try {
     const data = await shopifyFetch<CartCreateData>({

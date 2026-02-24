@@ -13,9 +13,9 @@ export function FounderSection() {
             <Image
               src={founder.image.src || "/placeholder.svg"}
               alt={founder.image.alt}
-              width={founder.image.width}
-              height={founder.image.height}
-              className="rounded-lg"
+              width={450}
+              height={600}
+              className="rounded-lg mx-auto"
               sizes="(min-width:1024px) 500px, 90vw"
             />
           </div>
@@ -31,8 +31,6 @@ export function FounderSection() {
                 {p}
               </p>
             ))}
-
-            <footer className="text-stone-500">With love, {founder.signature}</footer>
           </div>
         </div>
       </div>

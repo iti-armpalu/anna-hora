@@ -23,11 +23,7 @@ export default function ArticlePageClient({
     featuredProducts: ProductNormalized[]
 }) {
     const featured = featuredProducts[0] // show one next to hero; you can render many if you want
-
-    console.log("featuredProducts", featuredProducts)
-    console.log("featured handle", featuredProducts?.[0]?.handle)
-
-
+    
     return (
         <div className="min-h-screen bg-stone-50">
             {/* Back to Journal - Desktop */}

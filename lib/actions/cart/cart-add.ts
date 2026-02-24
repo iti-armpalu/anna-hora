@@ -56,7 +56,7 @@ export async function cartAddAction(
 
   const cookieStore = await cookies();
   let cartId = cookieStore.get("cartId")?.value;
-  const country = cookieStore.get("country")?.value || "GB";
+  const country = cookieStore.get("country")?.value || "CZ";
 
   try {
     // ----------------------------------
@@ -101,8 +101,6 @@ export async function cartAddAction(
     if (!shopifyCart) {
       return { ok: false, error: "Failed to update cart." };
     }
-
-    console.log("SERVER: cartAddAction executed");
 
     const normalized = normalizeCart(shopifyCart);
 

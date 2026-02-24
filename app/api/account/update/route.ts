@@ -1,66 +1,46 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { shopifyFetch } from "@/lib/shopify/fetch";
-
+import { NextRequest, NextResponse } from "next/server";
+import { customerAccountGraphql } from "@/lib/shopify/customer-account-graphql";
 import { CUSTOMER_UPDATE_MUTATION } from "@/lib/shopify/queries/customer";
-import type { ShopifyUserError, ShopifyCustomer } from "@/lib/shopify/types";
 
-
-// ----------------------------------------
-// Mutation Response Type
-// ----------------------------------------
-interface CustomerUpdateData {
+type UpdateRes = {
   customerUpdate: {
-    customer: ShopifyCustomer | null;
-    customerUserErrors: ShopifyUserError[];
+    customer: { id: string; firstName: string | null; lastName: string | null } | null;
+    userErrors: Array<{ field: string[] | null; message: string; code?: string | null }>;
   };
-}
+};
 
-// ----------------------------------------
-// POST /api/account/update
-// ----------------------------------------
-export async function POST(req: Request) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("customerAccessToken")?.value;
+export async function POST(req: NextRequest) {
+  try {
+    const body = (await req.json()) as {
+      firstName?: string;
+      lastName?: string;
+      // phone?: string; // only add if your schema supports it
+    };
 
-  if (!token) {
+    const input: Record<string, unknown> = {};
+    if (typeof body.firstName === "string") input.firstName = body.firstName;
+    if (typeof body.lastName === "string") input.lastName = body.lastName;
+
+    // If nothing to update, bail early
+    if (Object.keys(input).length === 0) {
+      return NextResponse.json({ ok: false, errors: [{ message: "No fields to update" }] }, { status: 400 });
+    }
+
+    const data = await customerAccountGraphql<UpdateRes>(CUSTOMER_UPDATE_MUTATION, { input });
+
+    const errors = data.customerUpdate.userErrors ?? [];
+    if (errors.length) {
+      return NextResponse.json({ ok: false, errors }, { status: 400 });
+    }
+
+    return NextResponse.json({
+      ok: true,
+      customer: data.customerUpdate.customer,
+    });
+  } catch (e: any) {
     return NextResponse.json(
-      { ok: false, error: "Not authenticated" },
-      { status: 401 }
+      { ok: false, error: e?.message ?? "Update failed" },
+      { status: 500 }
     );
   }
-
-  const body = await req.json();
-  const { firstName, lastName, email, phone } = body;
-
-  // Build the Shopify input object
-  const customerUpdateInput: Record<string, string | null> = {
-    firstName: firstName || null,
-    lastName: lastName || null,
-    email: email || null,
-    phone: phone || null,
-  };
-
-  // Shopify API
-  const res = await shopifyFetch<CustomerUpdateData>({
-    query: CUSTOMER_UPDATE_MUTATION,
-    variables: {
-      customerAccessToken: token,
-      customer: customerUpdateInput,
-    },
-  });
-
-  const { customer, customerUserErrors } = res.customerUpdate;
-
-  if (customerUserErrors.length > 0) {
-    return NextResponse.json(
-      { ok: false, errors: customerUserErrors },
-      { status: 400 }
-    );
-  }
-
-  return NextResponse.json(
-    { ok: true, customer },
-    { status: 200 }
-  );
 }

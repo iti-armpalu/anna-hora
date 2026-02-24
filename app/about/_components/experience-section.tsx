@@ -22,17 +22,6 @@ export function ExperienceSection() {
               </p>
             ))}
 
-            <div className="pt-4">
-              <h4 className="font-medium text-stone-800 mb-3">The {siteConfig.name.toUpperCase()} Promise</h4>
-              <ul className="space-y-2 text-stone-600">
-                {experience.promises.map((promise, i) => (
-                  <li key={i} className="flex items-start">
-                    <span className="w-2 h-2 bg-stone-400 rounded-full mt-2 mr-3 flex-shrink-0" />
-                    {promise}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
 
           <div className="relative order-1 lg:order-2">
@@ -40,8 +29,8 @@ export function ExperienceSection() {
               <Image
                 src={experience.image.src}
                 alt={experience.image.alt}
-                width={experience.image.width}
-                height={experience.image.height}
+                width={350}
+                height={500}
                 className="rounded-lg"
                 sizes="(min-width:1024px) 500px, 90vw"
               />

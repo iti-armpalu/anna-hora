@@ -2,13 +2,16 @@ import { ABOUT_CONTENT } from "../_data"
 import { SectionTitle } from "./section-title"
 import type { Pillar } from "../_data"
 
-function PillarCard({ title, text }: Pillar) {
+function PillarCard({ initial, name, title, text }: Pillar) {
   return (
     <div className="text-center">
-      <div className="w-16 h-16 bg-anna-cement-200 rounded-full flex items-center justify-center mx-auto mb-6">
-        {/* <div className="w-8 h-8 bg-anna-cement-400 rounded-full" /> */}
+      <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span className="text-[40px] font-serif italic text-anna-cement-600">{initial}</span>
       </div>
-      <h4 className="text-xl font-light text-stone-800 mb-4">{title}</h4>
+      <h4 className="text-xl font-light text-stone-800 mb-4">{name}</h4>
+      <p className="text-sm text-anna-cement-600 mb-4">
+        {title}
+      </p>
       <p className="text-stone-600 leading-relaxed">{text}</p>
     </div>
   )
@@ -28,10 +31,17 @@ export function PhilosophySection() {
           <p className="text-lg text-stone-600 leading-relaxed">{philosophy.text}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
           {philosophy.pillars.map((pillar) => (
             <PillarCard key={pillar.title} {...pillar} />
           ))}
+        </div>
+
+        <div className="max-w-3xl mx-auto text-center mt-16">
+          <p className="text-lg text-stone-600 leading-relaxed">
+            Together, we blend European craftsmanship with a global,
+            future-facing mindset.
+          </p>
         </div>
       </div>
     </section>

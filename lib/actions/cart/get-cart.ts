@@ -22,7 +22,7 @@ export async function getCartAction(): Promise<GetCartResult> {
   const cookieStore = await cookies();
 
   const cartId = cookieStore.get("cartId")?.value || null;
-  const country = cookieStore.get("country")?.value || "GB";
+  const country = cookieStore.get("country")?.value || "CZ";
 
   // --------------------------------------------
   // No cart ID → user has no cart yet

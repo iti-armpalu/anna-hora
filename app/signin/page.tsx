@@ -1,29 +1,29 @@
-
 import { AuthLayout } from "@/components/header/auth-layout";
-import { cookies } from "next/headers";
+import { getAuthSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
-import { SigninForm } from "./_components/signin-form";
 
 export default async function SigninPage() {
-  const cookieStore = await cookies();
+  const { isAuthenticated } = await getAuthSession();
 
-  // Look for the NEW cookie name we defined in the callback
-  const session = cookieStore.get("customer_session");
-
-  if (session) redirect("/account");
-
-  
-  // Redirect if already logged in
-  // const cookieStore = await cookies()
-  // const token = cookieStore.get("customerAccessToken");
-  // if (token) redirect("/account");
+  if (isAuthenticated) {
+    redirect("/account");
+  }
 
   return (
     <AuthLayout
-      title="Welcome back"
-      description="Sign in to your account to continue"
+      title="Sign in or create an account"
+      description="Continue to the secure sign-in step to access your account and orders."
     >
-      <SigninForm />
+      <a
+        href="/api/auth/login"
+        className="inline-flex w-full items-center justify-center rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-800 transition"
+      >
+        Continue
+      </a>
+
+      <p className="text-xs text-stone-500">
+        If you don’t have an account yet, you’ll be able to create one during sign-in.
+      </p>
     </AuthLayout>
   );
 }

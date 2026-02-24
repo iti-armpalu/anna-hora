@@ -36,7 +36,7 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "app/api/account/order-details"  ],
   "exclude": [
     "node_modules"
   ]

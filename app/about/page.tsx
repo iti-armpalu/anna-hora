@@ -2,8 +2,8 @@ import { HeroSection } from "./_components/hero-section"
 import { FounderSection } from "./_components/founder-section"
 import { PhilosophySection } from "./_components/philosophy-section"
 import { ExperienceSection } from "./_components/experience-section"
-import { CommitmentsSection } from "./_components/commitments-section"
 import { ClosingSection } from "./_components/closing-section"
+import { OurWhySection } from "./_components/our-why-section"
 
 export default function AboutPage() {
   return (
@@ -12,7 +12,7 @@ export default function AboutPage() {
       <FounderSection />
       <PhilosophySection />
       <ExperienceSection />
-      <CommitmentsSection />
+      <OurWhySection />
       <ClosingSection />
     </div>
   )

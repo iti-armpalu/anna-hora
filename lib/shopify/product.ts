@@ -39,8 +39,6 @@ export async function getProducts(
   first: number = 12,
   after?: null
 ): Promise<GetProductsResult> {
-  // const cookieStore = await cookies();
-  // const country = cookieStore.get("country")?.value || "GB";
 
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
@@ -70,12 +68,11 @@ interface ShopifyProductQueryResponse {
 }
 
 export async function getProductByHandle(handle: string): Promise<ProductNormalized | null> {
-  // const cookieStore = await cookies();
-  // const country = cookieStore.get("country")?.value || "GB";
 
   const res = await shopifyFetch<ShopifyProductQueryResponse>({
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle },
+    cache: "no-store",
   });
 
 

@@ -8,7 +8,6 @@ import {
   type ReactNode,
 } from "react";
 import { toast } from "sonner";
-import { useAuth } from "./auth-context";
 
 // ---------------------------------------------------
 // Types
@@ -74,10 +73,6 @@ function saveGuestWishlist(items: WishlistItem[]) {
 // Shopify Wishlist (Stubbed for future integration)
 // ---------------------------------------------------
 
-async function fetchShopifyWishlist(): Promise<WishlistItem[]> {
-  // TODO: Replace with Shopify customer API query using customerAccessToken
-  return [];
-}
 
 // async function updateShopifyWishlist(_items: WishlistItem[]) {
   // TODO: Replace with Shopify metafield mutation
@@ -98,7 +93,6 @@ function mergeWishlists(a: WishlistItem[], b: WishlistItem[]) {
 // ---------------------------------------------------
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth();
   const [items, setItems] = useState<WishlistItem[]>([]);
 
   /**
@@ -106,43 +100,11 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
    * Because isAuthenticated comes from the server during hydration,
    * there's no loading/flicker issue.
    */
-  useEffect(() => {
-    async function init() {
-      if (isAuthenticated) {
-        // 1. Load guest wishlist (localStorage)
-        const guest = loadGuestWishlist();
-
-        // 2. Load Shopify wishlist
-        const shopify = await fetchShopifyWishlist();
-
-        // 3. Merge them
-        const merged = mergeWishlists(guest, shopify);
-        setItems(merged);
-
-        // 4. Sync merged wishlist back to Shopify
-        if (merged.length > 0) {
-          // await updateShopifyWishlist(merged);
-        }
-
-        // 5. Clear guest wishlist as it's now merged
-        localStorage.removeItem(LOCAL_KEY);
-      } else {
-        // Guest mode — local only
-        setItems(loadGuestWishlist());
-      }
-    }
-
-    init();
-  }, [isAuthenticated]);
 
   /**
    * Save guest wishlist updates to localStorage
    */
-  useEffect(() => {
-    if (!isAuthenticated) {
-      saveGuestWishlist(items);
-    }
-  }, [items, isAuthenticated]);
+
 
   /**
    * Add item to wishlist
@@ -160,9 +122,6 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     const updated = [...items, newItem];
     setItems(updated);
 
-    if (isAuthenticated) {
-      // updateShopifyWishlist(updated);
-    }
 
     toast.success("Added to wishlist");
   };
@@ -174,9 +133,6 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     const updated = items.filter((i) => i.id !== variantId);
     setItems(updated);
 
-    if (isAuthenticated) {
-      // updateShopifyWishlist(updated);
-    }
 
     toast.success("Removed from wishlist");
   };
@@ -187,11 +143,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const clear = () => {
     setItems([]);
 
-    if (isAuthenticated) {
-      // updateShopifyWishlist([]);
-    } else {
-      localStorage.removeItem(LOCAL_KEY);
-    }
+
   };
 
   /**

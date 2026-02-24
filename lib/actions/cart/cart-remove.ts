@@ -31,7 +31,7 @@ export async function cartRemoveAction(
 
   const cookieStore = await cookies();
   const cartId = cookieStore.get("cartId")?.value;
-  const country = cookieStore.get("country")?.value || "GB";
+  const country = cookieStore.get("country")?.value || "CZ";
 
   if (!cartId) {
     return { ok: false, error: "No cartId found in cookies." };

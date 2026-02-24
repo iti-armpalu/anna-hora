@@ -1,136 +1,87 @@
-export const GET_CUSTOMER_QUERY = `
-    query getCustomerData($customerAccessToken: String!) {
-        customer(customerAccessToken: $customerAccessToken) {
-            firstName
-            lastName
-            email
-            phone
+// Customer Account API queries (for Shopify Customer Accounts / OIDC).
+// These are NOT Storefront API "classic customer" queries.
 
-            orders(first: 20) {
-                edges {
-                node {
-                    id
-                    name
-                    orderNumber
-                    processedAt
-                    financialStatus
-                    fulfillmentStatus
-                    statusUrl
-
-                    shippingAddress {
-                    firstName
-                    lastName
-                    address1
-                    address2
-                    city
-                    province
-                    zip
-                    country
-                    }
-
-                    subtotalPrice {
-                    amount
-                    currencyCode
-                    }
-
-                    totalPrice {
-                    amount
-                    currencyCode
-                    }
-
-                    totalShippingPrice {
-                    amount
-                    currencyCode
-                    }
-
-                    totalTax {
-                    amount
-                    currencyCode
-                    }
-
-                    lineItems(first: 20) {
-                    edges {
-                        node {
-                        quantity
-                        title
-                        variant {
-                            title
-                            price {
-                            amount
-                            currencyCode
-                            }
-                            image {
-                            url
-                            altText
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                }
-            }
-
-            addresses(first: 10) {
-                edges {
-                    node {
-                        id
-                        firstName
-                        lastName
-                        address1
-                        address2
-                        city
-                        province
-                        zip
-                        country
-                        phone
-                    }
-                }
-            }
-            defaultAddress {
-            id
-            }
-
-        }
-    }
-`;
-
-
-export const CUSTOMER_CREATE_MUTATION = `
-  mutation customerCreate($input: CustomerCreateInput!) {
-    customerCreate(input: $input) {
-      customer {
-        id
-        firstName
-        lastName
-        email
-        phone
-        
+export const CUSTOMER_PROFILE_QUERY = /* GraphQL */ `
+  query CustomerProfile {
+    customer {
+      id
+      firstName
+      lastName
+      displayName
+      emailAddress {
+        emailAddress
       }
-      customerUserErrors {
-        field
-        message
+      phoneNumber {
+        phoneNumber
       }
     }
   }
 `;
 
-export const CUSTOMER_UPDATE_MUTATION = `
-  mutation customerUpdate($customerAccessToken: String!, $customer: CustomerUpdateInput!) {
-    customerUpdate(
-      customerAccessToken: $customerAccessToken
-      customer: $customer
-    ) {
+export const CUSTOMER_UPDATE_MUTATION = /* GraphQL */ `
+  mutation CustomerUpdate($input: CustomerUpdateInput!) {
+    customerUpdate(input: $input) {
       customer {
         id
         firstName
         lastName
-        email
-        phone
       }
-      customerUserErrors {
+      userErrors {
         field
         message
+        code
+      }
+    }
+  }
+`;
+
+
+export const CUSTOMER_ORDERS_QUERY = /* GraphQL */ `
+  query CustomerOrders($first: Int!) {
+    customer {
+      orders(first: $first, reverse: true) {
+        nodes {
+          id
+          name
+          processedAt
+          financialStatus
+          fulfillmentStatus
+          totalPrice {
+            amount
+            currencyCode
+          }
+          # Optional: official Shopify-hosted status link
+          statusPageUrl
+        }
+      }
+    }
+  }
+`;
+
+export const ORDER_DETAILS_QUERY = /* GraphQL */ `
+  query OrderDetails($id: ID!, $lineItemsFirst: Int!) {
+    order(id: $id) {
+      id
+      name
+      processedAt
+      financialStatus
+      fulfillmentStatus
+      totalPrice {
+        amount
+        currencyCode
+      }
+      lineItems(first: $lineItemsFirst) {
+        nodes {
+          id
+          title
+          quantity
+          variantTitle
+
+          image {
+            url
+            altText
+          }
+        }
       }
     }
   }
