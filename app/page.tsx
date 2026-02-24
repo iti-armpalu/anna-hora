@@ -1,5 +1,4 @@
 
-import AsSeenIn from "@/components/press/as-seen-in"
 import { getCollectionByHandle } from "@/lib/shopify"
 import { getGiftCardAmounts } from "@/lib/shopify/utils/gift-card"
 import { getGiftCardProduct } from "@/lib/shopify/product"
@@ -41,9 +40,6 @@ export default async function HomePage() {
 
       {/* Gift Guide Section */}
       <GiftingSection startingAmount={startingAmount} currencyCode={giftCardProduct?.currencyCode} />
-
-      {/* As Seen In Section */}
-      <AsSeenIn />
 
       {/* Newsletter Section */}
       <NewsletterSection />
