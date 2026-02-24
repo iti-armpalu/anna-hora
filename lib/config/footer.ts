@@ -32,11 +32,11 @@ export const footerNavigation = {
     { label: "Our Silk", href: "/our-silk" },
     { label: "Gift Guide", href: "/gift-guide" },
     { label: "Journal", href: "/journal" },
-    { label: "Press", href: "/press" },
+    // { label: "Press", href: "/press" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
-    { label: "QR Scanned Link", href: "/product-experience" },
+    // { label: "QR Scanned Link", href: "/product-experience" },
   ],
 } satisfies Record<FooterSection, readonly FooterLink[]>;

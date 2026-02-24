@@ -5,10 +5,6 @@ interface SectionTitleProps {
   className?: string
 }
 
-function asText(line: TitleLine) {
-  return typeof line === "string" ? line : line.italic
-}
-
 export function SectionTitle({ titleLines, className = "" }: SectionTitleProps) {
   const first = titleLines[0]
   const shouldBreak =

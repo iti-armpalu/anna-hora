@@ -1,6 +1,6 @@
 // app/care-guide/_components/storage-tips-grid.tsx
 import { Card, CardContent } from "@/components/ui/card"
-import { Icon, type IconName } from "./icon"
+import { type IconName } from "./icon"
 import { Section, SectionInner, SectionTitle } from "./section"
 
 export function StorageTipsGrid({

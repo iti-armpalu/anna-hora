@@ -1,4 +1,3 @@
-import { siteConfig } from "@/lib/config/site"
 import { ABOUT_CONTENT } from "../_data"
 import { SectionTitle } from "./section-title"
 import Image from "next/image"

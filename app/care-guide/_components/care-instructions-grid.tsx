@@ -1,12 +1,8 @@
-// app/care-guide/_components/care-instructions-grid.tsx
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Icon, type IconName } from "./icon"
 import { Section, SectionInner, SectionTitle } from "./section"
 
 export type CareInstruction = {
   step: number
-  icon: IconName
   title: string
   description: string
   details: string[]
