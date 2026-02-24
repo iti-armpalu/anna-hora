@@ -25,6 +25,9 @@ export async function GET(req: NextRequest) {
 
   const secure = req.headers.get("x-forwarded-proto") === "https";
 
+  console.log("REDIRECT_URI (env):", process.env.SHOPIFY_CUSTOMER_REDIRECT_URI);
+  console.log("Authorize URL:", url.toString());
+
   res.cookies.set("shopify_state", state, {
     httpOnly: true,
     secure,
