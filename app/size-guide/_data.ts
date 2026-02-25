@@ -161,7 +161,7 @@ export interface SizeGuideContent {
     generalNotes: {
       title: "Fit & Care",
       content:
-        "Our pieces are designed to drape effortlessly and flatter every silhouette. All measurements are garment measurements taken flat. For the best fit, we recommend following your body measurements and referring to our size charts. If you're between sizes, we suggest sizing up for a more relaxed fit or sizing down for a closer fit. All fabrics have been pre-washed to minimize shrinkage.",
+        "Our pieces are designed to drape effortlessly and flatter every silhouette. All measurements are garment measurements taken flat. For the best fit, we recommend following your body measurements and referring to our size charts. If you're between sizes, we suggest sizing up for a more relaxed fit or sizing down for a closer fit.",
     },
   }
   

@@ -2,7 +2,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { SIZE_GUIDE_CONTENT } from "./_data"
 import { HeroSection } from "./_components/hero-section"
-import { ContactSection } from "./_components/contact-section"
 import { MeasurementTips } from "./_components/measurement-tips"
 import { SizeTable } from "./_components/size-table"
 
@@ -12,7 +11,6 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <HeroSection />
-        <ContactSection />
         <MeasurementTips />
 
         {/* Size Tables */}

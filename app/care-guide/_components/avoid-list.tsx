@@ -16,7 +16,7 @@ export function AvoidList({
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {avoidSection.items.map((item) => (
-            <div key={item} className="flex items-start gap-3 rounded-lg bg-white p-4">
+            <div key={item} className="flex items-center gap-3 rounded-lg bg-white p-4">
               <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-stone-500" aria-hidden="true" />
               <p className="leading-relaxed text-stone-600">{item}</p>
             </div>

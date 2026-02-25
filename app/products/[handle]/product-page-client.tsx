@@ -99,6 +99,7 @@ export default function ProductPageClient({
         <div className="min-h-screen">
             <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-16">
+
                     {/* Gallery */}
                     <div className="hidden md:block">
                         <ProductGallery images={product.images} />
@@ -151,20 +152,6 @@ export default function ProductPageClient({
                         </Button>
 
                         <CustomerAssurance />
-
-                        {/* Description */}
-                        <div className="pt-8 border-t">
-                            <h2 className="text-2xl font-light font-serif">
-                                The perfect combination of elegant luxury and practical comfort
-                            </h2>
-                            <div className="mt-4 space-y-4 text-stone-600">
-                                <p>{product.metafields.descriptionCore}</p>
-                                <p>{product.metafields.descriptionStyle}</p>
-                                <p>{product.metafields.descriptionSensory}</p>
-                                <p>{product.metafields.descriptionLifestyle}</p>
-
-                            </div>
-                        </div>
 
                         <ProductDetailsAccordion product={product} />
                     </div>

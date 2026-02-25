@@ -163,13 +163,6 @@ export default function OurSilkPage() {
                 titleEm={SILK_CONTENT.careGuide.headingEm}
                 subtitle={SILK_CONTENT.careGuide.intro}
               />
-              <Button
-                variant="outline"
-                className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent mt-8"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                {SILK_CONTENT.careGuide.ctaDownload.text}
-              </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

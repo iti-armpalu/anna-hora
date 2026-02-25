@@ -172,7 +172,7 @@ export const careGuideContent: CareGuideContent = {
       {
         issue: "Yellowing from Age",
         solution:
-          "Prevention is key—store with acid-free tissue paper. For existing yellowing, professional silk restoration may help, but severe discoloration may be permanent.",
+          "Prevention is key. Store with acid-free tissue paper. For existing yellowing, professional silk restoration may help, but severe discoloration may be permanent.",
       },
     ],
   },
