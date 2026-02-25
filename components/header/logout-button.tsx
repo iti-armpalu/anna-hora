@@ -9,7 +9,7 @@ export default function LogoutButton() {
       variant="outline"
       className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
     >
-      <Link href="/api/auth/logout">
+      <Link href="/api/auth/logout" prefetch={false}>
         <LogOut className="w-4 h-4 mr-2" />
         Logout
       </Link>
