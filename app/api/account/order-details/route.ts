@@ -8,14 +8,33 @@ type OrderDetailsRes = {
         name: string;
         processedAt: string;
         fulfillmentStatus: string;
-        financialStatus: string;
+        financialStatus: string | null;
         totalPrice: { amount: string; currencyCode: string };
         lineItems: {
             nodes: Array<{
                 id: string;
                 title: string;
                 quantity: number;
-                variantTitle?: string | null;
+                // variantTitle?: string | null;
+
+                // NEW: variant options (Size, Color, etc)
+                variantOptions: Array<{
+                    name: string;
+                    value: string;
+                }>;
+
+                // NEW: pricing
+                unitPrice: {
+                    amount: string;
+                    currencyCode: string;
+                } | null;
+
+                currentTotalPrice: {
+                    amount: string;
+                    currencyCode: string;
+                } | null;
+
+
                 image?: { url: string; altText?: string | null } | null;
             }>;
         };

@@ -77,6 +77,21 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
           quantity
           variantTitle
 
+          variantOptions {
+            name
+            value
+          }
+
+          # Prices
+          unitPrice {
+            amount
+            currencyCode
+          }
+          currentTotalPrice {
+            amount
+            currencyCode
+          }
+
           image {
             url
             altText
