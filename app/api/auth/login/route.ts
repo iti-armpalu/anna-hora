@@ -21,9 +21,6 @@ export async function GET(req: NextRequest) {
   url.searchParams.set("code_challenge", challenge);
   url.searchParams.set("code_challenge_method", "S256");
 
-  // 👇 ADD THIS LINE
-  url.searchParams.set("prompt", "login");
-
   const res = NextResponse.redirect(url.toString());
 
   const secure = req.headers.get("x-forwarded-proto") === "https";
