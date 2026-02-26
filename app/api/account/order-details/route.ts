@@ -16,7 +16,7 @@ type OrderDetailsRes = {
                 title: string;
                 quantity: number;
                 variantTitle?: string | null;
-                image: { url: string; altText: string };
+                image?: { url: string; altText?: string | null } | null;
             }>;
         };
     } | null;
