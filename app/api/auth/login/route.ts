@@ -21,12 +21,12 @@ export async function GET(req: NextRequest) {
   url.searchParams.set("code_challenge", challenge);
   url.searchParams.set("code_challenge_method", "S256");
 
+  // 👇 ADD THIS LINE
+  url.searchParams.set("prompt", "login");
+
   const res = NextResponse.redirect(url.toString());
 
   const secure = req.headers.get("x-forwarded-proto") === "https";
-
-  console.log("REDIRECT_URI (env):", process.env.SHOPIFY_CUSTOMER_REDIRECT_URI);
-  console.log("Authorize URL:", url.toString());
 
   res.cookies.set("shopify_state", state, {
     httpOnly: true,
