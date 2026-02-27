@@ -24,8 +24,8 @@ type OrderDetails = {
             id: string;
             title: string;
             quantity: number;
-            //   variantTitle?: string | null;
-            //   price?: { amount: string; currencyCode: string };
+              variantTitle?: string | null;
+              price?: { amount: string; currencyCode: string };
 
             variantOptions: Array<{ name: string; value: string }>;
             unitPrice: Money | null;

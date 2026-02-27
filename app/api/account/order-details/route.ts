@@ -15,7 +15,7 @@ type OrderDetailsRes = {
                 id: string;
                 title: string;
                 quantity: number;
-                // variantTitle?: string | null;
+                variantTitle?: string | null;
 
                 // NEW: variant options (Size, Color, etc)
                 variantOptions: Array<{
