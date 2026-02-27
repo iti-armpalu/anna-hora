@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, LifeBuoy, PackageSearch, RotateCcw, ShoppingCart } from "lucide-react";
+import { ChevronDown, Headphones, LifeBuoy, PackageSearch, RotateCcw, ShoppingCart, Truck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -24,8 +24,8 @@ type OrderDetails = {
             id: string;
             title: string;
             quantity: number;
-              variantTitle?: string | null;
-              price?: { amount: string; currencyCode: string };
+            variantTitle?: string | null;
+            price?: { amount: string; currencyCode: string };
 
             variantOptions: Array<{ name: string; value: string }>;
             unitPrice: Money | null;
@@ -64,6 +64,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const [details, setDetails] = useState<OrderDetails | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [returnOpen, setReturnOpen] = useState(false);
+    const [trackingOpen, setTrackingOpen] = useState(false);
 
     // If you later add tracking to the API response, you can compute a best tracking URL here.
     const trackingUrl: string | null = null;
@@ -120,11 +122,11 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         {order.fulfillmentStatus}
                     </Badge>
 
-                    {order.financialStatus ? (
+                    {/* {order.financialStatus ? (
                         <Badge variant="secondary" className="bg-stone-100 text-stone-800">
                             {order.financialStatus}
                         </Badge>
-                    ) : null}
+                    ) : null} */}
 
                     <span className="text-sm font-medium text-stone-900">
                         {order.totalPrice.amount} {order.totalPrice.currencyCode}
@@ -135,7 +137,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             </button>
 
             {/* Expanded details */}
-            {open ? (
+            {/* {open ? (
                 <div className="border-t border-stone-200 p-6">
                     {loading ? (
                         <p className="text-sm text-stone-600">Loading items…</p>
@@ -143,7 +145,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         <p className="text-sm text-red-600">{error}</p>
                     ) : lineItems.length ? (
                         <div className="space-y-3">
-                            {/* List header row */}
+        
                             <div className="hidden sm:grid grid-cols-[64px_1fr_140px_90px_120px] gap-4 text-xs text-stone-500 pb-2 border-b border-stone-200">
                                 <div />
                                 <div>Item</div>
@@ -152,7 +154,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 <div className="text-right">Total</div>
                             </div>
 
-                            {/* Line items */}
+               
                             {lineItems.map((li) => {
                                 const opts = optionsToText(li.variantOptions);
                                 return (
@@ -160,7 +162,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                         key={li.id}
                                         className="grid grid-cols-[64px_1fr] sm:grid-cols-[64px_1fr_140px_90px_120px] gap-4 items-center py-3 border-b border-stone-100 last:border-b-0"
                                     >
-                                        {/* Image */}
+                               
                                         <div className="w-16 h-16 rounded-md overflow-hidden bg-stone-100 shrink-0">
                                             {li.image?.url ? (
                                                 <Image
@@ -175,12 +177,12 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                             )}
                                         </div>
 
-                                        {/* Title + options */}
+                    
                                         <div className="min-w-0">
                                             <p className="text-sm font-medium text-stone-900 truncate">{li.title}</p>
                                             {opts ? <p className="text-xs text-stone-500 truncate">{opts}</p> : null}
 
-                                            {/* Mobile-only price/qty summary */}
+                                   
                                             <div className="sm:hidden mt-2 flex items-center justify-between text-xs text-stone-600">
                                                 <span>Unit: {formatMoney(li.unitPrice)}</span>
                                                 <span>Qty: {li.quantity}</span>
@@ -188,7 +190,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                             </div>
                                         </div>
 
-                                        {/* Desktop columns */}
+                         
                                         <div className="hidden sm:block text-sm text-stone-700 text-right">
                                             {formatMoney(li.unitPrice)}
                                         </div>
@@ -206,9 +208,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         <p className="text-sm text-stone-600">No items found.</p>
                     )}
 
-                    {/* Footer actions */}
+      
                     <div className="mt-6 pt-4 border-t border-stone-200 flex flex-wrap gap-2">
-                        {/* Track shipment: enable when you add trackingUrl to the response */}
+            
                         <Button
                             variant="outline"
                             size="sm"
@@ -230,7 +232,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                             )}
                         </Button>
 
-                        {/* Returns: link to your returns flow */}
+                    
                         <Button
                             variant="outline"
                             size="sm"
@@ -243,7 +245,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                             </a>
                         </Button>
 
-                        {/* Reorder: link to a route that re-adds items to cart (you’d implement this) */}
+                
                         <Button
                             variant="outline"
                             size="sm"
@@ -256,7 +258,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                             </a>
                         </Button>
 
-                        {/* Support: prefill order name */}
+ 
                         <Button
                             variant="outline"
                             size="sm"
@@ -270,7 +272,70 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         </Button>
                     </div>
                 </div>
-            ) : null}
+            ) : null} */}
+
+            <div
+                className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+            >
+                <div className="overflow-hidden">
+                    <div className="border-t border-border">
+                        {/* Product rows */}
+                        <div className="divide-y divide-border">
+                            {lineItems.map((li) => (
+                                <div key={li.id} className="flex items-center gap-4 p-5 md:p-6">
+                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-secondary flex-shrink-0 overflow-hidden">
+                                        <img
+                                            src={li.image.url}
+                                            alt={li.image.altText}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    {/* <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-card-foreground truncate">{li.title}</p>
+                                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">
+                                            <span>Color: {li.color}</span>
+                                            <span>Size: {li.size}</span>
+                                            <span>Quantity: {li.quantity}</span>
+                                        </div>
+                                    </div> */}
+                                    <p className="font-display font-semibold text-card-foreground text-right whitespace-nowrap">
+                                        $
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mobile total */}
+                        <div className="sm:hidden px-5 pb-2 flex justify-between items-center border-t border-border pt-3">
+                            <span className="text-sm text-muted-foreground">Total</span>
+                            <span className="font-display font-bold text-card-foreground">$</span>
+                        </div>
+
+                        {/* Footer actions */}
+                        <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
+                            <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setTrackingOpen(true)}>
+                                <Truck className="w-4 h-4" />
+                                {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
+                            </Button>
+                            {/* <ViewTrackingDialog open={trackingOpen} onOpenChange={setTrackingOpen} orderNumber={order.orderNumber} trackingNumber={order.trackingNumber} status={order.status} delivery={order.delivery} /> */}
+                            <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setReturnOpen(true)}>
+                                <RotateCcw className="w-4 h-4" />
+                                Request Return
+                            </Button>
+                            {/* <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} products={order.products} orderNumber={order.orderNumber} /> */}
+                            <Button variant="outline" size="sm" className="gap-2 text-sm">
+                                <ShoppingCart className="w-4 h-4" />
+                                Reorder
+                            </Button>
+                            <Button variant="outline" size="sm" className="gap-2 text-sm">
+                                <Headphones className="w-4 h-4" />
+                                Contact Support
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
