@@ -10,6 +10,7 @@ import { FilterSidebar } from "./_components/filter-sidebar";
 
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
+import { buildFilterData } from "@/lib/filters/build-filter-data";
 
 interface Props {
   initialProducts: ProductNormalized[];
@@ -86,41 +87,45 @@ export default function ShopClient({
   // -------------------------------------------------
   // FILTER DATA (for sidebar options)
   // -------------------------------------------------
+  // const filterData = useMemo(() => {
+  //   const sizeSet = new Set<string>();
+  //   const colorSet = new Set<string>();
+  //   const fabricSet = new Set<string>();
+
+  //   for (const product of products) {
+  //     // SIZE — only available variants
+  //     product.variants.forEach((variant) => {
+  //       if (!variant.availableForSale) return;
+
+  //       const sizeOpt = variant.selectedOptions.find(
+  //         (opt) => opt.name.toLowerCase() === "size"
+  //       );
+
+  //       if (sizeOpt?.value) sizeSet.add(sizeOpt.value);
+  //     });
+
+  //     // COLOR
+  //     for (const opt of product.options) {
+  //       if (opt.name.toLowerCase() === "color") {
+  //         opt.values.forEach((v) => colorSet.add(v));
+  //       }
+  //     }
+
+  //     // FABRIC
+  //     if (product.metafields.fabricShort) {
+  //       fabricSet.add(product.metafields.fabricShort);
+  //     }
+  //   }
+
+  //   return {
+  //     sizes: Array.from(sizeSet),
+  //     colors: Array.from(colorSet),
+  //     fabrics: Array.from(fabricSet),
+  //   };
+  // }, [products]);
+
   const filterData = useMemo(() => {
-    const sizeSet = new Set<string>();
-    const colorSet = new Set<string>();
-    const fabricSet = new Set<string>();
-
-    for (const product of products) {
-      // SIZE — only available variants
-      product.variants.forEach((variant) => {
-        if (!variant.availableForSale) return;
-
-        const sizeOpt = variant.selectedOptions.find(
-          (opt) => opt.name.toLowerCase() === "size"
-        );
-
-        if (sizeOpt?.value) sizeSet.add(sizeOpt.value);
-      });
-
-      // COLOR
-      for (const opt of product.options) {
-        if (opt.name.toLowerCase() === "color") {
-          opt.values.forEach((v) => colorSet.add(v));
-        }
-      }
-
-      // FABRIC
-      if (product.metafields.fabricShort) {
-        fabricSet.add(product.metafields.fabricShort);
-      }
-    }
-
-    return {
-      sizes: Array.from(sizeSet),
-      colors: Array.from(colorSet),
-      fabrics: Array.from(fabricSet),
-    };
+    return buildFilterData(products);
   }, [products]);
 
   // -------------------------------------------------
@@ -261,11 +266,10 @@ export default function ShopClient({
           {/* PRODUCT GRID */}
           <div className="lg:col-span-3">
             <div
-              className={`grid gap-8 items-stretch ${
-                viewMode === "grid"
+              className={`grid gap-8 items-stretch ${viewMode === "grid"
                   ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                   : "grid-cols-1"
-              }`}
+                }`}
             >
               {sortedProducts.map((product) => (
                 <ProductCard

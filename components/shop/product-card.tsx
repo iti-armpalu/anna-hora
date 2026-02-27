@@ -3,7 +3,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { WishlistButton } from "../wishlist-button"
 import ProductImageCarousel from "../product-image-carousel"
-// import { Badge } from "../ui/badge"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { formatPrice } from "@/hooks/use-price"
 import { Button } from "../ui/button"
@@ -28,12 +27,6 @@ export function ProductCard({
   });
 
   const fabric = product.metafields.fabricShort;
-
-  // const BADGE_MAP = {
-  //   // bestseller: { label: "Bestseller", color: "bg-anna-green-900" },
-  //   limited: { label: "Limited", color: "bg-anna-green-900" },
-  //   // new: { label: "New", color: "bg-anna-green-900" },
-  // } as const;
 
 
   // Find the "size" option (normalized)
@@ -138,20 +131,21 @@ export function ProductCard({
 
         <ProductImageCarousel product={product} />
       </div>
+      <CardContent className="flex flex-col flex-1 p-0">
 
-      {/* <Link href={`/products/${product.handle}`} prefetch={false}> */}
-      <CardContent className="flex flex-col justify-between flex-1 p-0">
         <div className="space-y-2">
-
           <div className="flex flex-row justify-start items-start gap-2 mt-4">
-            <p className="text-xs text-stone-500">
-              {fabric}
-            </p>
+            <p className="text-xs text-stone-500">{fabric}</p>
             <p className="text-xs text-stone-500">•</p>
+
             {sizes.length > 0 && (
               <div className="flex items-center gap-4 flex-wrap">
                 {sizes.map(({ size, inStock, variantId }) => (
-                  <span key={variantId} className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""}`}>
+                  <span
+                    key={variantId}
+                    className={`text-xs text-stone-500 ${!inStock ? "line-through opacity-50" : ""
+                      }`}
+                  >
                     {size}
                   </span>
                 ))}
@@ -159,24 +153,25 @@ export function ProductCard({
             )}
           </div>
 
-
-          <h3 className="font-medium text-stone-800 group-hover:text-stone-600 transition-colors">
+          <h3 className="font-medium text-stone-800 pr-6">
             {product.title}
           </h3>
-          <div className="flex flex-row justify-between items-center mt-4">
-            <p className="text-medium text-stone-800 font-medium">{price}</p>
-            <Button asChild variant="link" className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent">
-              <Link href={`/products/${product.handle}`} prefetch={false}>
-                View Details
-              </Link>
-            </Button>
-          </div>
+        </div>
 
+        <div className="mt-auto flex flex-row justify-between items-center pt-2">
+          <p className="text-medium text-stone-800 font-medium">{price}</p>
 
-
+          <Button
+            asChild
+            variant="link"
+            className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent"
+          >
+            <Link href={`/products/${product.handle}`} prefetch={false}>
+              View Details
+            </Link>
+          </Button>
         </div>
       </CardContent>
-      {/* </Link> */}
     </Card>
   )
 }

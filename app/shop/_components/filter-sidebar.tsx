@@ -70,21 +70,6 @@ function FilterSection({
   );
 }
 
-export const sortSizes = (sizes: string[]) => {
-  const SIZE_ORDER = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
-
-  return [...sizes].sort((a, b) => {
-    const aIndex = SIZE_ORDER.indexOf(a.toUpperCase());
-    const bIndex = SIZE_ORDER.indexOf(b.toUpperCase());
-
-    if (aIndex !== -1 && bIndex !== -1) {
-      return aIndex - bIndex;
-    }
-
-    return a.localeCompare(b);
-  });
-};
-
 // ---------------------------------------------
 // SIDEBAR
 // ---------------------------------------------
@@ -128,8 +113,6 @@ export function FilterSidebar({
 }: FilterSidebarProps) {
   const [minBound, maxBound] = priceBounds;
 
-  const sortedSizes = sortSizes(sizes);
-
   return (
     <aside className="hidden lg:block w-64 pr-6 sticky top-24">
       {/* FABRIC */}
@@ -143,7 +126,7 @@ export function FilterSidebar({
       {/* SIZE */}
       <FilterSection
         title="Size"
-        options={sortedSizes.map((s) => ({ label: s, value: s }))}
+        options={sizes.map((s) => ({ label: s, value: s }))}
         selected={selectedSizes}
         onChange={setSelectedSizes}
       />

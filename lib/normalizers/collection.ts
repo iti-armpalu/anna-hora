@@ -12,7 +12,17 @@ export function normalizeCollection(
   return {
     id: collection.id,
     title: collection.title,
+    description: collection.description,
     handle: collection.handle,
+
+    image: collection.image
+      ? {
+        url: collection.image.url,
+        altText: collection.image.altText ?? null,
+      }
+      : null,
+
+
 
     // Normalize the products inside the collection
     products: normalizeProducts(collection.products?.nodes ?? []),

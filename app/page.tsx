@@ -14,6 +14,12 @@ export default async function HomePage() {
   const featuredCollection = await getCollectionByHandle("Featured");
   const featuredProducts = featuredCollection?.products ?? [];
 
+  const categoryHandles = ["Shirts", "Shorts", "Trousers"];
+
+  const categoryCollections = (
+    await Promise.all(categoryHandles.map((h) => getCollectionByHandle(h)))
+  ).filter(Boolean);
+
   const giftCardProduct = await getGiftCardProduct();
 
   if (!giftCardProduct) {
@@ -30,7 +36,7 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* Featured Categories */}
-      <FeaturedCategories />
+      <FeaturedCategories collections={categoryCollections} />
 
       {/* Our Silk Section */}
       <OurSilkSection />

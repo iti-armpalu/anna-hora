@@ -28,7 +28,12 @@ export const COLLECTION_BY_HANDLE_QUERY = /* GraphQL */ `
     collection(handle: $handle) {
       id
       title
+      description
       handle
+      image {
+        url
+        altText
+      }
 
       products(first: $first) {
         nodes {
