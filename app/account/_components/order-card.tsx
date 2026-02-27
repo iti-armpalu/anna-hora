@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
+import { LineItemRow, type MinimalLineItem } from "./line-item-row";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -102,6 +103,14 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const lineItems = details?.lineItems.nodes ?? [];
 
+    const items: MinimalLineItem[] =
+        details?.lineItems.nodes.map((li) => ({
+            id: li.id,
+            title: li.title,
+            imageUrl: li.image?.url ?? null,
+            imageAlt: li.image?.altText ?? null,
+        })) ?? [];
+
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
             {/* Header (click to toggle) */}
@@ -123,12 +132,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         {order.fulfillmentStatus}
                     </Badge>
 
-                    {/* {order.financialStatus ? (
-                        <Badge variant="secondary" className="bg-stone-100 text-stone-800">
-                            {order.financialStatus}
-                        </Badge>
-                    ) : null} */}
-
                     <span className="text-sm font-medium text-stone-900">
                         {order.totalPrice.amount} {order.totalPrice.currencyCode}
                     </span>
@@ -136,144 +139,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                     <ChevronDown className={`w-5 h-5 text-stone-600 transition-transform ${open ? "rotate-180" : ""}`} />
                 </div>
             </button>
-
-            {/* Expanded details */}
-            {/* {open ? (
-                <div className="border-t border-stone-200 p-6">
-                    {loading ? (
-                        <p className="text-sm text-stone-600">Loading items…</p>
-                    ) : error ? (
-                        <p className="text-sm text-red-600">{error}</p>
-                    ) : lineItems.length ? (
-                        <div className="space-y-3">
-        
-                            <div className="hidden sm:grid grid-cols-[64px_1fr_140px_90px_120px] gap-4 text-xs text-stone-500 pb-2 border-b border-stone-200">
-                                <div />
-                                <div>Item</div>
-                                <div className="text-right">Unit price</div>
-                                <div className="text-right">Qty</div>
-                                <div className="text-right">Total</div>
-                            </div>
-
-               
-                            {lineItems.map((li) => {
-                                const opts = optionsToText(li.variantOptions);
-                                return (
-                                    <div
-                                        key={li.id}
-                                        className="grid grid-cols-[64px_1fr] sm:grid-cols-[64px_1fr_140px_90px_120px] gap-4 items-center py-3 border-b border-stone-100 last:border-b-0"
-                                    >
-                               
-                                        <div className="w-16 h-16 rounded-md overflow-hidden bg-stone-100 shrink-0">
-                                            {li.image?.url ? (
-                                                <Image
-                                                    src={li.image.url}
-                                                    width={64}
-                                                    height={64}
-                                                    alt={li.image.altText ?? li.title}
-                                                    className="w-16 h-16 object-cover"
-                                                />
-                                            ) : (
-                                                <div className="w-16 h-16" />
-                                            )}
-                                        </div>
-
-                    
-                                        <div className="min-w-0">
-                                            <p className="text-sm font-medium text-stone-900 truncate">{li.title}</p>
-                                            {opts ? <p className="text-xs text-stone-500 truncate">{opts}</p> : null}
-
-                                   
-                                            <div className="sm:hidden mt-2 flex items-center justify-between text-xs text-stone-600">
-                                                <span>Unit: {formatMoney(li.unitPrice)}</span>
-                                                <span>Qty: {li.quantity}</span>
-                                                <span>Total: {formatMoney(li.currentTotalPrice)}</span>
-                                            </div>
-                                        </div>
-
-                         
-                                        <div className="hidden sm:block text-sm text-stone-700 text-right">
-                                            {formatMoney(li.unitPrice)}
-                                        </div>
-                                        <div className="hidden sm:block text-sm text-stone-700 text-right">
-                                            {li.quantity}
-                                        </div>
-                                        <div className="hidden sm:block text-sm font-medium text-stone-900 text-right">
-                                            {formatMoney(li.currentTotalPrice)}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <p className="text-sm text-stone-600">No items found.</p>
-                    )}
-
-      
-                    <div className="mt-6 pt-4 border-t border-stone-200 flex flex-wrap gap-2">
-            
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-stone-300 text-stone-700 bg-transparent"
-                            asChild={Boolean(trackingUrl)}
-                            disabled={!trackingUrl}
-                            title={!trackingUrl ? "Tracking will appear once the order ships" : undefined}
-                        >
-                            {trackingUrl ? (
-                                <a href={trackingUrl} target="_blank" rel="noreferrer">
-                                    <PackageSearch className="w-4 h-4 mr-2" />
-                                    Track shipment
-                                </a>
-                            ) : (
-                                <span>
-                                    <PackageSearch className="w-4 h-4 mr-2 inline" />
-                                    Track shipment
-                                </span>
-                            )}
-                        </Button>
-
-                    
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-stone-300 text-stone-700 bg-transparent"
-                            asChild
-                        >
-                            <a href={`/account/returns?orderId=${encodeURIComponent(order.id)}`}>
-                                <RotateCcw className="w-4 h-4 mr-2" />
-                                Request return
-                            </a>
-                        </Button>
-
-                
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-stone-300 text-stone-700 bg-transparent"
-                            asChild
-                        >
-                            <a href={`/api/account/reorder?orderId=${encodeURIComponent(order.id)}`}>
-                                <ShoppingCart className="w-4 h-4 mr-2" />
-                                Reorder
-                            </a>
-                        </Button>
-
- 
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-stone-300 text-stone-700 bg-transparent"
-                            asChild
-                        >
-                            <a href={`/contact?subject=${encodeURIComponent(`Help with ${order.name}`)}`}>
-                                <LifeBuoy className="w-4 h-4 mr-2" />
-                                Contact support
-                            </a>
-                        </Button>
-                    </div>
-                </div>
-            ) : null} */}
 
             <div
                 className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
@@ -283,28 +148,11 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                     <div className="border-t border-border">
                         {/* Product rows */}
                         <div className="divide-y divide-border">
-                            {lineItems.map((li) => (
-                                <div key={li.id} className="flex items-center gap-4 p-5 md:p-6">
-                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg bg-secondary flex-shrink-0 overflow-hidden">
-                                        <img
-                                            src={li.image.url}
-                                            alt={li.image.altText}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    {/* <div className="flex-1 min-w-0">
-                                        <p className="font-medium text-card-foreground truncate">{li.title}</p>
-                                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">
-                                            <span>Color: {li.color}</span>
-                                            <span>Size: {li.size}</span>
-                                            <span>Quantity: {li.quantity}</span>
-                                        </div>
-                                    </div> */}
-                                    <p className="font-display font-semibold text-card-foreground text-right whitespace-nowrap">
-                                        $
-                                    </p>
-                                </div>
-                            ))}
+                            <div className="space-y-3">
+                                {items.map((item) => (
+                                    <LineItemRow key={item.id} item={item} />
+                                ))}
+                            </div>
                         </div>
 
                         {/* Mobile total */}
@@ -324,7 +172,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 <RotateCcw className="w-4 h-4" />
                                 Request Return
                             </Button>
-                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.id} />
+                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.name} items={items} />
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 <ShoppingCart className="w-4 h-4" />
                                 Reorder
