@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export type MinimalLineItem = {
   id: string;
-  title: string;
+  name: string;
   imageUrl: string | null;
   imageAlt?: string | null;
 };
@@ -16,7 +16,7 @@ export function LineItemRow({ item }: { item: MinimalLineItem }) {
             src={item.imageUrl}
             width={64}
             height={64}
-            alt={item.imageAlt ?? item.title}
+            alt={item.imageAlt ?? item.name}
             className="w-16 h-16 object-cover"
           />
         ) : null}
@@ -24,7 +24,7 @@ export function LineItemRow({ item }: { item: MinimalLineItem }) {
 
       <div className="min-w-0">
         <p className="text-sm font-medium text-stone-900 truncate">
-          {item.title}
+          {item.name}
         </p>
       </div>
     </div>

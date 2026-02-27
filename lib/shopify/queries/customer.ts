@@ -73,6 +73,7 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
       lineItems(first: $lineItemsFirst) {
         nodes {
           id
+          name
           title
           quantity
           variantTitle
@@ -84,8 +85,10 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
 
           # Prices
           unitPrice {
-            amount
-            currencyCode
+            price {
+              amount
+              currencyCode
+            }
           }
           currentTotalPrice {
             amount

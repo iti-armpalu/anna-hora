@@ -24,15 +24,9 @@ type OrderDetails = {
     lineItems: {
         nodes: Array<{
             id: string;
+            name: string;
             title: string;
             quantity: number;
-            variantTitle?: string | null;
-            price?: { amount: string; currencyCode: string };
-
-            variantOptions: Array<{ name: string; value: string }>;
-            unitPrice: Money | null;
-            currentTotalPrice: Money | null;
-
             image?: { url: string; altText?: string | null } | null;
         }>;
     };
@@ -106,10 +100,12 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const items: MinimalLineItem[] =
         details?.lineItems.nodes.map((li) => ({
             id: li.id,
-            title: li.title,
+            name: li.name ?? li.name ?? "Item",
             imageUrl: li.image?.url ?? null,
             imageAlt: li.image?.altText ?? null,
         })) ?? [];
+
+
 
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
