@@ -83,7 +83,6 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
             value
           }
 
-          # Prices
           unitPrice {
             price {
               amount

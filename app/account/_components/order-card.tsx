@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
-import { LineItemRow, type MinimalLineItem } from "./line-item-row";
+import { LineItemRow, type LineItemDetails } from "./line-item-row";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -27,7 +27,24 @@ type OrderDetails = {
             name: string;
             title: string;
             quantity: number;
-            image?: { url: string; altText?: string | null } | null;
+
+            variantTitle?: string | null;
+
+            variantOptions: Array<{
+                name: string;
+                value: string;
+            }>;
+
+            unitPrice: {
+                price: Money;
+            } | null;
+
+            currentTotalPrice: Money | null;
+
+            image?: {
+                url: string;
+                altText?: string | null;
+            } | null;
         }>;
     };
 };
@@ -95,14 +112,16 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         }
     }
 
-    const lineItems = details?.lineItems.nodes ?? [];
-
-    const items: MinimalLineItem[] =
+    const items: LineItemDetails[] =
         details?.lineItems.nodes.map((li) => ({
             id: li.id,
-            name: li.name ?? li.name ?? "Item",
+            name: li.name,
+            quantity: li.quantity,
+            variantOptions: li.variantOptions,
             imageUrl: li.image?.url ?? null,
             imageAlt: li.image?.altText ?? null,
+            currentTotalPrice: li.currentTotalPrice ?? null,
+            unitPrice: li.unitPrice ?? null,
         })) ?? [];
 
 

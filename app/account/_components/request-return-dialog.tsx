@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RotateCcw, CheckCircle2 } from "lucide-react";
-import { LineItemRow, type MinimalLineItem } from "./line-item-row";
+import { LineItemRow, type LineItemDetails } from "./line-item-row";
 
 const RETURN_REASONS = [
     { value: "SIZE_TOO_SMALL", label: "Too small" },
@@ -24,7 +24,7 @@ interface RequestReturnDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     orderNumber: string;
-    items: MinimalLineItem[];
+    items: LineItemDetails[];
 }
 
 export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: RequestReturnDialogProps) {
