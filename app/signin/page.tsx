@@ -16,7 +16,7 @@ export default async function SigninPage() {
     >
       <a
         href="/api/auth/login"
-        className="inline-flex w-full items-center justify-center rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-800 transition"
+        className="inline-flex w-full items-center justify-center rounded-md bg-anna-hora-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-800 transition"
       >
         Continue
       </a>

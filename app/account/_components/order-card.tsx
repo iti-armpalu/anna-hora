@@ -5,6 +5,7 @@ import { ChevronDown, Headphones, LifeBuoy, PackageSearch, RotateCcw, ShoppingCa
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { RequestReturnDialog } from "./request-return-dialog";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -323,7 +324,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 <RotateCcw className="w-4 h-4" />
                                 Request Return
                             </Button>
-                            {/* <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} products={order.products} orderNumber={order.orderNumber} /> */}
+                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.id} />
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 <ShoppingCart className="w-4 h-4" />
                                 Reorder
