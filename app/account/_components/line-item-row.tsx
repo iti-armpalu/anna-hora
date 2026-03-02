@@ -38,8 +38,8 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   const size = getOptionValue(item.variantOptions, "size");
 
   return (
-    <div className="flex items-start justify-between gap-4">
-      <div className="flex items-start gap-4 min-w-0">
+    <div className="flex items-start justify-between gap-4 p-5 md:p-6">
+      <div className="flex items-center gap-4 min-w-0">
         <div className="w-16 h-16 rounded-md overflow-hidden bg-stone-100 shrink-0">
           {item.imageUrl ? (
             <Image
@@ -59,7 +59,7 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
           <p className="text-xs text-stone-500 mt-1">
             {[color, size].filter(Boolean).join(" · ")}
             {([color, size].filter(Boolean).length ? " · " : "")}
-            Qty {item.quantity}
+            Quantity: {item.quantity}
           </p>
 
           {/* Optional: unit price */}

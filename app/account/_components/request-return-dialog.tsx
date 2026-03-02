@@ -93,7 +93,7 @@ export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: 
                                     Request Return
                                 </DialogTitle>
                             </div>
-                            <DialogDescription className="text-sm text-muted-foreground pl-12">
+                            <DialogDescription className="text-sm text-muted-foreground">
                                 Select the items you'd like to return from {orderNumber}.
                             </DialogDescription>
                         </DialogHeader>
@@ -103,11 +103,56 @@ export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: 
                             <div className="space-y-2">
                                 <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Select Items</label>
                                 <div className="rounded-lg border border-border divide-y divide-border">
-                                    {items.map((item) => (
-                                        <div key={item.id} className="p-3">
-                                            <LineItemRow item={item} />
-                                        </div>
-                                    ))}
+                                    {items.map((item) => {
+                                        const checked = selectedProducts.has(item.id);
+                                        return (
+                                            <div key={item.id} className="p-3">
+                                                <label
+                                                    className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${checked ? "bg-accent/50" : "hover:bg-accent/30"
+                                                        }`}
+                                                >
+                                                    <Checkbox
+                                                        checked={checked}
+                                                        onCheckedChange={() => toggleProduct(item.id, item.quantity)}
+                                                    />
+                                                    <LineItemRow item={item} />
+                                                </label>
+
+                                                {checked && (
+                                                    <div className="px-3 pb-3 pt-1 pl-10 space-y-2">
+                                                        <Select value={reasons[item.id] || ""} onValueChange={(v) => setReasonForProduct(item.id, v)}>
+                                                            <SelectTrigger className="w-full h-8 text-xs">
+                                                                <SelectValue placeholder="Select reason for return…" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {RETURN_REASONS.map((r) => (
+                                                                    <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                        {item.quantity > 1 && (
+                                                            <div className="flex items-center gap-2">
+                                                                <label className="text-xs text-muted-foreground whitespace-nowrap">Return qty:</label>
+                                                                <Select value={String(returnQtys[item.id] || item.quantity)} onValueChange={(v) => setReturnQtys((prev) => ({ ...prev, [item.id]: Number(v) }))}>
+                                                                    <SelectTrigger className="w-20 h-8 text-xs">
+                                                                        <SelectValue />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        {Array.from({ length: item.quantity }, (_, i) => i + 1).map((n) => (
+                                                                            <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                                                                        ))}
+                                                                    </SelectContent>
+                                                                </Select>
+                                                                <span className="text-xs text-muted-foreground">of {item.quantity}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+
+
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
 
@@ -141,3 +186,6 @@ export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: 
         </Dialog>
     );
 }
+
+
+
