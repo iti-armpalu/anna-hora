@@ -79,9 +79,9 @@ export async function cartAddAction(
       cookieStore.set("cartId", newCart.id, {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "lax", // <-- change
         path: "/",
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       });
     }
 

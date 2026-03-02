@@ -11,10 +11,8 @@ import { GlobalCartDrawer } from "@/app/cart/global-cart-drawer";
 
 import { CartProvider } from "@/context/cart-context";
 import { WishlistProvider } from "@/context/wishlist-context";
-import { CartShippingProvider } from "@/context/cart-shipping-context";
 
 import { getCartAction } from "@/lib/actions/cart/get-cart";
-import { getFreeShippingThreshold } from "@/lib/geo/get-free-shipping-treshold";
 import { siteConfig } from "@/lib/config/site";
 
 export const metadata: Metadata = {
@@ -27,8 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Geo / shipping threshold
-  const { threshold, currencyCode } = await getFreeShippingThreshold();
 
   // Cart id from cookie
   const cookieStore = await cookies();
@@ -41,7 +37,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
-        <CartShippingProvider threshold={threshold} currencyCode={currencyCode}>
           <CartProvider
             initialCartId={cartId}
             initialCart={initialCart}
@@ -59,7 +54,6 @@ export default async function RootLayout({
               <GlobalCartDrawer />
             </WishlistProvider>
           </CartProvider>
-        </CartShippingProvider>
       </body>
     </html>
   );

@@ -99,7 +99,7 @@ export function CartProvider({
     if (!cart) return { success: false, quantity };
 
     setLoading(true);
-    const res = await cartUpdateAction({ lineId, quantity });
+    const res = await cartUpdateAction({ cartId: cart.id, lineId, quantity });
     setLoading(false);
 
     if (!res.ok || !res.cart) {
@@ -124,10 +124,19 @@ export function CartProvider({
     if (!cart) return;
 
     setLoading(true);
-    const res = await cartRemoveAction({ lineId });
+    const res = await cartRemoveAction({ cartId: cart.id, lineId });
     if (res.ok && res.cart) setCart(res.cart);
     setLoading(false);
   }
+
+  useEffect(() => {
+    console.log("[CartContext] cart changed", {
+      cartId: cart?.id,
+      totalQuantity: cart?.totalQuantity,
+      lines: cart?.lines?.map((l) => ({ id: l.id, qty: l.quantity })),
+      subtotal: cart?.cost?.subtotalAmount,
+    });
+  }, [cart]);
 
   return (
     <CartContext.Provider

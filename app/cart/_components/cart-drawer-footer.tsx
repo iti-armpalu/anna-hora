@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import { CartShippingBanner } from "./cart-shipping-banner";
 import { CartSubtotal } from "./cart-subtotal";
 import { CartCheckoutNote } from "./cart-checkout-note";
 
@@ -31,9 +30,6 @@ export function CartDrawerFooter({
 
     return (
         <div className="border-t border-stone-200 bg-white px-6 py-4">
-            <CartShippingBanner subtotal={subtotal} />
-
-            <Separator className="mb-4" />
 
             <CartSubtotal
                 subtotal={subtotal}

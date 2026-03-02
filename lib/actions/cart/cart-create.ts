@@ -40,10 +40,9 @@ export async function cartCreateAction(): Promise<CartCreateResult> {
     cookieStore.set("cartId", shopifyCart.id, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "lax", // <-- change
       path: "/",
-      // Shopify carts never expire automatically, so 30 days is safe
-      maxAge: 60 * 60 * 24 * 30
+      maxAge: 60 * 60 * 24 * 30,
     });
 
     return {

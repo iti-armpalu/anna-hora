@@ -2,19 +2,36 @@
 import { cookies } from "next/headers";
 import { SHOPIFY_ENDPOINT, SHOPIFY_CONFIG } from "./config";
 
-interface ShopifyFetchParams {
+type ShopifyFetchParams<TVariables extends Record<string, unknown> = Record<string, unknown>> = {
   query: string;
-  variables?: Record<string, unknown>;
-  revalidate?: number;
+  variables?: TVariables;
+  /**
+   * Use cache only for safe read queries (GET_CART, collections, products, etc.)
+   * For mutations, ALWAYS use "no-store".
+   */
   cache?: RequestCache;
+  /**
+   * Only used when cache !== "no-store"
+   */
+  revalidate?: number;
+};
+
+interface ShopifyGraphQLError {
+  message: string;
+  extensions?: unknown;
 }
 
-export async function shopifyFetch<TData>({
+interface ShopifyResponse<TData> {
+  data?: TData;
+  errors?: ShopifyGraphQLError[];
+}
+
+export async function shopifyFetch<TData, TVariables extends Record<string, unknown> = Record<string, unknown>>({
   query,
-  variables = {},
+  variables = {} as TVariables,
+  cache = "no-store",          // ✅ SAFE DEFAULT
   revalidate = 60,
-  cache = "force-cache",
-}: ShopifyFetchParams): Promise<TData> {
+}: ShopifyFetchParams<TVariables>): Promise<TData> {
   const cookieStore = await cookies();
   const country = cookieStore.get("country")?.value || "CZ";
 
@@ -33,15 +50,20 @@ export async function shopifyFetch<TData>({
     next: cache === "no-store" ? undefined : { revalidate },
   });
 
-  const json = await res.json();
+  const json = (await res.json()) as ShopifyResponse<TData>;
 
-  if (json.errors) {
-    console.error("[Shopify errors]", json.errors);
-    throw new Error("Shopify Storefront API error");
+  if (!res.ok) {
+    console.error("[Shopify HTTP error]", res.status, json);
+    throw new Error("Shopify HTTP error");
+  }
+
+  if (json.errors?.length) {
+    console.error("[Shopify GraphQL errors]", json.errors);
+    throw new Error(json.errors[0]?.message || "Shopify GraphQL error");
   }
 
   if (!json.data) {
-    throw new Error("Shopify returned no data");
+    throw new Error("Shopify returned no data.");
   }
 
   return json.data;

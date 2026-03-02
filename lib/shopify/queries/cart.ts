@@ -165,6 +165,7 @@ export const CART_LINES_UPDATE = /* GraphQL */ `
           }
         }
       }
+      userErrors { field message }  
     }
   }
 `;
@@ -218,6 +219,7 @@ export const CART_LINES_REMOVE = /* GraphQL */ `
         }
       }
     }
+    userErrors { field message } 
   }
 `;
 

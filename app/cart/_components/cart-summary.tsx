@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-import { CartShippingBanner } from "./cart-shipping-banner";
 import { CartSubtotal } from "./cart-subtotal";
 import { CartCheckoutNote } from "./cart-checkout-note";
 
@@ -27,11 +26,6 @@ export function CartSummary({
         <h3 className="font-serif text-xl text-stone-800 mb-6">
           Order Summary
         </h3>
-
-        {/* Shipping incentive (geo-based) */}
-        <CartShippingBanner subtotal={subtotal} />
-
-        <Separator className="mb-4" />
 
         {/* Cart totals (Shopify-based) */}
         <CartSubtotal

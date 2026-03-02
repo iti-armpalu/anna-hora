@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 
 import { useCart } from "@/context/cart-context";
-import { useCartShipping } from "@/context/cart-shipping-context";
 import { formatPrice } from "@/hooks/use-price";
 
 import { CartEmptyState } from "./_components/cart-empty-state";
@@ -12,7 +11,7 @@ import { CartSummary } from "./_components/cart-summary";
 
 export default function CartPageClient() {
   const { cart, removeFromCart, loading } = useCart();
-  const { threshold, currencyCode } = useCartShipping();
+  // const { threshold, currencyCode } = useCartShipping();
 
   /* -------------------------
        Loading State
@@ -30,7 +29,7 @@ export default function CartPageClient() {
   /* -------------------------
        Derived Values
     ------------------------- */
-  const currency = currencyCode ?? cart.cost.currencyCode;
+  // const currency = currencyCode ?? cart.cost.currencyCode;
 
   const subtotal = useMemo(
     () => Number(cart.cost.subtotalAmount),

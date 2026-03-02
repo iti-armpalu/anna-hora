@@ -1,5 +1,4 @@
 // lib/shopify/types/cart-normalized.ts
-
 export interface CartLine {
     id: string;
     quantity: number;
