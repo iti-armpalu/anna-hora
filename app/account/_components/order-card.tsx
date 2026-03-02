@@ -187,7 +187,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 <RotateCcw className="w-4 h-4" />
                                 Request Return
                             </Button>
-                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.name} items={items} />
+                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.name} orderId={order.id} items={items} />
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 <ShoppingCart className="w-4 h-4" />
                                 Reorder

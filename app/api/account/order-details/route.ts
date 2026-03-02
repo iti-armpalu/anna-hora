@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { customerAccountGraphql } from "@/lib/shopify/customer-account-graphql";
 import { ORDER_DETAILS_QUERY } from "@/lib/shopify/queries/customer";
+import { requireAuthApi } from "@/lib/auth/require-auth-api";
 
 /* --------------------------------------------------------
  * Types
@@ -62,13 +63,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const auth = await requireAuthApi();
+  if (!auth.ok) {
+    return NextResponse.json({ error: "Not authenticated" }, { status: auth.status });
+  }
+
+
   try {
     const data = await customerAccountGraphql<OrderDetailsRes>(
       ORDER_DETAILS_QUERY,
       {
         id,
         lineItemsFirst: 50,
-      }
+      },
     );
 
     if (!data?.order) {

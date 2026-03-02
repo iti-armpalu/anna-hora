@@ -24,15 +24,21 @@ interface RequestReturnDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     orderNumber: string;
+    orderId: string;
     items: LineItemDetails[];
 }
 
-export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: RequestReturnDialogProps) {
+export function RequestReturnDialog({ open, onOpenChange, orderNumber, orderId, items }: RequestReturnDialogProps) {
     const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
     const [reasons, setReasons] = useState<Record<string, string>>({});
     const [returnQtys, setReturnQtys] = useState<Record<string, number>>({});
     const [notes, setNotes] = useState("");
     const [submitted, setSubmitted] = useState(false);
+    const [status, setStatus] = useState<
+        "idle" | "submitting" | "success" | "error"
+    >("idle");
+
+    const [error, setError] = useState<string>("");
 
     const toggleProduct = (id: string, quantity: number) => {
         setSelectedProducts((prev) => {
@@ -52,11 +58,52 @@ export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: 
     const setReasonForProduct = (id: string, reason: string) => {
         setReasons((prev) => ({ ...prev, [id]: reason }));
     };
+    async function handleSubmit() {
+        if (status === "submitting") return;
 
-    const handleSubmit = () => {
+        setStatus("submitting");
+        setError("");
 
-        setSubmitted(true);
-    };
+        try {
+            // Build Shopify payload
+            const requestedLineItems = [...selectedProducts].map((id) => ({
+                lineItemId: id,
+                quantity: returnQtys[id] ?? 1,
+                returnReason: reasons[id],
+                customerNote: notes.trim() || undefined,
+            }));
+
+            const res = await fetch("/api/returns/request", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderId,
+                    requestedLineItems,
+                }),
+            });
+
+            const json = await res.json().catch(() => null);
+
+            if (!res.ok) {
+                setError(
+                    json?.userErrors?.[0]?.message ||
+                    json?.error ||
+                    "Failed to submit return request"
+                );
+                setStatus("error");
+                return;
+            }
+
+            setStatus("success");
+            setSubmitted(true);
+        } catch (err) {
+            console.error("Return submit failed:", err);
+            setError("Unexpected error. Please try again.");
+            setStatus("error");
+        }
+    }
 
     const handleClose = () => {
         onOpenChange(false);
@@ -177,7 +224,7 @@ export function RequestReturnDialog({ open, onOpenChange, orderNumber, items }: 
                             </Button>
                             <Button disabled={!canSubmit} onClick={handleSubmit} className="flex-1 sm:flex-none gap-2">
                                 <RotateCcw className="w-4 h-4" />
-                                Submit Return
+                                {status === "submitting" ? "Submitting…" : "Submit Return"}
                             </Button>
                         </DialogFooter>
                     </>
