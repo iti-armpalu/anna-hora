@@ -16,8 +16,11 @@ import {
   Clock,
   Mail,
   Phone,
+  CheckCircle2,
+  ArrowRight,
 } from "lucide-react"
-import { shippingReturnsContent } from "@/data/shipping-returns-content"
+import { SHIPPING_RETURNS_CONTENT } from "./_data"
+
 
 export default function ShippingReturnsPage() {
   const [guestReturnData, setGuestReturnData] = useState({
@@ -40,10 +43,10 @@ export default function ShippingReturnsPage() {
       {/* Hero Section */}
       <div className="bg-white border-b border-stone-200">
         <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-serif text-stone-900 mb-6">{shippingReturnsContent.hero.title}</h1>
-          <p className="text-xl text-stone-600 mb-4">{shippingReturnsContent.hero.subtitle}</p>
+          <h1 className="text-4xl md:text-5xl font-serif text-stone-900 mb-6">{SHIPPING_RETURNS_CONTENT.hero.title}</h1>
+          <p className="text-xl text-stone-600 mb-4">{SHIPPING_RETURNS_CONTENT.hero.subtitle}</p>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            {shippingReturnsContent.hero.description}
+            {SHIPPING_RETURNS_CONTENT.hero.description}
           </p>
         </div>
       </div>
@@ -52,59 +55,73 @@ export default function ShippingReturnsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Shipping Section */}
           <div className="lg:col-span-2 space-y-12">
-            <Card className="border-stone-200 shadow-sm">
+            <Card className="border-stone-200 shadow-sm py-0">
               <CardContent className="p-8">
                 <div className="flex items-center space-x-3 mb-6">
-                  <Truck className="w-6 h-6 text-stone-600" />
-                  <h2 className="font-serif text-2xl text-stone-900">{shippingReturnsContent.shipping.title}</h2>
+                  <h2 className="font-serif text-2xl text-stone-900">Delivery</h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  {shippingReturnsContent.shipping.options.map((option, index) => (
+                  {SHIPPING_RETURNS_CONTENT.delivery.info.map((block, index) => (
                     <div key={index} className="border border-stone-200 rounded-lg p-4">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-medium text-stone-900">{option.name}</h3>
-                        <span className="text-stone-900 font-medium">{option.cost}</span>
+                        <h3 className="font-medium text-stone-900">{block.name}</h3>
                       </div>
-                      <p className="text-stone-600 text-sm mb-1">{option.deliveryTime}</p>
-                      {option.description && <p className="text-stone-500 text-sm">{option.description}</p>}
+                      <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">
+                        {block.items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-foreground/60" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-stone-200 pt-6">
-                  <h3 className="font-medium text-stone-900 mb-3">{shippingReturnsContent.shipping.dispatch.title}</h3>
-                  <div className="space-y-2 text-stone-600">
-                    <p className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{shippingReturnsContent.shipping.dispatch.cutoffTime}</span>
-                    </p>
-                    <p className="flex items-center space-x-2">
-                      <Package className="w-4 h-4" />
-                      <span>{shippingReturnsContent.shipping.dispatch.trackingInfo}</span>
-                    </p>
+                {/* Important Notes */}
+                <div className="bg-secondary/60 rounded-lg p-4 mb-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm font-medium text-foreground">
+                      Important Notes
+                    </span>
                   </div>
+                  <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
+                    {SHIPPING_RETURNS_CONTENT.delivery.importantNotes.map((note, i) => (
+                      <li key={i}>{note}</li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="mt-6 p-4 bg-stone-50 rounded-lg">
-                  <p className="text-stone-700 italic text-center">{shippingReturnsContent.shipping.reassurance}</p>
+                {/* Support + CTA */}
+                <div className="border-t border-border pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                  <Link
+                    href={SHIPPING_RETURNS_CONTENT.delivery.ctaHref}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
+                  >
+                    {SHIPPING_RETURNS_CONTENT.delivery.ctaText}
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
+
+
               </CardContent>
             </Card>
 
             {/* Returns Section */}
-            <Card className="border-stone-200 shadow-sm">
+            <Card className="border-stone-200 shadow-sm py-0">
               <CardContent className="p-8">
                 <div className="flex items-center space-x-3 mb-6">
-                  <RotateCcw className="w-6 h-6 text-stone-600" />
-                  <h2 className="font-serif text-2xl text-stone-900">{shippingReturnsContent.returns.title}</h2>
+                  <h2 className="font-serif text-2xl text-stone-900">{SHIPPING_RETURNS_CONTENT.returns.title}</h2>
                 </div>
 
-                <p className="text-stone-600 mb-8 leading-relaxed">{shippingReturnsContent.returns.description}</p>
+                <p className="text-stone-600 mb-8 leading-relaxed">{SHIPPING_RETURNS_CONTENT.returns.description}</p>
 
                 {/* Return Steps */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  {shippingReturnsContent.returns.steps.map((step, index) => (
+                  {SHIPPING_RETURNS_CONTENT.returns.steps.map((step, index) => (
                     <div key={index} className="text-center">
                       <div className="w-12 h-12 bg-stone-900 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-medium">
                         {step.step}
@@ -115,91 +132,46 @@ export default function ShippingReturnsPage() {
                   ))}
                 </div>
 
-                {/* Return Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white flex-1">
-                    <Link href="/account">{shippingReturnsContent.returns.buttons.loggedIn}</Link>
+                {/* Return Button */}
+                <div className="flex justify-center gap-4 mb-8">
+                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white">
+                    <Link href="/account">Initiate a Return</Link>
                   </Button>
-
-                  <Dialog open={isGuestReturnOpen} onOpenChange={setIsGuestReturnOpen}>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="border-stone-300 text-stone-700 hover:bg-stone-100 flex-1 bg-transparent"
-                      >
-                        {shippingReturnsContent.returns.buttons.guest}
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <DialogHeader>
-                        <DialogTitle>Guest Return</DialogTitle>
-                      </DialogHeader>
-                      <form onSubmit={handleGuestReturn} className="space-y-4">
-                        <div>
-                          <label htmlFor="orderNumber" className="block text-sm font-medium text-stone-700 mb-2">
-                            Order Number
-                          </label>
-                          <Input
-                            id="orderNumber"
-                            type="text"
-                            required
-                            value={guestReturnData.orderNumber}
-                            onChange={(e) => setGuestReturnData((prev) => ({ ...prev, orderNumber: e.target.value }))}
-                            placeholder="AH-12345"
-                            className="border-stone-300"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-2">
-                            Email Address
-                          </label>
-                          <Input
-                            id="email"
-                            type="email"
-                            required
-                            value={guestReturnData.email}
-                            onChange={(e) => setGuestReturnData((prev) => ({ ...prev, email: e.target.value }))}
-                            placeholder="your@email.com"
-                            className="border-stone-300"
-                          />
-                        </div>
-                        <Button type="submit" className="w-full bg-stone-900 hover:bg-stone-800 text-white">
-                          Submit Return Request
-                        </Button>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
                 </div>
 
                 {/* Return Policy Details */}
-                <div className="border-t border-stone-200 pt-6">
+                <div className="border-t border-stone-200 pt-6 mb-6">
                   <h3 className="font-medium text-stone-900 mb-4">Return Policy</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                    <div>
-                      <h4 className="font-medium text-stone-900 mb-2">Return Window</h4>
-                      <p className="text-stone-600">{shippingReturnsContent.returns.policy.window}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-stone-900 mb-2">Item Condition</h4>
-                      <ul className="text-stone-600 space-y-1">
-                        {shippingReturnsContent.returns.policy.condition.map((condition, index) => (
-                          <li key={index}>• {condition}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-stone-900 mb-2">Refund Timeline</h4>
-                      <p className="text-stone-600">{shippingReturnsContent.returns.policy.refundTimeline}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-stone-900 mb-2">Exceptions</h4>
-                      <ul className="text-stone-600 space-y-1">
-                        {shippingReturnsContent.returns.policy.exceptions.map((exception, index) => (
-                          <li key={index}>• {exception}</li>
-                        ))}
-                      </ul>
-                    </div>
+
+                    {SHIPPING_RETURNS_CONTENT.returns.policy.map((block, index) => (
+                      <div key={index} className="border border-stone-200 rounded-lg p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-medium text-stone-900">{block.name}</h3>
+                        </div>
+                        <ul className="list-disc ml-4 flex flex-col gap-1.5 text-sm text-muted-foreground">
+                          {block.conditions.map((item, i) => (
+                            <li key={i} className="list-item flex items-start gap-2">
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                      </div>
+                    ))}
+
                   </div>
+                </div>
+                {/* Support + CTA */}
+                <div className="border-t border-border pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                  <Link
+                    href={SHIPPING_RETURNS_CONTENT.returns.ctaHref}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
+                  >
+                    {SHIPPING_RETURNS_CONTENT.returns.ctaText}
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -208,22 +180,21 @@ export default function ShippingReturnsPage() {
             <Card className="border-stone-200 shadow-sm">
               <CardContent className="p-8">
                 <div className="flex items-center space-x-3 mb-6">
-                  <Headphones className="w-6 h-6 text-stone-600" />
-                  <h2 className="font-serif text-2xl text-stone-900">{shippingReturnsContent.complaints.title}</h2>
+                  <h2 className="font-serif text-2xl text-stone-900">{SHIPPING_RETURNS_CONTENT.complaints.title}</h2>
                 </div>
 
-                <p className="text-stone-600 mb-6 leading-relaxed">{shippingReturnsContent.complaints.description}</p>
+                <p className="text-stone-600 mb-6 leading-relaxed">{SHIPPING_RETURNS_CONTENT.complaints.description}</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  {shippingReturnsContent.complaints.contacts.map((contact, index) => (
-                    <div key={index} className="flex items-center space-x-3 p-4 border border-stone-200 rounded-lg">
+                  {SHIPPING_RETURNS_CONTENT.complaints.contacts.map((contact, index) => (
+                    <div key={index} className="flex items-center space-x-4 p-4 border border-stone-200 rounded-lg">
                       {contact.type === "phone" ? (
                         <Phone className="w-5 h-5 text-stone-600" />
                       ) : (
                         <Mail className="w-5 h-5 text-stone-600" />
                       )}
                       <div>
-                        <p className="text-sm text-stone-600 mb-1">{contact.label}</p>
+                        <p className="text-sm text-stone-600">{contact.label}</p>
                         <a
                           href={contact.href}
                           className="text-stone-900 hover:text-stone-700 transition-colors font-medium"
@@ -234,16 +205,6 @@ export default function ShippingReturnsPage() {
                     </div>
                   ))}
                 </div>
-
-                <div className="text-center">
-                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white">
-                    <Link href="/contact">Contact Form</Link>
-                  </Button>
-                </div>
-
-                <div className="mt-6 p-4 bg-stone-50 rounded-lg">
-                  <p className="text-stone-700 text-center">{shippingReturnsContent.complaints.resolution}</p>
-                </div>
               </CardContent>
             </Card>
           </div>
@@ -253,33 +214,22 @@ export default function ShippingReturnsPage() {
             <Card className="border-stone-200 shadow-sm">
               <CardContent className="p-6">
                 <h3 className="font-serif text-xl text-stone-900 mb-4">Need Quick Answers?</h3>
-                <p className="text-stone-600 text-sm mb-4">{shippingReturnsContent.support.description}</p>
+                <p className="text-stone-600 text-sm mb-4">{SHIPPING_RETURNS_CONTENT.support.description}</p>
                 <div className="space-y-3">
                   <Button
                     asChild
                     variant="outline"
                     className="w-full border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
                   >
-                    <Link href="/faq">{shippingReturnsContent.support.links.faq}</Link>
+                    <Link href="/faq">{SHIPPING_RETURNS_CONTENT.support.links.faq}</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
                     className="w-full border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
                   >
-                    <Link href="/our-silk">{shippingReturnsContent.support.links.careInstructions}</Link>
+                    <Link href="/our-silk">{SHIPPING_RETURNS_CONTENT.support.links.careInstructions}</Link>
                   </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-stone-200 shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="font-serif text-xl text-stone-900 mb-4">Track Your Order</h3>
-                <p className="text-stone-600 text-sm mb-4">Enter your order number to track your shipment.</p>
-                <div className="space-y-3">
-                  <Input placeholder="Order number (AH-12345)" className="border-stone-300" />
-                  <Button className="w-full bg-stone-900 hover:bg-stone-800 text-white">Track Order</Button>
                 </div>
               </CardContent>
             </Card>
@@ -289,7 +239,7 @@ export default function ShippingReturnsPage() {
                 <h3 className="font-serif text-xl text-stone-900 mb-2">Customer Care Hours</h3>
                 <div className="text-stone-600 text-sm space-y-1">
                   <p>Monday - Friday: 9:00 AM - 6:00 PM GMT</p>
-                  <p>Saturday: 10:00 AM - 4:00 PM GMT</p>
+                  <p className="text-stone-500 mt-2">Saturday: Closed</p>
                   <p className="text-stone-500 mt-2">Sunday: Closed</p>
                 </div>
               </CardContent>

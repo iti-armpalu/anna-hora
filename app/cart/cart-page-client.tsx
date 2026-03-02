@@ -1,9 +1,9 @@
+// app/cart/CartPageClient.tsx (or wherever this lives)
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 
 import { useCart } from "@/context/cart-context";
-import { formatPrice } from "@/hooks/use-price";
 
 import { CartEmptyState } from "./_components/cart-empty-state";
 import { CartLineItem } from "./_components/cart-line-item";
@@ -11,10 +11,9 @@ import { CartSummary } from "./_components/cart-summary";
 
 export default function CartPageClient() {
   const { cart, removeFromCart, loading } = useCart();
-  // const { threshold, currencyCode } = useCartShipping();
 
   /* -------------------------
-       Loading State
+       Loading / No Cart
     ------------------------- */
   if (!cart) {
     return (
@@ -29,34 +28,25 @@ export default function CartPageClient() {
   /* -------------------------
        Derived Values
     ------------------------- */
-  // const currency = currencyCode ?? cart.cost.currencyCode;
+  const currency = cart.cost.currencyCode;
 
   const subtotal = useMemo(
     () => Number(cart.cost.subtotalAmount),
     [cart.cost.subtotalAmount]
   );
 
-  const formattedSubtotal = useMemo(
-    () =>
-      formatPrice({
-        amount: subtotal,
-        currencyCode: currency,
-      }),
-    [subtotal, currency]
-  );
-
   /* -------------------------
-     Handlers
-  ------------------------- */
-  const handleCheckout = () => {
+       Handlers
+    ------------------------- */
+  const handleCheckout = useCallback(() => {
     if (cart.checkoutUrl) {
       window.location.assign(cart.checkoutUrl);
     }
-  };
+  }, [cart.checkoutUrl]);
 
   /* -------------------------
-     Empty Cart
-  ------------------------- */
+       Empty Cart
+    ------------------------- */
   if (isEmpty) {
     return (
       <div className="min-h-screen bg-stone-50">
@@ -65,14 +55,12 @@ export default function CartPageClient() {
     );
   }
 
-
   /* -------------------------
        Cart With Items
     ------------------------- */
   return (
     <div className="min-h-screen bg-stone-50">
       <div className="container mx-auto px-4 lg:px-8 py-12">
-        {/* Hero */}
         <header className="text-center mb-12">
           <h1 className="text-3xl lg:text-4xl font-serif text-stone-800 mb-4">
             Your Bag
@@ -83,9 +71,6 @@ export default function CartPageClient() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* -------------------------
-              Line Items
-          ------------------------- */}
           <section className="lg:col-span-2 space-y-8">
             {cart.lines.map((line) => (
               <CartLineItem
@@ -104,9 +89,6 @@ export default function CartPageClient() {
             ))}
           </section>
 
-          {/* -------------------------
-              Summary
-          ------------------------- */}
           <aside className="lg:col-span-1">
             <CartSummary
               subtotal={subtotal}
