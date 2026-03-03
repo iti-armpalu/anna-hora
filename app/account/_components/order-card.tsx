@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Headphones, LifeBuoy, PackageSearch, RotateCcw, ShoppingCart, Truck } from "lucide-react";
+import { ChevronDown, Headphones, RotateCcw, ShoppingCart, Truck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
@@ -77,6 +76,44 @@ function optionsToText(opts: Array<{ name: string; value: string }>) {
     return opts.map((o) => `${o.name}: ${o.value}`).join(" • ");
 }
 
+function Skeleton({ className = "" }: { className?: string }) {
+    return <div className={`animate-pulse rounded-md bg-stone-200/70 ${className}`} />;
+}
+
+function OrderDetailsSkeleton() {
+    return (
+        <div className="p-5 md:p-6 space-y-4">
+            {/* Line item skeletons */}
+            <div className="space-y-3">
+                {Array.from({ length: 2 }).map((_, i) => (
+                    <div
+                        key={i}
+                        className="flex items-start gap-4 rounded-xl border border-stone-200 bg-white p-4"
+                    >
+                        <Skeleton className="h-16 w-16 rounded-lg" />
+                        <div className="flex-1 space-y-2">
+                            <Skeleton className="h-4 w-2/3" />
+                            <Skeleton className="h-3 w-1/2" />
+                            <div className="flex gap-2 pt-2">
+                                <Skeleton className="h-3 w-20" />
+                                <Skeleton className="h-3 w-24" />
+                            </div>
+                        </div>
+                        <Skeleton className="h-4 w-16" />
+                    </div>
+                ))}
+            </div>
+
+            {/* Footer actions skeleton */}
+            <div className="flex flex-wrap gap-2 border-t border-stone-200 pt-4">
+                <Skeleton className="h-9 w-28" />
+                <Skeleton className="h-9 w-36" />
+                <Skeleton className="h-9 w-32" />
+            </div>
+        </div>
+    );
+}
+
 
 export function OrderCard({ order }: { order: OrderSummary }) {
     const [open, setOpen] = useState(false);
@@ -85,9 +122,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const [error, setError] = useState<string | null>(null);
     const [returnOpen, setReturnOpen] = useState(false);
     const [trackingOpen, setTrackingOpen] = useState(false);
-
-    // If you later add tracking to the API response, you can compute a best tracking URL here.
-    const trackingUrl: string | null = null;
 
     async function toggle() {
         const next = !open;
@@ -158,7 +192,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                 i.returnStatus !== "APPROVED"
         );
 
-
+    const isFulfilled = order.fulfillmentStatus === "FULFILLED";
 
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
@@ -197,11 +231,22 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                     <div className="border-t border-border">
                         {/* Product rows */}
                         <div className="divide-y divide-border">
-                            <div className="space-y-3">
+                            {/* <div className="space-y-3">
                                 {items.map((item) => (
                                     <LineItemRow key={item.id} item={item} />
                                 ))}
-                            </div>
+                            </div> */}
+                            {open && loading && !details ? (
+                                <OrderDetailsSkeleton />
+                            ) : error ? (
+                                <div className="p-5 md:p-6 text-sm text-red-600">{error}</div>
+                            ) : (
+                                <div className="space-y-3 p-5 md:p-6">
+                                    {items.map((item) => (
+                                        <LineItemRow key={item.id} item={item} />
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Mobile total */}
@@ -213,33 +258,32 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         {/* Footer actions */}
                         <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
                             <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setTrackingOpen(true)}>
-                                <Truck className="w-4 h-4" />
                                 {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
                             </Button>
                             {/* <ViewTrackingDialog open={trackingOpen} onOpenChange={setTrackingOpen} orderNumber={order.orderNumber} trackingNumber={order.trackingNumber} status={order.status} delivery={order.delivery} /> */}
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-2 text-sm"
-                                onClick={() => setReturnOpen(true)}
-                                disabled={!hasAnyReturnable}
-                            >
-                                <RotateCcw className="w-4 h-4" />
-                                Request Return
-                            </Button>
-                            <RequestReturnDialog
-                                open={returnOpen}
-                                onOpenChange={setReturnOpen}
-                                orderNumber={order.name}
-                                orderId={order.id}
-                                items={items}
-                            />
+                            {isFulfilled && (
+                                <>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="gap-2 text-sm"
+                                        onClick={() => setReturnOpen(true)}
+                                        disabled={!hasAnyReturnable}
+                                    >
+                                        <RotateCcw className="w-4 h-4" />
+                                        Request Return
+                                    </Button>
+
+                                    <RequestReturnDialog
+                                        open={returnOpen}
+                                        onOpenChange={setReturnOpen}
+                                        orderNumber={order.name}
+                                        orderId={order.id}
+                                        items={items}
+                                    />
+                                </>
+                            )}
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
-                                <ShoppingCart className="w-4 h-4" />
-                                Reorder
-                            </Button>
-                            <Button variant="outline" size="sm" className="gap-2 text-sm">
-                                <Headphones className="w-4 h-4" />
                                 Contact Support
                             </Button>
                         </div>
