@@ -36,6 +36,7 @@ export const CUSTOMER_UPDATE_MUTATION = /* GraphQL */ `
 `;
 
 
+
 export const CUSTOMER_ORDERS_QUERY = /* GraphQL */ `
   query CustomerOrders($first: Int!) {
     customer {
@@ -70,14 +71,34 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         amount
         currencyCode
       }
+
+      # Needed to disable/label returned items in UI
+      returns(first: 20) {
+        nodes {
+          id
+          status
+          returnLineItems(first: 100) {
+            nodes {
+              quantity
+              lineItem {
+                id
+              }
+            }
+          }
+        }
+      }
+
       lineItems(first: $lineItemsFirst) {
         nodes {
           id
           name
           title
           quantity
-          variantTitle
 
+          # ✅ Needed to prevent invalid return quantities
+          returnableQuantity
+
+          variantTitle
           variantOptions {
             name
             value

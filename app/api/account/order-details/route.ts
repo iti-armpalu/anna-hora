@@ -7,6 +7,8 @@ import { requireAuthApi } from "@/lib/auth/require-auth-api";
  * Types
  * ------------------------------------------------------ */
 
+type MoneyV2 = { amount: string; currencyCode: string };
+
 type OrderDetailsRes = {
   order: {
     id: string;
@@ -14,31 +16,45 @@ type OrderDetailsRes = {
     processedAt: string;
     fulfillmentStatus: string;
     financialStatus: string | null;
-    totalPrice: { amount: string; currencyCode: string };
+    totalPrice: MoneyV2;
+
+    // ✅ NEW: order returns (to grey out items already requested/approved)
+    returns: {
+      nodes: Array<{
+        id: string;
+        status: string; // e.g. REQUESTED, APPROVED, DECLINED, CLOSED
+        returnLineItems: {
+          nodes: Array<{
+            quantity: number;
+            lineItem: {
+              id: string;
+            };
+          }>;
+        };
+      }>;
+    };
+
     lineItems: {
       nodes: Array<{
         id: string;
         name: string;
         title: string;
         quantity: number;
-        variantTitle?: string | null;
 
+        // ✅ NEW: enforce return qty <= returnableQuantity
+        returnableQuantity: number;
+
+        variantTitle?: string | null;
         variantOptions: Array<{
           name: string;
           value: string;
         }>;
 
         unitPrice: {
-          price: {
-            amount: string;
-            currencyCode: string;
-          };
+          price: MoneyV2;
         } | null;
 
-        currentTotalPrice: {
-          amount: string;
-          currencyCode: string;
-        } | null;
+        currentTotalPrice: MoneyV2 | null;
 
         image?: {
           url: string;

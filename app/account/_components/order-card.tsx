@@ -21,6 +21,20 @@ type OrderSummary = {
 
 type OrderDetails = {
     id: string;
+
+    returns: {
+        nodes: Array<{
+            id: string;
+            status: string; // REQUESTED, APPROVED, DECLINED, CLOSED, etc.
+            returnLineItems: {
+                nodes: Array<{
+                    quantity: number;
+                    lineItem: { id: string };
+                }>;
+            };
+        }>;
+    };
+
     lineItems: {
         nodes: Array<{
             id: string;
@@ -28,23 +42,15 @@ type OrderDetails = {
             title: string;
             quantity: number;
 
+            returnableQuantity: number; // ✅ NEW
+
             variantTitle?: string | null;
+            variantOptions: Array<{ name: string; value: string }>;
 
-            variantOptions: Array<{
-                name: string;
-                value: string;
-            }>;
-
-            unitPrice: {
-                price: Money;
-            } | null;
-
+            unitPrice: { price: Money } | null;
             currentTotalPrice: Money | null;
 
-            image?: {
-                url: string;
-                altText?: string | null;
-            } | null;
+            image?: { url: string; altText?: string | null } | null;
         }>;
     };
 };
@@ -112,6 +118,22 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         }
     }
 
+    const returnStatusByLineItemId = new Map<string, string>();
+
+    details?.returns?.nodes.forEach((ret) => {
+        // You can decide which statuses should lock the line item
+        // Usually REQUESTED + APPROVED should disable re-requesting
+        const locksItem =
+            ret.status === "REQUESTED" || ret.status === "APPROVED";
+
+        if (!locksItem) return;
+
+        ret.returnLineItems.nodes.forEach((rli) => {
+            returnStatusByLineItemId.set(rli.lineItem.id, ret.status);
+        });
+    });
+
+
     const items: LineItemDetails[] =
         details?.lineItems.nodes.map((li) => ({
             id: li.id,
@@ -122,7 +144,19 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             imageAlt: li.image?.altText ?? null,
             currentTotalPrice: li.currentTotalPrice ?? null,
             unitPrice: li.unitPrice ?? null,
+
+            // ✅ NEW
+            returnableQuantity: li.returnableQuantity,
+            returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
         })) ?? [];
+
+    const hasAnyReturnable =
+        items.some(
+            (i) =>
+                i.returnableQuantity > 0 &&
+                i.returnStatus !== "REQUESTED" &&
+                i.returnStatus !== "APPROVED"
+        );
 
 
 
@@ -183,11 +217,23 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
                             </Button>
                             {/* <ViewTrackingDialog open={trackingOpen} onOpenChange={setTrackingOpen} orderNumber={order.orderNumber} trackingNumber={order.trackingNumber} status={order.status} delivery={order.delivery} /> */}
-                            <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setReturnOpen(true)}>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="gap-2 text-sm"
+                                onClick={() => setReturnOpen(true)}
+                                disabled={!hasAnyReturnable}
+                            >
                                 <RotateCcw className="w-4 h-4" />
                                 Request Return
                             </Button>
-                            <RequestReturnDialog open={returnOpen} onOpenChange={setReturnOpen} orderNumber={order.name} orderId={order.id} items={items} />
+                            <RequestReturnDialog
+                                open={returnOpen}
+                                onOpenChange={setReturnOpen}
+                                orderNumber={order.name}
+                                orderId={order.id}
+                                items={items}
+                            />
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 <ShoppingCart className="w-4 h-4" />
                                 Reorder
