@@ -42,7 +42,7 @@ type OrderDetails = {
             title: string;
             quantity: number;
 
-            returnableQuantity: number; // ✅ NEW
+            refundableQuantity: number;
 
             variantTitle?: string | null;
             variantOptions: Array<{ name: string; value: string }>;
@@ -146,14 +146,14 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             unitPrice: li.unitPrice ?? null,
 
             // ✅ NEW
-            returnableQuantity: li.returnableQuantity,
+            refundableQuantity: li.refundableQuantity,
             returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
         })) ?? [];
 
     const hasAnyReturnable =
         items.some(
             (i) =>
-                i.returnableQuantity > 0 &&
+                i.refundableQuantity > 0 &&
                 i.returnStatus !== "REQUESTED" &&
                 i.returnStatus !== "APPROVED"
         );

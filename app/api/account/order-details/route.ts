@@ -41,8 +41,8 @@ type OrderDetailsRes = {
         title: string;
         quantity: number;
 
-        // ✅ NEW: enforce return qty <= returnableQuantity
-        returnableQuantity: number;
+        // ✅ NEW: enforce return qty 
+        refundableQuantity: number;
 
         variantTitle?: string | null;
         variantOptions: Array<{

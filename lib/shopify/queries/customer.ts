@@ -96,7 +96,7 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
           quantity
 
           # ✅ Needed to prevent invalid return quantities
-          returnableQuantity
+          refundableQuantity
 
           variantTitle
           variantOptions {

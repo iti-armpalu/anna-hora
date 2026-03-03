@@ -197,7 +197,7 @@ export function RequestReturnDialog({
                                     {items.map((item) => {
                                         const checked = selectedProducts.has(item.id);
                                         const locked = isLocked(item);
-                                        const disabled = locked || item.returnableQuantity === 0;
+                                        const disabled = locked || item.refundableQuantity === 0;
 
                                         return (
                                             <div key={item.id} className="p-3">
@@ -213,8 +213,8 @@ export function RequestReturnDialog({
                                                         disabled={disabled}
                                                         onCheckedChange={() => {
                                                             if (disabled) return;
-                                                            // ✅ use returnableQuantity as the max
-                                                            toggleProduct(item.id, item.returnableQuantity);
+                                                            
+                                                            toggleProduct(item.id, item.refundableQuantity);
                                                         }}
                                                     />
                                                     <LineItemRow item={item} />
@@ -246,7 +246,7 @@ export function RequestReturnDialog({
                                                             </SelectContent>
                                                         </Select>
 
-                                                        {item.returnableQuantity > 1 ? (
+                                                        {item.refundableQuantity > 1 ? (
                                                             <div className="flex items-center gap-2">
                                                                 <label className="text-xs text-muted-foreground whitespace-nowrap">
                                                                     Return qty:
@@ -266,7 +266,7 @@ export function RequestReturnDialog({
                                                                     </SelectTrigger>
                                                                     <SelectContent>
                                                                         {Array.from(
-                                                                            { length: item.returnableQuantity },
+                                                                            { length: item.refundableQuantity },
                                                                             (_, i) => i + 1
                                                                         ).map((n) => (
                                                                             <SelectItem key={n} value={String(n)}>
@@ -277,7 +277,7 @@ export function RequestReturnDialog({
                                                                 </Select>
 
                                                                 <span className="text-xs text-muted-foreground">
-                                                                    of {item.returnableQuantity}
+                                                                    of {item.refundableQuantity}
                                                                 </span>
                                                             </div>
                                                         ) : null}

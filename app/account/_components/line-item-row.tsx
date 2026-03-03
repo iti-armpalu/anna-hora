@@ -15,7 +15,7 @@ export type LineItemDetails = {
   currentTotalPrice?: Money | null; // line total
   unitPrice?: { price: Money } | null; // optional: per-item
 
-  returnableQuantity: number; // ✅ add
+  refundableQuantity: number;
   returnStatus?: string | null; // ✅ add (optional)
 };
 
