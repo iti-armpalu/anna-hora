@@ -238,7 +238,7 @@ export default function ShippingReturnsPage() {
               <CardContent className="p-6">
                 <h3 className="font-serif text-xl text-stone-900 mb-2">Customer Care Hours</h3>
                 <div className="text-stone-600 text-sm space-y-1">
-                  <p>Monday - Friday: 9:00 AM - 6:00 PM GMT</p>
+                  <p>Monday - Friday: 9:00 AM - 6:00 PM CET</p>
                   <p className="text-stone-500 mt-2">Saturday: Closed</p>
                   <p className="text-stone-500 mt-2">Sunday: Closed</p>
                 </div>

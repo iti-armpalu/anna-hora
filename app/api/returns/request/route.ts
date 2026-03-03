@@ -9,12 +9,9 @@ import { customerAccountGraphql } from "@/lib/shopify/customer-account-graphql";
 const ORDER_REQUEST_RETURN_MUTATION = /* GraphQL */ `
   mutation OrderRequestReturn(
     $orderId: ID!
-    $requestedLineItems: [ReturnRequestLineItemInput!]!
+    $requestedLineItems: [RequestedLineItemInput!]!
   ) {
-    orderRequestReturn(
-      orderId: $orderId
-      requestedLineItems: $requestedLineItems
-    ) {
+    orderRequestReturn(orderId: $orderId, requestedLineItems: $requestedLineItems) {
       return {
         id
         status
@@ -26,6 +23,7 @@ const ORDER_REQUEST_RETURN_MUTATION = /* GraphQL */ `
     }
   }
 `;
+
 
 /* -------------------------------------------------------
  * Types

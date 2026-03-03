@@ -23,7 +23,7 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={UI_TEXTS.contactCtas.primary.href}
-              className="bg-stone-900 hover:bg-stone-800 text-white px-4 py-2 rounded-md inline-flex items-center justify-center font-medium transition-colors"
+              className="bg-anna-green-900 hover:bg-stone-800 text-white px-4 py-2 rounded-md inline-flex items-center justify-center font-medium transition-colors"
             >
               {UI_TEXTS.contactCtas.primary.label}
             </Link>

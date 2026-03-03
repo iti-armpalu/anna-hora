@@ -71,7 +71,7 @@ export const SHIPPING_RETURNS_CONTENT = {
             {
                 name: "Return Costs",
                 conditions: [
-                    "Return shipping costs are paid by the customer.",
+                    "Return shipping costs are paid by the customer",
                 ],
             },
             {
