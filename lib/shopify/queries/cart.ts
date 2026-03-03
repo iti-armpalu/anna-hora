@@ -218,8 +218,11 @@ export const CART_LINES_REMOVE = /* GraphQL */ `
           }
         }
       }
+      userErrors {
+        field
+        message
+      }
     }
-    userErrors { field message } 
   }
 `;
 
