@@ -178,6 +178,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (userErrors.length) {
+      console.log("Return userErrors:", userErrors); // <-- add this
       return NextResponse.json(
         { ok: false, userErrors },
         { status: 400 }
