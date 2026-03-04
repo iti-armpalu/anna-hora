@@ -5,21 +5,16 @@ export function CustomerAssurance() {
   return (
     <div className="grid grid-cols-3 gap-4 py-6 border-y border-stone-200 mb-0">
       <div className="text-center space-y-2">
-        <Truck className="w-6 h-6 text-stone-600 mx-auto" />
-        <h3 className="text-xs font-medium text-stone-800">Free Shipping</h3>
-        <p className="text-xs text-stone-600">
-          XXXX
-        </p>
-      </div>
-      <div className="text-center space-y-2">
-        <RotateCcw className="w-6 h-6 text-stone-600 mx-auto" />
         <h3 className="text-xs font-medium text-stone-800">Easy Returns</h3>
-        <p className="text-xs text-stone-600">30-day policy</p>
+        <p className="text-xs text-stone-600">14-day policy</p>
       </div>
       <div className="text-center space-y-2">
-        <Shield className="w-6 h-6 text-stone-600 mx-auto" />
-        <h3 className="text-xs font-medium text-stone-800">Secure Payment</h3>
-        <p className="text-xs text-stone-600">Data protected</p>
+        <h3 className="text-xs font-medium text-stone-800">Crafted Locally</h3>
+        <p className="text-xs text-stone-600">Thoughtfully designed pieces, made in Czechia</p>
+      </div>
+      <div className="text-center space-y-2">
+        <h3 className="text-xs font-medium text-stone-800">Premium Materials</h3>
+        <p className="text-xs text-stone-600">Carefully selected fabrics made to last</p>
       </div>
     </div>
   )

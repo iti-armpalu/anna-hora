@@ -5,9 +5,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Mail, Phone, Clock, Instagram } from "lucide-react"
 import { siteConfig } from "@/lib/config/site";
 
-
 import type { Metadata } from "next"
-import { ContactForm } from "./_components/contact-form"
+
 
 export const metadata: Metadata = {
     title: "Contact Us - We'd Love to Hear from You",
@@ -20,7 +19,7 @@ const HEADER_DESCRIPTION =
 
 function ContactInfoCard() {
     return (
-        <Card className="border-stone-200 shadow-sm">
+        <Card className="border-stone-200 shadow-sm py-0">
             <CardContent className="p-6">
                 <h3 className="font-serif text-xl text-stone-900 mb-4">Get in Touch</h3>
                 <div className="space-y-4">
@@ -38,7 +37,7 @@ function ContactInfoCard() {
                         label="Call us"
                         content={
                             <a href="tel:+442071234567" className="text-stone-900 hover:text-stone-700 transition-colors">
-                                 {siteConfig.phone}
+                                {siteConfig.phone}
                             </a>
                         }
                     />
@@ -46,11 +45,19 @@ function ContactInfoCard() {
                         icon={<Clock className="w-5 h-5 text-stone-600 mt-0.5" />}
                         label="Customer Care Hours"
                         content={
-                            <p className="text-stone-900 text-sm">
-                                Monday - Friday: 9:00 AM - 6:00 PM GMT
-                                <br />
-                                Saturday: 10:00 AM - 4:00 PM GMT
-                            </p>
+                            <>
+                                <p className="text-stone-900">
+                                    Monday – Friday: {siteConfig.customerCareHours.mondayFriday}
+                                </p>
+
+                                <p className="text-sm text-stone-500">
+                                    Saturday: {siteConfig.customerCareHours.saturday}
+                                </p>
+
+                                <p className="text-sm text-stone-500">
+                                    Sunday: {siteConfig.customerCareHours.sunday}
+                                </p>
+                            </>
                         }
                     />
                 </div>
@@ -81,7 +88,7 @@ function ContactInfo({
 
 function FAQCard() {
     return (
-        <Card className="border-stone-200 shadow-sm">
+        <Card className="border-stone-200 shadow-sm py-0">
             <CardContent className="p-6">
                 <h3 className="font-serif text-xl text-stone-900 mb-2">Need Quick Answers?</h3>
                 <p className="text-stone-600 text-sm mb-4">Visit our FAQ page for immediate answers to common questions.</p>
@@ -95,7 +102,7 @@ function FAQCard() {
 
 function FollowUsCard() {
     return (
-        <Card className="border-stone-200 shadow-sm">
+        <Card className="border-stone-200 shadow-sm py-0">
             <CardContent className="p-6">
                 <h3 className="font-serif text-xl text-stone-900 mb-4">Follow Us</h3>
 
@@ -126,13 +133,11 @@ export default function ContactPage() {
                     </header>
 
                     <div className="grid grid-cols-1 space-y-6">
-                        <div className="lg:col-span-2">
-                            <ContactForm />
-                        </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <ContactInfoCard />
-                            <div className="space-y-6">
+
+                            <div className="grid grid-rows-2 gap-6">
                                 <FAQCard />
                                 <FollowUsCard />
                             </div>

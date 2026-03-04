@@ -103,13 +103,6 @@ function OrderDetailsSkeleton() {
                     </div>
                 ))}
             </div>
-
-            {/* Footer actions skeleton */}
-            <div className="flex flex-wrap gap-2 border-t border-stone-200 pt-4">
-                <Skeleton className="h-9 w-28" />
-                <Skeleton className="h-9 w-36" />
-                <Skeleton className="h-9 w-32" />
-            </div>
         </div>
     );
 }
@@ -231,11 +224,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                     <div className="border-t border-border">
                         {/* Product rows */}
                         <div className="divide-y divide-border">
-                            {/* <div className="space-y-3">
-                                {items.map((item) => (
-                                    <LineItemRow key={item.id} item={item} />
-                                ))}
-                            </div> */}
                             {open && loading && !details ? (
                                 <OrderDetailsSkeleton />
                             ) : error ? (

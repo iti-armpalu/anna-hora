@@ -157,7 +157,7 @@ export const careGuideContent: CareGuideContent = {
       {
         issue: "Wrinkles from Storage",
         solution:
-          "Hang garment in a steamy bathroom for 15-20 minutes, or use a steamer held 6 inches away. Never apply steam directly to silk.",
+          "Hang garment in a steamy bathroom for 15-20 minutes, or use a steamer held 15 cm / 6 inches away. Never apply steam directly to silk.",
       },
       {
         issue: "Color Fading",

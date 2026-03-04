@@ -2,13 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { useCart } from "@/context/cart-context"
-import { formatPrice } from "@/hooks/use-price"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
-import { Gift, Heart, Star } from "lucide-react"
+import { Gift } from "lucide-react"
 import Image from "next/image"
-import { useMemo, useState } from "react"
-import { toast } from "sonner"
 
 interface GiftGuidePageClientProps {
     product: ProductNormalized
@@ -16,42 +12,13 @@ interface GiftGuidePageClientProps {
 }
 
 export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGuidePageClientProps) {
-    const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
-    const [message, setMessage] = useState("")
-    const { addToCart } = useCart()
 
-    const currency = product.currencyCode
-    const maxMessageLength = 200
-
-    const selectedVariant = useMemo(() => {
-        if (selectedAmount === null) return null
-        return product.variants.find((v) => Number(v.price.amount) === selectedAmount) ?? null
-    }, [product.variants, selectedAmount])
-
-    const selectedAmountLabel = useMemo(() => {
-        if (selectedAmount === null) return null
-        return formatPrice({ amount: selectedAmount, currencyCode: currency })
-    }, [currency, selectedAmount])
-
-    async function handleAddToBag() {
-        if (selectedAmount === null) {
-            toast.error("Please select a gift card amount.")
-            return
-        }
-
-        if (!selectedVariant) {
-            toast.error("No matching variant found for selected amount.")
-            return
-        }
-
-        try {
-            await addToCart(selectedVariant.id, 1)
-            toast.success(`Added ${product.title} (${selectedAmountLabel}) to your bag.`)
-        } catch (err) {
-            toast.error("Failed to add gift card to bag.")
-            console.error(err)
-        }
-    }
+    const packagingImages = [
+        { src: "/packing-1.jpeg", alt: "Folded garment tied with ribbon" },
+        { src: "/packing-2.jpeg", alt: "Branded box sealed with our signature sticker" },
+        { src: "/packing-3.jpeg", alt: "Soft cotton dust bag" },
+        { src: "/packing-4.jpeg", alt: "Finished gift presentation with tissue and a note" },
+    ]
 
     return (
         <div className="min-h-screen bg-stone-50">
@@ -72,8 +39,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                             </p>
 
                             <p className="text-lg text-stone-600 leading-relaxed">
-                                Delivered instantly by email, with the option to add a personal message. No guessing sizes. No timing
-                                stress. Just quiet, considered gifting.
+                                Gift cards are something we’re preparing carefully and will introduce soon. For now, we invite you to explore the pieces themselves—and the details that make them special. Each order is packed with care, so it arrives ready to give.
                             </p>
 
                             <Button
@@ -81,18 +47,14 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                                 onClick={() => document.getElementById("gift-card")?.scrollIntoView({ behavior: "smooth" })}
                             >
                                 <Gift className="w-4 h-4 mr-2" />
-                                Shop Gift Card
+                                Gift Cards (Coming Soon)
                             </Button>
-
-                            <p className="text-sm text-stone-500">
-                                Physical gifts are coming—gift cards are available now.
-                            </p>
                         </div>
 
                         <div className="relative">
                             <Image
                                 src="/gift-guide-hero.jpeg"
-                                alt="Elegant gift wrapping"
+                                alt="Elegant ANNA HORA gift"
                                 width={500}
                                 height={600}
                                 className="rounded-lg"
@@ -115,7 +77,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                                 <em className="font-serif italic">Gift Card</em>
                             </h3>
                             <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-                                When you can’t decide, let her choose. Delivered digitally by email (gift cards are digital for now).
+                                When you can’t decide, let her choose.
                             </p>
                         </div>
 
@@ -125,71 +87,32 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                             </div>
 
                             <Card className="border-0 shadow-lg bg-white p-8">
-                                <div className="space-y-6">
-                                    <h4 className="text-2xl font-light text-stone-800">Create Your Gift Card</h4>
+                                <div className="space-y-5">
 
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium text-stone-700 mb-2">Gift Card Amount</label>
-                                            <div className="grid grid-cols-3 gap-2">
-                                                {giftCardAmounts.map((amount) => (
-                                                    <Button
-                                                        key={amount}
-                                                        variant={selectedAmount === amount ? "default" : "outline"}
-                                                        size="sm"
-                                                        onClick={() => setSelectedAmount(amount)}
-                                                        className={
-                                                            selectedAmount === amount
-                                                                ? "bg-anna-green-800 hover:bg-stone-700 text-white"
-                                                                : "border-stone-300 text-stone-700 hover:bg-stone-100"
-                                                        }
-                                                    >
-                                                        {formatPrice({ amount, currencyCode: product.currencyCode })}
-                                                    </Button>
-                                                ))}
-                                            </div>
-                                        </div>
+                                    <p className="text-stone-600 leading-relaxed">
+                                        Gift cards will be digital and delivered by email at launch, with the option to add a personal message.
+                                    </p>
 
-                                        <div>
-                                            <label className="block text-sm font-medium text-stone-700 mb-2">Delivery</label>
-                                            <div className="rounded-md border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
-                                                Digital delivery via email (instant)
-                                            </div>
-                                            <p className="text-xs text-stone-500 mt-2">
-                                                You’ll be able to forward it, print it, or include it in a card.
-                                            </p>
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-sm font-medium text-stone-700 mb-2">Personal Message (Optional)</label>
-                                            <div className="relative">
-                                                <textarea
-                                                    value={message}
-                                                    onChange={(e) => setMessage(e.target.value.slice(0, maxMessageLength))}
-                                                    className="w-full p-3 border border-stone-300 rounded-md focus:border-stone-500 focus:outline-none resize-none"
-                                                    rows={4}
-                                                    maxLength={maxMessageLength}
-                                                    placeholder="Add a personal touch to your gift..."
-                                                />
-                                                <div className="absolute bottom-3 right-3 text-xs text-stone-400">
-                                                    {message.length}/{maxMessageLength}
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                    <div className="rounded-lg border border-stone-200 bg-stone-50 p-4">
+                                        <ul className="space-y-2 text-sm text-stone-700">
+                                            <li className="flex gap-2">
+                                                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-stone-400" />
+                                                Multiple amounts
+                                            </li>
+                                            <li className="flex gap-2">
+                                                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-stone-400" />
+                                                Optional personal message
+                                            </li>
+                                            <li className="flex gap-2">
+                                                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-stone-400" />
+                                                Email delivery (instant)
+                                            </li>
+                                        </ul>
                                     </div>
 
-                                    <Button
-                                        disabled={!selectedVariant}
-                                        onClick={handleAddToBag}
-                                        className="w-full bg-anna-green-950 text-white hover:bg-stone-700"
-                                    >
-                                        {selectedVariant ? <>Add Gift Card — {selectedAmountLabel}</> : "Select Amount"}
+                                    <Button disabled className="w-full bg-anna-green-950 text-white opacity-60">
+                                        Coming Soon
                                     </Button>
-
-                                    <p className="text-xs text-stone-500">
-                                        Gift cards never expire and can be used across the store.
-                                    </p>
                                 </div>
                             </Card>
                         </div>
@@ -197,49 +120,41 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                 </div>
             </section>
 
-            {/* The Experience Section */}
-            <section className="py-16 lg:py-24 bg-white">
+            {/* Packaging Preview */}
+            <section id="packaging" className="py-16 lg:py-24 bg-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-8">
-                            More Than a Gift,
-                            <br />
-                            <em className="font-serif italic">A Daily Ritual</em>
-                        </h3>
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-12">
+                            <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
+                                Packaging
+                                <br />
+                                <em className="font-serif italic">Preview</em>
+                            </h3>
+                            <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+                                A glimpse of how we pack orders. Carefully prepared, with attention to every detail.
+                            </p>
+                        </div>
 
-                        <p className="text-xl text-stone-600 leading-relaxed mb-12">
-                            A gift card is an invitation to slow down—toward softness, texture, and quiet luxury. It’s the freedom to
-                            choose what she’ll reach for again and again.
-                        </p>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                            <div className="text-center">
-                                <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Gift className="w-8 h-8 text-anna-cement-600" />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {packagingImages.map((img) => (
+                                <div key={img.src} className="group">
+                                    <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-stone-100">
+                                        <Image
+                                            src={img.src}
+                                            alt={img.alt}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                                            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                                        />
+                                    </div>
+                                    <p className="mt-3 text-sm text-stone-600">{img.alt}</p>
                                 </div>
-                                <h4 className="text-lg font-light text-stone-800 mb-2">Instant Delivery</h4>
-                                <p className="text-stone-600 text-sm">Delivered by email in minutes—perfect for last-minute gifting.</p>
-                            </div>
-
-                            <div className="text-center">
-                                <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Heart className="w-8 h-8 text-anna-cement-600" />
-                                </div>
-                                <h4 className="text-lg font-light text-stone-800 mb-2">No Guesswork</h4>
-                                <p className="text-stone-600 text-sm">She chooses the piece, the size, and the moment.</p>
-                            </div>
-
-                            <div className="text-center">
-                                <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Star className="w-8 h-8 text-anna-cement-600" />
-                                </div>
-                                <h4 className="text-lg font-light text-stone-800 mb-2">Always Right</h4>
-                                <p className="text-stone-600 text-sm">A considered gift that fits every season and every style.</p>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </section>
+
         </div>
     )
 }

@@ -25,7 +25,7 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src="/anna-hora-giftcard-2.webp"
@@ -40,39 +40,26 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
                 Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time,
                 in her own style.
               </p>
-              <div className="flex items-center justify-between">
-                {startingAmount && (
-                  <span className="text-lg font-medium text-stone-800">
-                    From {formatPrice({ amount: startingAmount, currencyCode })}
-                  </span>
-                )}
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                >
-                  <Link href="/gift-guide">View Gift Guide</Link>
-                </Button>
-              </div>
+              <Badge
+                variant="secondary"
+                className="text-stone-800">
+                Coming soon
+              </Badge>
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+          <Card className="group cursor-pointer border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                src="/gift-wrapping.webp"
+                src="/packing-4.jpeg"
                 alt="Gift Wrapping"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
               />
             </div>
             <CardContent className="p-6">
               <div className="flex flex-wrap items-center gap-4 mb-3">
-                <h4 className="text-xl font-light text-stone-800">Complimentary Gift Wrapping</h4>
-                <Badge variant="secondary" className="bg-stone-100 text-stone-700 hover:bg-stone-300 font-normal">
-                  FSC-certified recycled paper
-                </Badge>
+                <h4 className="text-xl font-light text-stone-800">Complimentary Signature Packaging</h4>
               </div>
               <p className="text-stone-600 mb-4">
                 Every order arrives in our signature packaging, complete with a handwritten note— because the unboxing
@@ -80,13 +67,23 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-medium text-stone-800">Always Included</span>
-                <Button
+                {/* <Button
                   variant="outline"
                   size="sm"
                   className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
                 >
                   Learn More
-                </Button>
+                </Button> */}
+                {/* <div className="text-center mt-12"> */}
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
+                  >
+                    <Link href="/gift-guide">Learn More</Link>
+                  </Button>
+                {/* </div> */}
               </div>
             </CardContent>
           </Card>

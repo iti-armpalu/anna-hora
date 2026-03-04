@@ -84,7 +84,7 @@ export function ProductDetailsAccordion({ product }: ProductDetailsAccordionProp
                 <AccordionContent className="space-y-3 text-stone-600">
                     <div>
                         <ul className="list-disc pl-4 space-y-1 text-sm">
-                            <li>30-day returns for unworn items</li>
+                            <li>14-day returns for unworn items</li>
                             <li>{product.metafields.ethicalNotes}</li>
                         </ul>
                     </div>

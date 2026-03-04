@@ -112,7 +112,7 @@ export const SHIPPING_RETURNS_CONTENT = {
             {
                 type: "phone",
                 label: "Call us",
-                value: "+420773583533",
+                value: `${siteConfig.phone}`,
                 href: "tel:+420773583533",
             },
             {
