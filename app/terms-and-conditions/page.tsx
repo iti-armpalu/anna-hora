@@ -1,20 +1,14 @@
 import Link from "next/link"
-import * as Icons from "lucide-react"
-import type { LucideIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import TERMS_DATA from "./_data"
 import type { TermsSection } from "./_data"
-
-// Helper to safely get icon component
-function getIcon(iconName: string, fallback: LucideIcon = Icons.FileText): LucideIcon {
-  return (Icons[iconName as keyof typeof Icons] as LucideIcon) ?? fallback
-}
+import { Mail } from "lucide-react"
 
 // Hero Section Component
 function TermsHero() {
   const { hero } = TERMS_DATA
-
+ 
   return (
     <section className="py-16 lg:py-24 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,12 +31,10 @@ function TermsHero() {
 }
 
 // Section Header Component
-function SectionHeader({ icon, title }: { icon: string; title: string }) {
-  const Icon = getIcon(icon)
+function SectionHeader({ title }: { title: string }) {
 
   return (
     <div className="flex items-center mb-6">
-      <Icon className="h-6 w-6 text-primary mr-3" />
       <h2 className="text-2xl font-light text-card-foreground">{title}</h2>
     </div>
   )
@@ -98,7 +90,7 @@ function ContentSection({ section }: { section: TermsSection }) {
 
   return (
     <div className={wrapperClass}>
-      <SectionHeader icon={section.icon} title={section.title} />
+      <SectionHeader title={section.title} />
 
       {section.intro && <p className="leading-relaxed text-card-foreground mb-4">{section.intro}</p>}
 
@@ -118,7 +110,7 @@ function ContactSection() {
   return (
     <div className="bg-primary/5 rounded-lg p-8 border border-primary/20">
       <div className="flex items-center mb-6">
-        <Icons.Mail className="h-6 w-6 text-primary mr-3" />
+        <Mail className="h-6 w-6 text-primary mr-3" />
         <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
       </div>
 
@@ -131,6 +123,16 @@ function ContactSection() {
           </p>
           <p>
             <strong>Phone:</strong> {contact.phone}
+          </p>
+          <p>
+            <strong>Address:</strong>
+            <span className="block">
+              {contact.addressLines.map((line, i) => (
+                <span key={i} className="block">
+                  {line}
+                </span>
+              ))}
+            </span>
           </p>
         </div>
 
@@ -157,7 +159,7 @@ function TermsUpdatesSection() {
 }
 
 // Main Page Component
-export default function TermsPage() {
+export default function TermsAndConditionsPage() {
   return (
     <div>
       <TermsHero />

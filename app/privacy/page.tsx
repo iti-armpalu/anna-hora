@@ -1,27 +1,20 @@
 import Link from "next/link"
-import * as Icons from "lucide-react"
-import type { LucideIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import PRIVACY_DATA from "./_data"
 import type { PrivacySection } from "./_data"
+import { Mail } from "lucide-react"
 
-// Helper to safely get icon component
-function getIcon(iconName: string, fallback: LucideIcon = Icons.Shield): LucideIcon {
-  return (Icons[iconName as keyof typeof Icons] as LucideIcon) ?? fallback
-}
 
 // Hero Section Component
 function PrivacyHero() {
   const { hero } = PRIVACY_DATA
-  const HeroIcon = getIcon(hero.icon)
 
   return (
     <section className="py-16 lg:py-24 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-center mb-6">
-            <HeroIcon className="h-12 w-12 text-primary mr-4" />
             <h1 className="text-4xl lg:text-5xl font-light text-foreground">{hero.title}</h1>
           </div>
 
@@ -39,12 +32,10 @@ function PrivacyHero() {
 }
 
 // Section Header Component
-function SectionHeader({ icon, title }: { icon: string; title: string }) {
-  const Icon = getIcon(icon)
+function SectionHeader({ title }: { title: string }) {
 
   return (
     <div className="flex items-center mb-6">
-      <Icon className="h-6 w-6 text-primary mr-3" />
       <h2 className="text-2xl font-light text-card-foreground">{title}</h2>
     </div>
   )
@@ -95,7 +86,7 @@ function SectionRights({ rights }: { rights: PrivacySection["rights"] }) {
   if (!rights) return null
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-card-foreground">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-card-foreground mt-4">
       {rights.map((right, i) => (
         <div key={i} className="space-y-1">
           <h3 className="font-medium">{right.title}</h3>
@@ -115,7 +106,7 @@ function ContentSection({ section }: { section: PrivacySection }) {
 
   return (
     <div className={wrapperClass}>
-      <SectionHeader icon={section.icon} title={section.title} />
+      <SectionHeader title={section.title} />
 
       {section.intro && <p className="leading-relaxed text-card-foreground mb-4">{section.intro}</p>}
 
@@ -136,7 +127,7 @@ function ContactSection() {
   return (
     <div className="bg-primary/5 rounded-lg p-8 border border-primary/20">
       <div className="flex items-center mb-6">
-        <Icons.Mail className="h-6 w-6 text-primary mr-3" />
+        <Mail className="h-6 w-6 text-primary mr-3" />
         <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
       </div>
 
@@ -150,11 +141,21 @@ function ContactSection() {
           <p>
             <strong>Phone:</strong> {contact.phone}
           </p>
+          <p>
+            <strong>Address:</strong>
+            <span className="block">
+              {contact.addressLines.map((line, i) => (
+                <span key={i} className="block">
+                  {line}
+                </span>
+              ))}
+            </span>
+          </p>
         </div>
 
         <div className="pt-4">
           <Link href={contact.ctaHref}>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">{contact.ctaText}</Button>
+            <Button className="bg-anna-green-950 hover:bg-primary/90 text-primary-foreground">{contact.ctaText}</Button>
           </Link>
         </div>
       </div>
