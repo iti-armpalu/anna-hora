@@ -61,6 +61,12 @@ export default function ProductPageClient({
         : null;
 
     // -------------------------------------------------
+    // Size Guide ID
+    // -------------------------------------------------
+    const sizeGuideId =
+        product.metafields.sizeGuideId?.trim().toLowerCase() ?? null
+
+    // -------------------------------------------------
     // Price
     // -------------------------------------------------
     const basePrice = selectedVariant
@@ -125,7 +131,11 @@ export default function ProductPageClient({
                         <div className="space-y-3">
                             <div className="flex items-center justify-between">
                                 <h3 className="text-sm font-medium text-stone-800">Size</h3>
-                                <SizeGuideDialog open={showSizeGuide} onOpenChange={setShowSizeGuide} />
+                                <SizeGuideDialog
+                                    open={showSizeGuide}
+                                    onOpenChange={setShowSizeGuide}
+                                    sizeGuideId={sizeGuideId}
+                                />
                             </div>
                             <div className="grid grid-cols-5 gap-2">
                                 {sizes.map(({ size, inStock }) => (

@@ -38,6 +38,7 @@ function normalizeMetafields(
     isLimited: map["is_limited"] === "true",
     isBestseller: map["is_bestseller"] === "true",
     fitNotes: map["fit_notes"] ?? null,
+    sizeGuideId: map["size_guide_id"] ?? null,
     careInstructions: map["care_instructions"] ?? null,
     madeIn: map["made_in"] ?? null,
     ethicalNotes: map["ethical_notes"] ?? null,

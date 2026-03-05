@@ -48,6 +48,7 @@ export interface ProductMetafieldsNormalized {
   isLimited: boolean;
   isBestseller: boolean;
   fitNotes: string | null;
+  sizeGuideId: string | null;
   careInstructions: string | null;
   madeIn: string | null;
   ethicalNotes: string | null;

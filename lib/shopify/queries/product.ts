@@ -160,6 +160,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
           { namespace: "custom", key: "is_limited" },
           { namespace: "custom", key: "is_bestseller" },
           { namespace: "custom", key: "fit_notes" },
+          { namespace: "custom", key: "size_guide_id" },
           { namespace: "custom", key: "care_instructions" },
           { namespace: "custom", key: "made_in" },
           { namespace: "custom", key: "ethical_notes" },
