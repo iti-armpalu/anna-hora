@@ -9,7 +9,8 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
-import { Check, Circle, ClipboardList, Package, PackageCheck } from "lucide-react";
+import { Check, Circle, ClipboardList, Copy, ExternalLink, Package, PackageCheck } from "lucide-react";
+import { useState } from "react";
 
 type TrackingStep = {
     label: string;
@@ -46,6 +47,14 @@ export function TrackingDialog({
     trackingUrl?: string | null;
     trackingUpdatedAt?: string | null;
 }) {
+    const [copied, setCopied] = useState(false);
+
+    function handleCopy() {
+        navigator.clipboard.writeText(trackingNumber);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    }
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md">
@@ -67,32 +76,62 @@ export function TrackingDialog({
                 </div>
 
                 {/* Tracking information */}
-                <div className="rounded-lg border border-border bg-muted/30 p-4">
-                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
-                        Tracking information
-                    </p>
+                <div className="rounded-lg border border-border bg-muted/40 px-3 py-3 space-y-2">
 
                     {trackingCompany || trackingNumber || trackingUrl ? (
-                        <div className="space-y-2">
+                        <div>
                             {trackingCompany ? (
-                                <p className="text-sm text-foreground">
-                                    Carrier: <span className="font-medium">{trackingCompany}</span>
-                                </p>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs text-muted-foreground shrink-0">
+                                        Carrier:
+                                    </span>
+                                    <span className="text-sm font-medium text-foreground">
+                                        {trackingCompany}
+                                    </span>
+                                    {trackingUrl ? (
+                                        <Button
+                                            asChild
+                                            variant="ghost"
+                                            size="sm"
+                                            className="ml-auto h-7 w-7 p-0 shrink-0"
+                                            aria-label="External link for tracking"
+                                        >
+                                            <a href={trackingUrl} target="_blank" rel="noopener noreferrer">
+                                                <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                                            </a>
+                                        </Button>
+                                    ) : null}
+                                </div>
                             ) : null}
 
                             {trackingNumber ? (
-                                <p className="text-sm text-foreground">
-                                    Tracking number: <span className="font-medium font-mono">{trackingNumber}</span>
-                                </p>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs text-muted-foreground shrink-0">
+                                        Tracking:
+                                    </span>
+                                    <span className="text-sm font-mono font-medium text-foreground truncate">
+                                        {trackingNumber}
+                                    </span>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="ml-auto h-7 w-7 p-0 shrink-0"
+                                        onClick={handleCopy}
+                                        aria-label="Copy tracking number"
+                                    >
+                                        {copied ? (
+                                            <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                        ) : (
+                                            <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                                        )}
+                                    </Button>
+
+                                </div>
                             ) : null}
 
-                            {trackingUrl ? (
-                                <Button asChild variant="outline" size="sm" className="mt-2">
-                                    <a href={trackingUrl} target="_blank" rel="noreferrer">
-                                        Track package
-                                    </a>
-                                </Button>
-                            ) : null}
+
+
+
                         </div>
                     ) : (
                         <div className="space-y-1">
