@@ -13,7 +13,7 @@ export type LineItemDetails = {
   imageAlt?: string | null;
 
   currentTotalPrice?: Money | null; // line total
-  unitPrice?: { price: Money } | null; // optional: per-item
+  price?: Money | null;
 
   refundableQuantity: number;
   returnStatus?: string | null; // ✅ add (optional)
@@ -79,9 +79,9 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
             {"Quantity: "}{item.quantity}
           </span>
 
-          {item.unitPrice && (
+          {item.price && (
             <span className="text-xs text-muted-foreground">
-              {"@ "}{formatMoney(item.unitPrice.price)}{" each"}
+              {"@ "}{formatMoney(item.price)}{" each"}
             </span>
           )}
         </div>

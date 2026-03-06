@@ -50,9 +50,7 @@ type OrderDetailsRes = {
           value: string;
         }>;
 
-        unitPrice: {
-          price: MoneyV2;
-        } | null;
+        price: MoneyV2 | null;
 
         currentTotalPrice: MoneyV2 | null;
 

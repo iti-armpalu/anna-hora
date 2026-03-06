@@ -104,12 +104,11 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
             value
           }
 
-          unitPrice {
-            price {
-              amount
-              currencyCode
-            }
+          price {
+            amount
+            currencyCode
           }
+
           currentTotalPrice {
             amount
             currencyCode

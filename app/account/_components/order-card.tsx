@@ -46,7 +46,7 @@ type OrderDetails = {
             variantTitle?: string | null;
             variantOptions: Array<{ name: string; value: string }>;
 
-            unitPrice: { price: Money } | null;
+            price?: Money | null;
             currentTotalPrice: Money | null;
 
             image?: { url: string; altText?: string | null } | null;
@@ -158,7 +158,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             imageUrl: li.image?.url ?? null,
             imageAlt: li.image?.altText ?? null,
             currentTotalPrice: li.currentTotalPrice ?? null,
-            unitPrice: li.unitPrice ?? null,
+            price: li.price ?? null,
 
             // ✅ NEW
             refundableQuantity: li.refundableQuantity,
