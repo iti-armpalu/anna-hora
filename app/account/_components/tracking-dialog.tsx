@@ -11,6 +11,7 @@ import { Check, Circle, ClipboardList, Package, PackageCheck } from "lucide-reac
 
 type TrackingStep = {
   label: string;
+  description: string;
   date: string | null;
   completed: boolean;
   active: boolean;
@@ -83,6 +84,9 @@ export function TrackingDialog({
                     }`}
                   >
                     {step.label}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {step.description}
                   </p>
 
                   {step.date && (

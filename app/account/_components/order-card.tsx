@@ -12,6 +12,7 @@ type Money = { amount: string; currencyCode: string };
 
 type TrackingStep = {
     label: string;
+    description: string;
     date: string | null;
     completed: boolean;
     active: boolean;
@@ -149,18 +150,21 @@ function buildLayerATrackingData(
     const steps: TrackingStep[] = [
         {
             label: "Order confirmed",
+            description: "Your order has been placed and confirmed",
             date: formatTrackingDate(details.createdAt),
             completed: true,
             active: !details.processedAt,
         },
         {
             label: processingLabel,
+            description: "Order is being prepared for shipment",
             date: formatTrackingDate(details.processedAt),
             completed: hasFulfillment,
             active: !hasFulfillment,
         },
         {
             label: "Shipped",
+            description: "Package handed to carrier",
             date: formatTrackingDate(firstFulfillment?.createdAt),
             completed: hasFulfillment,
             active: hasFulfillment,
@@ -312,7 +316,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
                         {/* Footer actions */}
                         <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
-                        
+
                             <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setTrackingOpen(true)}>
                                 {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
                             </Button>
