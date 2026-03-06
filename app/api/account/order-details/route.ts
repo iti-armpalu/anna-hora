@@ -35,6 +35,12 @@ type OrderDetailsRes = {
       nodes: Array<{
         id: string;
         createdAt: string;
+        updatedAt: string;
+        trackingInformation: Array<{
+          company: string | null;
+          number: string | null;
+          url: string | null;
+        }>;
       }>;
     };
 

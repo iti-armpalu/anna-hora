@@ -50,6 +50,12 @@ type OrderDetails = {
         nodes: Array<{
             id: string;
             createdAt: string;
+            updatedAt: string;
+            trackingInformation: Array<{
+                company: string | null;
+                number: string | null;
+                url: string | null;
+            }>;
         }>;
     };
 
@@ -262,6 +268,14 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const trackingData = buildLayerATrackingData(order, details);
 
+    const firstFulfillment = details?.fulfillments?.nodes?.[0] ?? null;
+    const firstTracking = firstFulfillment?.trackingInformation?.[0] ?? null;
+
+    const trackingCompany = firstTracking?.company ?? null;
+    const trackingNumber = firstTracking?.number ?? null;
+    const trackingUrl = firstTracking?.url ?? null;
+    const trackingUpdatedAt = firstFulfillment?.updatedAt ?? null;
+
     const deliveryMethod = details?.shippingLine?.title ?? null;
 
     const isFulfilled = order.fulfillmentStatus === "FULFILLED";
@@ -335,6 +349,10 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                     orderNumber={trackingData.orderNumber}
                                     steps={trackingData.steps}
                                     deliveryMethod={deliveryMethod}
+                                    trackingCompany={trackingCompany}
+                                    trackingNumber={trackingNumber}
+                                    trackingUrl={trackingUrl}
+                                    trackingUpdatedAt={trackingUpdatedAt}
                                 />
                             ) : null}
 

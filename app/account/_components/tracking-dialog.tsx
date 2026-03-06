@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -29,13 +30,21 @@ export function TrackingDialog({
     onOpenChange,
     orderNumber,
     steps,
-    deliveryMethod
+    deliveryMethod,
+    trackingCompany,
+    trackingNumber,
+    trackingUrl,
+    trackingUpdatedAt
 }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     orderNumber: string;
     steps: TrackingStep[];
     deliveryMethod?: string | null;
+    trackingCompany?: string | null;
+    trackingNumber?: string | null;
+    trackingUrl?: string | null;
+    trackingUpdatedAt?: string | null;
 }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -46,6 +55,7 @@ export function TrackingDialog({
                         View the progress of your order.
                     </DialogDescription>
                 </DialogHeader>
+
                 {/* Info row */}
                 <div className="flex flex-wrap items-center gap-2">
                     <Badge
@@ -55,6 +65,48 @@ export function TrackingDialog({
                         {deliveryMethod}
                     </Badge>
                 </div>
+
+                {/* Tracking information */}
+                <div className="rounded-lg border border-border bg-muted/30 p-4">
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
+                        Tracking information
+                    </p>
+
+                    {trackingCompany || trackingNumber || trackingUrl ? (
+                        <div className="space-y-2">
+                            {trackingCompany ? (
+                                <p className="text-sm text-foreground">
+                                    Carrier: <span className="font-medium">{trackingCompany}</span>
+                                </p>
+                            ) : null}
+
+                            {trackingNumber ? (
+                                <p className="text-sm text-foreground">
+                                    Tracking number: <span className="font-medium font-mono">{trackingNumber}</span>
+                                </p>
+                            ) : null}
+
+                            {trackingUrl ? (
+                                <Button asChild variant="outline" size="sm" className="mt-2">
+                                    <a href={trackingUrl} target="_blank" rel="noreferrer">
+                                        Track package
+                                    </a>
+                                </Button>
+                            ) : null}
+                        </div>
+                    ) : (
+                        <div className="space-y-1">
+                            <p className="text-sm text-foreground font-medium">
+                                Tracking info will appear here soon
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                Once your package has been handed to the carrier, we’ll show the tracking company,
+                                tracking number, and tracking link here.
+                            </p>
+                        </div>
+                    )}
+                </div>
+
 
                 <div className="relative pl-1 py-1">
                     {steps.map((step, i) => {
@@ -89,8 +141,8 @@ export function TrackingDialog({
                                 <div className={`pb-6 ${isLast ? "pb-0" : ""}`}>
                                     <p
                                         className={`text-sm font-medium leading-7 ${step.completed || step.active
-                                                ? "text-foreground"
-                                                : "text-muted-foreground"
+                                            ? "text-foreground"
+                                            : "text-muted-foreground"
                                             }`}
                                     >
                                         {step.label}

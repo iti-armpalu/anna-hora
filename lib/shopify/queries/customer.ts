@@ -86,6 +86,12 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         nodes {
           id
           createdAt
+          updatedAt
+          trackingInformation {
+            company
+            number
+            url
+          }
         }
       }
 
