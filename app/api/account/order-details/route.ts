@@ -22,7 +22,7 @@ type OrderDetailsRes = {
     financialStatus: string | null;
     totalPrice: MoneyV2;
 
-    shippingLines: {
+    shippingLine: {
       nodes: Array<{
         title: string;
         price: {
