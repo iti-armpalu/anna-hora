@@ -64,12 +64,20 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
     order(id: $id) {
       id
       name
+      createdAt
       processedAt
       financialStatus
       fulfillmentStatus
       totalPrice {
         amount
         currencyCode
+      }
+
+      fulfillments(first: 10) {
+        nodes {
+          id
+          createdAt
+        }
       }
 
       # Needed to disable/label returned items in UI
@@ -95,7 +103,7 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
           title
           quantity
 
-          # ✅ Needed to prevent invalid return quantities
+          #Needed to prevent invalid return quantities
           refundableQuantity
 
           variantTitle

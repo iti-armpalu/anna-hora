@@ -13,10 +13,22 @@ type OrderDetailsRes = {
   order: {
     id: string;
     name: string;
+
+    // Layer A tracking
+    createdAt: string;
     processedAt: string;
     fulfillmentStatus: string;
+
     financialStatus: string | null;
     totalPrice: MoneyV2;
+
+    fulfillments: {
+      nodes: Array<{
+        id: string;
+        createdAt: string;
+      }>;
+    };
+
 
     // ✅ NEW: order returns (to grey out items already requested/approved)
     returns: {

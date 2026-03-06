@@ -6,8 +6,21 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
+import { TrackingDialog } from "./tracking-dialog";
 
 type Money = { amount: string; currencyCode: string };
+
+type TrackingStep = {
+    label: string;
+    date: string | null;
+    completed: boolean;
+    active: boolean;
+};
+
+type TrackingDialogData = {
+    orderNumber: string;
+    steps: TrackingStep[];
+};
 
 type OrderSummary = {
     id: string;
@@ -20,6 +33,18 @@ type OrderSummary = {
 
 type OrderDetails = {
     id: string;
+    name: string;
+
+    createdAt: string;
+    processedAt: string;
+    fulfillmentStatus: string;
+
+    fulfillments: {
+        nodes: Array<{
+            id: string;
+            createdAt: string;
+        }>;
+    };
 
     returns: {
         nodes: Array<{
@@ -95,6 +120,58 @@ function OrderDetailsSkeleton() {
     );
 }
 
+function formatTrackingDate(iso?: string | null) {
+    if (!iso) return null;
+
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return null;
+
+    return d.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+function buildLayerATrackingData(
+    order: OrderSummary,
+    details: OrderDetails | null
+): TrackingDialogData | null {
+    if (!details) return null;
+
+    const firstFulfillment = details.fulfillments.nodes[0] ?? null;
+    const hasFulfillment = Boolean(firstFulfillment);
+
+    const processingLabel =
+        details.fulfillmentStatus === "IN_PROGRESS" ? "In progress" : "Processing";
+
+    const steps: TrackingStep[] = [
+        {
+            label: "Order confirmed",
+            date: formatTrackingDate(details.createdAt),
+            completed: true,
+            active: !details.processedAt,
+        },
+        {
+            label: processingLabel,
+            date: formatTrackingDate(details.processedAt),
+            completed: hasFulfillment,
+            active: !hasFulfillment,
+        },
+        {
+            label: "Shipped",
+            date: formatTrackingDate(firstFulfillment?.createdAt),
+            completed: hasFulfillment,
+            active: hasFulfillment,
+        },
+    ];
+
+    return {
+        orderNumber: order.name,
+        steps,
+    };
+}
 
 export function OrderCard({ order }: { order: OrderSummary }) {
     const [open, setOpen] = useState(false);
@@ -173,6 +250,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                 i.returnStatus !== "APPROVED"
         );
 
+    const trackingData = buildLayerATrackingData(order, details);
+
     const isFulfilled = order.fulfillmentStatus === "FULFILLED";
 
     return (
@@ -233,10 +312,19 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
                         {/* Footer actions */}
                         <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
+                        
                             <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setTrackingOpen(true)}>
                                 {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
                             </Button>
-                            {/* <ViewTrackingDialog open={trackingOpen} onOpenChange={setTrackingOpen} orderNumber={order.orderNumber} trackingNumber={order.trackingNumber} status={order.status} delivery={order.delivery} /> */}
+                            {trackingData ? (
+                                <TrackingDialog
+                                    open={trackingOpen}
+                                    onOpenChange={setTrackingOpen}
+                                    orderNumber={trackingData.orderNumber}
+                                    steps={trackingData.steps}
+                                />
+                            ) : null}
+
                             {isFulfilled && (
                                 <>
                                     <Button
