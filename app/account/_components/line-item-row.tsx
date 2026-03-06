@@ -41,43 +41,59 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   const size = getOptionValue(item.variantOptions, "size");
 
   return (
-    <div className="flex items-start justify-between gap-4 p-5 md:p-6">
-      <div className="flex items-center gap-4 min-w-0">
-        <div className="w-16 h-16 rounded-md overflow-hidden bg-stone-100 shrink-0">
-          {item.imageUrl ? (
-            <Image
-              src={item.imageUrl}
-              width={64}
-              height={64}
-              alt={item.imageAlt ?? title}
-              className="w-16 h-16 object-cover"
-            />
-          ) : null}
-        </div>
+    <div className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
 
-        <div className="min-w-0">
-          <p className="text-sm font-medium text-stone-900 truncate">{title}</p>
+      {/* Product image */}
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+        {item.imageUrl ? (
+          <Image
+            src={item.imageUrl}
+            width={64}
+            height={64}
+            alt={item.imageAlt ?? title}
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="m9.5 15 3-4.5 3 4.5" />
+              <circle cx="9" cy="9" r="1.5" />
+            </svg>
+          </div>
+        )}
+      </div>
 
-          {/* Variant info row */}
-          <p className="text-xs text-stone-500 mt-1">
-            {[color, size].filter(Boolean).join(" · ")}
-            {([color, size].filter(Boolean).length ? " · " : "")}
-            Quantity: {item.quantity}
-          </p>
+      {/* Product info */}
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium text-stone-900 truncate">{title}</p>
 
-          {/* Optional: unit price */}
-          {item.unitPrice?.price ? (
-            <p className="text-xs text-stone-500 mt-1">
-              {formatMoney(item.unitPrice.price)} each
-            </p>
-          ) : null}
+        {/* Variant info row */}
+        <p className="text-xs text-stone-500 mt-1">
+          {[color, size].filter(Boolean).join(" · ")}
+          {([color, size].filter(Boolean).length ? " · " : "")}
+        </p>
+
+        <div className="mt-2 flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+            {"Quantity: "}{item.quantity}
+          </span>
+
+          {item.unitPrice && (
+            <span className="text-xs text-muted-foreground">
+              {"@ "}{formatMoney(item.unitPrice.price)}{" each"}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Line total */}
-      <div className="text-sm font-medium text-stone-900 whitespace-nowrap">
-        {formatMoney(item.currentTotalPrice)}
+      <div className="shrink-0 text-right">
+        <span className="text-sm font-semibold text-card-foreground">
+          {formatMoney(item.currentTotalPrice)}
+        </span>
       </div>
+
     </div>
   );
 }

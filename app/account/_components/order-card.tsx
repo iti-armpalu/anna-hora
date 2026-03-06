@@ -64,18 +64,6 @@ function formatDate(iso: string) {
     });
 }
 
-function formatMoney(m?: Money | null) {
-    if (!m) return "—";
-    const n = Number(m.amount);
-    const amt = Number.isFinite(n) ? n.toFixed(2) : m.amount;
-    return `${amt} ${m.currencyCode}`;
-}
-
-function optionsToText(opts: Array<{ name: string; value: string }>) {
-    if (!opts?.length) return "";
-    return opts.map((o) => `${o.name}: ${o.value}`).join(" • ");
-}
-
 function Skeleton({ className = "" }: { className?: string }) {
     return <div className={`animate-pulse rounded-md bg-stone-200/70 ${className}`} />;
 }
