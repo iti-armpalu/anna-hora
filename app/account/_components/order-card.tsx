@@ -41,14 +41,10 @@ type OrderDetails = {
     fulfillmentStatus: string;
 
     shippingLine: {
-        nodes: Array<{
-            title: string;
-            price: {
-                amount: string;
-                currencyCode: string;
-            };
-        }>;
-    };
+        title: string;
+        handle: string | null;
+        originalPrice: Money;
+    } | null;
 
     fulfillments: {
         nodes: Array<{
@@ -266,8 +262,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const trackingData = buildLayerATrackingData(order, details);
 
-    const deliveryMethod =
-        details?.shippingLine?.nodes?.[0]?.title ?? null;
+    const deliveryMethod = details?.shippingLine?.title ?? null;
 
     const isFulfilled = order.fulfillmentStatus === "FULFILLED";
 

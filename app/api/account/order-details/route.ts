@@ -23,14 +23,13 @@ type OrderDetailsRes = {
     totalPrice: MoneyV2;
 
     shippingLine: {
-      nodes: Array<{
-        title: string;
-        price: {
-          amount: string;
-          currencyCode: string;
-        };
-      }>;
-    };
+      title: string;
+      handle: string | null;
+      originalPrice: {
+        amount: string;
+        currencyCode: string;
+      };
+    } | null;
 
     fulfillments: {
       nodes: Array<{

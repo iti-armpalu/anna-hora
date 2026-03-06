@@ -73,13 +73,12 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         currencyCode
       }
 
-      shippingLine(first: 5) {
-        nodes {
-          title
-          price {
-            amount
-            currencyCode
-          }
+      shippingLine {
+        title
+        handle
+        originalPrice {
+          amount
+          currencyCode
         }
       }
 
