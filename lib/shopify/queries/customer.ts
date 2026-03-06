@@ -73,6 +73,16 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         currencyCode
       }
 
+      shippingLines(first: 5) {
+        nodes {
+          title
+          price {
+            amount
+            currencyCode
+          }
+        }
+      }
+
       fulfillments(first: 10) {
         nodes {
           id

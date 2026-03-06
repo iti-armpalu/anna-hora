@@ -22,6 +22,16 @@ type OrderDetailsRes = {
     financialStatus: string | null;
     totalPrice: MoneyV2;
 
+    shippingLines: {
+      nodes: Array<{
+        title: string;
+        price: {
+          amount: string;
+          currencyCode: string;
+        };
+      }>;
+    };
+
     fulfillments: {
       nodes: Array<{
         id: string;
