@@ -306,7 +306,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const itemsSubtotal = {
         amount: items
-            .reduce((sum, i) => sum + Number(i.currentTotalPrice?.amount ?? 0), 0)
+            .reduce((sum, i) => sum + Number(i.totalPrice?.amount ?? 0), 0)
             .toFixed(2),
         currencyCode: order.totalPrice.currencyCode,
     };
