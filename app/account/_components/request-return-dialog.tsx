@@ -229,7 +229,7 @@ export function RequestReturnDialog({
                                                 ) : null}
 
                                                 {checked && !disabled ? (
-                                                    <div className="px-3 pb-3 pt-2 pl-10 space-y-2">
+                                                    <div className="pb-3 pt-2 pl-10 space-y-2">
                                                         <Select
                                                             value={reasons[item.id] || ""}
                                                             onValueChange={(v) => setReasonForProduct(item.id, v)}
@@ -290,7 +290,7 @@ export function RequestReturnDialog({
                             </div>
 
                             {/* Notes */}
-                            <div className="space-y-2">
+                            {/* <div className="space-y-2">
                                 <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                                     Additional Notes{" "}
                                     <span className="normal-case text-muted-foreground/60">
@@ -304,7 +304,7 @@ export function RequestReturnDialog({
                                     rows={3}
                                     className="resize-none"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Error */}
                             {error ? (
@@ -324,7 +324,7 @@ export function RequestReturnDialog({
                             <Button
                                 disabled={!canSubmit}
                                 onClick={handleSubmit}
-                                className="flex-1 sm:flex-none gap-2"
+                                className="bg-anna-green-950 flex-1 sm:flex-none gap-2"
                             >
                                 {status === "submitting" ? "Submitting…" : "Submit Return"}
                             </Button>

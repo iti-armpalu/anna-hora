@@ -68,9 +68,26 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
       processedAt
       financialStatus
       fulfillmentStatus
+
       totalPrice {
         amount
         currencyCode
+      }
+
+      totalRefunded {
+        amount
+        currencyCode
+      }
+
+      refunds {
+        id
+        createdAt
+        updatedAt
+        returnName
+        totalRefunded {
+          amount
+          currencyCode
+        }
       }
 
       shippingLine {
@@ -95,7 +112,6 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         }
       }
 
-      # Needed to disable/label returned items in UI
       returns(first: 20) {
         nodes {
           id
@@ -117,8 +133,6 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
           name
           title
           quantity
-
-          #Needed to prevent invalid return quantities
           refundableQuantity
 
           variantTitle

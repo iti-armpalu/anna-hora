@@ -41,16 +41,17 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   const size = getOptionValue(item.variantOptions, "size");
 
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
+    <div className="w-full flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
 
+      {/* Product image */}
       {/* Product image */}
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
         {item.imageUrl ? (
           <Image
             src={item.imageUrl}
-            width={64}
-            height={64}
             alt={item.imageAlt ?? title}
+            fill
+            sizes="80px"
             className="object-cover"
           />
         ) : (

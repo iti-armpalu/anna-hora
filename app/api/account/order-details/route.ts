@@ -22,13 +22,22 @@ type OrderDetailsRes = {
     financialStatus: string | null;
     totalPrice: MoneyV2;
 
+    // ✅ NEW: total refunded across the whole order
+    totalRefunded: MoneyV2;
+
+    // ✅ NEW: refund history / events
+    refunds: Array<{
+      id: string;
+      createdAt: string | null;
+      updatedAt: string;
+      returnName: string | null;
+      totalRefunded: MoneyV2;
+    }>;
+
     shippingLine: {
       title: string;
       handle: string | null;
-      originalPrice: {
-        amount: string;
-        currencyCode: string;
-      };
+      originalPrice: MoneyV2;
     } | null;
 
     fulfillments: {
@@ -44,12 +53,10 @@ type OrderDetailsRes = {
       }>;
     };
 
-
-    // ✅ NEW: order returns (to grey out items already requested/approved)
     returns: {
       nodes: Array<{
         id: string;
-        status: string; // e.g. REQUESTED, APPROVED, DECLINED, CLOSED
+        status: string;
         returnLineItems: {
           nodes: Array<{
             quantity: number;
@@ -67,8 +74,6 @@ type OrderDetailsRes = {
         name: string;
         title: string;
         quantity: number;
-
-        // ✅ NEW: enforce return qty 
         refundableQuantity: number;
 
         variantTitle?: string | null;
@@ -78,7 +83,6 @@ type OrderDetailsRes = {
         }>;
 
         price: MoneyV2 | null;
-
         currentTotalPrice: MoneyV2 | null;
 
         image?: {

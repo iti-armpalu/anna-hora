@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
 import { TrackingDialog } from "./tracking-dialog";
+import { formatMoney } from "@/lib/utils/format-money";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -39,6 +40,22 @@ type OrderDetails = {
     createdAt: string;
     processedAt: string;
     fulfillmentStatus: string;
+
+
+    financialStatus: string | null;
+    totalPrice: Money;
+
+    // total refunded across the whole order
+    totalRefunded: Money;
+
+    // refund history / events
+    refunds: Array<{
+        id: string;
+        createdAt: string | null;
+        updatedAt: string;
+        returnName: string | null;
+        totalRefunded: Money;
+    }>;
 
     shippingLine: {
         title: string;
@@ -280,6 +297,28 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const isFulfilled = order.fulfillmentStatus === "FULFILLED";
 
+    const itemsSubtotal = {
+        amount: items
+            .reduce((sum, i) => sum + Number(i.currentTotalPrice?.amount ?? 0), 0)
+            .toFixed(2),
+        currencyCode: order.totalPrice.currencyCode,
+    };
+
+    const netPaid: Money = {
+        amount: (
+            Number(details.totalPrice.amount) -
+            Number(details.totalRefunded.amount)
+        ).toFixed(2),
+        currencyCode: details.totalPrice.currencyCode,
+    };
+
+    function formatMoney(m?: Money | null) {
+        if (!m) return "—";
+        const n = Number(m.amount);
+        const amount = Number.isFinite(n) ? n.toFixed(2) : m.amount;
+        return `${m.currencyCode} ${amount}`;
+    }
+
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
             {/* Header (click to toggle) */}
@@ -315,6 +354,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             >
                 <div className="overflow-hidden">
                     <div className="border-t border-border">
+
                         {/* Product rows */}
                         <div className="divide-y divide-border">
                             {open && loading && !details ? (
@@ -322,11 +362,50 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                             ) : error ? (
                                 <div className="p-5 md:p-6 text-sm text-red-600">{error}</div>
                             ) : (
-                                <div className="space-y-3 p-5 md:p-6">
-                                    {items.map((item) => (
-                                        <LineItemRow key={item.id} item={item} />
-                                    ))}
-                                </div>
+                                <>
+                                    {/* Line items */}
+                                    <div className="space-y-3 p-5 md:p-6">
+                                        {items.map((item) => (
+                                            <LineItemRow key={item.id} item={item} />
+                                        ))}
+                                    </div>
+
+                                    {/* Totals */}
+                                    {details && (
+                                        <div className="px-5 md:px-6 py-4 space-y-2 text-sm">
+                                            <div className="flex items-center justify-between text-muted-foreground">
+                                                <span>Items subtotal</span>
+                                                <span>{formatMoney(itemsSubtotal)}</span>
+                                            </div>
+
+                                            {details.shippingLine && (
+                                                <div className="flex items-center justify-between text-muted-foreground">
+                                                    <span>Shipping</span>
+                                                    <span>{formatMoney(details.shippingLine.originalPrice)}</span>
+                                                </div>
+                                            )}
+
+                                            <div className="flex items-center justify-between font-medium text-foreground pt-2 border-t border-border">
+                                                <span>Total</span>
+                                                <span>{formatMoney(details.totalPrice)}</span>
+                                            </div>
+
+                                            {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
+                                                <>
+                                                    <div className="flex items-center justify-between text-muted-foreground">
+                                                        <span>Refund</span>
+                                                        <span>-{formatMoney(details.totalRefunded)}</span>
+                                                    </div>
+
+                                                    <div className="flex items-center justify-between font-medium text-foreground">
+                                                        <span>Net paid</span>
+                                                        <span>{formatMoney(netPaid)}</span>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
 
@@ -378,6 +457,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                     />
                                 </>
                             )}
+
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 Contact Support
                             </Button>
