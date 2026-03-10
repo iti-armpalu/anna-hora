@@ -311,7 +311,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         currencyCode: order.totalPrice.currencyCode,
     };
 
-    const netPaid: Money | null = details
+    const netPaidAmount: Money | null = details
         ? {
             amount: (
                 Number(details.totalPrice.amount) -
@@ -397,7 +397,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
                                             <div className="flex items-center justify-between font-medium text-foreground pt-2 border-t border-border">
                                                 <span>Total</span>
-                                                <span>{formatMoney(details.totalPrice)}</span>
+                                                <span>{formatMoney(order.paymentInformation.totalPaidAmount)}</span>
                                             </div>
 
                                             {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
@@ -409,7 +409,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
                                                     <div className="flex items-center justify-between font-medium text-foreground">
                                                         <span>Net paid</span>
-                                                        <span>{formatMoney(netPaid)}</span>
+                                                        <span>{formatMoney(netPaidAmount)}</span>
                                                     </div>
                                                 </>
                                             )}
