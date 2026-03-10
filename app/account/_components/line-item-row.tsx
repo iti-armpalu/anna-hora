@@ -86,6 +86,20 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
             </span>
           )}
         </div>
+
+        <div className="mt-2 flex items-center gap-2 flex-wrap">
+
+          <span className="text-xs text-muted-foreground italic">
+            1 item return requested
+          </span>
+
+          <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+            Return requested
+          </span>
+
+        </div>
+
+
       </div>
 
       {/* Line total */}
