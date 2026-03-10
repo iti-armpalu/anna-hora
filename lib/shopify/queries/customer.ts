@@ -146,6 +146,11 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
             currencyCode
           }
 
+          totalPrice {
+            amount
+            currencyCode
+          }
+
           currentTotalPrice {
             amount
             currencyCode

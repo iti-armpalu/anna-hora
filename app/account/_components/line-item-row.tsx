@@ -4,7 +4,7 @@ type Money = { amount: string; currencyCode: string };
 
 export type LineItemDetails = {
   id: string;
-  name: string; // Shopify line item name (often "Product - Variant")
+  name: string;
   quantity: number;
 
   variantOptions?: Array<{ name: string; value: string }> | null;
@@ -12,7 +12,8 @@ export type LineItemDetails = {
   imageUrl: string | null;
   imageAlt?: string | null;
 
-  currentTotalPrice?: Money | null; // line total
+  totalPrice?: Money | null;
+  currentTotalPrice?: Money | null;
   price?: Money | null;
 
   refundableQuantity: number;
@@ -43,7 +44,6 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   return (
     <div className="w-full flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
 
-      {/* Product image */}
       {/* Product image */}
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
         {item.imageUrl ? (
@@ -91,7 +91,7 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
       {/* Line total */}
       <div className="shrink-0 text-right">
         <span className="text-sm font-semibold text-card-foreground">
-          {formatMoney(item.currentTotalPrice)}
+          {formatMoney(item.totalPrice)}
         </span>
       </div>
 

@@ -83,6 +83,7 @@ type OrderDetailsRes = {
         }>;
 
         price: MoneyV2 | null;
+        totalPrice: MoneyV2 | null;
         currentTotalPrice: MoneyV2 | null;
 
         image?: {

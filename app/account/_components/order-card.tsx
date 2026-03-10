@@ -101,6 +101,7 @@ type OrderDetails = {
             variantOptions: Array<{ name: string; value: string }>;
 
             price?: Money | null;
+            totalPrice: Money | null;
             currentTotalPrice: Money | null;
 
             image?: { url: string; altText?: string | null } | null;
@@ -266,6 +267,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             variantOptions: li.variantOptions,
             imageUrl: li.image?.url ?? null,
             imageAlt: li.image?.altText ?? null,
+            totalPrice: li.totalPrice ?? null,
             currentTotalPrice: li.currentTotalPrice ?? null,
             price: li.price ?? null,
 
