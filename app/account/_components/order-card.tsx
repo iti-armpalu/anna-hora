@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
 import { TrackingDialog } from "./tracking-dialog";
+import { Separator } from "@/components/ui/separator";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -384,7 +385,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                     {details && (
                                         <div className="px-5 md:px-6 py-4 space-y-2 text-sm">
                                             <div className="flex items-center justify-between text-muted-foreground">
-                                                <span>Items subtotal</span>
+                                                <span>Items Subtotal</span>
                                                 <span>{formatMoney(itemsSubtotal)}</span>
                                             </div>
 
@@ -395,7 +396,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                 </div>
                                             )}
 
-                                            <div className="flex items-center justify-between font-medium text-foreground pt-2 border-t border-border">
+                                            <Separator className="my-2" />
+
+                                            <div className="flex items-center justify-between font-medium">
                                                 <span>Total</span>
                                                 <span>{formatMoney(order.paymentInformation.totalPaidAmount)}</span>
                                             </div>
@@ -403,12 +406,14 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                             {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
                                                 <>
                                                     <div className="flex items-center justify-between text-muted-foreground">
-                                                        <span>Refund</span>
+                                                        <span>Refunded</span>
                                                         <span>-{formatMoney(details.totalRefunded)}</span>
                                                     </div>
 
-                                                    <div className="flex items-center justify-between font-medium text-foreground">
-                                                        <span>Net paid</span>
+                                                    <Separator className="my-2" />
+
+                                                    <div className="flex items-center justify-between font-medium">
+                                                        <span>Net Total</span>
                                                         <span>{formatMoney(netPaidAmount)}</span>
                                                     </div>
                                                 </>
