@@ -383,7 +383,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
                                     {/* Totals */}
                                     {details && (
-                                        <div className="px-5 md:px-6 py-4 space-y-2 text-sm">
+                                        <div className="space-y-2 p-5 md:p-6 text-sm">
                                             <div className="flex items-center justify-between text-muted-foreground">
                                                 <span>Items Subtotal</span>
                                                 <span>{formatMoney(itemsSubtotal)}</span>
