@@ -77,65 +77,65 @@ export function TrackingDialog({
 
                 {/* Tracking information */}
                 <div className="rounded-lg border border-border bg-muted/40 px-3 py-3 space-y-2">
-
                     {trackingCompany || trackingNumber || trackingUrl ? (
-                        <div>
-                            {trackingCompany ? (
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs text-muted-foreground shrink-0">
-                                        Carrier:
-                                    </span>
-                                    <span className="text-sm font-medium text-foreground">
-                                        {trackingCompany}
-                                    </span>
-                                    {trackingUrl ? (
-                                        <Button
-                                            asChild
-                                            variant="ghost"
-                                            size="sm"
-                                            className="ml-auto h-7 w-7 p-0 shrink-0"
-                                            aria-label="External link for tracking"
-                                        >
-                                            <a href={trackingUrl} target="_blank" rel="noopener noreferrer">
-                                                <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
-                                            </a>
-                                        </Button>
+                        <div className="flex items-start gap-3">
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                                    <p className="text-xs text-muted-foreground shrink-0">
+                                        Tracking information
+                                    </p>
+
+                                    {trackingCompany ? (
+                                        <span className="text-xs font-medium bg-muted text-foreground px-2 py-0.5 rounded-full">
+                                            {trackingCompany}
+                                        </span>
                                     ) : null}
                                 </div>
-                            ) : null}
+
+                                {trackingNumber ? (
+                                    <p className="text-sm font-mono font-medium text-foreground truncate">
+                                        {trackingNumber}
+                                    </p>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">
+                                        Tracking number not available yet
+                                    </p>
+                                )}
+                            </div>
 
                             {trackingNumber ? (
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs text-muted-foreground shrink-0">
-                                        Tracking:
-                                    </span>
-                                    <span className="text-sm font-mono font-medium text-foreground truncate">
-                                        {trackingNumber}
-                                    </span>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="ml-auto h-7 w-7 p-0 shrink-0"
-                                        onClick={handleCopy}
-                                        aria-label="Copy tracking number"
-                                    >
-                                        {copied ? (
-                                            <Check className="h-3.5 w-3.5 text-emerald-600" />
-                                        ) : (
-                                            <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                                        )}
-                                    </Button>
-
-                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 w-7 p-0 shrink-0"
+                                    onClick={handleCopy}
+                                    aria-label="Copy tracking number"
+                                >
+                                    {copied ? (
+                                        <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                    ) : (
+                                        <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                                    )}
+                                </Button>
                             ) : null}
 
-
-
-
+                            {trackingUrl ? (
+                                <Button
+                                    asChild
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 w-7 p-0 shrink-0"
+                                    aria-label="Open external tracking link"
+                                >
+                                    <a href={trackingUrl} target="_blank" rel="noopener noreferrer">
+                                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                                    </a>
+                                </Button>
+                            ) : null}
                         </div>
                     ) : (
                         <div className="space-y-1">
-                            <p className="text-sm text-foreground font-medium">
+                            <p className="text-sm font-medium text-foreground">
                                 Tracking info will appear here soon
                             </p>
                             <p className="text-sm text-muted-foreground">

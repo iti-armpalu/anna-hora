@@ -19,7 +19,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { RotateCcw, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
 
 const RETURN_REASONS = [
@@ -158,7 +158,7 @@ export function RequestReturnDialog({
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className="sm:max-w-lg p-0 gap-0 overflow-hidden rounded-xl">
+            <DialogContent className="sm:max-w-2xl p-0 gap-0 overflow-hidden rounded-xl">
                 {submitted ? (
                     <div className="flex flex-col items-center justify-center py-14 px-6 text-center">
                         <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mb-5">
@@ -326,7 +326,6 @@ export function RequestReturnDialog({
                                 onClick={handleSubmit}
                                 className="flex-1 sm:flex-none gap-2"
                             >
-                                <RotateCcw className="w-4 h-4" />
                                 {status === "submitting" ? "Submitting…" : "Submit Return"}
                             </Button>
                         </DialogFooter>
