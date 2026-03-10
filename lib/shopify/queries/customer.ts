@@ -47,12 +47,19 @@ export const CUSTOMER_ORDERS_QUERY = /* GraphQL */ `
           processedAt
           financialStatus
           fulfillmentStatus
+
+          paymentInformation {
+            totalPaidAmount {
+              amount
+              currencyCode
+            }
+          }
+
           totalPrice {
             amount
             currencyCode
           }
-          # Optional: official Shopify-hosted status link
-          statusPageUrl
+          
         }
       }
     }

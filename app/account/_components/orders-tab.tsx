@@ -11,6 +11,12 @@ type OrderSummary = {
   processedAt: string;
   fulfillmentStatus: string;
   financialStatus?: string | null;
+  paymentInformation: {
+    totalPaidAmount: {
+      amount: string;
+      currencyCode: string;
+    };
+  } | null;
   totalPrice: { amount: string; currencyCode: string };
   statusPageUrl?: string | null;
 };

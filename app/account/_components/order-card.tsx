@@ -29,6 +29,12 @@ type OrderSummary = {
     processedAt: string;
     fulfillmentStatus: string;
     financialStatus?: string | null;
+    paymentInformation: {
+        totalPaidAmount: {
+            amount: string;
+            currencyCode: string;
+        };
+    } | null;
     totalPrice: Money;
 };
 
@@ -344,7 +350,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                     </Badge>
 
                     <span className="text-sm font-medium text-stone-900">
-                        {order.totalPrice.amount} {order.totalPrice.currencyCode}
+                        {/* {order.totalPrice.amount} {order.totalPrice.currencyCode} */}
+                        {formatMoney(order.paymentInformation.totalPaidAmount)}
                     </span>
 
                     <ChevronDown className={`w-5 h-5 text-stone-600 transition-transform ${open ? "rotate-180" : ""}`} />
