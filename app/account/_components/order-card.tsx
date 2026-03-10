@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
 import { TrackingDialog } from "./tracking-dialog";
-import { formatMoney } from "@/lib/utils/format-money";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -304,13 +303,15 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         currencyCode: order.totalPrice.currencyCode,
     };
 
-    const netPaid: Money = {
-        amount: (
-            Number(details.totalPrice.amount) -
-            Number(details.totalRefunded.amount)
-        ).toFixed(2),
-        currencyCode: details.totalPrice.currencyCode,
-    };
+    const netPaid: Money | null = details
+        ? {
+            amount: (
+                Number(details.totalPrice.amount) -
+                Number(details.totalRefunded.amount)
+            ).toFixed(2),
+            currencyCode: details.totalPrice.currencyCode,
+        }
+        : null;
 
     function formatMoney(m?: Money | null) {
         if (!m) return "—";
