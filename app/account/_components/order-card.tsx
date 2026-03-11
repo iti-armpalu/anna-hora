@@ -50,9 +50,9 @@ type OrderDetails = {
     // Money
     totalPrice: Money;
     totalRefunded: Money;
-    paymentInformation: {
-        totalPaidAmount: Money;
-    } | null;
+    // paymentInformation: {
+    //     totalPaidAmount: Money;
+    // } | null;
 
     // Refund events
     refunds: Array<{
@@ -418,11 +418,11 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const netPaidAmount: Money | null = details
         ? {
             amount: (
-                toAmount(details.paymentInformation?.totalPaidAmount) -
+                toAmount(order.paymentInformation?.totalPaidAmount) -
                 toAmount(details.totalRefunded)
             ).toFixed(2),
             currencyCode:
-                details.paymentInformation?.totalPaidAmount.currencyCode ??
+                order.paymentInformation?.totalPaidAmount.currencyCode ??
                 details.totalPrice.currencyCode,
         }
         : null;
@@ -486,8 +486,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                 <div className="overflow-hidden">
                     <div className="border-t border-border">
                         {/* =====================================
-                Details body
-            ===================================== */}
+                            Details body
+                        ===================================== */}
                         <div className="divide-y divide-border">
                             {open && loading && !details ? (
                                 <OrderDetailsSkeleton />
@@ -527,7 +527,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                 <span>Total Paid</span>
                                                 <span>
                                                     {formatMoney(
-                                                        details.paymentInformation?.totalPaidAmount ?? details.totalPrice
+                                                        order.paymentInformation?.totalPaidAmount ?? details.totalPrice
                                                     )}
                                                 </span>
                                             </div>
@@ -561,8 +561,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         </div>
 
                         {/* =====================================
-                Footer actions
-            ===================================== */}
+                        Footer actions
+                        ===================================== */}
                         <div className="flex flex-wrap gap-2 border-t border-border bg-accent/30 p-5 pt-3 md:p-6 md:pt-4">
                             {/* Tracking */}
                             <Button
