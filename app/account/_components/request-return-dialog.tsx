@@ -43,10 +43,6 @@ interface RequestReturnDialogProps {
     items: LineItemDetails[];
 }
 
-function isLocked(item: LineItemDetails) {
-    return item.returnStatus === "REQUESTED" || item.returnStatus === "APPROVED";
-}
-
 export function RequestReturnDialog({
     open,
     onOpenChange,
@@ -196,8 +192,7 @@ export function RequestReturnDialog({
                                 <div className="rounded-lg border border-border divide-y divide-border">
                                     {items.map((item) => {
                                         const checked = selectedProducts.has(item.id);
-                                        const locked = isLocked(item);
-                                        const disabled = locked || item.refundableQuantity === 0;
+                                        const disabled = item.refundableQuantity === 0;
 
                                         return (
                                             <div key={item.id} className="p-3">
@@ -219,14 +214,6 @@ export function RequestReturnDialog({
                                                     />
                                                     <LineItemRow item={item} />
                                                 </label>
-
-                                                {disabled ? (
-                                                    <p className="pl-10 pt-2 text-xs text-stone-500">
-                                                        {locked
-                                                            ? "Return already requested for this item."
-                                                            : "This item is not returnable."}
-                                                    </p>
-                                                ) : null}
 
                                                 {checked && !disabled ? (
                                                     <div className="pb-3 pt-2 pl-10 space-y-2">
