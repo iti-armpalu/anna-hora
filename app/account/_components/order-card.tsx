@@ -61,19 +61,17 @@ type OrderDetails = {
     }>;
 
     // Refund/payment transactions
-    transactions: {
-        nodes: Array<{
-            id: string;
-            kind: string | null;
-            status: string | null;
-            createdAt: string;
-            processedAt: string | null;
-            transactionAmount: {
-                shopMoney: Money;
-                presentmentMoney: Money;
-            };
-        }>;
-    };
+    transactions: Array<{
+        id: string;
+        kind: string | null;
+        status: string | null;
+        createdAt: string;
+        processedAt: string | null;
+        transactionAmount: {
+            shopMoney: Money;
+            presentmentMoney: Money;
+        };
+    }>;
 
     // Delivery method
     shippingLine: {
@@ -402,7 +400,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     };
 
     const refundTransactions =
-        details?.transactions?.nodes?.filter((tx) => tx.kind === "REFUND") ?? [];
+        details?.transactions?.filter((tx) => tx.kind === "REFUND") ?? [];
 
     const hasRefundPending = refundTransactions.some((tx) => tx.status === "PENDING");
 

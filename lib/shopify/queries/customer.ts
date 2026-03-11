@@ -97,22 +97,20 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
         }
       }
 
-      transactions(first: 20) {
-        nodes {
-          id
-          kind
-          status
-          createdAt
-          processedAt
-          transactionAmount {
-            shopMoney {
-              amount
-              currencyCode
-            }
-            presentmentMoney {
-              amount
-              currencyCode
-            }
+      transactions {
+        id
+        kind
+        status
+        createdAt
+        processedAt
+        transactionAmount {
+          shopMoney {
+            amount
+            currencyCode
+          }
+          presentmentMoney {
+            amount
+            currencyCode
           }
         }
       }

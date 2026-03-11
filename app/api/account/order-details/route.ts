@@ -32,19 +32,17 @@ type OrderDetailsRes = {
       totalRefunded: MoneyV2;
     }>;
 
-    transactions: {
-      nodes: Array<{
-        id: string;
-        kind: string | null;
-        status: string | null;
-        createdAt: string;
-        processedAt: string | null;
-        transactionAmount: {
-          shopMoney: MoneyV2;
-          presentmentMoney: MoneyV2;
-        };
-      }>;
-    };
+    transactions: Array<{
+      id: string;
+      kind: string | null;
+      status: string | null;
+      createdAt: string;
+      processedAt: string | null;
+      transactionAmount: {
+        shopMoney: MoneyV2;
+        presentmentMoney: MoneyV2;
+      };
+    }>;
 
     shippingLine: {
       title: string;
