@@ -98,90 +98,85 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   const returnEvents = item.returnEvents ?? [];
 
   return (
-    <div className="flex w-full items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
-        {item.imageUrl ? (
-          <Image
-            src={item.imageUrl}
-            alt={item.imageAlt ?? title}
-            fill
-            sizes="80px"
-            className="object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="m9.5 15 3-4.5 3 4.5" />
-              <circle cx="9" cy="9" r="1.5" />
-            </svg>
-          </div>
-        )}
-      </div>
-
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-stone-900">{title}</p>
-
-        {variantText ? (
-          <p className="mt-1 text-xs text-stone-500">{variantText}</p>
-        ) : null}
-
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
-            Quantity: {item.quantity}
-          </span>
-
-          {item.price ? (
-            <span className="text-xs text-muted-foreground">
-              @ {formatMoney(item.price)} each
-            </span>
-          ) : null}
+    <>
+      <div className="flex w-full items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+          {item.imageUrl ? (
+            <Image
+              src={item.imageUrl}
+              alt={item.imageAlt ?? title}
+              fill
+              sizes="80px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="m9.5 15 3-4.5 3 4.5" />
+                <circle cx="9" cy="9" r="1.5" />
+              </svg>
+            </div>
+          )}
         </div>
 
-        {returnEvents.length > 0 ? (
-          <div className="mt-3 space-y-2">
-            {returnEvents.map((event) => (
-              <div
-                key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}
-                className="flex flex-wrap items-center gap-2 rounded-lg bg-stone-50 px-3 py-2"
-              >
-                <span className="text-xs font-medium text-stone-900">
-                  {event.returnName ?? "Return"}
-                </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium text-stone-900">{title}</p>
 
-                <span className="text-xs text-stone-500">—</span>
+          {variantText ? (
+            <p className="mt-1 text-xs text-stone-500">{variantText}</p>
+          ) : null}
 
-                <span className="text-xs text-stone-600">
-                  {getReturnEventLabel(event)}
-                </span>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+              Quantity: {item.quantity}
+            </span>
 
-                <span
-                  className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-medium ${getReturnBadgeClasses(
-                    event
-                  )}`}
-                >
-                  {event.isRefunded ? "Refunded" : event.status}
-                </span>
-              </div>
-            ))}
+            {item.price ? (
+              <span className="text-xs text-muted-foreground">
+                @ {formatMoney(item.price)} each
+              </span>
+            ) : null}
           </div>
-        ) : null}
+        </div>
+
+        <div className="shrink-0 text-right">
+          <span className="text-sm font-semibold text-card-foreground">
+            {formatMoney(item.totalPrice)}
+          </span>
+        </div>
       </div>
 
-      <div className="shrink-0 text-right">
-        <span className="text-sm font-semibold text-card-foreground">
-          {formatMoney(item.totalPrice)}
-        </span>
-      </div>
-    </div>
+      {returnEvents.length > 0 ? (
+        <div className="flex mt-3 space-y-2 ml-10">
+          {returnEvents.map((event) => (
+            <div
+              key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}
+              className="flex flex-wrap items-center gap-2 rounded-lg bg-stone-50 px-3 py-2"
+            >
+              <span className="text-xs font-medium text-stone-900">
+                {event.returnName ?? "Return"}
+              </span>
+
+              <span className="text-xs text-stone-500">—</span>
+
+              <span className="text-xs text-stone-600">
+                {getReturnEventLabel(event)}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+    </>
   );
 }
