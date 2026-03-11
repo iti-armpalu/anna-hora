@@ -326,14 +326,13 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         return `${m.currencyCode} ${amount}`;
     }
 
-    const hasApprovedReturn = details?.returns?.nodes.some(
-        (ret) => ret.status === "APPROVED"
-    );
-
     const hasRefundedAmount =
-        details && Number(details.totalRefunded.amount) > 0;
+        !!details && Number(details.totalRefunded.amount) > 0;
 
-    const showRefundPending = hasApprovedReturn && !hasRefundedAmount;
+    const hasOpenReturn =
+        details?.returns?.nodes.some((ret) => ret.status === "OPEN") ?? false;
+
+    const showRefundPending = hasOpenReturn && !hasRefundedAmount;
 
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
@@ -437,7 +436,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                     </div>
                                                 </>
                                             )}
-                                            
+
                                         </div>
                                     )}
                                 </>
