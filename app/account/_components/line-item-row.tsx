@@ -98,7 +98,6 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
   const returnEvents = item.returnEvents ?? [];
 
   return (
-    <>
       <div className="flex w-full items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
         <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
           {item.imageUrl ? (
@@ -147,6 +146,29 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
               </span>
             ) : null}
           </div>
+
+
+          {returnEvents.length > 0 ? (
+            <div className="flex mt-3 space-y-2 space-x-2">
+              {returnEvents.map((event) => (
+                <div
+                  key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}
+                  className="flex flex-wrap gap-2 italic"
+                >
+                  <span className="text-xs font-medium text-stone-900">
+                    {event.returnName ?? "Return"}
+                  </span>
+
+                  <span className="text-xs text-stone-500">—</span>
+
+                  <span className="text-xs text-stone-600">
+                    {getReturnEventLabel(event)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
         </div>
 
         <div className="shrink-0 text-right">
@@ -155,28 +177,5 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
           </span>
         </div>
       </div>
-
-      {returnEvents.length > 0 ? (
-        <div className="flex mt-3 space-y-2 ml-10">
-          {returnEvents.map((event) => (
-            <div
-              key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}
-              className="flex flex-wrap items-center gap-2 rounded-lg bg-stone-50 px-3 py-2"
-            >
-              <span className="text-xs font-medium text-stone-900">
-                {event.returnName ?? "Return"}
-              </span>
-
-              <span className="text-xs text-stone-500">—</span>
-
-              <span className="text-xs text-stone-600">
-                {getReturnEventLabel(event)}
-              </span>
-            </div>
-          ))}
-        </div>
-      ) : null}
-
-    </>
   );
 }
