@@ -82,6 +82,9 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
 
   const returnInfo = getReturnLabel(item.returnStatus, item.returnQuantity);
 
+  console.log("LineItemRow item:", item);
+  console.log("returnInfo:", returnInfo);
+
   return (
     <div className="w-full flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
 
