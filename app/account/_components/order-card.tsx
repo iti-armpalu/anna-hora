@@ -199,7 +199,7 @@ function buildLayerATrackingData(
             active: !hasFulfillment,
         },
         {
-            label: "Shipped",
+            label: "Dispatched",
             description: "Package handed to carrier",
             date: formatTrackingDate(firstFulfillment?.createdAt),
             completed: hasFulfillment,
@@ -326,6 +326,15 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         return `${m.currencyCode} ${amount}`;
     }
 
+    const hasApprovedReturn = details?.returns?.nodes.some(
+        (ret) => ret.status === "APPROVED"
+    );
+
+    const hasRefundedAmount =
+        details && Number(details.totalRefunded.amount) > 0;
+
+    const showRefundPending = hasApprovedReturn && !hasRefundedAmount;
+
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
             {/* Header (click to toggle) */}
@@ -400,6 +409,19 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                 <span>{formatMoney(order.paymentInformation.totalPaidAmount)}</span>
                                             </div>
 
+                                            {showRefundPending && (
+                                                <>
+                                                    <div className="flex items-center justify-between text-muted-foreground">
+                                                        <span>Refund</span>
+                                                        <span>Pending</span>
+                                                    </div>
+
+                                                    <p className="text-xs text-muted-foreground">
+                                                        Your return has been approved. The refunded amount will appear here once it has been processed.
+                                                    </p>
+                                                </>
+                                            )}
+
                                             {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
                                                 <>
                                                     <div className="flex items-center justify-between text-muted-foreground">
@@ -415,6 +437,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                     </div>
                                                 </>
                                             )}
+                                            
                                         </div>
                                     )}
                                 </>
@@ -422,10 +445,10 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                         </div>
 
                         {/* Mobile total */}
-                        <div className="sm:hidden px-5 pb-2 flex justify-between items-center border-t border-border pt-3">
+                        {/* <div className="sm:hidden px-5 pb-2 flex justify-between items-center border-t border-border pt-3">
                             <span className="text-sm text-muted-foreground">Total</span>
                             <span className="font-display font-bold text-card-foreground">$</span>
-                        </div>
+                        </div> */}
 
                         {/* Footer actions */}
                         <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
