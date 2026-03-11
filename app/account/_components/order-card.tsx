@@ -254,12 +254,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const returnQtyByLineItemId = new Map<string, number>();
 
     details?.returns?.nodes.forEach((ret) => {
-        // You can decide which statuses should lock the line item
-        // Usually REQUESTED + APPROVED should disable re-requesting
-        const locksItem =
-            ret.status === "REQUESTED" || ret.status === "APPROVED";
-
-        if (!locksItem) return;
 
         ret.returnLineItems.nodes.forEach((rli) => {
             returnStatusByLineItemId.set(rli.lineItem.id, ret.status);
@@ -281,7 +275,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             price: li.price ?? null,
 
             refundableQuantity: li.refundableQuantity,
-            
+
             returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
             returnQuantity: returnQtyByLineItemId.get(li.id) ?? 0,
         })) ?? [];
