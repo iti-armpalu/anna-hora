@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Headphones, RotateCcw, ShoppingCart, Truck } from "lucide-react";
+import { ChevronDown, RotateCcw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
 import { RequestReturnDialog } from "./request-return-dialog";
 import { LineItemRow, type LineItemDetails } from "./line-item-row";
 import { TrackingDialog } from "./tracking-dialog";
-import { Separator } from "@/components/ui/separator";
 
 type Money = { amount: string; currencyCode: string };
 
@@ -31,10 +32,7 @@ type OrderSummary = {
     fulfillmentStatus: string;
     financialStatus?: string | null;
     paymentInformation: {
-        totalPaidAmount: {
-            amount: string;
-            currencyCode: string;
-        };
+        totalPaidAmount: Money;
     } | null;
     totalPrice: Money;
 };
@@ -43,18 +41,20 @@ type OrderDetails = {
     id: string;
     name: string;
 
+    // Order lifecycle
     createdAt: string;
     processedAt: string;
     fulfillmentStatus: string;
-
-
     financialStatus: string | null;
+
+    // Money
     totalPrice: Money;
-
-    // total refunded across the whole order
     totalRefunded: Money;
+    paymentInformation: {
+        totalPaidAmount: Money;
+    } | null;
 
-    // refund history / events
+    // Refund events
     refunds: Array<{
         id: string;
         createdAt: string | null;
@@ -63,12 +63,14 @@ type OrderDetails = {
         totalRefunded: Money;
     }>;
 
+    // Delivery method
     shippingLine: {
         title: string;
         handle: string | null;
         originalPrice: Money;
     } | null;
 
+    // Fulfillment / tracking
     fulfillments: {
         nodes: Array<{
             id: string;
@@ -82,11 +84,12 @@ type OrderDetails = {
         }>;
     };
 
+    // Return events
     returns: {
         nodes: Array<{
             id: string;
             name: string | null;
-            status: string; // REQUESTED, APPROVED, DECLINED, CLOSED, etc.
+            status: string;
             returnLineItems: {
                 nodes: Array<{
                     lineItem: { id: string };
@@ -96,36 +99,83 @@ type OrderDetails = {
         }>;
     };
 
+    // Purchased items
     lineItems: {
         nodes: Array<{
             id: string;
             name: string;
             title: string;
             quantity: number;
-
             refundableQuantity: number;
-
             variantTitle?: string | null;
             variantOptions: Array<{ name: string; value: string }>;
-
             price?: Money | null;
             totalPrice: Money | null;
             currentTotalPrice: Money | null;
-
             image?: { url: string; altText?: string | null } | null;
         }>;
     };
 };
 
+type ReturnRefundState = {
+    returnId: string;
+    returnName: string | null;
+    status: string;
+    lineItems: Array<{
+        lineItemId: string;
+        quantity: number;
+    }>;
+    refund: {
+        id: string;
+        amount: Money;
+        createdAt: string | null;
+        updatedAt: string;
+    } | null;
+};
+
+/* --------------------------------------------------------
+ * Small formatting helpers
+ * ------------------------------------------------------ */
+
 function formatDate(iso: string) {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return iso;
+
     return d.toLocaleDateString(undefined, {
         year: "numeric",
         month: "short",
         day: "numeric",
     });
 }
+
+function formatTrackingDate(iso?: string | null) {
+    if (!iso) return null;
+
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return null;
+
+    return d.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+function formatMoney(m?: Money | null) {
+    if (!m) return "—";
+    const n = Number(m.amount);
+    const amount = Number.isFinite(n) ? n.toFixed(2) : m.amount;
+    return `${m.currencyCode} ${amount}`;
+}
+
+function toAmount(m?: Money | null) {
+    return Number(m?.amount ?? 0);
+}
+
+/* --------------------------------------------------------
+ * Skeleton
+ * ------------------------------------------------------ */
 
 function Skeleton({ className = "" }: { className?: string }) {
     return <div className={`animate-pulse rounded-md bg-stone-200/70 ${className}`} />;
@@ -134,7 +184,6 @@ function Skeleton({ className = "" }: { className?: string }) {
 function OrderDetailsSkeleton() {
     return (
         <div className="p-5 md:p-6 space-y-4">
-            {/* Line item skeletons */}
             <div className="space-y-3">
                 {Array.from({ length: 2 }).map((_, i) => (
                     <div
@@ -158,19 +207,9 @@ function OrderDetailsSkeleton() {
     );
 }
 
-function formatTrackingDate(iso?: string | null) {
-    if (!iso) return null;
-
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return null;
-
-    return d.toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-}
+/* --------------------------------------------------------
+ * Tracking model
+ * ------------------------------------------------------ */
 
 function buildLayerATrackingData(
     order: OrderSummary,
@@ -214,21 +253,9 @@ function buildLayerATrackingData(
     };
 }
 
-type ReturnRefundState = {
-    returnId: string;
-    returnName: string | null;
-    status: string;
-    lineItems: Array<{
-        lineItemId: string;
-        quantity: number;
-    }>;
-    refund: {
-        id: string;
-        amount: Money;
-        createdAt: string | null;
-        updatedAt: string;
-    } | null;
-};
+/* --------------------------------------------------------
+ * Return / refund normalization
+ * ------------------------------------------------------ */
 
 function buildReturnRefundStates(details: OrderDetails | null): ReturnRefundState[] {
     if (!details) return [];
@@ -262,8 +289,14 @@ function buildReturnRefundStates(details: OrderDetails | null): ReturnRefundStat
     });
 }
 
+/* --------------------------------------------------------
+ * Component
+ * ------------------------------------------------------ */
 
 export function OrderCard({ order }: { order: OrderSummary }) {
+    /* -----------------------------
+     * Local UI state
+     * --------------------------- */
     const [open, setOpen] = useState(false);
     const [details, setDetails] = useState<OrderDetails | null>(null);
     const [loading, setLoading] = useState(false);
@@ -271,6 +304,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     const [returnOpen, setReturnOpen] = useState(false);
     const [trackingOpen, setTrackingOpen] = useState(false);
 
+    /* -----------------------------
+     * Fetch order details on expand
+     * --------------------------- */
     async function toggle() {
         const next = !open;
         setOpen(next);
@@ -280,10 +316,13 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             setError(null);
 
             try {
-                const res = await fetch(`/api/account/order-details?id=${encodeURIComponent(order.id)}`, {
-                    method: "GET",
-                    cache: "no-store",
-                });
+                const res = await fetch(
+                    `/api/account/order-details?id=${encodeURIComponent(order.id)}`,
+                    {
+                        method: "GET",
+                        cache: "no-store",
+                    }
+                );
 
                 if (!res.ok) {
                     const body = await res.json().catch(() => null);
@@ -300,6 +339,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         }
     }
 
+    /* -----------------------------
+     * Normalize returns + refunds
+     * --------------------------- */
     const returnStates = buildReturnRefundStates(details);
 
     const returnStatusByLineItemId = new Map<string, string>();
@@ -314,6 +356,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         });
     });
 
+    /* -----------------------------
+     * Build line items for UI
+     * --------------------------- */
     const items: LineItemDetails[] =
         details?.lineItems.nodes.map((li) => ({
             id: li.id,
@@ -325,22 +370,26 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             totalPrice: li.totalPrice ?? null,
             currentTotalPrice: li.currentTotalPrice ?? null,
             price: li.price ?? null,
-
             refundableQuantity: li.refundableQuantity,
-
             returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
             returnQuantity: returnQtyByLineItemId.get(li.id) ?? 0,
             isRefunded: refundStatusByLineItemId.get(li.id) ?? false,
         })) ?? [];
 
-    const hasAnyReturnable =
-        items.some(
-            (i) =>
-                i.refundableQuantity > 0 &&
-                i.returnStatus !== "REQUESTED" &&
-                i.returnStatus !== "APPROVED"
-        );
+    /* -----------------------------
+     * Return action state
+     * --------------------------- */
+    const hasAnyReturnable = items.some(
+        (item) =>
+            item.refundableQuantity > 0 &&
+            item.returnStatus !== "REQUESTED"
+    );
 
+    const isFulfilled = order.fulfillmentStatus === "FULFILLED";
+
+    /* -----------------------------
+     * Tracking state
+     * --------------------------- */
     const trackingData = buildLayerATrackingData(order, details);
 
     const firstFulfillment = details?.fulfillments?.nodes?.[0] ?? null;
@@ -353,120 +402,144 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const deliveryMethod = details?.shippingLine?.title ?? null;
 
-    const isFulfilled = order.fulfillmentStatus === "FULFILLED";
+    /* -----------------------------
+     * Totals
+     * --------------------------- */
+    const collapsedTotal =
+        order.paymentInformation?.totalPaidAmount ?? order.totalPrice;
 
-    const itemsSubtotal = {
+    const itemsSubtotal: Money = {
         amount: items
-            .reduce((sum, i) => sum + Number(i.totalPrice?.amount ?? 0), 0)
+            .reduce((sum, item) => sum + toAmount(item.totalPrice), 0)
             .toFixed(2),
-        currencyCode: order.totalPrice.currencyCode,
+        currencyCode: collapsedTotal.currencyCode,
     };
 
     const netPaidAmount: Money | null = details
         ? {
             amount: (
-                Number(details.totalPrice.amount) -
-                Number(details.totalRefunded.amount)
+                toAmount(details.paymentInformation?.totalPaidAmount) -
+                toAmount(details.totalRefunded)
             ).toFixed(2),
-            currencyCode: details.totalPrice.currencyCode,
+            currencyCode:
+                details.paymentInformation?.totalPaidAmount.currencyCode ??
+                details.totalPrice.currencyCode,
         }
         : null;
 
-    function formatMoney(m?: Money | null) {
-        if (!m) return "—";
-        const n = Number(m.amount);
-        const amount = Number.isFinite(n) ? n.toFixed(2) : m.amount;
-        return `${m.currencyCode} ${amount}`;
-    }
+    /* -----------------------------
+     * Refund display states
+     * --------------------------- */
+    const hasRefundedAmount =
+        !!details && toAmount(details.totalRefunded) > 0;
 
     const hasRefundPending = returnStates.some(
-        (ret) =>
-            (ret.status === "OPEN" || ret.status === "CLOSED") &&
-            !ret.refund
+        (ret) => (ret.status === "OPEN" || ret.status === "CLOSED") && !ret.refund
     );
 
+    /* -----------------------------
+     * Render
+     * --------------------------- */
     return (
-        <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
-            {/* Header (click to toggle) */}
+        <div className="overflow-hidden rounded-xl border border-stone-200 bg-white">
+            {/* =========================================
+          Header
+      ========================================= */}
             <button
                 type="button"
                 onClick={toggle}
-                className="w-full p-6 flex items-center justify-between gap-4 hover:bg-stone-50 transition"
+                className="flex w-full items-center justify-between gap-4 p-6 transition hover:bg-stone-50"
                 aria-expanded={open}
             >
-                <div className="text-left min-w-0">
+                <div className="min-w-0 text-left">
                     <div className="flex items-center gap-2">
-                        <h3 className="font-medium text-stone-900 truncate">{order.name}</h3>
+                        <h3 className="truncate font-medium text-stone-900">{order.name}</h3>
                     </div>
-                    <p className="text-sm text-stone-500">Placed {formatDate(order.processedAt)}</p>
+                    <p className="text-sm text-stone-500">
+                        Placed {formatDate(order.processedAt)}
+                    </p>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex shrink-0 items-center gap-3">
                     <Badge variant="secondary" className="bg-stone-100 text-stone-800">
                         {order.fulfillmentStatus}
                     </Badge>
 
                     <span className="text-sm font-medium text-stone-900">
-                        {/* {order.totalPrice.amount} {order.totalPrice.currencyCode} */}
-                        {formatMoney(order.paymentInformation.totalPaidAmount)}
+                        {formatMoney(collapsedTotal)}
                     </span>
 
-                    <ChevronDown className={`w-5 h-5 text-stone-600 transition-transform ${open ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                        className={`h-5 w-5 text-stone-600 transition-transform ${open ? "rotate-180" : ""
+                            }`}
+                    />
                 </div>
             </button>
 
+            {/* =========================================
+          Expandable content
+      ========================================= */}
             <div
                 className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     }`}
             >
                 <div className="overflow-hidden">
                     <div className="border-t border-border">
-
-                        {/* Product rows */}
+                        {/* =====================================
+                Details body
+            ===================================== */}
                         <div className="divide-y divide-border">
                             {open && loading && !details ? (
                                 <OrderDetailsSkeleton />
                             ) : error ? (
-                                <div className="p-5 md:p-6 text-sm text-red-600">{error}</div>
+                                <div className="p-5 text-sm text-red-600 md:p-6">{error}</div>
                             ) : (
                                 <>
-                                    {/* Line items */}
+                                    {/* ---------------------------------
+                      Line items
+                  --------------------------------- */}
                                     <div className="space-y-3 p-5 md:p-6">
                                         {items.map((item) => (
                                             <LineItemRow key={item.id} item={item} />
                                         ))}
                                     </div>
 
-                                    {/* Totals */}
-                                    {details && (
-                                        <div className="space-y-2 p-5 md:p-6 text-sm">
+                                    {/* ---------------------------------
+                      Totals summary
+                  --------------------------------- */}
+                                    {details ? (
+                                        <div className="space-y-2 p-5 text-sm md:p-6">
                                             <div className="flex items-center justify-between text-muted-foreground">
                                                 <span>Items Subtotal</span>
                                                 <span>{formatMoney(itemsSubtotal)}</span>
                                             </div>
 
-                                            {details.shippingLine && (
+                                            {details.shippingLine ? (
                                                 <div className="flex items-center justify-between text-muted-foreground">
                                                     <span>Shipping</span>
                                                     <span>{formatMoney(details.shippingLine.originalPrice)}</span>
                                                 </div>
-                                            )}
+                                            ) : null}
 
                                             <Separator className="my-2" />
 
                                             <div className="flex items-center justify-between font-medium">
-                                                <span>Total</span>
-                                                <span>{formatMoney(order.paymentInformation.totalPaidAmount)}</span>
+                                                <span>Total Paid</span>
+                                                <span>
+                                                    {formatMoney(
+                                                        details.paymentInformation?.totalPaidAmount ?? details.totalPrice
+                                                    )}
+                                                </span>
                                             </div>
 
-                                            {hasRefundPending && (
+                                            {hasRefundPending ? (
                                                 <div className="flex items-center justify-between text-muted-foreground">
                                                     <span>Refund</span>
                                                     <span>Pending</span>
                                                 </div>
-                                            )}
+                                            ) : null}
 
-                                            {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
+                                            {hasRefundedAmount ? (
                                                 <>
                                                     <div className="flex items-center justify-between text-muted-foreground">
                                                         <span>Refunded</span>
@@ -476,30 +549,33 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                     <Separator className="my-2" />
 
                                                     <div className="flex items-center justify-between font-medium">
-                                                        <span>Net Total</span>
+                                                        <span>Net Paid</span>
                                                         <span>{formatMoney(netPaidAmount)}</span>
                                                     </div>
                                                 </>
-                                            )}
-
+                                            ) : null}
                                         </div>
-                                    )}
+                                    ) : null}
                                 </>
                             )}
                         </div>
 
-                        {/* Mobile total */}
-                        {/* <div className="sm:hidden px-5 pb-2 flex justify-between items-center border-t border-border pt-3">
-                            <span className="text-sm text-muted-foreground">Total</span>
-                            <span className="font-display font-bold text-card-foreground">$</span>
-                        </div> */}
-
-                        {/* Footer actions */}
-                        <div className="flex flex-wrap gap-2 p-5 md:p-6 pt-3 md:pt-4 border-t border-border bg-accent/30">
-
-                            <Button variant="outline" size="sm" className="gap-2 text-sm" onClick={() => setTrackingOpen(true)}>
-                                {order.fulfillmentStatus === "FULFILLED" ? "View Tracking" : "Track Order"}
+                        {/* =====================================
+                Footer actions
+            ===================================== */}
+                        <div className="flex flex-wrap gap-2 border-t border-border bg-accent/30 p-5 pt-3 md:p-6 md:pt-4">
+                            {/* Tracking */}
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="gap-2 text-sm"
+                                onClick={() => setTrackingOpen(true)}
+                            >
+                                {order.fulfillmentStatus === "FULFILLED"
+                                    ? "View Tracking"
+                                    : "Track Order"}
                             </Button>
+
                             {trackingData ? (
                                 <TrackingDialog
                                     open={trackingOpen}
@@ -514,7 +590,8 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                 />
                             ) : null}
 
-                            {isFulfilled && (
+                            {/* Returns */}
+                            {isFulfilled ? (
                                 <>
                                     <Button
                                         variant="outline"
@@ -523,7 +600,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                         onClick={() => setReturnOpen(true)}
                                         disabled={!hasAnyReturnable}
                                     >
-                                        <RotateCcw className="w-4 h-4" />
+                                        <RotateCcw className="h-4 w-4" />
                                         Request Return
                                     </Button>
 
@@ -535,8 +612,9 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                         items={items}
                                     />
                                 </>
-                            )}
+                            ) : null}
 
+                            {/* Support */}
                             <Button variant="outline" size="sm" className="gap-2 text-sm">
                                 Contact Support
                             </Button>
