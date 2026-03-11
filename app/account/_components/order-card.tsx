@@ -330,7 +330,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         !!details && Number(details.totalRefunded.amount) > 0;
 
     const hasOpenReturn =
-        details?.returns?.nodes.some((ret) => ret.status === "OPEN") ?? false;
+        details?.returns?.nodes.some((ret) => ret.status === "CLOSED") ?? false;
 
     const showRefundPending = hasOpenReturn && !hasRefundedAmount;
 
