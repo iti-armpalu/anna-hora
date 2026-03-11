@@ -2,6 +2,14 @@ import Image from "next/image";
 
 type Money = { amount: string; currencyCode: string };
 
+type ReturnEvent = {
+  returnId: string;
+  returnName: string | null;
+  status: string;
+  quantity: number;
+  isRefunded: boolean;
+};
+
 export type LineItemDetails = {
   id: string;
   name: string;
@@ -18,9 +26,7 @@ export type LineItemDetails = {
 
   refundableQuantity: number;
 
-  returnStatus?: string | null;
-  returnQuantity?: number;
-  isRefunded?: boolean
+  returnEvents?: ReturnEvent[];
 };
 
 function getOptionValue(
@@ -39,76 +45,60 @@ function formatMoney(m?: Money | null) {
   return `${amount} ${m.currencyCode}`;
 }
 
-function getReturnLabel(
-  status?: string | null,
-  quantity?: number,
-  isRefunded?: boolean
-): { text: string; badge: string } | null {
-  if (!status || quantity == null || quantity <= 0) return null;
+function getReturnEventLabel(event: ReturnEvent): string {
+  const plural = event.quantity > 1 ? "items" : "item";
 
-  const plural = quantity > 1 ? "s" : "";
-
-  if (isRefunded) {
-    return {
-      text: `${quantity} item${plural} refunded`,
-      badge: "Refunded",
-    };
+  if (event.isRefunded) {
+    return `refunded - ${event.quantity} ${plural}`;
   }
 
-  switch (status) {
+  switch (event.status) {
     case "REQUESTED":
-      return {
-        text: `${quantity} item${plural} return requested`,
-        badge: "Return requested",
-      };
+      return `refund requested - ${event.quantity} ${plural}`;
     case "OPEN":
-      return {
-        text: `${quantity} item${plural} return in progress`,
-        badge: "Return in progress",
-      };
+      return `return in progress - ${event.quantity} ${plural}`;
     case "CLOSED":
-      return {
-        text: `${quantity} item${plural} returned`,
-        badge: "Returned",
-      };
+      return `returned - ${event.quantity} ${plural}`;
     case "DECLINED":
-      return {
-        text: `${quantity} item${plural} return declined`,
-        badge: "Declined",
-      };
+      return `return declined - ${event.quantity} ${plural}`;
     case "CANCELED":
-      return {
-        text: `${quantity} item${plural} return canceled`,
-        badge: "Canceled",
-      };
+      return `return canceled - ${event.quantity} ${plural}`;
     default:
-      return {
-        text: `${quantity} item${plural} returned`,
-        badge: "Returned",
-      };
+      return `returned - ${event.quantity} ${plural}`;
+  }
+}
+
+function getReturnBadgeClasses(event: ReturnEvent): string {
+  if (event.isRefunded) {
+    return "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200";
+  }
+
+  switch (event.status) {
+    case "REQUESTED":
+      return "bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200";
+    case "OPEN":
+      return "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200";
+    case "CLOSED":
+      return "bg-stone-100 text-stone-700 ring-1 ring-inset ring-stone-200";
+    case "DECLINED":
+      return "bg-red-50 text-red-700 ring-1 ring-inset ring-red-200";
+    case "CANCELED":
+      return "bg-stone-100 text-stone-600 ring-1 ring-inset ring-stone-200";
+    default:
+      return "bg-stone-100 text-stone-700 ring-1 ring-inset ring-stone-200";
   }
 }
 
 export function LineItemRow({ item }: { item: LineItemDetails }) {
-  const title = item.name.split(" - ")[0]; // keeps product name only
+  const title = item.name.split(" - ")[0];
   const color = getOptionValue(item.variantOptions, "color");
   const size = getOptionValue(item.variantOptions, "size");
-
   const variantText = [color, size].filter(Boolean).join(" · ");
 
-  const returnInfo = getReturnLabel(
-    item.returnStatus,
-    item.returnQuantity,
-    item.isRefunded
-  );
-
-  console.log("LineItemRow item:", item);
-  console.log("returnInfo:", returnInfo);
+  const returnEvents = item.returnEvents ?? [];
 
   return (
-    <div className="w-full flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
-
-      {/* Product image */}
+    <div className="flex w-full items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
         {item.imageUrl ? (
           <Image
@@ -120,7 +110,16 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <rect x="3" y="3" width="18" height="18" rx="2" />
               <path d="m9.5 15 3-4.5 3 4.5" />
               <circle cx="9" cy="9" r="1.5" />
@@ -129,50 +128,60 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
         )}
       </div>
 
-      {/* Product info */}
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-stone-900 truncate">{title}</p>
+        <p className="truncate text-sm font-medium text-stone-900">{title}</p>
 
-        {/* Variant info row */}
-        {variantText && (
-          <p className="text-xs text-stone-500 mt-1">
-            {variantText}
-          </p>
-        )}
+        {variantText ? (
+          <p className="mt-1 text-xs text-stone-500">{variantText}</p>
+        ) : null}
 
-        <div className="mt-2 flex items-center gap-2 flex-wrap">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
-            {"Quantity: "}{item.quantity}
+            Quantity: {item.quantity}
           </span>
 
-          {item.price && (
+          {item.price ? (
             <span className="text-xs text-muted-foreground">
-              {"@ "}{formatMoney(item.price)}{" each"}
+              @ {formatMoney(item.price)} each
             </span>
-          )}
+          ) : null}
         </div>
 
-        {returnInfo && (
-          <div className="mt-2 flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-muted-foreground italic">
-              {returnInfo.text}
-            </span>
+        {returnEvents.length > 0 ? (
+          <div className="mt-3 space-y-2">
+            {returnEvents.map((event) => (
+              <div
+                key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}
+                className="flex flex-wrap items-center gap-2 rounded-lg bg-stone-50 px-3 py-2"
+              >
+                <span className="text-xs font-medium text-stone-900">
+                  {event.returnName ?? "Return"}
+                </span>
 
-            <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
-              {returnInfo.badge}
-            </span>
+                <span className="text-xs text-stone-500">—</span>
+
+                <span className="text-xs text-stone-600">
+                  {getReturnEventLabel(event)}
+                </span>
+
+                <span
+                  className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-medium ${getReturnBadgeClasses(
+                    event
+                  )}`}
+                >
+                  {event.isRefunded ? "Refunded" : event.status}
+                </span>
+              </div>
+            ))}
           </div>
-        )}
-
+        ) : null}
       </div>
 
-      {/* Line total */}
       <div className="shrink-0 text-right">
         <span className="text-sm font-semibold text-card-foreground">
           {formatMoney(item.totalPrice)}
         </span>
       </div>
-
     </div>
   );
 }

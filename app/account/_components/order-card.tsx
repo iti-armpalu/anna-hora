@@ -343,15 +343,30 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
     const returnStates = buildReturnRefundStates(details);
 
-    const returnStatusByLineItemId = new Map<string, string>();
-    const returnQtyByLineItemId = new Map<string, number>();
-    const refundStatusByLineItemId = new Map<string, boolean>();
+    const returnEventsByLineItemId = new Map<
+        string,
+        Array<{
+            returnId: string;
+            returnName: string | null;
+            status: string;
+            quantity: number;
+            isRefunded: boolean;
+        }>
+    >();
 
     returnStates.forEach((ret) => {
         ret.lineItems.forEach((line) => {
-            returnStatusByLineItemId.set(line.lineItemId, ret.status);
-            returnQtyByLineItemId.set(line.lineItemId, line.quantity);
-            refundStatusByLineItemId.set(line.lineItemId, Boolean(ret.refund));
+            const existing = returnEventsByLineItemId.get(line.lineItemId) ?? [];
+
+            existing.push({
+                returnId: ret.returnId,
+                returnName: ret.returnName,
+                status: ret.status,
+                quantity: line.quantity,
+                isRefunded: Boolean(ret.refund),
+            });
+
+            returnEventsByLineItemId.set(line.lineItemId, existing);
         });
     });
 
@@ -367,14 +382,17 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             currentTotalPrice: li.currentTotalPrice ?? null,
             price: li.price ?? null,
             refundableQuantity: li.refundableQuantity,
-            returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
-            returnQuantity: returnQtyByLineItemId.get(li.id) ?? 0,
-            isRefunded: refundStatusByLineItemId.get(li.id) ?? false,
+            returnEvents: returnEventsByLineItemId.get(li.id) ?? [],
         })) ?? [];
 
-    const hasAnyReturnable = items.some(
-        (item) => item.refundableQuantity > 0 && item.returnStatus !== "REQUESTED"
-    );
+    const hasAnyReturnable = items.some((item) => {
+        const hasOpenReturnRequest =
+            item.returnEvents?.some(
+                (event) => event.status === "REQUESTED" || event.status === "OPEN"
+            ) ?? false;
+
+        return item.refundableQuantity > 0 && !hasOpenReturnRequest;
+    });
 
     const isFulfilled = order.fulfillmentStatus === "FULFILLED";
 
