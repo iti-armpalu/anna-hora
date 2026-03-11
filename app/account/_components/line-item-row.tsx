@@ -20,6 +20,7 @@ export type LineItemDetails = {
 
   returnStatus?: string | null;
   returnQuantity?: number;
+  isRefunded?: boolean
 };
 
 function getOptionValue(
@@ -40,11 +41,19 @@ function formatMoney(m?: Money | null) {
 
 function getReturnLabel(
   status?: string | null,
-  quantity?: number
+  quantity?: number,
+  isRefunded?: boolean
 ): { text: string; badge: string } | null {
-  if (!status || !quantity) return null;
+  if (!status || quantity == null || quantity <= 0) return null;
 
   const plural = quantity > 1 ? "s" : "";
+
+  if (isRefunded) {
+    return {
+      text: `${quantity} item${plural} refunded`,
+      badge: "Refunded",
+    };
+  }
 
   switch (status) {
     case "REQUESTED":
@@ -52,19 +61,26 @@ function getReturnLabel(
         text: `${quantity} item${plural} return requested`,
         badge: "Return requested",
       };
-
-    case "APPROVED":
+    case "OPEN":
       return {
-        text: `${quantity} item${plural} approved for return`,
-        badge: "Return approved",
+        text: `${quantity} item${plural} return in progress`,
+        badge: "Return in progress",
       };
-
     case "CLOSED":
       return {
-        text: `${quantity} item${plural} refunded`,
-        badge: "Refunded",
+        text: `${quantity} item${plural} returned`,
+        badge: "Returned",
       };
-
+    case "DECLINED":
+      return {
+        text: `${quantity} item${plural} return declined`,
+        badge: "Declined",
+      };
+    case "CANCELED":
+      return {
+        text: `${quantity} item${plural} return canceled`,
+        badge: "Canceled",
+      };
     default:
       return {
         text: `${quantity} item${plural} returned`,
@@ -80,7 +96,11 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
 
   const variantText = [color, size].filter(Boolean).join(" · ");
 
-  const returnInfo = getReturnLabel(item.returnStatus, item.returnQuantity);
+  const returnInfo = getReturnLabel(
+    item.returnStatus,
+    item.returnQuantity,
+    item.isRefunded
+  );
 
   console.log("LineItemRow item:", item);
   console.log("returnInfo:", returnInfo);

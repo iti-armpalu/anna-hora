@@ -122,6 +122,7 @@ export const ORDER_DETAILS_QUERY = /* GraphQL */ `
       returns(first: 20) {
         nodes {
           id
+          name
           status
           returnLineItems(first: 100) {
             nodes {

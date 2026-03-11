@@ -56,6 +56,7 @@ type OrderDetailsRes = {
     returns: {
       nodes: Array<{
         id: string;
+        name: string | null;
         status: string;
         returnLineItems: {
           nodes: Array<{

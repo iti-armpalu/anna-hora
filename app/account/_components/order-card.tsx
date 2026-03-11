@@ -85,6 +85,7 @@ type OrderDetails = {
     returns: {
         nodes: Array<{
             id: string;
+            name: string | null;
             status: string; // REQUESTED, APPROVED, DECLINED, CLOSED, etc.
             returnLineItems: {
                 nodes: Array<{
@@ -213,6 +214,55 @@ function buildLayerATrackingData(
     };
 }
 
+type ReturnRefundState = {
+    returnId: string;
+    returnName: string | null;
+    status: string;
+    lineItems: Array<{
+        lineItemId: string;
+        quantity: number;
+    }>;
+    refund: {
+        id: string;
+        amount: Money;
+        createdAt: string | null;
+        updatedAt: string;
+    } | null;
+};
+
+function buildReturnRefundStates(details: OrderDetails | null): ReturnRefundState[] {
+    if (!details) return [];
+
+    return details.returns.nodes.map((ret) => {
+        const matchingRefund =
+            details.refunds.find(
+                (refund) =>
+                    refund.returnName &&
+                    ret.name &&
+                    refund.returnName === ret.name
+            ) ?? null;
+
+        return {
+            returnId: ret.id,
+            returnName: ret.name ?? null,
+            status: ret.status,
+            lineItems: ret.returnLineItems.nodes.map((rli) => ({
+                lineItemId: rli.lineItem.id,
+                quantity: rli.quantity,
+            })),
+            refund: matchingRefund
+                ? {
+                    id: matchingRefund.id,
+                    amount: matchingRefund.totalRefunded,
+                    createdAt: matchingRefund.createdAt,
+                    updatedAt: matchingRefund.updatedAt,
+                }
+                : null,
+        };
+    });
+}
+
+
 export function OrderCard({ order }: { order: OrderSummary }) {
     const [open, setOpen] = useState(false);
     const [details, setDetails] = useState<OrderDetails | null>(null);
@@ -250,17 +300,19 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         }
     }
 
+    const returnStates = buildReturnRefundStates(details);
+
     const returnStatusByLineItemId = new Map<string, string>();
     const returnQtyByLineItemId = new Map<string, number>();
+    const refundStatusByLineItemId = new Map<string, boolean>();
 
-    details?.returns?.nodes.forEach((ret) => {
-
-        ret.returnLineItems.nodes.forEach((rli) => {
-            returnStatusByLineItemId.set(rli.lineItem.id, ret.status);
-            returnQtyByLineItemId.set(rli.lineItem.id, rli.quantity);
+    returnStates.forEach((ret) => {
+        ret.lineItems.forEach((line) => {
+            returnStatusByLineItemId.set(line.lineItemId, ret.status);
+            returnQtyByLineItemId.set(line.lineItemId, line.quantity);
+            refundStatusByLineItemId.set(line.lineItemId, Boolean(ret.refund));
         });
     });
-
 
     const items: LineItemDetails[] =
         details?.lineItems.nodes.map((li) => ({
@@ -278,6 +330,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
             returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
             returnQuantity: returnQtyByLineItemId.get(li.id) ?? 0,
+            isRefunded: refundStatusByLineItemId.get(li.id) ?? false,
         })) ?? [];
 
     const hasAnyReturnable =
@@ -326,13 +379,11 @@ export function OrderCard({ order }: { order: OrderSummary }) {
         return `${m.currencyCode} ${amount}`;
     }
 
-    const hasRefundedAmount =
-        !!details && Number(details.totalRefunded.amount) > 0;
-
-    const hasOpenReturn =
-        details?.returns?.nodes.some((ret) => ret.status === "CLOSED") ?? false;
-
-    const showRefundPending = hasOpenReturn && !hasRefundedAmount;
+    const hasRefundPending = returnStates.some(
+        (ret) =>
+            (ret.status === "OPEN" || ret.status === "CLOSED") &&
+            !ret.refund
+    );
 
     return (
         <div className="border border-stone-200 rounded-xl overflow-hidden bg-white">
@@ -408,17 +459,11 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                                 <span>{formatMoney(order.paymentInformation.totalPaidAmount)}</span>
                                             </div>
 
-                                            {showRefundPending && (
-                                                <>
-                                                    <div className="flex items-center justify-between text-muted-foreground">
-                                                        <span>Refund</span>
-                                                        <span>Pending</span>
-                                                    </div>
-
-                                                    <p className="text-xs text-muted-foreground">
-                                                        Your return has been approved. The refunded amount will appear here once it has been processed.
-                                                    </p>
-                                                </>
+                                            {hasRefundPending && (
+                                                <div className="flex items-center justify-between text-muted-foreground">
+                                                    <span>Refund</span>
+                                                    <span>Pending</span>
+                                                </div>
                                             )}
 
                                             {details.totalRefunded && Number(details.totalRefunded.amount) > 0 && (
