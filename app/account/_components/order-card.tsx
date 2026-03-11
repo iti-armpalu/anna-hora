@@ -88,8 +88,8 @@ type OrderDetails = {
             status: string; // REQUESTED, APPROVED, DECLINED, CLOSED, etc.
             returnLineItems: {
                 nodes: Array<{
-                    quantity: number;
                     lineItem: { id: string };
+                    quantity: number;
                 }>;
             };
         }>;
@@ -251,6 +251,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
     }
 
     const returnStatusByLineItemId = new Map<string, string>();
+    const returnQtyByLineItemId = new Map<string, number>();
 
     details?.returns?.nodes.forEach((ret) => {
         // You can decide which statuses should lock the line item
@@ -262,6 +263,7 @@ export function OrderCard({ order }: { order: OrderSummary }) {
 
         ret.returnLineItems.nodes.forEach((rli) => {
             returnStatusByLineItemId.set(rli.lineItem.id, ret.status);
+            returnQtyByLineItemId.set(rli.lineItem.id, rli.quantity);
         });
     });
 
@@ -278,9 +280,10 @@ export function OrderCard({ order }: { order: OrderSummary }) {
             currentTotalPrice: li.currentTotalPrice ?? null,
             price: li.price ?? null,
 
-            // ✅ NEW
             refundableQuantity: li.refundableQuantity,
+            
             returnStatus: returnStatusByLineItemId.get(li.id) ?? null,
+            returnQuantity: returnQtyByLineItemId.get(li.id) ?? 0,
         })) ?? [];
 
     const hasAnyReturnable =

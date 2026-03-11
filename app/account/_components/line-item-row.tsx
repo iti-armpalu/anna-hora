@@ -17,7 +17,9 @@ export type LineItemDetails = {
   price?: Money | null;
 
   refundableQuantity: number;
-  returnStatus?: string | null; // ✅ add (optional)
+
+  returnStatus?: string | null;
+  returnQuantity?: number;
 };
 
 function getOptionValue(
@@ -36,10 +38,49 @@ function formatMoney(m?: Money | null) {
   return `${amount} ${m.currencyCode}`;
 }
 
+function getReturnLabel(
+  status?: string | null,
+  quantity?: number
+): { text: string; badge: string } | null {
+  if (!status || !quantity) return null;
+
+  const plural = quantity > 1 ? "s" : "";
+
+  switch (status) {
+    case "REQUESTED":
+      return {
+        text: `${quantity} item${plural} return requested`,
+        badge: "Return requested",
+      };
+
+    case "APPROVED":
+      return {
+        text: `${quantity} item${plural} approved for return`,
+        badge: "Return approved",
+      };
+
+    case "CLOSED":
+      return {
+        text: `${quantity} item${plural} refunded`,
+        badge: "Refunded",
+      };
+
+    default:
+      return {
+        text: `${quantity} item${plural} returned`,
+        badge: "Returned",
+      };
+  }
+}
+
 export function LineItemRow({ item }: { item: LineItemDetails }) {
   const title = item.name.split(" - ")[0]; // keeps product name only
   const color = getOptionValue(item.variantOptions, "color");
   const size = getOptionValue(item.variantOptions, "size");
+
+  const variantText = [color, size].filter(Boolean).join(" · ");
+
+  const returnInfo = getReturnLabel(item.returnStatus, item.returnQuantity);
 
   return (
     <div className="w-full flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent/40">
@@ -70,10 +111,11 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
         <p className="text-sm font-medium text-stone-900 truncate">{title}</p>
 
         {/* Variant info row */}
-        <p className="text-xs text-stone-500 mt-1">
-          {[color, size].filter(Boolean).join(" · ")}
-          {([color, size].filter(Boolean).length ? " · " : "")}
-        </p>
+        {variantText && (
+          <p className="text-xs text-stone-500 mt-1">
+            {variantText}
+          </p>
+        )}
 
         <div className="mt-2 flex items-center gap-2 flex-wrap">
           <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
@@ -87,18 +129,17 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
           )}
         </div>
 
-        <div className="mt-2 flex items-center gap-2 flex-wrap">
+        {returnInfo && (
+          <div className="mt-2 flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-muted-foreground italic">
+              {returnInfo.text}
+            </span>
 
-          <span className="text-xs text-muted-foreground italic">
-            1 item return requested
-          </span>
-
-          <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
-            Return requested
-          </span>
-
-        </div>
-
+            <span className="inline-flex items-center rounded-md bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+              {returnInfo.badge}
+            </span>
+          </div>
+        )}
 
       </div>
 
