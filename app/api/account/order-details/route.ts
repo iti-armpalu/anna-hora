@@ -22,10 +22,8 @@ type OrderDetailsRes = {
     financialStatus: string | null;
     totalPrice: MoneyV2;
 
-    // ✅ NEW: total refunded across the whole order
     totalRefunded: MoneyV2;
 
-    // ✅ NEW: refund history / events
     refunds: Array<{
       id: string;
       createdAt: string | null;
@@ -33,6 +31,20 @@ type OrderDetailsRes = {
       returnName: string | null;
       totalRefunded: MoneyV2;
     }>;
+
+    transactions: {
+      nodes: Array<{
+        id: string;
+        kind: string | null;
+        status: string | null;
+        createdAt: string;
+        processedAt: string | null;
+        transactionAmount: {
+          shopMoney: MoneyV2;
+          presentmentMoney: MoneyV2;
+        };
+      }>;
+    };
 
     shippingLine: {
       title: string;
