@@ -124,7 +124,7 @@ export function LineItemRow({ item }: { item: LineItemDetails }) {
 
 
         {returnEvents.length > 0 ? (
-          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs italic text-stone-600">
+          <div className="mt-3 flex flex-wrap items-center gap-y-1 text-xs italic text-stone-600">
             {returnEvents.map((event, index) => (
               <span
                 key={`${event.returnId}-${event.quantity}-${event.status}-${event.isRefunded}`}

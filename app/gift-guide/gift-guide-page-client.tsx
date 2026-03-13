@@ -53,7 +53,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
 
                         <div className="relative">
                             <Image
-                                src="/gift-guide-hero.jpeg"
+                                src="/gift-guide-hero-1.png"
                                 alt="Elegant ANNA HORA gift"
                                 width={500}
                                 height={600}

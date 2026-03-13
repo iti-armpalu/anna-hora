@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, RotateCcw } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -589,7 +589,6 @@ export function OrderCard({ order }: { order: OrderSummary }) {
                                         onClick={() => setReturnOpen(true)}
                                         disabled={!hasAnyReturnable}
                                     >
-                                        <RotateCcw className="h-4 w-4" />
                                         Request Return
                                     </Button>
 

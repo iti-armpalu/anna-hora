@@ -32,7 +32,7 @@ export const siteConfig = siteSchema.parse({
     as they look. We're honoured to be part of your ritual.`,
 
     supportEmail: "customerservice@annahora.com",
-    phone: "+420 723 583 533",
+    phone: "+420 773 583 533",
 
     customerCareHours: {
         mondayFriday: "9:00 AM – 6:00 PM CET",

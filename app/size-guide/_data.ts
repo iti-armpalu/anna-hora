@@ -118,21 +118,23 @@ function convertTableCmToIn(cm: SizeTableData): SizeTableData {
 // ---------------------------------
 // Categories (CM as canonical input)
 // ---------------------------------
+const FLAT_MEASUREMENT_NOTE =
+  "All measurements are taken with the garment laid flat. Waist and hip measurements represent half-circumference."
+
 const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "lounge-trousers",
     category: "Lounge Trousers",
     description: "Relaxed-fit trousers designed for comfort and style",
-    fitNotes:
-      "Our lounge trousers feature an elastic waistband and relaxed leg for maximum comfort. They have a slightly relaxed fit throughout.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
-      headers: ["Measurement", "XS", "S", "M", "L"],
+      headers: ["Measurement", "S", "M", "L"],
       rows: [
-        { measurement: "Outseam", xs: "X", s: "106", m: "107", l: "108" },
-        { measurement: "Inseam", xs: "X", s: "79.5", m: "79.5", l: "79.5" },
-        { measurement: "Waist", xs: "X", s: "34-38", m: "36-40", l: "41-45" },
-        { measurement: "Hips (max.)", xs: "X", s: "56", m: "58", l: "60" },
-        { measurement: "Elastic waistband (height)", xs: "X", s: "5", m: "5", l: "5" },
+        { measurement: "Outseam", s: "106", m: "107", l: "108" },
+        { measurement: "Inseam", s: "79.5", m: "79.5", l: "79.5" },
+        { measurement: "Waist", s: "34-38", m: "36-40", l: "41-45" },
+        { measurement: "Hips (max.)", s: "56", m: "58", l: "60" },
+        { measurement: "Elastic waistband (height)", s: "5", m: "5", l: "5" },
       ],
     },
   },
@@ -140,8 +142,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     id: "relaxed-fit-trousers",
     category: "Relaxed Fit Trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
-    fitNotes:
-      "These trousers feature a high-rise waist and wide leg for an elegant, flowing look. Size down for a more tailored fit.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
       headers: ["Measurement", "XS", "S", "M", "L"],
       rows: [
@@ -157,15 +158,15 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     id: "lounge-shorts",
     category: "Lounge Shorts",
     description: "Comfortable shorts ideal for warm weather lounging",
-    fitNotes: "Designed with an elastic waistband and relaxed fit. Perfect for lounging at home or casual summer wear.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
       headers: ["Measurement", "XS", "S", "M", "L"],
       rows: [
-        { measurement: "Outseam", xs: "X", s: "34", m: "35", l: "36" },
-        { measurement: "Inseam", xs: "X", s: "6.5", m: "7", l: "7" },
-        { measurement: "Waist", xs: "X", s: "66-71", m: "74-79", l: "82-87" },
-        { measurement: "Hips (max.)", xs: "X", s: "115", m: "121", l: "127" },
-        { measurement: "Elastic waistband (height)", xs: "X", s: "4", m: "4", l: "4" },
+        { measurement: "Outseam", s: "34", m: "35", l: "36" },
+        { measurement: "Inseam", s: "6.5", m: "7", l: "7" },
+        { measurement: "Waist", s: "66-71", m: "74-79", l: "82-87" },
+        { measurement: "Hips (max.)", s: "115", m: "121", l: "127" },
+        { measurement: "Elastic waistband (height)", s: "4", m: "4", l: "4" },
       ],
     },
   },
@@ -173,7 +174,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     id: "boxer-shorts",
     category: "Boxer Shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
-    fitNotes: "Made from soft, breathable fabric with an elastic waistband. True to size fit.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
       headers: ["Measurement", "XS", "S", "M", "L"],
       rows: [
@@ -189,7 +190,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     id: "long-shirt",
     category: "Long Shirt",
     description: "Elegant long shirts perfect for lounging or layering",
-    fitNotes: "This shirt is designed with a relaxed, comfortable fit that drapes beautifully on the body.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
       headers: ["Measurement", "XS", "S", "M", "L"],
       rows: [
@@ -205,7 +206,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     id: "short-shirt",
     category: "Short Shirt",
     description: "Elegant short shirt perfect for lounging or layering",
-    fitNotes: "This shirt is designed with a relaxed, comfortable fit that drapes beautifully on the body.",
+    fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
       headers: ["Measurement", "XS", "S", "M", "L"],
       rows: [
@@ -222,6 +223,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
 // -----------------------------
 // Export: full content object
 // -----------------------------
+
 export const SIZE_GUIDE_CONTENT: SizeGuideContent = {
   hero: {
     title: "Find Your Perfect Fit",

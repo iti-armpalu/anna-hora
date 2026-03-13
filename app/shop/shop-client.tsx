@@ -225,18 +225,20 @@ export default function ShopClient({
       </section>
 
       {/* FILTER + SORT */}
-      <section className="sticky top-16 z-40 bg-white border-b border-stone-200">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <FiltersPanel
-            open={isFilterOpen}
-            onOpenChange={setIsFilterOpen}
-            collections={collections}
-            activeCollection={activeCollection}
-          />
+      <section className="sticky top-16 lg:top-20 z-40 border-b border-stone-200 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between py-4">
+            <FiltersPanel
+              open={isFilterOpen}
+              onOpenChange={setIsFilterOpen}
+              collections={collections}
+              activeCollection={activeCollection}
+            />
 
-          <div className="flex items-center gap-3">
-            <SortControl value={selectedSort} onChange={setSelectedSort} />
-            <ViewToggle value={viewMode} onChange={setViewMode} />
+            <div className="flex items-center gap-3">
+              <SortControl value={selectedSort} onChange={setSelectedSort} />
+              <ViewToggle value={viewMode} onChange={setViewMode} />
+            </div>
           </div>
         </div>
       </section>
@@ -267,8 +269,8 @@ export default function ShopClient({
           <div className="lg:col-span-3">
             <div
               className={`grid gap-8 items-stretch ${viewMode === "grid"
-                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                  : "grid-cols-1"
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                : "grid-cols-1"
                 }`}
             >
               {sortedProducts.map((product) => (

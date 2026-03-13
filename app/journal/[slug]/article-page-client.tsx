@@ -82,13 +82,6 @@ export default function ArticlePageClient({
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div className="flex items-center space-x-2">
-                                                <span className="text-sm text-stone-500 mr-2">Share:</span>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8"><Facebook className="h-4 w-4" /></Button>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8"><Twitter className="h-4 w-4" /></Button>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8"><Instagram className="h-4 w-4" /></Button>
-                                            </div>
                                         </div>
                                     </header>
 

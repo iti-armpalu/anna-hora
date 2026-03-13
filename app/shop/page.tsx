@@ -1,7 +1,6 @@
 import { getCollections, getProducts } from "@/lib/shopify";
 import ShopClient from "./shop-client";
-import { Suspense } from "react";
-import ShopSkeleton from "./shop-skeleton";
+import { applyMerchandisingOrder } from "@/lib/shopify/utils/apply-merchandising-order";
 
 export const revalidate = 60;
 
@@ -11,13 +10,16 @@ export default async function Page() {
     getProducts(250),
   ]);
 
+  // Temporary merchandising: prioritize products with better imagery
+  // until full collection merchandising is implemented
+  const merchandisedProducts = applyMerchandisingOrder(productsResult.products);
+
   return (
-    <Suspense fallback={<ShopSkeleton />}>
       <ShopClient
-        initialProducts={productsResult.products}
+        // initialProducts={productsResult.products}
+        initialProducts={merchandisedProducts}
         collections={collections}
         activeCollection={null}
       />
-    </Suspense>
   );
 }

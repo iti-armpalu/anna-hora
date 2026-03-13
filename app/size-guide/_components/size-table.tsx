@@ -62,9 +62,8 @@ export function SizeTable({ category, defaultUnit = "cm" }: Props) {
               {headers.map((header, index) => (
                 <th
                   key={header}
-                  className={`px-4 py-3 text-left font-medium text-stone-900 whitespace-nowrap ${
-                    index === 0 ? "sticky left-0 bg-stone-50 z-10" : ""
-                  }`}
+                  className={`px-4 py-3 text-left font-medium text-stone-900 whitespace-nowrap ${index === 0 ? "sticky left-0 bg-stone-50 z-10" : ""
+                    }`}
                 >
                   {header}
                 </th>
@@ -98,13 +97,11 @@ export function SizeTable({ category, defaultUnit = "cm" }: Props) {
 
       {/* Fit notes */}
       {category.fitNotes && (
-        <Card className="mt-6 border-stone-200 bg-stone-50 py-0">
-          <CardContent className="p-6">
-            <p className="text-stone-600 leading-relaxed italic">
-              {category.fitNotes}
-            </p>
-          </CardContent>
-        </Card>
+        <div>
+          <ul className="list-disc pl-4 space-y-1 mt-2 text-xs text-stone-600 leading-relaxed italic">
+            <li>{category.fitNotes}</li>
+          </ul>
+        </div>
       )}
     </section>
   )

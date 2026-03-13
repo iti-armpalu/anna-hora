@@ -101,7 +101,7 @@ export const journalArticles: JournalArticle[] = [
         date: "December 12, 2025",
         readTime: "7 min read",
         image: "/journal/journal-entry-2.jpeg",
-        featuredProductHandles: ["verdant-panther-pure-silk-lounge-shirt"],
+        featuredProductHandles: ["silk-edit-leopard-lounge-trousers"],
         featured: false,
         content: `
 <p>There’s a quiet shift that happens when loungewear leaves the home. What was once reserved for private moments becomes part of public life, asking new questions of comfort, confidence, and intention. The line between inside and outside has blurred, and with it, our understanding of how clothes should function.</p>
@@ -213,7 +213,7 @@ export const journalArticles: JournalArticle[] = [
         date: "December 26, 2025",
         readTime: "5 min read",
         image: "/journal/journal-entry-4.jpeg",
-        featuredProductHandles: ["pure-silk-lounge-trousers"],
+        featuredProductHandles: ["silk-edit-geometric-lounge-shorts"],
         featured: false,
         content: `
         <p>Some days call for structure, others for softness. Most require a balance of both. This edit sits comfortably in that in-between space—where clothing is chosen not for occasion, but for how it supports the rhythm of the day.</p>
