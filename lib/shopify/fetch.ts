@@ -1,18 +1,13 @@
-// lib/shopify/fetch.ts
 import { cookies } from "next/headers";
 import { SHOPIFY_ENDPOINT, SHOPIFY_CONFIG } from "./config";
+import { resolveMarketCountry } from "./resolve-market";
 
-type ShopifyFetchParams<TVariables extends Record<string, unknown> = Record<string, unknown>> = {
+type ShopifyFetchParams<
+  TVariables extends Record<string, unknown> = Record<string, unknown>
+> = {
   query: string;
   variables?: TVariables;
-  /**
-   * Use cache only for safe read queries (GET_CART, collections, products, etc.)
-   * For mutations, ALWAYS use "no-store".
-   */
   cache?: RequestCache;
-  /**
-   * Only used when cache !== "no-store"
-   */
   revalidate?: number;
 };
 
@@ -26,18 +21,21 @@ interface ShopifyResponse<TData> {
   errors?: ShopifyGraphQLError[];
 }
 
-export async function shopifyFetch<TData, TVariables extends Record<string, unknown> = Record<string, unknown>>({
+export async function shopifyFetch<
+  TData,
+  TVariables extends Record<string, unknown> = Record<string, unknown>
+>({
   query,
   variables = {} as TVariables,
-  cache = "no-store",          // ✅ SAFE DEFAULT
+  cache = "no-store",
   revalidate = 60,
 }: ShopifyFetchParams<TVariables>): Promise<TData> {
   const cookieStore = await cookies();
-  // const country = cookieStore.get("country")?.value || "CZ";
 
-  const marketCountry =
-    cookieStore.get("marketCountry")?.value || "CZ";
+  const shippingCountry =
+    cookieStore.get("shippingCountry")?.value || "CZ";
 
+  const marketCountry = await resolveMarketCountry(shippingCountry);
 
   const res = await fetch(SHOPIFY_ENDPOINT, {
     method: "POST",
@@ -48,7 +46,10 @@ export async function shopifyFetch<TData, TVariables extends Record<string, unkn
     },
     body: JSON.stringify({
       query,
-      variables: { marketCountry, ...variables },
+      variables: {
+        ...variables,
+        country: marketCountry,
+      },
     }),
     cache,
     next: cache === "no-store" ? undefined : { revalidate },
