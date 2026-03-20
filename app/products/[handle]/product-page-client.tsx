@@ -171,6 +171,12 @@ export default function ProductPageClient({
                             </div>
                         </div>
 
+                        {isShippingBlocked && (
+                            <p className="text-sm text-neutral-500">
+                                We currently don’t ship to your country.
+                            </p>
+                        )}
+
                         {/* Add to Bag */}
                         <Button
                             size="lg"
@@ -183,7 +189,7 @@ export default function ProductPageClient({
                                 : isSelectedSizeOutOfStock
                                     ? "Currently Out of Stock"
                                     : isShippingBlocked
-                                        ? `We don’t ship to ${shippingCountry}`
+                                        ? `Unavailable in your region`
                                         : `Add to Bag – ${formattedPrice}`}
                         </Button>
 
