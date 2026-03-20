@@ -23,9 +23,9 @@ export default function InstagramGrid() {
         </Link>
       </div>
 
-      <div className=" md:h-[310px] overflow-hidden">
+      <div className="overflow-hidden">
         <div
-          className="embedsocial-hashtag -mt-55"
+          className="embedsocial-hashtag -mt-32 lg:-mt-22"
           data-ref={EMBED_SOCIAL_REF}
         />
       </div>
