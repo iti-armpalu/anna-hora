@@ -171,27 +171,24 @@ export default function ProductPageClient({
                             </div>
                         </div>
 
-                        {isShippingBlocked && (
+                        {isShippingBlocked ? (
                             <p className="text-sm text-neutral-500">
-                                We currently don’t ship to your country.
+                                We don’t ship to your country yet — hopefully soon.
                             </p>
-                        )}
-
-                        {/* Add to Bag */}
-                        <Button
-                            size="lg"
-                            onClick={handleAddToBag}
-                            className="w-full"
-                            disabled={isAddToBagDisabled}
-                        >
-                            {!selectedVariant
-                                ? "Select a size"
-                                : isSelectedSizeOutOfStock
-                                    ? "Currently Out of Stock"
-                                    : isShippingBlocked
-                                        ? `Unavailable in your region`
+                        ) : (
+                            <Button
+                                size="lg"
+                                onClick={handleAddToBag}
+                                className="w-full"
+                                disabled={!selectedVariant || isSelectedSizeOutOfStock}
+                            >
+                                {!selectedVariant
+                                    ? "Select a size"
+                                    : isSelectedSizeOutOfStock
+                                        ? "Currently Out of Stock"
                                         : `Add to Bag – ${formattedPrice}`}
-                        </Button>
+                            </Button>
+                        )}
 
                         <CustomerAssurance />
 
