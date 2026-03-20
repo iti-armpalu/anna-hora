@@ -60,7 +60,7 @@ export default function Footer() {
               </div>
             ))}
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-12">
             <InstagramGrid />
           </div>
 

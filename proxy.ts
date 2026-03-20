@@ -1,20 +1,35 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-function resolveCountry(req: NextRequest): string {
-  const existing = req.cookies.get("country")?.value;
+const DEFAULT_MARKET_COUNTRY = "CZ";
+
+function resolveShippingCountry(req: NextRequest): string {
+  const existing = req.cookies.get("shippingCountry")?.value;
   if (existing) return existing;
 
-  const geoCountry = req.headers.get("x-vercel-ip-country");
-  const PRIMARY = "CZ";
-  return geoCountry || PRIMARY;
+  return req.headers.get("x-vercel-ip-country") || DEFAULT_MARKET_COUNTRY;
+}
+
+function resolveMarketCountry(req: NextRequest): string {
+  const existing = req.cookies.get("marketCountry")?.value;
+  if (existing) return existing;
+
+  return DEFAULT_MARKET_COUNTRY;
 }
 
 export function proxy(req: NextRequest) {
-  const country = resolveCountry(req);
+  const shippingCountry = resolveShippingCountry(req);
+  const marketCountry = resolveMarketCountry(req);
 
   const res = NextResponse.next();
-  res.cookies.set("country", country, {
+
+  res.cookies.set("shippingCountry", shippingCountry, {
+    path: "/",
+    httpOnly: false,
+    maxAge: 60 * 60 * 24 * 365,
+  });
+
+  res.cookies.set("marketCountry", marketCountry, {
     path: "/",
     httpOnly: false,
     maxAge: 60 * 60 * 24 * 365,

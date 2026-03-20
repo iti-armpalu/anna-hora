@@ -33,7 +33,11 @@ export async function shopifyFetch<TData, TVariables extends Record<string, unkn
   revalidate = 60,
 }: ShopifyFetchParams<TVariables>): Promise<TData> {
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "CZ";
+  // const country = cookieStore.get("country")?.value || "CZ";
+
+  const marketCountry =
+    cookieStore.get("marketCountry")?.value || "CZ";
+
 
   const res = await fetch(SHOPIFY_ENDPOINT, {
     method: "POST",
@@ -44,7 +48,7 @@ export async function shopifyFetch<TData, TVariables extends Record<string, unkn
     },
     body: JSON.stringify({
       query,
-      variables: { country, ...variables },
+      variables: { marketCountry, ...variables },
     }),
     cache,
     next: cache === "no-store" ? undefined : { revalidate },
