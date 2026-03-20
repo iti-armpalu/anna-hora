@@ -20,10 +20,14 @@ import ProductImageCarousel from "@/components/product-image-carousel";
 
 interface Props {
     product: ProductNormalized;
+    shippingCountry: string;
+    canShip: boolean;
 }
 
 export default function ProductPageClient({
     product,
+    shippingCountry,
+    canShip,
 }: Props) {
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -91,12 +95,23 @@ export default function ProductPageClient({
             return;
         }
 
+        if (!canShip) {
+            toast.error(`We don’t ship to ${shippingCountry}.`);
+            return;
+        }
+
         await addToCart(selectedVariant.id, 1);
 
         toast.success(`${product.title} added to bag • Size ${selectedSize}`)
     }
-    const isSelectedSizeOutOfStock = selectedVariant && !selectedVariant.availableForSale
 
+    const isSelectedSizeOutOfStock =
+        !!selectedVariant && !selectedVariant.availableForSale;
+
+    const isShippingBlocked = !canShip;
+
+    const isAddToBagDisabled =
+        !selectedVariant || isSelectedSizeOutOfStock || isShippingBlocked;
 
     // -------------------------------------------------
     // Render
@@ -157,8 +172,19 @@ export default function ProductPageClient({
                         </div>
 
                         {/* Add to Bag */}
-                        <Button size="lg" onClick={handleAddToBag} className="w-full" disabled={isSelectedSizeOutOfStock}>
-                            {isSelectedSizeOutOfStock ? "Currently Out of Stock" : `Add to Bag – ${formattedPrice}`}
+                        <Button
+                            size="lg"
+                            onClick={handleAddToBag}
+                            className="w-full"
+                            disabled={isAddToBagDisabled}
+                        >
+                            {!selectedVariant
+                                ? "Select a size"
+                                : isSelectedSizeOutOfStock
+                                    ? "Currently Out of Stock"
+                                    : isShippingBlocked
+                                        ? `We don’t ship to ${shippingCountry}`
+                                        : `Add to Bag – ${formattedPrice}`}
                         </Button>
 
                         <CustomerAssurance />
