@@ -172,9 +172,11 @@ export default function ProductPageClient({
                         </div>
 
                         {isShippingBlocked ? (
-                            <p className="text-sm text-neutral-500">
-                                We don’t ship to your country yet — hopefully soon.
-                            </p>
+                            <div className="space-y-2">
+                                <p className="text-sm text-neutral-500">
+                                    We don’t ship to your country yet — hopefully soon.
+                                </p>
+                            </div>
                         ) : (
                             <Button
                                 size="lg"
