@@ -5,7 +5,7 @@ import Script from "next/script";
 import { Instagram } from "lucide-react";
 import { siteConfig } from "@/lib/config/site";
 
-const EMBED_SOCIAL_REF = "0f0ff820ac2c5e517d8e2bbc5377ee0fddac811b";
+const EMBED_SOCIAL_REF = "ed5f0124a26c086321a572430e09a3d6b22015f2";
 
 export default function InstagramGrid() {
   return (
@@ -25,7 +25,7 @@ export default function InstagramGrid() {
 
       <div className="overflow-hidden">
         <div
-          className="embedsocial-hashtag -mt-32 lg:-mt-22"
+          className="embedsocial-hashtag"
           data-ref={EMBED_SOCIAL_REF}
         />
       </div>

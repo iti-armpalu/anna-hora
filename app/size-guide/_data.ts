@@ -123,8 +123,8 @@ const FLAT_MEASUREMENT_NOTE =
 
 const CM_CATEGORIES: CmCategoryInput[] = [
   {
-    id: "lounge-trousers",
-    category: "Lounge Trousers",
+    id: "signature-edit--lounge-trousers",
+    category: "Signature Edit Lounge Trousers",
     description: "Relaxed-fit trousers designed for comfort and style",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -139,8 +139,8 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     },
   },
   {
-    id: "relaxed-fit-trousers",
-    category: "Relaxed Fit Trousers",
+    id: "silk-edit-lounge-trousers",
+    category: "Silk Edit Lounge Trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -155,8 +155,8 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     },
   },
   {
-    id: "lounge-shorts",
-    category: "Lounge Shorts",
+    id: "signature-edit-lounge-shorts",
+    category: "Signature Edit Lounge Shorts",
     description: "Comfortable shorts ideal for warm weather lounging",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -171,8 +171,8 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     },
   },
   {
-    id: "boxer-shorts",
-    category: "Boxer Shorts",
+    id: "silk-edit-lounge-shorts",
+    category: "Silk Edit Lounge Shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -187,8 +187,8 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     },
   },
   {
-    id: "long-shirt",
-    category: "Long Shirt",
+    id: "signature-edit-lounge-shirt",
+    category: "Signature Edit Lounge Shirt",
     description: "Elegant long shirts perfect for lounging or layering",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -203,8 +203,8 @@ const CM_CATEGORIES: CmCategoryInput[] = [
     },
   },
   {
-    id: "short-shirt",
-    category: "Short Shirt",
+    id: "silk-edit-lounge-shirt",
+    category: "Silk Edit Lounge Shirt",
     description: "Elegant short shirt perfect for lounging or layering",
     fitNotes: `${FLAT_MEASUREMENT_NOTE}`,
     table: {
@@ -274,7 +274,7 @@ function normalize(input: string) {
 }
 
 /**
- * Prefer storing `id` in the Shopify metafield (e.g. "lounge-trousers").
+ * Prefer storing `id` in the Shopify metafield (e.g. "signatur-edit-trousers").
  * This also supports matching by label as fallback so older products won’t break.
  */
 export function resolveSizeCategory(metafieldValue: string | null | undefined): SizeCategory | null {
