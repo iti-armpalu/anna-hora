@@ -2,28 +2,28 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+//   SheetTrigger,
+// } from "@/components/ui/sheet";
 
-import { Filter } from "lucide-react";
+// import { Filter } from "lucide-react";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 
 interface Props {
-  open: boolean;
-  onOpenChange: (value: boolean) => void;
+  // open: boolean;
+  // onOpenChange: (value: boolean) => void;
   collections: CollectionNormalized[];
   activeCollection: string | null; // ← server-driven
 }
 
 export function FiltersPanel({
-  open,
-  onOpenChange,
+  // open,
+  // onOpenChange,
   collections,
   activeCollection,
 }: Props) {
@@ -50,7 +50,7 @@ export function FiltersPanel({
   return (
     <>
       {/* MOBILE FILTER DRAWER */}
-      <Sheet open={open} onOpenChange={onOpenChange}>
+      {/* <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetTrigger asChild>
           <Button
             variant="outline"
@@ -92,10 +92,10 @@ export function FiltersPanel({
             })}
           </div>
         </SheetContent>
-      </Sheet>
+      </Sheet> */}
 
       {/* DESKTOP LINKS */}
-      <div className="hidden lg:flex items-center space-x-6">
+      <div className="flex lg:flex items-center space-x-6">
         {finalCollections.map((col) => {
           const isActive =
             (col.handle === "all" && activeCollection === null) ||

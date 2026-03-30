@@ -10,7 +10,7 @@ type Props = {
 
 export function ViewToggle({ value, onChange }: Props) {
   return (
-    <div className="hidden sm:flex items-center space-x-1 border border-stone-300 rounded-md">
+    <div className="hidden md:flex items-center space-x-1 border border-stone-300 rounded-md">
       <Button
         variant={value === "grid" ? "default" : "ghost"}
         size="sm"

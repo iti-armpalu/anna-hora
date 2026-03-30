@@ -42,14 +42,6 @@ export default function OurSilkSection() {
               like second skin, and elevates the everyday. It's silk that speaks to confidence, calm, and the freedom to
               feel — the ANNA HORA way of living.
             </p>
-            <div className="grid grid-cols-2 gap-6 pt-4">
-              {silkFeatures.map((feature) => (
-                <div key={feature.title}>
-                  <h4 className="font-medium text-stone-800 mb-2">{feature.title}</h4>
-                  <p className="text-sm text-stone-600">{feature.description}</p>
-                </div>
-              ))}
-            </div>
             <Button
               asChild
               variant="outline"
