@@ -37,23 +37,23 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-stone-50">
-          <CartProvider
-            initialCartId={cartId}
-            initialCart={initialCart}
-          >
-            <WishlistProvider>
-              {/* Option A: Let Header read auth itself via getAuthSession() */}
-              <Header />
+        <CartProvider
+          initialCartId={cartId}
+          initialCart={initialCart}
+        >
+          <WishlistProvider>
+            {/* Option A: Let Header read auth itself via getAuthSession() */}
+            <Header />
 
-              {/* Option B (if your Header needs prop): <Header isAuthenticated={isAuthenticated} /> */}
-              {children}
+            {/* Option B (if your Header needs prop): <Header isAuthenticated={isAuthenticated} /> */}
+            {children}
 
-              <Analytics />
-              <Toaster position="top-center" />
-              <Footer />
-              <GlobalCartDrawer />
-            </WishlistProvider>
-          </CartProvider>
+            <Analytics />
+            <Toaster position="top-center" />
+            <Footer />
+            <GlobalCartDrawer />
+          </WishlistProvider>
+        </CartProvider>
       </body>
     </html>
   );

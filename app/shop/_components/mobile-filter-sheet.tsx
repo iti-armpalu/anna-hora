@@ -1,15 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
-import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
   SheetFooter,
 } from "@/components/ui/sheet";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
@@ -74,53 +71,15 @@ export function MobileFilterSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="lg:hidden border-stone-300 bg-transparent"
-        >
-          <Filter className="mr-2 h-4 w-4" />
-          Filters
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent side="left" className="w-full max-w-sm overflow-y-auto bg-white">
-        <SheetHeader>
+      <SheetContent
+        side="left"
+        className="w-full max-w-sm overflow-y-auto bg-white"
+      >
+        <SheetHeader className="sr-only">
           <SheetTitle>Filters</SheetTitle>
         </SheetHeader>
 
         <div className="p-4">
-          <div className="border-b border-stone-200 pb-4">
-            <p className="mb-3 text-sm font-medium text-stone-900">Collection</p>
-
-            <div className="flex flex-wrap gap-2">
-              {finalCollections.map((col) => {
-                const isActive =
-                  (col.handle === "all" && activeCollection === null) ||
-                  col.handle === activeCollection;
-
-                const href =
-                  col.handle === "all" ? "/shop" : `/collections/${col.handle}`;
-
-                return (
-                  <Link
-                    key={col.handle}
-                    href={href}
-                    onClick={() => onOpenChange(false)}
-                    className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                      isActive
-                        ? "bg-stone-900 text-white"
-                        : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-                    }`}
-                  >
-                    {col.title}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
           <FilterSidebar
             fabrics={fabrics}
             sizes={sizes}

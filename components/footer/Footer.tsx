@@ -38,7 +38,9 @@ function FooterColumn({ section }: FooterColumnProps) {
 
 export default function Footer() {
   return (
-    <footer className="py-12 px-4 bg-anna-green-900 text-anna-cement-50">
+    <footer
+      data-mobile-filter-footer
+      className="py-12 px-4 bg-anna-green-900 text-anna-cement-50">
       <div className="container mx-auto">
         {/* Top: Brand + 3 columns */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -54,11 +56,11 @@ export default function Footer() {
           </div>
 
 
-            {footerSections.map((section) => (
-              <div key={section.key} className="lg:col-span-2">
-                <FooterColumn section={section} />
-              </div>
-            ))}
+          {footerSections.map((section) => (
+            <div key={section.key} className="lg:col-span-2">
+              <FooterColumn section={section} />
+            </div>
+          ))}
 
           <div className="lg:col-span-12">
             <InstagramGrid />

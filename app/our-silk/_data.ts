@@ -15,7 +15,7 @@ export const SILK_CONTENT = {
         headingEm: "Against the Skin",
         paragraphs: [
             "Imagine the first touch of morning air, cool and gentle against your skin. This is silk—a fabric that doesn't merely cover, but caresses. Each thread is spun from the cocoon of the mulberry silkworm, creating a material so fine it seems to float rather than rest.",
-            "The weight is perfect—substantial enough to drape beautifully, yet light enough to move with your body like a second skin. As you slip into silk, you feel the day's tensions dissolve, replaced by a sense of being held, cherished, understood.",
+            "The weight of our silks is just perfect—substantial enough to drape beautifully, yet light enough to move with your body like a second skin. As you slip into silk, you feel the day's tensions dissolve, replaced by a sense of being held, cherished, understood.",
         ],
         media: {
             image:
@@ -33,18 +33,18 @@ export const SILK_CONTENT = {
             {
                 image:
                     "/silk-shirts.webp",
-                alt: "Mulberry silkworms",
+                alt: "Mulberry silk shirt",
                 title: "Grade 6A Mulberry Silk",
                 text:
-                    "Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
+                    "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
             },
             {
                 image:
                     "/22-momme-weight.webp",
                 alt: "Silk weaving process",
-                title: "22 Momme Weight",
+                title: "22 & 30 Momme Weight",
                 text:
-                    "The perfect balance of durability and drape, heavy enough for structure yet light enough for the most delicate touch.",
+                    "Crafted in 22 and 30 momme silk, balancing fluid drape with a more structured, substantial feel."
             },
             {
                 image:
@@ -94,14 +94,13 @@ export const SILK_CONTENT = {
         headingTop: "Ethical",
         headingEm: "by Design",
         paragraphs: [
-            "Our silk is sourced from family-owned farms that have perfected their craft over generations. These artisans understand that true luxury cannot exist without respect—for the silkworms, for the environment, and for the people who bring this ancient art to life.",
+            "Our silk is sourced from proven trusted manufacturers who understand that true luxury cannot exist without respect—for the silkworms, for the environment, and for the people who bring this ancient art to life.",
             'We believe in the philosophy of "slow luxury" — creating pieces that are meant to be treasured for years, not seasons. Every purchase supports sustainable practices and fair wages, ensuring that beauty and ethics walk hand in hand.',
         ],
         commitmentsTitle: "Our Commitments",
         commitments: [
-            "Partnership with certified sustainable silk farms",
+            "Partnership with certified proven manufacturers",
             "Fair wages and working conditions for all artisans",
-            "Minimal environmental impact through traditional methods",
             "Long-term relationships built on mutual respect",
         ],
         image:
