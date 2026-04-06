@@ -71,7 +71,7 @@ export const ABOUT_CONTENT: AboutContent = {
     founder: {
         image: {
             src: "/anna-hora-founders.webp",
-            alt: "Founder portrait",
+            alt: `${siteConfig.name} founders Kat and Barbora`
         },
         titleLines: ["Where It All", { italic: "Began" }],
         paragraphs: [
@@ -108,11 +108,10 @@ export const ABOUT_CONTENT: AboutContent = {
         paragraphs: [
             `That evolution welcomed a third pillar into ${siteConfig.name.toUpperCase()}: our close friend Iti — technologist, systems thinker, 
             and now Chief Technology Officer. Her arrival marked a turning point. Not just in how we operate, but in what we stand for.`,
-            `Not just in how we operate, but in what we stand for.`,
         ],
         image: {
             src: "/ethical-by-design.webp",
-            alt: "Silk texture detail",
+            alt: "Silk loungewear fabric detail",
         },
     },
 

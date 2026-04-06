@@ -154,10 +154,10 @@ export default function OurSilkPage() {
       </section>
 
       {/* Silk Care Guide */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="bg-white py-16 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
               <SectionHeader
                 titleTop={SILK_CONTENT.careGuide.headingTop}
                 titleEm={SILK_CONTENT.careGuide.headingEm}
@@ -165,10 +165,21 @@ export default function OurSilkPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {SILK_CONTENT.careGuide.steps.map((step) => (
                 <CareGuideStep key={step.step} {...step} />
               ))}
+            </div>
+
+            {/* CTA */}
+            <div className="mt-12 flex justify-center">
+              <Button
+                asChild
+                variant="outline"
+                className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
+              >
+                <Link href="/care-guide">View Full Care Guide</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -189,7 +200,7 @@ export default function OurSilkPage() {
                 asChild
                 data-slot="button"
                 size="lg"
-                className="bg-anna-green-950 hover:bg-anna-green-800 text-white px-8 py-3"
+                className="bg-anna-green-900 hover:bg-anna-green-800 text-white px-8 py-3"
               >
                 <Link href={SILK_CONTENT.closing.primaryCta.href}>
                   Shop Now
