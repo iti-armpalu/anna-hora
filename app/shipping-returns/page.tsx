@@ -5,14 +5,8 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import {
-  Truck,
-  Package,
-  RotateCcw,
-  Headphones,
   Clock,
   Mail,
   Phone,
@@ -21,6 +15,27 @@ import {
 } from "lucide-react"
 import { SHIPPING_RETURNS_CONTENT } from "./_data"
 import { siteConfig } from "@/lib/config/site"
+import { CopyButton } from "@/components/ui/copy-button"
+
+function ContactInfo({
+  icon,
+  label,
+  content,
+}: {
+  icon: React.ReactNode
+  label: string
+  content: React.ReactNode
+}) {
+  return (
+    <div className="flex items-start space-x-3">
+      {icon}
+      <div>
+        <p className="text-sm text-stone-600 mb-1">{label}</p>
+        {content}
+      </div>
+    </div>
+  )
+}
 
 
 export default function ShippingReturnsPage() {
@@ -135,7 +150,7 @@ export default function ShippingReturnsPage() {
 
                 {/* Return Button */}
                 <div className="flex justify-center gap-4 mb-8">
-                  <Button asChild className="bg-anna-green-950 hover:bg-stone-800 text-white">
+                  <Button asChild className="bg-anna-green-900 hover:bg-stone-800 text-white">
                     <Link href="/account">Initiate a Return</Link>
                   </Button>
                 </div>
@@ -180,31 +195,51 @@ export default function ShippingReturnsPage() {
             {/* Complaints Section */}
             <Card className="border-stone-200 shadow-sm">
               <CardContent className="p-8">
-                <div className="flex items-center space-x-3 mb-6">
-                  <h2 className="font-serif text-2xl text-stone-900">{SHIPPING_RETURNS_CONTENT.complaints.title}</h2>
+                <div className="mb-6 flex items-center space-x-3">
+                  <h2 className="font-serif text-2xl text-stone-900">
+                    {SHIPPING_RETURNS_CONTENT.complaints.title}
+                  </h2>
                 </div>
 
-                <p className="text-stone-600 mb-6 leading-relaxed">{SHIPPING_RETURNS_CONTENT.complaints.description}</p>
+                <p className="mb-6 leading-relaxed text-stone-600">
+                  {SHIPPING_RETURNS_CONTENT.complaints.description}
+                </p>
+                <div className="space-y-4">
+                  <ContactInfo
+                    icon={<Mail className="w-5 h-5 text-stone-600 mt-0.5" />}
+                    label="Email us directly"
+                    content={
+                      <CopyButton value={siteConfig.supportEmail} />
+                    }
+                  />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  {SHIPPING_RETURNS_CONTENT.complaints.contacts.map((contact, index) => (
-                    <div key={index} className="flex items-center space-x-4 p-4 border border-stone-200 rounded-lg">
-                      {contact.type === "phone" ? (
-                        <Phone className="w-5 h-5 text-stone-600" />
-                      ) : (
-                        <Mail className="w-5 h-5 text-stone-600" />
-                      )}
-                      <div>
-                        <p className="text-sm text-stone-600">{contact.label}</p>
-                        <a
-                          href={contact.href}
-                          className="text-stone-900 hover:text-stone-700 transition-colors font-medium"
-                        >
-                          {contact.value}
-                        </a>
-                      </div>
-                    </div>
-                  ))}
+                  <ContactInfo
+                    icon={<Phone className="w-5 h-5 text-stone-600 mt-0.5" />}
+                    label="Call us"
+                    content={
+                      <CopyButton value={siteConfig.phone} />
+                    }
+                  />
+
+                  <ContactInfo
+                    icon={<Clock className="w-5 h-5 text-stone-600 mt-0.5" />}
+                    label="Customer Care Hours"
+                    content={
+                      <>
+                        <p className="text-stone-900">
+                          Monday – Friday: {siteConfig.customerCareHours.mondayFriday}
+                        </p>
+
+                        <p className="text-sm text-stone-500">
+                          Saturday: {siteConfig.customerCareHours.saturday}
+                        </p>
+
+                        <p className="text-sm text-stone-500">
+                          Sunday: {siteConfig.customerCareHours.sunday}
+                        </p>
+                      </>
+                    }
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -231,25 +266,6 @@ export default function ShippingReturnsPage() {
                   >
                     <Link href="/our-silk">{SHIPPING_RETURNS_CONTENT.support.links.careInstructions}</Link>
                   </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-stone-200 shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="font-serif text-xl text-stone-900 mb-2">Customer Care Hours</h3>
-                <div className="text-stone-600 text-sm space-y-1">
-                  <p className="text-stone-900">
-                    Monday – Friday: {siteConfig.customerCareHours.mondayFriday}
-                  </p>
-
-                  <p className="text-sm text-stone-500">
-                    Saturday: {siteConfig.customerCareHours.saturday}
-                  </p>
-
-                  <p className="text-sm text-stone-500">
-                    Sunday: {siteConfig.customerCareHours.sunday}
-                  </p>
                 </div>
               </CardContent>
             </Card>

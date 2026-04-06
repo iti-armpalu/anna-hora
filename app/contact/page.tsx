@@ -6,6 +6,7 @@ import { Mail, Phone, Clock, Instagram } from "lucide-react"
 import { siteConfig } from "@/lib/config/site";
 
 import type { Metadata } from "next"
+import { CopyButton } from "@/components/ui/copy-button"
 
 
 export const metadata: Metadata = {
@@ -27,20 +28,18 @@ function ContactInfoCard() {
                         icon={<Mail className="w-5 h-5 text-stone-600 mt-0.5" />}
                         label="Email us directly"
                         content={
-                            <a href="mailto:hello@annahora.com" className="text-stone-900 hover:text-stone-700 transition-colors">
-                                {siteConfig.supportEmail}
-                            </a>
+                            <CopyButton value={siteConfig.supportEmail} />
                         }
                     />
+
                     <ContactInfo
                         icon={<Phone className="w-5 h-5 text-stone-600 mt-0.5" />}
                         label="Call us"
                         content={
-                            <a href="tel:+442071234567" className="text-stone-900 hover:text-stone-700 transition-colors">
-                                {siteConfig.phone}
-                            </a>
+                            <CopyButton value={siteConfig.phone} />
                         }
                     />
+
                     <ContactInfo
                         icon={<Clock className="w-5 h-5 text-stone-600 mt-0.5" />}
                         label="Customer Care Hours"

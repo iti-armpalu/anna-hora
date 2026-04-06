@@ -1,4 +1,3 @@
-// app/components/footer/Footer.tsx
 import Link from "next/link";
 import { siteConfig } from "@/lib/config/site";
 import { footerNavigation } from "@/lib/config/footer";
@@ -7,7 +6,7 @@ import Year from "./year";
 import InstagramGrid from "./instagram-grid";
 
 type FooterColumnProps = {
-  section: typeof footerSections[number];
+  section: (typeof footerSections)[number];
 };
 
 function FooterColumn({ section }: FooterColumnProps) {
@@ -15,7 +14,7 @@ function FooterColumn({ section }: FooterColumnProps) {
 
   return (
     <nav aria-labelledby={section.key} className="lg:col-span-1">
-      <h4 id={section.key} className="font-medium mb-4">
+      <h4 id={section.key} className="mb-4 font-medium">
         {section.title}
       </h4>
 
@@ -25,7 +24,7 @@ function FooterColumn({ section }: FooterColumnProps) {
             <Link
               href={item.href}
               prefetch={false}
-              className="text-anna-cement-200 hover:text-white transition-colors"
+              className="text-anna-cement-200 transition-colors hover:text-white"
             >
               {item.label}
             </Link>
@@ -40,21 +39,18 @@ export default function Footer() {
   return (
     <footer
       data-mobile-filter-footer
-      className="py-12 px-4 bg-anna-green-900 text-anna-cement-50">
-      <div className="container mx-auto">
-        {/* Top: Brand + 3 columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      className="bg-anna-green-900 py-12 text-anna-cement-50"
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h3 className="text-xl mb-4">{siteConfig.name}</h3>
+              <h3 className="mb-4 text-xl">{siteConfig.name.toUpperCase()}</h3>
               <p className="text-sm leading-relaxed text-anna-cement-100">
                 {siteConfig.tagline}
               </p>
             </div>
-
-
           </div>
-
 
           {footerSections.map((section) => (
             <div key={section.key} className="lg:col-span-2">
@@ -65,24 +61,20 @@ export default function Footer() {
           <div className="lg:col-span-12">
             <InstagramGrid />
           </div>
-
         </div>
 
-
-
-        {/* Bottom: Legal + Copyright */}
-        <div className="border-t border-anna-green-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-anna-cement-300 text-sm">
-            © <Year /> {siteConfig.name}. All rights reserved.
+        <div className="mt-8 flex flex-col items-center justify-between border-t border-anna-green-800 pt-8 md:flex-row">
+          <p className="text-sm text-anna-cement-300">
+            © <Year />{" "}{siteConfig.name.toUpperCase()}. All rights reserved.
           </p>
 
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="mt-4 flex space-x-6 md:mt-0">
             {footerNavigation.legal.map((item) => (
               <Link
                 key={`legal-${item.href}`}
                 href={item.href}
                 prefetch={false}
-                className="text-anna-cement-300 hover:text-anna-cement-100 text-sm transition-colors"
+                className="text-sm text-anna-cement-300 transition-colors hover:text-anna-cement-100"
               >
                 {item.label}
               </Link>

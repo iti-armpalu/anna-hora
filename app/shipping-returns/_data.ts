@@ -61,7 +61,7 @@ export const SHIPPING_RETURNS_CONTENT = {
                 ],
             },
             {
-                name: "Item Condititon",
+                name: "Item Condition",
                 conditions: [
                     "Items must be unworn and unwashed",
                     "Original tags must be attached",
@@ -112,14 +112,13 @@ export const SHIPPING_RETURNS_CONTENT = {
             {
                 type: "phone",
                 label: "Call us",
-                value: `${siteConfig.phone}`,
-                href: "tel:+420773583533",
+                value: siteConfig.phone,
+
             },
             {
                 type: "email",
                 label: "Email us",
-                value: "customerservice@annahora.com",
-                href: "mailto:customerservice@annahora.com",
+                value: siteConfig.supportEmail,
             },
         ],
     },

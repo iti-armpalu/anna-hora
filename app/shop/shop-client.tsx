@@ -203,9 +203,8 @@ export default function ShopClient({
   // -------------------------------------------------
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* HERO */}
       <section className="py-12 lg:py-16">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
           <h2 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
             {activeCollection ? "Collection" : "The Collection"}
           </h2>
@@ -215,9 +214,8 @@ export default function ShopClient({
         </div>
       </section>
 
-      {/* FILTER + SORT BAR */}
       <section className="sticky top-16 z-40 border-b border-stone-200 bg-white lg:top-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <FiltersPanel
@@ -234,10 +232,8 @@ export default function ShopClient({
         </div>
       </section>
 
-      {/* GRID + SIDEBAR */}
-      <main className="container mx-auto px-4 py-8 pb-24">
+      <main className="container mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          {/* DESKTOP SIDEBAR */}
           <aside className="hidden lg:block">
             <FilterSidebar
               fabrics={filterData.fabrics}
@@ -256,12 +252,11 @@ export default function ShopClient({
             />
           </aside>
 
-          {/* PRODUCTS */}
           <div className="lg:col-span-3">
             <div
-              className={`grid gap-8 items-stretch ${viewMode === "grid"
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "grid-cols-1"
+              className={`grid items-stretch gap-8 ${viewMode === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                  : "grid-cols-1"
                 }`}
             >
               {sortedProducts.map((product) => (
@@ -276,7 +271,6 @@ export default function ShopClient({
         </div>
       </main>
 
-      {/* MOBILE FILTER SHEET */}
       <MobileFilterSheet
         open={isFilterOpen}
         onOpenChange={setIsFilterOpen}
@@ -297,7 +291,6 @@ export default function ShopClient({
         currency={products[0]?.currencyCode}
       />
 
-      {/* FLOATING MOBILE BUTTON */}
       <button
         onClick={() => setIsFilterOpen(true)}
         className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-anna-green-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
