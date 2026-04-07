@@ -1,3 +1,5 @@
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -5,6 +7,7 @@ import PRIVACY_DATA from "./_data"
 import type { PrivacySection } from "./_data"
 import { Mail } from "lucide-react"
 
+export const metadata: Metadata = pageMeta.privacy;
 
 // Hero Section Component
 function PrivacyHero() {

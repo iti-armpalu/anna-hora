@@ -1,9 +1,13 @@
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import TERMS_DATA from "./_data"
 import type { TermsSection } from "./_data"
 import { Mail } from "lucide-react"
+
+export const metadata: Metadata = pageMeta.terms;
 
 // Hero Section Component
 function TermsHero() {

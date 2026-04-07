@@ -13,6 +13,7 @@ const customerCareHoursSchema = z.object({
 
 const siteSchema = z.object({
     name: z.string(),
+    url: z.string().url(),
     tagline: z.string(),
     supportEmail: z.string().email(),
     phone: z.string(),
@@ -27,6 +28,7 @@ const siteSchema = z.object({
 
 export const siteConfig = siteSchema.parse({
     name: "Anna Hora",
+    url: "https://www.annahora.com",
     tagline: `Crafted with care. Worn with intention. Thank you for being here — 
     for choosing slower moments, thoughtful design, and pieces that feel as good 
     as they look. We're honoured to be part of your ritual.`,

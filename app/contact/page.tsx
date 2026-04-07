@@ -1,18 +1,17 @@
 import type React from "react"
 import Link from "next/link"
+
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Mail, Phone, Clock, Instagram } from "lucide-react"
 import { siteConfig } from "@/lib/config/site";
-
-import type { Metadata } from "next"
 import { CopyButton } from "@/components/ui/copy-button"
 
 
-export const metadata: Metadata = {
-    title: "Contact Us - We'd Love to Hear from You",
-    description: "Get in touch with our team for questions about orders, styling advice, or collaborations.",
-}
+export const metadata: Metadata = pageMeta.about;
 
 const HEADER_TITLE = "We'd Love to Hear from You"
 const HEADER_DESCRIPTION =

@@ -13,12 +13,10 @@ import { CartProvider } from "@/context/cart-context";
 import { WishlistProvider } from "@/context/wishlist-context";
 
 import { getCartAction } from "@/lib/actions/cart/get-cart";
-import { siteConfig } from "@/lib/config/site";
+import { defaultMetadata } from "@/lib/config/metadata";
 
-export const metadata: Metadata = {
-  title: siteConfig.name,
-  description: "A luxury lifestyle concept",
-};
+
+export const metadata: Metadata = defaultMetadata;
 
 export default async function RootLayout({
   children,
@@ -42,10 +40,8 @@ export default async function RootLayout({
           initialCart={initialCart}
         >
           <WishlistProvider>
-            {/* Option A: Let Header read auth itself via getAuthSession() */}
             <Header />
 
-            {/* Option B (if your Header needs prop): <Header isAuthenticated={isAuthenticated} /> */}
             {children}
 
             <Analytics />

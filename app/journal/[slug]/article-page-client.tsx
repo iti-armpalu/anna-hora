@@ -2,15 +2,12 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Facebook, Twitter, Instagram, ArrowRight } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
+import type { NormalizedArticle } from "@/lib/shopify/blog"
 import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
-import type { JournalArticle, RelatedArticle } from "../_data"
 import { ProductCard } from "@/components/shop/product-card"
 
 export default function ArticlePageClient({
@@ -18,18 +15,22 @@ export default function ArticlePageClient({
     relatedArticles,
     featuredProducts,
 }: {
-    article: JournalArticle
-    relatedArticles: RelatedArticle[]
+    article: NormalizedArticle
+    relatedArticles: NormalizedArticle[]
     featuredProducts: ProductNormalized[]
 }) {
-    const featured = featuredProducts[0] // show one next to hero; you can render many if you want
-    
+    const featured = featuredProducts[0]
+
     return (
         <div className="min-h-screen bg-stone-50">
-            {/* Back to Journal - Desktop */}
-            <div className="block py-6 border-b border-stone-200">
+
+            {/* Back to Journal */}
+            <div className="py-6 border-b border-stone-200">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <Link href="/journal" className="flex items-center space-x-2 text-stone-600 hover:text-stone-800 transition-colors">
+                    <Link
+                        href="/journal"
+                        className="flex items-center space-x-2 text-stone-600 hover:text-stone-800 transition-colors"
+                    >
                         <ArrowLeft className="h-4 w-4" />
                         <span className="text-sm">Back to Journal</span>
                     </Link>
@@ -37,69 +38,63 @@ export default function ArticlePageClient({
             </div>
 
             <section>
-                <div className="container mx-auto px-0 sm:px-6 lg:px-8">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="flex lg:flex-row justify-center gap-8 items-end mb-12">
-                            <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden">
-                                <Image src={article.image} alt={article.title} fill className="object-cover" priority />
-                            </div>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="flex gap-12 items-start pt-12">
 
-                            {/* Featured Product Card (links to PDP) */}
-                            {featured ?
-                                <div className="hidden md:block space-y-2">
-                                    <p className="text-xs uppercase tracking-wider text-stone-500 font-light">Featured product in the article</p>
-                                    <div className="px-3 bg-stone-100 rounded-md">
-                                        <ProductCard product={featured} className="w-[220px] py-0 pt-4" />
+                            {/* LEFT — image stacked above article */}
+                            <div className="flex-1 min-w-0">
+
+                                {/* Image */}
+                                <div className="flex justify-center mb-10">
+                                    <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden">
+                                        <Image
+                                            src={article.image}
+                                            alt={article.imageAlt || article.title}
+                                            fill
+                                            className="object-cover"
+                                            priority
+                                        />
                                     </div>
                                 </div>
-                                : null}
 
-                        </div>
+                                {/* Mobile product card — between image and article */}
+                                {featured && (
+                                    <div className="lg:hidden border border-stone-200 rounded-sm p-4 mb-10">
+                                        <p className="text-xs text-stone-400 tracking-wide mb-4">
+                                            Featured in this story
+                                        </p>
+                                        <ProductCard product={featured} />
+                                    </div>
+                                )}
 
-                        {/* Article Content */}
-                        <article className="py-2 lg:py-4">
-                            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                                <div className="max-w-3xl mx-auto">
+                                {/* Article */}
+                                <article className="max-w-2xl">
                                     <header className="mb-12">
-                                        <Badge variant="outline" className="mb-4 border-stone-300 text-stone-600">
-                                            {article.categoryName}
-                                        </Badge>
+                                        {article.category && (
+                                            <span className="text-xs text-stone-400 tracking-wide mb-3 block">
+                                                {article.category}
+                                            </span>
+                                        )}
                                         <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-stone-800 mb-4 sm:mb-6 leading-tight">
                                             {article.title}
                                         </h1>
-                                        <p className="text-base sm:text-lg lg:text-xl text-stone-600 mb-6 sm:mb-8 leading-relaxed">
+                                        <p className="text-base sm:text-lg text-stone-600 mb-6 sm:mb-8 leading-relaxed">
                                             {article.excerpt}
                                         </p>
-
-                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex flex-col gap-2 text-sm text-stone-500">
-                                                    <span>By {article.author}</span>
-                                                    <div className="flex items-center space-x-4 text-sm text-stone-500">
-                                                        <span>{article.date}</span>
-                                                        <span>•</span>
+                                        <div className="flex flex-col gap-1 text-sm text-stone-500">
+                                            <span>By {article.author}</span>
+                                            <div className="flex items-center gap-2">
+                                                <span>{article.date}</span>
+                                                {article.readTime && (
+                                                    <>
+                                                        <span>·</span>
                                                         <span>{article.readTime}</span>
-                                                    </div>
-                                                </div>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </header>
-
-                                    {featured ? (
-                                        <div className="flex flex-col items-center md:hidden mb-6 space-y-2">
-                                            <p className="text-xs uppercase tracking-wider text-stone-500 font-light text-center">
-                                                Featured product in the article
-                                            </p>
-
-                                            <div className="px-3 bg-stone-100 rounded-md">
-                                                <ProductCard
-                                                    product={featured}
-                                                    className="w-[220px] py-0 pt-4"
-                                                />
-                                            </div>
-                                        </div>
-                                    ) : null}
-
 
                                     <Separator className="mb-12" />
 
@@ -113,53 +108,69 @@ export default function ArticlePageClient({
                                         prose-strong:text-stone-800 prose-strong:font-medium"
                                         dangerouslySetInnerHTML={{ __html: article.content ?? "" }}
                                     />
-                                </div>
+                                </article>
                             </div>
-                        </article>
+
+                            {/* RIGHT — sticky product card, desktop only */}
+                            {featured && (
+                                <aside className="hidden lg:block w-72 shrink-0 sticky top-24 self-start">
+                                    <div className="border border-stone-200 rounded-sm p-4">
+                                        <p className="text-xs text-stone-400 tracking-wide mb-4">
+                                            Featured in this story
+                                        </p>
+                                        <ProductCard product={featured} className="py-0" />
+                                    </div>
+                                </aside>
+                            )}
+
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Related Articles */}
-            <section className="py-16 lg:py-24 bg-white">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-6xl mx-auto">
-                        <h3 className="text-3xl font-light text-stone-800 mb-12 text-center">Continue Reading</h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {relatedArticles.map((relatedArticle) => (
-                                <Card key={relatedArticle.id} className="group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
-                                    <div className="relative aspect-[4/3] overflow-hidden">
-                                        <Image
-                                            src={relatedArticle.image || "/placeholder.svg"}
-                                            alt={relatedArticle.title}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-700"
-                                        />
-                                    </div>
-                                    <CardContent className="p-6">
-                                        <Badge variant="outline" className="mb-3 border-stone-300 text-stone-600 text-xs">
-                                            {relatedArticle.category}
-                                        </Badge>
-                                        <h4 className="text-lg font-light text-stone-800 mb-3 leading-tight group-hover:text-stone-600 transition-colors">
-                                            {relatedArticle.title}
-                                        </h4>
-                                        <div className="flex items-center justify-between text-xs text-stone-500">
-                                            <span>{relatedArticle.readTime}</span>
-                                            <Link href={`/journal/${relatedArticle.slug}`}>
-                                                <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900 p-0">
-                                                    Read More
-                                                    <ArrowRight className="w-3 h-3 ml-1" />
-                                                </Button>
-                                            </Link>
+            {relatedArticles.length > 0 && (
+                <section className="py-16 lg:py-24 bg-white">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-6xl mx-auto">
+                            <h3 className="text-3xl font-light text-stone-800 mb-12 text-center">
+                                Continue Reading
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {relatedArticles.map((related) => (
+                                    <Link key={related.id} href={`/journal/${related.slug}`}>
+                                        <div className="group cursor-pointer overflow-hidden">
+                                            <div className="relative aspect-[3/4] overflow-hidden mb-4">
+                                                <Image
+                                                    src={related.image || "/placeholder.svg"}
+                                                    alt={related.imageAlt || related.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                            </div>
+                                            <span className="text-xs text-stone-400 tracking-wide mb-1 block">
+                                                {related.category ?? related.tags[0]}
+                                            </span>
+                                            <h4 className="text-base font-light text-stone-800 mb-2 leading-snug group-hover:text-stone-500 transition-colors duration-300">
+                                                {related.title}
+                                            </h4>
+                                            <div className="flex items-center gap-2 text-xs text-stone-400">
+                                                <span>{related.date}</span>
+                                                {related.readTime && (
+                                                    <>
+                                                        <span>·</span>
+                                                        <span>{related.readTime}</span>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
         </div>
     )
 }

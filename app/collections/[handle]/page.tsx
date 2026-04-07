@@ -1,31 +1,32 @@
-import ShopClient from "@/app/shop/shop-client";
-import { siteConfig } from "@/lib/config/site";
-import { getCollections, getCollectionByHandle } from "@/lib/shopify";
 import { Metadata } from "next";
+import { pageMeta } from "@/lib/config/metadata";
+import { siteConfig } from "@/lib/config/site";
+
 import { notFound } from "next/navigation";
 
-// -------------------------------
-// SEO Metadata
-// -------------------------------
-export async function generateMetadata(
-  { params }: { params: Promise<{ handle: string }> }
-): Promise<Metadata> {
-  const { handle } = await params;
+import ShopClient from "@/app/shop/shop-client";
+import { getCollections, getCollectionByHandle } from "@/lib/shopify";
 
+// -------------------------------
+// Metadata
+// -------------------------------
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { handle } = await params;
   const collection = await getCollectionByHandle(handle);
 
   if (!collection) {
-    return {
-      title: "Collection Not Found",
-      robots: "noindex",
-    };
+    return { title: "Collection Not Found", robots: "noindex, nofollow" };
   }
 
   return {
-    title: `${collection.title} | ${siteConfig.name.toUpperCase()}`,
+    title: collection.title, // template in defaultMetadata appends " | ANNA HORA"
+    description: collection.description || pageMeta.shop.description,
     openGraph: {
       title: `${collection.title} | ${siteConfig.name.toUpperCase()}`,
       url: `/collections/${handle}`,
+      images: collection.image
+        ? [{ url: collection.image.url, width: 1200, height: 630, alt: collection.title }]
+        : undefined,
       type: "website",
     },
   };

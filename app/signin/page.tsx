@@ -1,6 +1,11 @@
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
+import { redirect } from "next/navigation";
+
 import { AuthLayout } from "@/components/header/auth-layout";
 import { getAuthSession } from "@/lib/auth/session";
-import { redirect } from "next/navigation";
+
+export const metadata: Metadata = pageMeta.signIn;
 
 export default async function SigninPage() {
   const { isAuthenticated } = await getAuthSession();

@@ -2,6 +2,11 @@ import { getCollections, getProducts } from "@/lib/shopify";
 import ShopClient from "./shop-client";
 import { applyMerchandisingOrder } from "@/lib/shopify/utils/apply-merchandising-order";
 
+import { Metadata } from "next";
+import { pageMeta } from "@/lib/config/metadata";
+
+export const metadata: Metadata = pageMeta.shop;
+
 export const revalidate = 60;
 
 export default async function Page() {

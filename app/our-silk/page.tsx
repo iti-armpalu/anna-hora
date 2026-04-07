@@ -1,14 +1,17 @@
+import { ChevronRight } from "lucide-react"
+import { Metadata } from "next"
 import Image from "next/image"
-import { Download, ChevronRight } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { SILK_CONTENT } from "./_data"
 import { SectionHeader } from "./_components/section-header"
 import { BenefitCard } from "./_components/benefit-card"
 import { CraftsmanshipCard } from "./_components/craftmanship-card"
 import { CareGuideStep } from "./_components/care-guide-step"
+import { pageMeta } from "@/lib/config/metadata"
 
+export const metadata: Metadata = pageMeta.ourSilk;
 
 export default function OurSilkPage() {
   return (

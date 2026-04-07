@@ -9,6 +9,7 @@ type ShopifyFetchParams<
   variables?: TVariables;
   cache?: RequestCache;
   revalidate?: number;
+  skipMarket?: boolean;
 };
 
 interface ShopifyGraphQLError {
@@ -29,6 +30,7 @@ export async function shopifyFetch<
   variables = {} as TVariables,
   cache = "no-store",
   revalidate = 60,
+  skipMarket
 }: ShopifyFetchParams<TVariables>): Promise<TData> {
   const cookieStore = await cookies();
 
@@ -46,10 +48,9 @@ export async function shopifyFetch<
     },
     body: JSON.stringify({
       query,
-      variables: {
-        ...variables,
-        country: marketCountry,
-      },
+      variables: skipMarket
+        ? variables
+        : { ...variables, country: marketCountry },
     }),
     cache,
     next: cache === "no-store" ? undefined : { revalidate },

@@ -1,8 +1,12 @@
-// app/account/page.tsx (SERVER)
+import { Metadata } from "next";
+import { pageMeta } from "@/lib/config/metadata";
+
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { customerAccountGraphql } from "@/lib/shopify/customer-account-graphql";
 import { CUSTOMER_PROFILE_QUERY, CUSTOMER_ORDERS_QUERY } from "@/lib/shopify/queries/customer";
 import AccountClientPage from "./account-page-client";
+
+export const metadata: Metadata = pageMeta.account;
 
 type ProfileRes = {
   customer: {

@@ -1,6 +1,11 @@
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
 import Link from "next/link"
+
 import { FAQ_CONTENT, HEADER, UI_TEXTS } from "./_data"
 import { FAQSearchAndContent } from "./_components/faq-search-and-content"
+
+export const metadata: Metadata = pageMeta.faq;
 
 export default function FAQPage() {
   return (

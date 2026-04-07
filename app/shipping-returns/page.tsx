@@ -1,6 +1,8 @@
 "use client"
 
 import type React from "react"
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
 
 import { useState } from "react"
 import Link from "next/link"
@@ -16,6 +18,9 @@ import {
 import { SHIPPING_RETURNS_CONTENT } from "./_data"
 import { siteConfig } from "@/lib/config/site"
 import { CopyButton } from "@/components/ui/copy-button"
+
+
+export const metadata: Metadata = pageMeta.shippingReturns;
 
 function ContactInfo({
   icon,
@@ -39,19 +44,6 @@ function ContactInfo({
 
 
 export default function ShippingReturnsPage() {
-  const [guestReturnData, setGuestReturnData] = useState({
-    orderNumber: "",
-    email: "",
-  })
-  const [isGuestReturnOpen, setIsGuestReturnOpen] = useState(false)
-
-  const handleGuestReturn = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle guest return logic here
-    console.log("Guest return:", guestReturnData)
-    setIsGuestReturnOpen(false)
-    // Show success message or redirect
-  }
 
   return (
     <div className="min-h-screen bg-stone-50">

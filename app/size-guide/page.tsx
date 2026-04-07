@@ -4,7 +4,10 @@ import { SIZE_GUIDE_CONTENT } from "./_data"
 import { HeroSection } from "./_components/hero-section"
 import { MeasurementTips } from "./_components/measurement-tips"
 import { SizeTable } from "./_components/size-table"
+import { pageMeta } from "@/lib/config/metadata"
+import { Metadata } from "next"
 
+export const metadata: Metadata = pageMeta.sizeGuide;
 
 export default function Page() {
   return (
