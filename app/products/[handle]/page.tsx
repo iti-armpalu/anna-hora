@@ -6,44 +6,89 @@ import { cookies } from "next/headers";
 
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config/site";
+import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
+
+function ProductStructuredData({
+    product,
+    handle,
+}: {
+    product: ProductNormalized;
+    handle: string;
+}) {
+    const firstVariant = product.variants?.[0];
+    const availableForSale = product.variants?.some((v) => v.availableForSale);
+
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.title,
+        description: product.description,
+        image: product.images.map((img) => img.url),
+        brand: {
+            "@type": "Brand",
+            name: siteConfig.name,
+        },
+        url: `${siteConfig.url}/products/${handle}`,
+        offers: {
+            "@type": "Offer",
+            price: firstVariant?.price.amount ?? product.minPrice,
+            priceCurrency: firstVariant?.price.currencyCode ?? product.currencyCode,
+            availability: availableForSale
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
+            url: `${siteConfig.url}/products/${handle}`,
+            seller: {
+                "@type": "Organization",
+                name: siteConfig.name,
+            },
+        },
+    };
+
+    return (
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+    );
+}
 
 export async function generateMetadata({
-  params,
+    params,
 }: {
-  params: Promise<{ handle: string }>;
+    params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
-  const { handle } = await params;
-  const product = await getProductByHandle(handle);
+    const { handle } = await params;
+    const product = await getProductByHandle(handle);
 
-  if (!product) {
+    if (!product) {
+        return {
+            title: "Product Not Found",
+            robots: { index: false, follow: false },
+        };
+    }
+
+    const firstImage = product.images?.[0];
+
     return {
-      title: "Product Not Found",
-      robots: { index: false, follow: false },
+        title: product.title,
+        description: product.description || `Shop ${product.title} — premium mulberry silk loungewear by ANNA HORA.`,
+        openGraph: {
+            title: `${product.title} | ${siteConfig.name}`,
+            description: product.description,
+            url: `/products/${handle}`,
+            type: "website",
+            images: firstImage
+                ? [
+                    {
+                        url: firstImage.url,
+                        width: 1200,
+                        height: 630,
+                        alt: firstImage.altText || product.title,
+                    },
+                ]
+                : undefined,
+        },
     };
-  }
-
-  const firstImage = product.images?.[0];
-
-  return {
-    title: product.title,
-    description: product.description || `Shop ${product.title} — premium mulberry silk loungewear by ANNA HORA.`,
-    openGraph: {
-      title: `${product.title} | ${siteConfig.name}`,
-      description: product.description,
-      url: `/products/${handle}`,
-      type: "website",
-      images: firstImage
-        ? [
-            {
-              url: firstImage.url,
-              width: 1200,
-              height: 630,
-              alt: firstImage.altText || product.title,
-            },
-          ]
-        : undefined,
-    },
-  };
 }
 
 export const revalidate = 60; // ISR every 60 seconds
@@ -73,10 +118,13 @@ export default async function ProductPage({
     const canShip = availableCountries.includes(shippingCountry);
 
     return (
-        <ProductPageClient
-            product={product}
-            shippingCountry={shippingCountry}
-            canShip={canShip}
-        />
+        <>
+            <ProductStructuredData product={product} handle={handle} />
+            <ProductPageClient
+                product={product}
+                shippingCountry={shippingCountry}
+                canShip={canShip}
+            />
+        </>
     );
 }

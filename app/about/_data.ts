@@ -78,8 +78,6 @@ export const ABOUT_CONTENT: AboutContent = {
             "Our starting point was loungewear. Not because it was easy, but because it mattered. We wanted to design pieces that feel intentional, timeless, and quietly powerful — garments that honour “you time” in a world that rarely pauses.",
             "From carefully sourced fabrics to thoughtful silhouettes, our focus has always been on how women feel in our designs, not on chasing trends.",
             `But ${siteConfig.name.toUpperCase()} was never meant to stop at product.`,
-            "We are a brand built by women, for women — and increasingly, with women. We believe women build differently: with intuition, collaboration, resilience, and an instinctive understanding that beauty and intelligence are not opposites."
-
         ],
     },
 

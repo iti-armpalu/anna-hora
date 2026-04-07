@@ -13,8 +13,8 @@ export function FounderSection() {
             <Image
               src={founder.image.src || "/placeholder.svg"}
               alt={founder.image.alt}
-              width={450}
-              height={600}
+              width={350}
+              height={500}
               className="rounded-lg mx-auto"
               sizes="(min-width:1024px) 500px, 90vw"
             />
