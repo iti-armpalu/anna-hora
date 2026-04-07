@@ -1,10 +1,7 @@
-"use client"
-
 import type React from "react"
 import { pageMeta } from "@/lib/config/metadata"
 import { Metadata } from "next"
 
-import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
