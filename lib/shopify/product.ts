@@ -1,5 +1,3 @@
-"use server";
-
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
 import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/shopify/queries/product";

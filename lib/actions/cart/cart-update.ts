@@ -54,7 +54,7 @@ export async function cartUpdateAction(
   }
 
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "CZ";
+  const country = cookieStore.get("shippingCountry")?.value || "CZ";
 
   // Keep cookie in sync with the cart the UI is using.
   // This prevents mismatch after OIDC redirects / multi-tab / etc.

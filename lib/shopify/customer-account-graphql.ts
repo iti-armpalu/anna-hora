@@ -9,7 +9,7 @@ const SHOP_DOMAIN = process.env.SHOP_STOREFRONT_DOMAIN!;
 
 async function getGraphqlEndpoint(): Promise<string> {
   const res = await fetch(`https://${SHOP_DOMAIN}/.well-known/customer-account-api`, {
-    cache: "no-store",
+    next: { revalidate: 86400 }, // 24 hours
   });
 
   if (!res.ok) throw new Error(`Customer Account API discovery failed: ${res.status}`);

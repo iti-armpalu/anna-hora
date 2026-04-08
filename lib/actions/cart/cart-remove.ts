@@ -48,7 +48,7 @@ export async function cartRemoveAction(
   }
 
   const cookieStore = await cookies();
-  const country = cookieStore.get("country")?.value || "CZ";
+  const country = cookieStore.get("shippingCountry")?.value || "CZ";
 
   // Keep cookie in sync with the cart currently used in UI
   const cookieCartId = cookieStore.get("cartId")?.value;

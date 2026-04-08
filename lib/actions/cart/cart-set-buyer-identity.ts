@@ -32,7 +32,7 @@ export async function cartSetBuyerIdentityAction(
 
   const cookieStore = await cookies();
   const cartId = cookieStore.get("cartId")?.value;
-  const country = cookieStore.get("country")?.value || "CZ";
+  const country = cookieStore.get("shippingCountry")?.value || "CZ";
 
   if (!cartId) return { ok: false, error: "Cart not found." };
 

@@ -34,7 +34,7 @@ function normalizeMetafields(
     descriptionStyle: map["description_style"] ?? null,
     descriptionSensory: map["description_sensory"] ?? null,
     descriptionLifestyle: map["description_lifestyle"] ?? null,
-    isNew: map["is_limited"] === "true",
+    isNew: map["is_new"] === "true",
     isLimited: map["is_limited"] === "true",
     isBestseller: map["is_bestseller"] === "true",
     fitNotes: map["fit_notes"] ?? null,

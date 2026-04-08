@@ -129,15 +129,6 @@ export function CartProvider({
     setLoading(false);
   }
 
-  useEffect(() => {
-    console.log("[CartContext] cart changed", {
-      cartId: cart?.id,
-      totalQuantity: cart?.totalQuantity,
-      lines: cart?.lines?.map((l) => ({ id: l.id, qty: l.quantity })),
-      subtotal: cart?.cost?.subtotalAmount,
-    });
-  }, [cart]);
-
   return (
     <CartContext.Provider
       value={{

@@ -28,7 +28,7 @@ export async function shopifyFetch<
 >({
   query,
   variables = {} as TVariables,
-  cache = "no-store",
+  cache = "force-cache",
   revalidate = 60,
   skipMarket
 }: ShopifyFetchParams<TVariables>): Promise<TData> {

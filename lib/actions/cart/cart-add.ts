@@ -56,7 +56,7 @@ export async function cartAddAction(
 
   const cookieStore = await cookies();
   let cartId = cookieStore.get("cartId")?.value;
-  const country = cookieStore.get("country")?.value || "CZ";
+  const country = cookieStore.get("shippingCountry")?.value || "CZ";
 
   try {
     // ----------------------------------
