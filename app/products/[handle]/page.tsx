@@ -41,6 +41,31 @@ function ProductStructuredData({
                 "@type": "Organization",
                 name: siteConfig.name,
             },
+            shippingDetails: {
+                "@type": "OfferShippingDetails",
+                deliveryTime: {
+                    "@type": "ShippingDeliveryTime",
+                    handlingTime: {
+                        "@type": "QuantitativeValue",
+                        minValue: 1,
+                        maxValue: 2,
+                        unitCode: "DAY",
+                    },
+                    transitTime: {
+                        "@type": "QuantitativeValue",
+                        minValue: 3,
+                        maxValue: 7,
+                        unitCode: "DAY",
+                    },
+                },
+            },
+            hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 14,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/ReturnShippingFees",
+            },
         },
     };
 
