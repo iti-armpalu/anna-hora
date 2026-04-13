@@ -64,7 +64,7 @@ export default function ProductImageCarousel({ product }: ProductImageCarouselPr
                             <div className="relative w-full h-full aspect-[3/4]">
                                 <Image
                                     src={imageError ? "/placeholder.svg" : image.url}
-                                    alt={`image.title - Image ${index + 1}`}
+                                    alt={image.altText || `${product.title} - Image ${index + 1}`}
                                     width={768}
                                     height={1024}
                                     className="object-cover w-full h-full"

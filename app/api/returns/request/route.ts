@@ -56,9 +56,6 @@ function mask(value?: string | null, start = 10, end = 6) {
  * ----------------------------------------------------- */
 
 export async function POST(req: NextRequest) {
-  console.log("\n==============================");
-  console.log("POST /api/returns/request HIT");
-  console.log("==============================");
 
   /* -----------------------------
    * Auth Guard
@@ -67,7 +64,6 @@ export async function POST(req: NextRequest) {
   const auth = await requireAuthApi();
 
   if (!auth.ok) {
-    console.log("Not authenticated");
     return NextResponse.json(
       { ok: false, error: "Not authenticated" },
       { status: 401 }
@@ -92,11 +88,6 @@ export async function POST(req: NextRequest) {
 
   const orderId = (body.orderId ?? "").trim();
   const items = body.requestedLineItems ?? [];
-
-  console.log("Incoming payload:", {
-    orderId: mask(orderId),
-    itemsCount: items.length,
-  });
 
   if (!orderId) {
     return NextResponse.json(
@@ -140,15 +131,6 @@ export async function POST(req: NextRequest) {
     return payload;
   });
 
-  console.log("Variables (masked):", {
-    orderId: mask(orderId),
-    requestedLineItems: requestedLineItems.map((i) => ({
-      lineItemId: mask(i.lineItemId as string),
-      quantity: i.quantity,
-      returnReason: i.returnReason,
-    })),
-  });
-
   /* -----------------------------
    * Call Shopify
    * --------------------------- */
@@ -170,22 +152,12 @@ export async function POST(req: NextRequest) {
     const result = data?.orderRequestReturn;
     const userErrors = result?.userErrors ?? [];
 
-    console.log("Shopify response:", {
-      hasReturn: Boolean(result?.return),
-      returnId: mask(result?.return?.id),
-      status: result?.return?.status,
-      userErrorsCount: userErrors.length,
-    });
-
     if (userErrors.length) {
-      console.log("Return userErrors:", userErrors); // <-- add this
       return NextResponse.json(
         { ok: false, userErrors },
         { status: 400 }
       );
     }
-
-    console.log("Return request submitted");
 
     return NextResponse.json(
       {
