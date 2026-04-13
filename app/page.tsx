@@ -1,13 +1,14 @@
-
 import { getCollectionByHandle } from "@/lib/shopify"
 import { getGiftCardAmounts } from "@/lib/shopify/utils/gift-card"
 import { getGiftCardProduct } from "@/lib/shopify/product"
-import NewsletterSection from "@/components/common/newsletter-section"
-import HeroSection from "@/components/hero-section"
-import FeaturedCategories from "@/components/featured-categories"
-import OurSilkSection from "@/components/our-silk-selection"
-import GiftingSection from "@/components/gifting-section"
-import FeaturedProducts from "@/components/featured-products"
+import NewsletterSection from "@/components/home/newsletter-section"
+import HeroSection from "@/components/home/hero-section"
+import FeaturedCategories from "@/components/home/featured-categories"
+import OurSilkSection from "@/components/home/our-silk-selection"
+import GiftingSection from "@/components/home/gifting-section"
+import FeaturedProducts from "@/components/home/featured-products"
+
+
 
 export default async function HomePage() {
 
@@ -20,12 +21,8 @@ export default async function HomePage() {
     await Promise.all(categoryHandles.map((h) => getCollectionByHandle(h)))
   ).filter(Boolean);
 
+
   const giftCardProduct = await getGiftCardProduct();
-
-  if (!giftCardProduct) {
-    return <div>No gift card product found.</div>;
-  }
-
   const giftCardAmounts = giftCardProduct ? getGiftCardAmounts(giftCardProduct) : [];
   const startingAmount = giftCardAmounts[0] ?? null;
 

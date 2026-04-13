@@ -29,7 +29,7 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src="/anna-hora-giftcard-2.webp"
-                alt="Luxury Gift Set"
+                alt="An ANNA HORA gift card tied with a branded green satin ribbon on marble table top"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -52,7 +52,7 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src="/packing-4.jpeg"
-                alt="Gift Wrapping"
+                alt="An ANNA HORA order packed in branded tissue and packaging with a sealed sticker."
                 fill
                 className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
               />
@@ -75,14 +75,14 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
                   Learn More
                 </Button> */}
                 {/* <div className="text-center mt-12"> */}
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                  >
-                    <Link href="/gift-guide">Learn More</Link>
-                  </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
+                >
+                  <Link href="/gift-guide">Learn More</Link>
+                </Button>
                 {/* </div> */}
               </div>
             </CardContent>

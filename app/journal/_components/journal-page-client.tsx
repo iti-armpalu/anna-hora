@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, Filter, ArrowRight, Share2 } from "lucide-react"
+import { Search, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -17,7 +17,7 @@ import type { NormalizedArticle } from "@/lib/shopify/blog"
 // ------------------------------------
 interface JournalPageClientProps {
     articles: NormalizedArticle[];
-    categories: string[]; // now derived dynamically, no longer JournalCategory[]
+    categories: string[];
 }
 
 export default function JournalPageClient({ articles, categories }: JournalPageClientProps) {
@@ -119,7 +119,7 @@ export default function JournalPageClient({ articles, categories }: JournalPageC
                                             </>
                                         )}
                                     </div>
-                                    <Button asChild className="bg-anna-green-950 hover:bg-stone-700 text-white">
+                                    <Button asChild>
                                         <Link href={`/journal/${featuredArticle.slug}`}>Read Story</Link>
                                     </Button>
                                 </CardContent>
@@ -134,56 +134,6 @@ export default function JournalPageClient({ articles, categories }: JournalPageC
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {regularArticles.map((article) => (
-                            // <Card
-                            //     key={article.id}
-                            //     className="py-0 gap-0 group cursor-pointer border-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300"
-                            // >
-                            //     <div className="relative aspect-[4/3] overflow-hidden">
-                            //         <Image
-                            //             src={article.image}
-                            //             alt={article.imageAlt || article.title}
-                            //             fill
-                            //             className="object-cover group-hover:scale-105 transition-transform duration-700"
-                            //         />
-                            //         <Button
-                            //             size="icon"
-                            //             variant="secondary"
-                            //             className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white"
-                            //         >
-                            //             <Share2 className="w-4 h-4" />
-                            //         </Button>
-                            //     </div>
-                            //     <CardContent className="p-6">
-                            //         {/* category metafield badge, falls back to first tag */}
-                            //         <Badge variant="outline" className="mb-3 border-stone-300 text-stone-600 text-xs">
-                            //             {article.category ?? article.tags[0]}
-                            //         </Badge>
-                            //         <h4 className="text-lg font-light text-stone-800 mb-3 leading-tight group-hover:text-stone-600 transition-colors">
-                            //             {article.title}
-                            //         </h4>
-                            //         <p className="text-stone-600 h-20 text-sm mb-4 leading-relaxed">{article.excerpt}</p>
-                            //         <div className="flex flex-col gap-1 text-sm text-stone-500 mb-6">
-                            //             <span>By ANNA HORA Editorial Team</span>
-                            //             <div className="flex items-center gap-2">
-                            //                 <span>{article.date}</span>
-                            //                 {article.readTime && (
-                            //                     <>
-                            //                         <span>·</span>
-                            //                         <span>{article.readTime}</span>
-                            //                     </>
-                            //                 )}
-                            //             </div>
-                            //         </div>
-                            //         <div className="mt-4 pt-4 border-t border-stone-100">
-                            //             <Button asChild variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900 p-0">
-                            //                 <Link href={`/journal/${article.slug}`}>
-                            //                     Read More
-                            //                     <ArrowRight className="w-3 h-3 ml-1" />
-                            //                 </Link>
-                            //             </Button>
-                            //         </div>
-                            //     </CardContent>
-                            // </Card>
                             <Link href={`/journal/${article.slug}`} key={article.id}>
                                 <Card className="pt-0 group cursor-pointer border-0 bg-transparent overflow-hidden">
                                     {/* Image */}
@@ -246,7 +196,7 @@ export default function JournalPageClient({ articles, categories }: JournalPageC
                                 placeholder="Your email address"
                                 className="flex-1 border-stone-300 focus:border-stone-500"
                             />
-                            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8">Subscribe</Button>
+                            <Button>Subscribe</Button>
                         </div>
                         <p className="text-xs text-stone-500 mt-4">Thoughtful stories, no spam. Unsubscribe at any time.</p>
                     </div>

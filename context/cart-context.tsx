@@ -26,7 +26,7 @@ type CartContextType = {
   toggle: () => void;
 };
 
-const CartContext = createContext<CartContextType | null>(null);
+export const CartContext = createContext<CartContextType | null>(null);
 
 export function useCart() {
   const ctx = useContext(CartContext);
@@ -79,17 +79,18 @@ export function CartProvider({
 
   async function addToCart(variantId: string, quantity: number) {
     setLoading(true);
-
-    const res = await cartAddAction({ variantId, quantity });
-
-    if (!res.ok || !res.cart) {
-      console.error("Add to cart failed:", res.error);
+    try {
+      const res = await cartAddAction({ variantId, quantity });
+      if (!res.ok || !res.cart) {
+        console.error("Add to cart failed:", res.error);
+        return;
+      }
+      setCart(res.cart);
+    } catch (err) {
+      console.error("addToCart unexpected error:", err);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setCart(res.cart);
-    setLoading(false);
   }
 
   async function updateQuantity(

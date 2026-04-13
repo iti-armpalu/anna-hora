@@ -1,6 +1,5 @@
+import { Spinner } from "@/components/ui/spinner";
 import { siteConfig } from "@/lib/config/site";
-import { Spinner } from "../../components/ui/spinner";
-
 
 export default function Loading() {
   return (
@@ -12,4 +11,3 @@ export default function Loading() {
     </div>
   )
 }
-  

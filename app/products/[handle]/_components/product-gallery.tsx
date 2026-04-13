@@ -3,10 +3,10 @@
 import { useState } from "react"
 import Image from "next/image"
 import ProductLightbox from "./product-lightbox"
-import { ProductImage } from "@/lib/shopify/types/product"
+import { ProductImageNormalized } from "@/lib/shopify/types/product-normalized"
 
 interface ProductGalleryProps {
-    images: ProductImage[];
+    images: ProductImageNormalized[];
 }
 
 export function ProductGallery({ images }: ProductGalleryProps) {

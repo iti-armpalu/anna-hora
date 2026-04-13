@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { WishlistButton } from "../wishlist-button"
-import ProductImageCarousel from "../product-image-carousel"
+import ProductImageCarousel from "./product-image-carousel"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { formatPrice } from "@/hooks/use-price"
 import { Button } from "../ui/button"

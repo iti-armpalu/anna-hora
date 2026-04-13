@@ -1,4 +1,4 @@
-import CategoryCard from "./category-card"
+import CategoryCard from "./category-card";
 
 type Collection = {
   id: string;

@@ -15,7 +15,7 @@ import {
     ProductNormalized,
     ProductVariantNormalized,
 } from "@/lib/shopify/types/product-normalized";
-import ProductImageCarousel from "@/components/product-image-carousel";
+import ProductImageCarousel from "@/components/shop/product-image-carousel";
 
 
 interface Props {
@@ -156,11 +156,10 @@ export default function ProductPageClient({
                                 {sizes.map(({ size, inStock }) => (
                                     <Button
                                         key={size}
-                                        onClick={() => setSelectedSize(size)}
-                                        variant={
-                                            selectedSize === size ? "default" : "outline"
-                                        }
-                                        className={!inStock ? "opacity-50" : ""}
+                                        onClick={() => inStock ? setSelectedSize(size) : undefined}
+                                        disabled={!inStock}
+                                        variant={selectedSize === size ? "default" : "outline"}
+                                        className={!inStock ? "opacity-50 cursor-not-allowed" : ""}
                                     >
                                         {size}
                                     </Button>

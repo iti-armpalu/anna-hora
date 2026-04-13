@@ -3,9 +3,10 @@ import type { TitleLine } from "../_data"
 interface SectionTitleProps {
   titleLines: TitleLine[]
   className?: string
+  as?: "h1" | "h2" | "h3" | "h4"
 }
 
-export function SectionTitle({ titleLines, className = "" }: SectionTitleProps) {
+export function SectionTitle({ titleLines, className = "", as: Tag = "h3" }: SectionTitleProps) {
   const first = titleLines[0]
   const shouldBreak =
     titleLines.length > 1 &&

@@ -1,23 +1,10 @@
+import { careGuideContent } from "../_data"
 import { Card, CardContent } from "@/components/ui/card"
 import { Section, SectionInner, SectionTitle } from "./section"
 
-export type CareInstruction = {
-  step: number
-  title: string
-  description: string
-  details: string[]
-}
+export function CareInstructionsGrid() {
+  const { careInstructions } = careGuideContent
 
-export function CareInstructionsGrid({
-  careInstructions,
-}: {
-  careInstructions: {
-    title: string
-    subtitle: string
-    description: string
-    instructions: CareInstruction[]
-  }
-}) {
   return (
     <Section className="bg-white py-16 lg:py-24">
       <SectionInner max="max-w-6xl">
@@ -35,7 +22,7 @@ export function CareInstructionsGrid({
               <CardContent className="p-8">
                 <div className="mb-4 flex items-start gap-4">
 
-                  <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <div className="w-16 h-16 bg-anna-cement-100 rounded-full flex items-center justify-center shadow-sm">
                     <span className="text-3xl md:text-5xl lg:text-7xl font-serif italic text-anna-cement-600 leading-none translate-y-[-8px]">
                       {instruction.step}
                     </span>

@@ -1,11 +1,9 @@
-// app/care-guide/_components/intro-section.tsx
+import { careGuideContent } from "../_data"
 import { Section, SectionInner, SectionTitle } from "./section"
 
-export function IntroSection({
-  introduction,
-}: {
-  introduction: { title: string; subtitle: string; paragraphs: string[] }
-}) {
+export function IntroSection() {
+  const { introduction } = careGuideContent
+
   return (
     <Section className="py-16 lg:py-24">
       <SectionInner max="max-w-4xl">

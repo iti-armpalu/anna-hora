@@ -33,7 +33,7 @@ export default function Page() {
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <Button asChild className="bg-anna-green-900 hover:bg-stone-800 text-white px-8 py-3">
+          <Button asChild>
             <Link href="/shop">Shop Collection</Link>
           </Button>
         </div>

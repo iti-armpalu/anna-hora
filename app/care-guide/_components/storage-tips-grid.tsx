@@ -1,18 +1,10 @@
-// app/care-guide/_components/storage-tips-grid.tsx
+import { careGuideContent } from "../_data"
 import { Card, CardContent } from "@/components/ui/card"
-import { type IconName } from "./icon"
 import { Section, SectionInner, SectionTitle } from "./section"
 
-export function StorageTipsGrid({
-  storage,
-}: {
-  storage: {
-    title: string
-    subtitle: string
-    description: string
-    tips: Array<{ icon: IconName; title: string; description: string }>
-  }
-}) {
+export function StorageTipsGrid() {
+  const { storage } = careGuideContent
+
   return (
     <Section className="bg-white py-16 lg:py-24">
       <SectionInner max="max-w-6xl">

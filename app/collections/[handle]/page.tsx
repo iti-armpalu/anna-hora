@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 import { pageMeta } from "@/lib/config/metadata";
 import { siteConfig } from "@/lib/config/site";
-
 import { notFound } from "next/navigation";
 
 import ShopClient from "@/app/shop/shop-client";
 import { getCollections, getCollectionByHandle } from "@/lib/shopify";
 
-// -------------------------------
-// Metadata
-// -------------------------------
-export async function generateMetadata({ params }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ handle: string }>;
+}): Promise<Metadata> {
   const { handle } = await params;
   const collection = await getCollectionByHandle(handle);
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 
   return {
-    title: collection.title, // template in defaultMetadata appends " | ANNA HORA"
+    title: collection.title,
     description: collection.description || pageMeta.shop.description,
     openGraph: {
       title: `${collection.title} | ${siteConfig.name.toUpperCase()}`,
@@ -32,15 +32,11 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   };
 }
 
-// -------------------------------
-// PAGE
-// -------------------------------
 export default async function CollectionPage({
   params,
 }: {
   params: Promise<{ handle: string }>;
 }) {
-
   const { handle } = await params;
 
   const [collection, collections] = await Promise.all([
@@ -49,7 +45,6 @@ export default async function CollectionPage({
   ]);
 
   if (!collection) notFound();
-
 
   return (
     <ShopClient

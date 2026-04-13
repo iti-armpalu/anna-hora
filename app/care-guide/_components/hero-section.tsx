@@ -1,11 +1,9 @@
-// app/care-guide/_components/hero-section.tsx
+import { careGuideContent } from "../_data"
 import { Section, SectionInner } from "./section"
 
-export function HeroSection({
-  hero,
-}: {
-  hero: { title: string; subtitle: string; description: string }
-}) {
+export function HeroSection() {
+  const { hero } = careGuideContent
+
   return (
     <Section className="relative border-b border-stone-200 bg-white">
       <SectionInner max="max-w-4xl" className="py-16 lg:py-24">

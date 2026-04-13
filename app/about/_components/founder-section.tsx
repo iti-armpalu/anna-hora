@@ -1,9 +1,9 @@
 import Image from "next/image"
-import { ABOUT_CONTENT } from "../_data"
+import { aboutContent } from "../_data"
 import { SectionTitle } from "./section-title"
 
 export function FounderSection() {
-  const { founder } = ABOUT_CONTENT
+  const { founder } = aboutContent
 
   return (
     <section className="py-16 lg:py-24">

@@ -89,7 +89,7 @@ export default function ShopClient({
     return Number(product.minPrice);
   }
 
-  type ProductBooleanFlag = "bestseller" | "limited" | "new";
+  type ProductBooleanFlag = "isBestseller" | "isLimited" | "isNew";
 
   const hasFlag = useCallback(
     (product: ProductNormalized, key: ProductBooleanFlag) => {
@@ -169,13 +169,13 @@ export default function ShopClient({
 
         case "bestsellers":
           return (
-            Number(hasFlag(b, "bestseller")) -
-            Number(hasFlag(a, "bestseller"))
+            Number(hasFlag(b, "isBestseller")) -
+            Number(hasFlag(a, "isBestseller"))
           );
 
         case "newest":
         default:
-          return Number(hasFlag(b, "new")) - Number(hasFlag(a, "new"));
+          return Number(hasFlag(b, "isNew")) - Number(hasFlag(a, "isNew"));
       }
     });
   }, [filteredProducts, selectedSort, hasFlag]);
@@ -255,8 +255,8 @@ export default function ShopClient({
           <div className="lg:col-span-3">
             <div
               className={`grid items-stretch gap-8 ${viewMode === "grid"
-                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                  : "grid-cols-1"
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                : "grid-cols-1"
                 }`}
             >
               {sortedProducts.map((product) => (
@@ -294,8 +294,8 @@ export default function ShopClient({
       <button
         onClick={() => setIsFilterOpen(true)}
         className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-anna-green-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
-            ? "pointer-events-none translate-y-4 opacity-0"
-            : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
+          ? "pointer-events-none translate-y-4 opacity-0"
+          : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
           }`}
       >
         <SlidersHorizontal className="h-4 w-4" />

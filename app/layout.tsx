@@ -36,9 +36,7 @@ export default async function RootLayout({
         >
           <WishlistProvider>
             <Header />
-
-            {children}
-
+            <main className="min-h-screen">{children}</main>
             <Analytics />
             <Toaster position="top-center" />
             <Footer />

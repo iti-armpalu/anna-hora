@@ -40,7 +40,7 @@ export function CartDrawerFooter({
                 <Button
                     onClick={handleCheckout}
                     disabled={totalQuantity === 0}
-                    className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+                    className="w-full"
                 >
                     Proceed to Checkout
                 </Button>

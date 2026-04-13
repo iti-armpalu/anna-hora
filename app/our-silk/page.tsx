@@ -20,8 +20,8 @@ export default function OurSilkPage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-stone-100 to-stone-200">
           <Image
-            src={SILK_CONTENT.hero.bgImage || "/placeholder.svg"}
-            alt="Silk texture in natural light"
+            src={SILK_CONTENT.hero.image}
+            alt={SILK_CONTENT.hero.alt}
             fill
             className="object-cover"
             priority
@@ -202,8 +202,6 @@ export default function OurSilkPage() {
               <Button
                 asChild
                 data-slot="button"
-                size="lg"
-                className="bg-anna-green-900 hover:bg-anna-green-800 text-white px-8 py-3"
               >
                 <Link href={SILK_CONTENT.closing.primaryCta.href}>
                   Shop Now

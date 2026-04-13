@@ -1,9 +1,9 @@
-import { ABOUT_CONTENT } from "../_data"
+import { aboutContent } from "../_data"
 import { SectionTitle } from "./section-title"
 
 
 export function OurWhySection() {
-  const { why } = ABOUT_CONTENT
+  const { why } = aboutContent
 
   return (
     <section className="py-16 lg:py-24 bg-stone-100">

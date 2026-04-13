@@ -12,7 +12,6 @@ export default function AccountTabs({ customer }: { customer: AccountVM }) {
       <TabsList className="grid grid-cols-3 w-full">
         <TabsTrigger value="orders">Orders</TabsTrigger>
         <TabsTrigger value="profile">Profile</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
 
       <TabsContent value="orders" className="py-6">
@@ -21,10 +20,6 @@ export default function AccountTabs({ customer }: { customer: AccountVM }) {
 
       <TabsContent value="profile" className="py-6">
         <ProfileTab customer={customer} />
-      </TabsContent>
-
-      <TabsContent value="settings" className="py-6">
-        {/* later */}
       </TabsContent>
     </Tabs>
   );

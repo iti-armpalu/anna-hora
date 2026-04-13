@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -133,7 +132,7 @@ export default function NewsletterSection() {
                     <Button
                       type="submit"
                       disabled={submitState === "submitting"}
-                      className="max-w-xs bg-anna-green-900 px-8 text-white hover:bg-stone-700"
+                      className="max-w-xs"
                     >
                       {submitState === "submitting" ? "Submitting..." : "Subscribe"}
                     </Button>

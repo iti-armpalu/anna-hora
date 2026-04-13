@@ -1,11 +1,10 @@
-// app/care-guide/_data.ts
-import type { IconName } from "./_components/icon"
+import { ClosingContent } from "@/components/common/page-closing"
+
 
 export type CareInstruction = {
   step: number
   title: string
   description: string
-  icon: IconName
   details: string[]
 }
 
@@ -17,7 +16,6 @@ export type CommonIssue = {
 export type StorageTip = {
   title: string
   description: string
-  icon: IconName
 }
 
 export type CareGuideContent = {
@@ -48,16 +46,11 @@ export type CareGuideContent = {
     description: string
     tips: StorageTip[]
   }
-  avoidSection: {
+  avoidList: {
     title: string
     items: string[]
   }
-  downloadSection: {
-    title: string
-    description: string
-    buttonText: string
-    href: string
-  }
+  closing: ClosingContent
 }
 
 export const careGuideContent: CareGuideContent = {
@@ -86,7 +79,6 @@ export const careGuideContent: CareGuideContent = {
         step: 1,
         title: "Washing",
         description: "Gentle cleansing preserves silk's natural luster",
-        icon: "droplets",
         details: [
           "Hand wash in cool water (30°C/86°F or below) using a pH-neutral silk detergent",
           "Avoid harsh detergents, bleach, or fabric softeners which can damage fibers",
@@ -100,7 +92,6 @@ export const careGuideContent: CareGuideContent = {
         step: 2,
         title: "Drying",
         description: "Proper drying maintains silk's shape and structure",
-        icon: "sun",
         details: [
           "Gently press excess water out with a clean, white towel—never wring",
           "Lay flat on a clean, dry towel away from direct sunlight or heat",
@@ -114,7 +105,6 @@ export const careGuideContent: CareGuideContent = {
         step: 3,
         title: "Ironing",
         description: "Restore silk's smooth finish with careful pressing",
-        icon: "wind",
         details: [
           "Iron while slightly damp for best results, or use a pressing cloth",
           "Set iron to low heat (silk/delicate setting) without steam",
@@ -128,7 +118,6 @@ export const careGuideContent: CareGuideContent = {
         step: 4,
         title: "Stain Removal",
         description: "Act quickly to treat stains without damage",
-        icon: "alertCircle",
         details: [
           "Blot spills immediately with a clean, white cloth—never rub",
           "For water-based stains, gently dab with cool water",
@@ -186,29 +175,25 @@ export const careGuideContent: CareGuideContent = {
         title: "Breathable Garment Bags",
         description:
           "Store silk in cotton or linen garment bags—never plastic, which traps moisture and can cause yellowing. Natural fabrics allow silk to breathe while protecting from dust.",
-        icon: "package",
       },
       {
         title: "Cool, Dark Environment",
         description:
           "Keep silk in a cool, dry place away from direct sunlight, which causes fading. Avoid attics or basements where temperature and humidity fluctuate.",
-        icon: "home",
       },
       {
         title: "Natural Cedar Protection",
         description:
           "Use cedar sachets or blocks to naturally repel moths—never mothballs, which contain harsh chemicals. Replace cedar annually for continued protection.",
-        icon: "shield",
       },
       {
         title: "Proper Hanging",
         description:
           "Use padded or wide hangers to prevent shoulder marks. For delicate pieces or long-term storage, fold gently with acid-free tissue paper between folds.",
-        icon: "archive",
       },
     ],
   },
-  avoidSection: {
+  avoidList: {
     title: "What to Avoid",
     items: [
       "Hot water, which can shrink silk and damage its protein structure",
@@ -220,11 +205,11 @@ export const careGuideContent: CareGuideContent = {
       "Wire hangers, which can leave rust marks and distort garment shape",
     ],
   },
-  downloadSection: {
-    title: "Keep This Guide Handy",
-    description:
-      "Download our comprehensive silk care guide PDF for quick reference. Print it and keep it with your garments for easy access whenever you need it.",
-    buttonText: "Download Care Guide PDF",
-    href: "/files/care-guide.pdf",
+  closing: {
+    titleLines: ["Ready to Experience", { italic: "Pure Silk Luxury?" }],
+    ctas: [
+      { label: "Shop Collection", href: "/shop", variant: "primary" },
+      { label: "Learn About Our Silk", href: "/our-silk", variant: "outline" },
+    ],
   },
 }

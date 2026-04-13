@@ -16,11 +16,9 @@ export function CartEmptyState() {
         of quiet luxury.
       </p>
 
-      <Link href="/shop">
-        <Button className="bg-anna-green-950 hover:bg-stone-700 text-white px-8">
-          Continue Shopping
-        </Button>
-      </Link>
+      <Button asChild>
+        <Link href="/shop">Continue Shopping</Link>
+      </Button>
     </div>
   );
 }

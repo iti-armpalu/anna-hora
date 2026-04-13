@@ -2,8 +2,8 @@
 
 export const SILK_CONTENT = {
     hero: {
-        bgImage:
-            "/anna-hora-hero-2.webp",
+        image: "/anna-hora-hero-2.webp",
+        alt: "A woman reads a book outdoors in green silk trousers, coffee in hand.",
         titleTop: "The Language of",
         titleEm: "Silk",
         subtitle:
@@ -18,9 +18,8 @@ export const SILK_CONTENT = {
             "The weight of our silks is just perfect—substantial enough to drape beautifully, yet light enough to move with your body like a second skin. As you slip into silk, you feel the day's tensions dissolve, replaced by a sense of being held, cherished, understood.",
         ],
         media: {
-            image:
-                "/silk-draping-naturally.webp",
-            alt: "Silk draping naturally",
+            image: "/silk-draping-naturally.webp",
+            alt: "A woman walks in an off-white silk lounge set against a white panelled wall.",
         },
     },
 
@@ -31,25 +30,22 @@ export const SILK_CONTENT = {
             "Every thread tells a story of ancient wisdom and modern precision, woven together to create something truly extraordinary.",
         cards: [
             {
-                image:
-                    "/silk-shirts.webp",
-                alt: "Mulberry silk shirt",
+                image: "/silk-shirts.webp",
+                alt: "ANNA HORA silk shirts in mink and off-white hanging on branded hangers.",
                 title: "Grade 6A Mulberry Silk",
                 text:
                     "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
             },
             {
-                image:
-                    "/22-momme-weight.webp",
-                alt: "Silk weaving process",
+                image: "/22-momme-weight.webp",
+                alt: "A white silk lounge shirt worn while holding a vase of hydrangeas.",
                 title: "22 & 30 Momme Weight",
                 text:
                     "Crafted in 22 and 30 momme silk, balancing fluid drape with a more structured, substantial feel."
             },
             {
-                image:
-                    "/artisan-finished.webp",
-                alt: "Artisan craftsmanship",
+                image: "/artisan-finished.webp",
+                alt: "Close view of a mink silk lounge shirt pocket and fabric drape.",
                 title: "Artisan Finished",
                 text:
                     "Each piece is carefully inspected and finished by skilled artisans who understand that true luxury lies in the details.",
@@ -105,7 +101,7 @@ export const SILK_CONTENT = {
         ],
         image:
             "/ethical-by-design.webp",
-        imageAlt: "Sustainable silk farm",
+        imageAlt: "A silk lounge set worn in a home kitchen, shot in black and white.",
     },
 
     careGuide: {

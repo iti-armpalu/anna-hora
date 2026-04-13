@@ -139,7 +139,7 @@ export default function ShippingReturnsPage() {
 
                 {/* Return Button */}
                 <div className="flex justify-center gap-4 mb-8">
-                  <Button asChild className="bg-anna-green-900 hover:bg-stone-800 text-white">
+                  <Button asChild>
                     <Link href="/account">Initiate a Return</Link>
                   </Button>
                 </div>

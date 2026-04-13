@@ -57,11 +57,10 @@ export default function WishlistClient() {
                             Explore our collection of silk loungewear and add pieces you love.
                         </p>
 
-                        <Link href="/shop">
-                            <Button className="bg-anna-green-950 hover:bg-stone-700 text-white">
-                                Start Shopping
-                            </Button>
-                        </Link>
+                        <Button asChild>
+                            <Link href="/shop">
+                                Start Shopping</Link>
+                        </Button>
                     </div>
                 )}
 
@@ -84,7 +83,7 @@ export default function WishlistClient() {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {items.map((item) => {
-                                
+
                                 const formattedPrice = formatPrice({
                                     amount: item.price,
                                     currencyCode: item.currencyCode,

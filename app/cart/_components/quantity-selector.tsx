@@ -48,12 +48,6 @@ export function QuantitySelector({
   async function handleIncrease() {
     const newQty = value + 1;
 
-    console.log("[QuantitySelector] INCREASE", {
-      lineId,
-      currentValue: value,
-      newQty,
-    });
-
     if (isCartMode) {
       const result = await cart.updateQuantity(lineId!, newQty);
 
@@ -69,12 +63,6 @@ export function QuantitySelector({
 
   async function handleDecrease() {
     const newQty = value - 1;
-
-    console.log("[QuantitySelector] DECREASE", {
-      lineId,
-      currentValue: value,
-      newQty,
-    });
 
     if (newQty < 1) return;
 

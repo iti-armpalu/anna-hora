@@ -157,9 +157,9 @@ function ContactSection() {
         </div>
 
         <div className="pt-4">
-          <Link href={contact.ctaHref}>
-            <Button className="bg-anna-green-950 hover:bg-primary/90 text-primary-foreground">{contact.ctaText}</Button>
-          </Link>
+          <Button asChild>
+            <Link href={contact.ctaHref}>{contact.ctaText}</Link>
+          </Button>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ export default function OurSilkSection() {
           <div className="relative order-2 lg:order-1">
             <Image
               src="/anna-hora-silk.webp"
-              alt="Premium silk texture"
+              alt="A collage showing the Signature Edit Green Lounge Trousers — waistband detail, hem close-up, and worn outdoors while reading."
               width={500}
               height={600}
               className="rounded-lg"

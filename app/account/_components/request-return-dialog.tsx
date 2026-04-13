@@ -311,7 +311,7 @@ export function RequestReturnDialog({
                             <Button
                                 disabled={!canSubmit}
                                 onClick={handleSubmit}
-                                className="bg-anna-green-950 flex-1 sm:flex-none gap-2"
+                                className="flex-1 sm:flex-none gap-2"
                             >
                                 {status === "submitting" ? "Submitting…" : "Submit Return"}
                             </Button>

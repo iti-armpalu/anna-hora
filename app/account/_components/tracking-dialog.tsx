@@ -50,6 +50,7 @@ export function TrackingDialog({
     const [copied, setCopied] = useState(false);
 
     function handleCopy() {
+        if (!trackingNumber) return;
         navigator.clipboard.writeText(trackingNumber);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);

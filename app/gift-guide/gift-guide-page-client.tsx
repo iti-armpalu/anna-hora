@@ -43,7 +43,6 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                             </p>
 
                             <Button
-                                className="bg-anna-green-950 hover:bg-anna-green-800 text-white"
                                 onClick={() => document.getElementById("gift-card")?.scrollIntoView({ behavior: "smooth" })}
                             >
                                 <Gift className="w-4 h-4 mr-2" />
@@ -54,7 +53,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                         <div className="relative">
                             <Image
                                 src="/gift-guide-hero-1.png"
-                                alt="Elegant ANNA HORA gift"
+                                alt="A woman in a white silk lounge shirt puts on an earring, side profile."
                                 width={500}
                                 height={600}
                                 className="rounded-lg"
@@ -83,7 +82,13 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                             <div className="relative">
-                                <Image src="/anna-hora-giftcard-2.webp" alt="ANNA HORA Gift Card" width={500} height={400} className="rounded-lg" />
+                                <Image
+                                    src="/anna-hora-giftcard-2.webp"
+                                    alt="An ANNA HORA gift card tied with a branded green satin ribbon on marble table top."
+                                    width={500}
+                                    height={400}
+                                    className="rounded-lg"
+                                />
                             </div>
 
                             <Card className="border-0 shadow-lg bg-white p-8">
@@ -110,7 +115,7 @@ export default function GiftGuidePageClient({ product, giftCardAmounts }: GiftGu
                                         </ul>
                                     </div>
 
-                                    <Button disabled className="w-full bg-anna-green-950 text-white opacity-60">
+                                    <Button disabled className="w-full opacity-60">
                                         Coming Soon
                                     </Button>
                                 </div>

@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { FAQ_CONTENT, HEADER, UI_TEXTS } from "./_data"
 import { FAQSearchAndContent } from "./_components/faq-search-and-content"
+import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = pageMeta.faq;
 
@@ -26,18 +27,16 @@ export default function FAQPage() {
           <h3 className="text-2xl font-serif text-stone-900 mb-4">{UI_TEXTS.contactPromptTitle}</h3>
           <p className="text-stone-600 mb-6 leading-relaxed text-pretty">{UI_TEXTS.contactPromptText}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href={UI_TEXTS.contactCtas.primary.href}
-              className="bg-anna-green-900 hover:bg-stone-800 text-white px-4 py-2 rounded-md inline-flex items-center justify-center font-medium transition-colors"
-            >
-              {UI_TEXTS.contactCtas.primary.label}
-            </Link>
-            <Link
-              href={UI_TEXTS.contactCtas.secondary.href}
-              className="border border-stone-300 text-stone-700 hover:bg-stone-50 bg-transparent px-4 py-2 rounded-md inline-flex items-center justify-center font-medium transition-colors"
-            >
-              {UI_TEXTS.contactCtas.secondary.label}
-            </Link>
+            <Button asChild>
+              <Link href={UI_TEXTS.contactCtas.primary.href}>
+                {UI_TEXTS.contactCtas.primary.label}
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href={UI_TEXTS.contactCtas.secondary.href}>
+                {UI_TEXTS.contactCtas.secondary.label}
+              </Link>
+            </Button>
           </div>
         </section>
       </main>

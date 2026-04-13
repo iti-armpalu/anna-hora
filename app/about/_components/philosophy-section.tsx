@@ -1,6 +1,5 @@
-import { ABOUT_CONTENT } from "../_data"
 import { SectionTitle } from "./section-title"
-import type { Pillar } from "../_data"
+import { aboutContent, type Pillar } from "../_data"
 
 function PillarCard({ initial, name, title, text }: Pillar) {
   return (
@@ -18,7 +17,7 @@ function PillarCard({ initial, name, title, text }: Pillar) {
 }
 
 export function PhilosophySection() {
-  const { philosophy } = ABOUT_CONTENT
+  const { philosophy } = aboutContent
 
   return (
     <section className="py-16 lg:py-24 bg-white">
@@ -39,8 +38,7 @@ export function PhilosophySection() {
 
         <div className="max-w-3xl mx-auto text-center mt-16">
           <p className="text-lg text-stone-600 leading-relaxed">
-            Together, we blend European craftsmanship with a global,
-            future-facing mindset.
+            {philosophy.closing}
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-// app/care-guide/_components/common-issues.tsx
+import { careGuideContent } from "../_data"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Section, SectionInner, SectionTitle } from "./section"
 
@@ -10,15 +10,9 @@ function slugify(value: string) {
     .replace(/\s+/g, "-")
 }
 
-export function CommonIssues({
-  commonIssues,
-}: {
-  commonIssues: {
-    title: string
-    subtitle: string
-    issues: Array<{ issue: string; solution: string }>
-  }
-}) {
+export function CommonIssues() {
+  const { commonIssues } = careGuideContent
+
   return (
     <Section className="py-16 lg:py-24">
       <SectionInner max="max-w-4xl">

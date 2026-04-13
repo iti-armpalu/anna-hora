@@ -73,6 +73,10 @@
 }
 
 :root {
+  --primary: oklch(0.28 0.03 172);        /* anna-green-900 #2a3d3b */
+  --primary-foreground: oklch(1 0 0);     /* white */
+  --primary-hover: oklch(0.18 0.025 172); /* anna-green-950 #132020 */
+  
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -80,8 +84,6 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
