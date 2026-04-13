@@ -16,7 +16,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
                 <div className="absolute inset-0">
                     <Image
                         src="/anna-hora-white-silk.png"
-                        alt="Elegant silk loungewear"
+                        alt="A woman walks in an off-white silk lounge set against a white panelled wall."
                         fill
                         className="object-cover"
                         priority

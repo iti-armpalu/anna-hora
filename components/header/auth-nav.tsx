@@ -20,6 +20,9 @@ export default async function AuthNav() {
             <User className="h-4 w-4" />
           </AvatarFallback>
         </Avatar>
+        <span className="sr-only">
+          {isAuthenticated ? "My Account" : "Sign In"}
+        </span>
       </Link>
     </Button>
   );

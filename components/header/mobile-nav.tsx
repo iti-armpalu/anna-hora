@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Image from "next/image"
-import { Separator } from "@radix-ui/react-separator"
+import { Separator } from "@/components/ui/separator"
+import { siteConfig } from "@/lib/config/site"
+
 
 type Item = { label: string; href: string }
 
@@ -28,7 +30,6 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
 
           {/* Header */}
           <SheetHeader className="px-4 py-3 border-b border-stone-200 bg-white">
-            {/* <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200"> */}
             <SheetTitle>
               <Link
                 href="/"
@@ -47,12 +48,7 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
                 />
               </Link>
             </SheetTitle>
-
-            {/* </div> */}
           </SheetHeader>
-
-
-
 
           {/* Main Navigation */}
           <nav className="flex-1 overflow-y-auto">
@@ -68,30 +64,12 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
                 </Link>
               ))}
             </div>
-
             <Separator className="my-2" />
-
-            {/* Customer Care */}
-            {/* <div className="px-4 py-4">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-3">Customer Care</p>
-              <div className="space-y-2">
-                {siteContent.navigation.footer.customerCare.slice(0, 4).map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block py-2 px-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-md transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div> */}
           </nav>
 
           {/* Footer */}
           <div className="border-t border-stone-200 p-4 bg-white">
-            <p className="text-xs text-stone-500 text-center">© 2025 Anna Hora</p>
+            <p className="text-xs text-stone-500 text-center">© {new Date().getFullYear()} {siteConfig.name.toUpperCase()} </p>
           </div>
         </div>
       </SheetContent>

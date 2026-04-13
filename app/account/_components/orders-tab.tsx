@@ -33,7 +33,7 @@ export function OrdersTab({ orders }: { orders: OrderSummary[] }) {
         <p className="text-stone-600 mb-6 max-w-sm">
           Discover our collection of premium silk loungewear, crafted for moments of quiet luxury.
         </p>
-        <Button asChild className="inline-block">
+        <Button asChild>
           <Link href="/shop">Start Shopping</Link>
         </Button>
       </div>

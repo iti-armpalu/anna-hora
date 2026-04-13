@@ -120,7 +120,7 @@ export default function JournalPageClient({ articles, categories }: JournalPageC
                                         )}
                                     </div>
                                     <Button asChild>
-                                        <Link href={`/journal/${featuredArticle.slug}`}>Read Story</Link>
+                                        <Link aria-label={`Read more about ${featuredArticle.title}`} href={`/journal/${featuredArticle.slug}`}>Read Story</Link>
                                     </Button>
                                 </CardContent>
                             </div>
@@ -134,7 +134,7 @@ export default function JournalPageClient({ articles, categories }: JournalPageC
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {regularArticles.map((article) => (
-                            <Link href={`/journal/${article.slug}`} key={article.id}>
+                            <Link aria-label={`Read more about ${article.title}`} href={`/journal/${article.slug}`} key={article.id}>
                                 <Card className="pt-0 group cursor-pointer border-0 bg-transparent overflow-hidden">
                                     {/* Image */}
                                     <div className="relative aspect-[3/4] overflow-hidden">

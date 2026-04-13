@@ -12,7 +12,6 @@ export function QuickActions() {
             <Button asChild variant="ghost" size="icon">
                 <Link
                     href="/wishlist"
-                    aria-label="Wishlist"
                     prefetch={false}
                 >
                     <Heart className="h-5 w-5" />
