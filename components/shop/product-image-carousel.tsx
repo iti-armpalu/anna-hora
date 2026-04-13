@@ -83,6 +83,7 @@ export default function ProductImageCarousel({ product }: ProductImageCarouselPr
                     <Button
                         size="icon"
                         variant="secondary"
+                        aria-label="Previous image"
                         onClick={scrollPrev}
                         className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 z-10"
                     >
@@ -91,6 +92,7 @@ export default function ProductImageCarousel({ product }: ProductImageCarouselPr
                     <Button
                         size="icon"
                         variant="secondary"
+                        aria-label="Next image"
                         onClick={scrollNext}
                         className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 z-10"
                     >

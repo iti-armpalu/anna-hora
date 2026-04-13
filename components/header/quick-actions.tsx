@@ -1,8 +1,9 @@
 import Link from "next/link"
-import { CartButton } from "../../app/cart/_components/cart-button"
+import { CartButton } from "@/app/cart/_components/cart-button"
 import AuthNav from "./auth-nav"
 import { Button } from "../ui/button"
 import { Heart } from "lucide-react"
+
 
 export function QuickActions() {
     return (
