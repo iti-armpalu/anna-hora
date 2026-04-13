@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatPrice } from "@/hooks/use-price"
 
 interface GiftingSectionProps {
   startingAmount: number | null
@@ -67,14 +66,6 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-medium text-stone-800">Always Included</span>
-                {/* <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                >
-                  Learn More
-                </Button> */}
-                {/* <div className="text-center mt-12"> */}
                 <Button
                   asChild
                   variant="outline"
@@ -83,7 +74,6 @@ export default function GiftingSection({ startingAmount, currencyCode }: Gifting
                 >
                   <Link href="/gift-guide">Learn More</Link>
                 </Button>
-                {/* </div> */}
               </div>
             </CardContent>
           </Card>

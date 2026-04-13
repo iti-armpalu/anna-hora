@@ -2,17 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-const silkFeatures = [
-  {
-    title: "22 Momme Weight",
-    description: "The perfect balance of durability and drape",
-  },
-  {
-    title: "Grade 6A Quality",
-    description: "The highest grade of mulberry silk",
-  },
-]
-
 export default function OurSilkSection() {
   return (
     <section className="py-16 lg:py-24 bg-white">

@@ -8,8 +8,6 @@ import OurSilkSection from "@/components/home/our-silk-selection"
 import GiftingSection from "@/components/home/gifting-section"
 import FeaturedProducts from "@/components/home/featured-products"
 
-
-
 export default async function HomePage() {
 
   const featuredCollection = await getCollectionByHandle("Featured");
@@ -27,25 +25,13 @@ export default async function HomePage() {
   const startingAmount = giftCardAmounts[0] ?? null;
 
   return (
-    <div>
-
-      {/* Hero Section */}
+    <>
       <HeroSection />
-
-      {/* Featured Categories */}
       <FeaturedCategories collections={categoryCollections} />
-
-      {/* Our Silk Section */}
       <OurSilkSection />
-
-      {/* Featured Products */}
       <FeaturedProducts products={featuredProducts} />
-
-      {/* Gift Guide Section */}
       <GiftingSection startingAmount={startingAmount} currencyCode={giftCardProduct?.currencyCode} />
-
-      {/* Newsletter Section */}
       <NewsletterSection />
-    </div>
+    </>
   )
 }

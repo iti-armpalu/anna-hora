@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { ProductCard } from "../shop/product-card"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 
-
 interface FeaturedProductsProps {
   products: ProductNormalized[]
 }
