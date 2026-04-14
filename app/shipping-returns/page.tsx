@@ -128,7 +128,7 @@ export default function ShippingReturnsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   {SHIPPING_RETURNS_CONTENT.returns.steps.map((step, index) => (
                     <div key={index} className="text-center">
-                      <div className="w-12 h-12 bg-stone-900 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-medium">
+                      <div className="w-12 h-12 bg-anna-green-950 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-medium">
                         {step.step}
                       </div>
                       <h3 className="font-medium text-stone-900 mb-2">{step.title}</h3>

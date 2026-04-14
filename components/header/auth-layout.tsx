@@ -10,7 +10,7 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ title, description, children }: AuthLayoutProps) {
     return (
-        <div className="min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex">
+        <div className="flex min-h-[100dvh]">
             {/* Left Side - Image */}
             <div className="hidden lg:flex lg:w-1/2 relative bg-stone-100">
                 <div className="absolute inset-0">

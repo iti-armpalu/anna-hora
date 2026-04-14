@@ -1,42 +1,40 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { homeContent } from "@/components/home/_data"
 
 export default function OurSilkSection() {
+  const { ourSilk } = homeContent
+
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="relative order-2 lg:order-1">
             <Image
-              src="/anna-hora-silk.webp"
-              alt="A collage showing the Signature Edit Green Lounge Trousers — waistband detail, hem close-up, and worn outdoors while reading."
+              src={ourSilk.image.src}
+              alt={ourSilk.image.alt}
               width={500}
               height={600}
               className="rounded-lg"
+              sizes="(min-width: 1024px) 500px, 90vw"
             />
           </div>
+
           <div className="space-y-6 order-1 lg:order-2">
-            <h3 className="text-3xl lg:text-4xl font-light text-stone-800">
-              The art of <em className="font-serif italic">Mulberry Silk</em>
-            </h3>
-            <p className="text-stone-600 leading-relaxed">
-              Our silk reflects everything ANNA HORA stands for — quiet luxury, integrity, and thoughtful design. It's
-              chosen with care, crafted with intention, and worn with ease. We only partner with skilled artisans who
-              honour tradition while designing for those who value beauty with purpose.
-            </p>
-            <p className="text-stone-600 leading-relaxed">
-              It took 18 months to find a silk that felt right — not just to the touch, but in principle. It had to meet
-              our standards for comfort, quality, and consciousness. The result? A fabric that moves like water, wears
-              like second skin, and elevates the everyday. It's silk that speaks to confidence, calm, and the freedom to
-              feel — the ANNA HORA way of living.
-            </p>
-            <Button
-              asChild
-              variant="outline"
-              className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-            >
-              <Link href="/our-silk">Learn More About Our Silk</Link>
+            <h2 className="text-3xl lg:text-4xl font-light text-stone-800">
+              {ourSilk.heading}{" "}
+              <em className="font-serif italic">{ourSilk.headingEm}</em>
+            </h2>
+
+            {ourSilk.paragraphs.map((p) => (
+              <p key={p.slice(0, 40)} className="text-stone-600 leading-relaxed">
+                {p}
+              </p>
+            ))}
+
+            <Button asChild variant="outline">
+              <Link href={ourSilk.cta.href}>{ourSilk.cta.label}</Link>
             </Button>
           </div>
         </div>

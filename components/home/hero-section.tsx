@@ -2,17 +2,19 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/config/site"
+import { homeContent } from "@/components/home/_data"
 
 export default function HeroSection() {
+  const { hero } = homeContent
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/anna-hora-hero-1.webp"
-          alt="A woman seated on the floor in a white silk lounge shirt, looking down."
+          src={hero.image.src}
+          alt={hero.image.alt}
           fill
           className="object-cover"
-          // on mobile focus on the top/face area, desktop shows full image
           style={{ objectPosition: "50% center" }}
           priority
         />
@@ -21,27 +23,31 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 w-full text-left px-8">
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-none">
-          For the moments
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-none">
+          {hero.heading.top}
           <br />
-          <em className="font-serif italic">you keep to yourself</em>
-        </h2>
+          <em className="font-serif italic">{hero.heading.em}</em>
+        </h1>
 
         <p className="text-lg md:text-xl text-stone-200 mb-8 max-w-2xl font-light">
-          Not just silk. A ritual. A feeling. A way to come home to yourself.
+          {hero.description}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-start">
+          {/* Light button intentional — sits over dark image overlay */}
           <Button asChild size="lg" className="bg-stone-200 hover:bg-stone-300 text-black px-8 py-3">
-            <Link href="/shop">Explore Collection</Link>
+            <Link href={hero.ctas.primary.href}>{hero.ctas.primary.label}</Link>
           </Button>
+          {/* White outline intentional — sits over dark image overlay */}
           <Button
             asChild
             variant="outline"
             size="lg"
             className="border-white text-white hover:bg-white/10 px-8 py-3 bg-transparent"
           >
-            <Link href="/about">About {siteConfig.name.toUpperCase()}</Link>
+            <Link href={hero.ctas.secondary.href}>
+              {hero.ctas.secondary.label}
+            </Link>
           </Button>
         </div>
       </div>

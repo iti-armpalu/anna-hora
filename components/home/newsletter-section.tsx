@@ -1,67 +1,66 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { homeContent } from "@/components/home/_data"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-type SubmitState = "idle" | "submitting" | "success" | "error";
+type SubmitState = "idle" | "submitting" | "success" | "error"
 
 export default function NewsletterSection() {
-  const [email, setEmail] = useState("");
-  const [submitState, setSubmitState] = useState<SubmitState>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { newsletter } = homeContent
+
+  const [email, setEmail] = useState("")
+  const [submitState, setSubmitState] = useState<SubmitState>("idle")
+  const [errorMessage, setErrorMessage] = useState("")
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault()
 
-    const trimmedEmail = email.trim();
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail) return
 
-    if (!trimmedEmail) return;
-
-    setSubmitState("submitting");
-    setErrorMessage("");
+    setSubmitState("submitting")
+    setErrorMessage("")
 
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmedEmail }),
-      });
+      })
 
       const data = (await res.json().catch(() => null)) as
         | { ok?: boolean; error?: string }
-        | null;
+        | null
 
       if (!res.ok || !data?.ok) {
-        throw new Error(data?.error ?? "Something went wrong. Please try again.");
+        throw new Error(data?.error ?? "Something went wrong. Please try again.")
       }
 
-      setSubmitState("success");
+      setSubmitState("success")
     } catch (error: unknown) {
       const message =
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again.";
+          : "Something went wrong. Please try again."
 
-      setSubmitState("error");
-      setErrorMessage(message);
+      setSubmitState("error")
+      setErrorMessage(message)
     }
   }
 
   useEffect(() => {
-    if (submitState !== "success") return;
+    if (submitState !== "success") return
 
-    const timer = window.setTimeout(() => {
-      setSubmitState("idle");
-      setEmail("");
-    }, 4000);
+    const timer = setTimeout(() => {
+      setSubmitState("idle")
+      setEmail("")
+    }, 4000)
 
-    return () => window.clearTimeout(timer);
-  }, [submitState]);
+    return () => clearTimeout(timer)
+  }, [submitState])
 
   return (
     <section className="py-16 lg:py-24">
@@ -77,20 +76,15 @@ export default function NewsletterSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-
                 >
-
-                  <h3 className="mb-3 text-3xl font-light text-stone-800 lg:text-4xl">
-                    You're In!
-                  </h3>
-
+                  <h2 className="mb-3 text-3xl font-light text-stone-800 lg:text-4xl">
+                    {newsletter.success.heading}
+                  </h2>
                   <p className="mb-3 text-stone-600">
-                    Thank you for subscribing. We&apos;ll send thoughtful notes,
-                    styling inspiration, and early access to new collections.
+                    {newsletter.success.description}
                   </p>
-
                   <p className="text-xs text-stone-500">
-                    Check your inbox for a welcome note from us.
+                    {newsletter.success.note}
                   </p>
                 </motion.div>
               ) : (
@@ -102,14 +96,11 @@ export default function NewsletterSection() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <h3 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
-                    Me-Time Letters
-                  </h3>
-
+                  <h2 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
+                    {newsletter.heading}
+                  </h2>
                   <p className="mb-8 text-stone-600">
-                    Join our community and receive thoughtful notes about self-care,
-                    styling tips, and exclusive access to new collections. Sent
-                    occasionally, always with intention.
+                    {newsletter.description}
                   </p>
 
                   <form
@@ -120,30 +111,31 @@ export default function NewsletterSection() {
                       type="email"
                       inputMode="email"
                       autoComplete="email"
-                      placeholder="Your email address"
+                      placeholder={newsletter.placeholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       disabled={submitState === "submitting"}
-                      className="flex-1 border-stone-300 focus:border-stone-500 "
+                      className="flex-1 border-stone-300 focus:border-stone-500"
                       aria-label="Email address"
                     />
-
                     <Button
                       type="submit"
                       disabled={submitState === "submitting"}
                       className="max-w-xs"
                     >
-                      {submitState === "submitting" ? "Submitting..." : "Subscribe"}
+                      {submitState === "submitting"
+                        ? newsletter.submittingLabel
+                        : newsletter.ctaLabel}
                     </Button>
                   </form>
 
-                  {submitState === "error" ? (
+                  {submitState === "error" && (
                     <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
-                  ) : null}
+                  )}
 
                   <p className="mt-4 text-xs text-stone-500">
-                    We respect your privacy. Unsubscribe at any time.
+                    {newsletter.privacy}
                   </p>
                 </motion.div>
               )}
@@ -152,5 +144,5 @@ export default function NewsletterSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

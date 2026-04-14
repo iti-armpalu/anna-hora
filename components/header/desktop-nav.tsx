@@ -1,4 +1,3 @@
-// components/header/NavDesktop.tsx (SERVER wrapper + CLIENT link)
 import { NavLink } from "./nav-link"
 
 type Item = { label: string; href: string }

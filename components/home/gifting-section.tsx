@@ -1,78 +1,71 @@
-'use client'
-
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { homeContent } from "@/components/home/_data"
 
-interface GiftingSectionProps {
-  startingAmount: number | null
-  currencyCode?: string
-}
+export default function GiftingSection() {
+  const { gifting } = homeContent
 
-export default function GiftingSection({ startingAmount, currencyCode }: GiftingSectionProps) {
   return (
     <section className="py-16 lg:py-24 bg-stone-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h3 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">Thoughtful Gifting</h3>
-          <p className="text-stone-600 max-w-2xl mx-auto">Because the best gifts feel personal.</p>
-          <p className="text-stone-600 max-w-2xl mx-auto">
-            Each piece is carefully wrapped and ready to honour her rituals, her milestones, or simply, Her.
-          </p>
+          <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
+            {gifting.heading}
+          </h2>
+          <p className="text-stone-600 max-w-2xl mx-auto">{gifting.description}</p>
+          <p className="text-stone-600 max-w-2xl mx-auto">{gifting.subDescription}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Gift Card */}
           <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                src="/anna-hora-giftcard-2.webp"
-                alt="An ANNA HORA gift card tied with a branded green satin ribbon on marble table top"
+                src={gifting.giftCard.image.src}
+                alt={gifting.giftCard.image.alt}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(min-width: 768px) 50vw, 100vw"
               />
             </div>
             <CardContent className="p-6">
-              <h4 className="text-xl font-light text-stone-800 mb-2">Gift Cards</h4>
-              <p className="text-stone-600 mb-4">
-                Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time,
-                in her own style.
-              </p>
-              <Badge
-                variant="secondary"
-                className="text-stone-800">
-                Coming soon
+              <h3 className="text-xl font-light text-stone-800 mb-2">
+                {gifting.giftCard.heading}
+              </h3>
+              <p className="text-stone-600 mb-4">{gifting.giftCard.description}</p>
+              <Badge variant="secondary" className="text-stone-800">
+                {gifting.giftCard.badge}
               </Badge>
             </CardContent>
           </Card>
 
-          <Card className="group cursor-pointer border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+          {/* Signature Packaging */}
+          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                src="/packing-4.jpeg"
-                alt="An ANNA HORA order packed in branded tissue and packaging with a sealed sticker."
+                src={gifting.packaging.image.src}
+                alt={gifting.packaging.image.alt}
                 fill
                 className="object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
+                sizes="(min-width: 768px) 50vw, 100vw"
               />
             </div>
             <CardContent className="p-6">
-              <div className="flex flex-wrap items-center gap-4 mb-3">
-                <h4 className="text-xl font-light text-stone-800">Complimentary Signature Packaging</h4>
-              </div>
-              <p className="text-stone-600 mb-4">
-                Every order arrives in our signature packaging, complete with a handwritten note— because the unboxing
-                should feel as special as what's inside.
-              </p>
+              <h3 className="text-xl font-light text-stone-800 mb-3">
+                {gifting.packaging.heading}
+              </h3>
+              <p className="text-stone-600 mb-4">{gifting.packaging.description}</p>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-medium text-stone-800">Always Included</span>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-                >
-                  <Link href="/gift-guide">Learn More</Link>
+                <span className="text-lg font-medium text-stone-800">
+                  {gifting.packaging.badge}
+                </span>
+                <Button asChild variant="outline" size="sm">
+                  <Link href={gifting.packaging.cta.href}>
+                    {gifting.packaging.cta.label}
+                  </Link>
                 </Button>
               </div>
             </CardContent>

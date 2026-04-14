@@ -3,11 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function LogoutButton() {
   return (
-    <Button
-      asChild
-      variant="outline"
-      className="border-stone-300 text-stone-700 hover:bg-stone-100 bg-transparent"
-    >
+    <Button asChild variant="outline">
       <a href="/api/auth/logout">
         <LogOut className="w-4 h-4 mr-2" />
         Logout

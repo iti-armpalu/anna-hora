@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
-
+import Header from "@/components/header/header"
 import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
+
 import { Toaster } from "@/components/ui/sonner";
 import { GlobalCartDrawer } from "@/app/cart/global-cart-drawer";
 
@@ -14,7 +14,6 @@ import { WishlistProvider } from "@/context/wishlist-context";
 import { getCartAction } from "@/lib/actions/cart/get-cart";
 import { defaultMetadata } from "@/lib/config/metadata";
 import Script from "next/script";
-
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -31,25 +30,27 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        <script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
           data-cbid="dafbf68a-3e6a-4673-bc69-511150fb7d11"
           data-blockingmode="auto"
-          strategy="beforeInteractive"
+          async
         />
       </head>
-      <body className="min-h-screen bg-stone-50">
+      <body className="min-h-screen bg-stone-50 flex flex-col">
         <CartProvider
           initialCartId={cartId}
           initialCart={initialCart}
         >
           <WishlistProvider>
             <Header />
-            <main>{children}</main>
+            <main className="flex-1 flex flex-col">{children}</main>
+            <Footer />
+
+            {/* These don't participate in layout */}
             <Analytics />
             <Toaster position="top-center" />
-            <Footer />
             <GlobalCartDrawer />
           </WishlistProvider>
         </CartProvider>

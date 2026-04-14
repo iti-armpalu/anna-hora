@@ -2,77 +2,131 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
 import Image from "next/image"
-import { Separator } from "@/components/ui/separator"
+import { Menu, X, Instagram } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
+import { usePathname } from "next/navigation"
 import { siteConfig } from "@/lib/config/site"
-
+import { footerNavigation } from "@/lib/config/footer"
 
 type Item = { label: string; href: string }
 
 export function MobileNav({ items }: { items: readonly Item[] }) {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+
+  const close = () => setIsOpen(false)
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(`${href}/`) || pathname === href
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" aria-label="Open menu">
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
 
+      <SheetContent
+        side="right"
+        className="w-full p-0 bg-stone-50 border-0 [&>button]:hidden"
+      >
+        <VisuallyHidden.Root>
+          <SheetTitle>Navigation menu</SheetTitle>
+        </VisuallyHidden.Root>
 
-      <SheetContent side="right" className="w-full sm:w-[480px] bg-stone-50 p-0">
         <div className="flex flex-col h-full">
 
           {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-stone-200 bg-white">
-            <SheetTitle>
-              <Link
-                href="/"
-                className="relative block h-10 w-32 sm:h-12 sm:w-40 lg:h-16 lg:w-60"
-                onClick={() => setIsOpen(false)}
-              >
-                <Image
-                  src="/anna-hora-logo-black.png"
-                  alt="ANNA HORA"
-                  fill
-                  priority
-                  className="object-contain"
-                  sizes="(max-width: 640px) 128px,
-           (max-width: 1024px) 160px,
-           192px"
-                />
-              </Link>
-            </SheetTitle>
-          </SheetHeader>
+          <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-stone-100">
+            <Link href="/" onClick={close} aria-label="ANNA HORA - Return to homepage">
+              <Image
+                src="/anna-hora-logo-2026-04.png"
+                alt="ANNA HORA"
+                width={120}
+                height={40}
+                className="object-contain"
+              />
+            </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={close}
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
 
-          {/* Main Navigation */}
-          <nav className="flex-1 overflow-y-auto">
-            <div className="flex flex-col space-y-1 p-4">
+          {/* Primary Navigation */}
+          <nav aria-label="Mobile primary" className="px-6 pt-8 pb-6">
+            <ul className="space-y-1">
               {items.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg font-light text-stone-800 hover:text-stone-600 transition-colors py-3 px-2 hover:bg-stone-100 rounded-md"
-                >
-                  {item.label}
-                </Link>
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={close}
+                    className={`flex items-center justify-between py-3 text-2xl font-light transition-colors border-b border-stone-100 ${isActive(item.href)
+                      ? "text-anna-green-900"
+                      : "text-stone-800 hover:text-anna-green-900"
+                      }`}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-anna-green-900" />
+                    )}
+                  </Link>
+                </li>
               ))}
-            </div>
-            <Separator className="my-2" />
+            </ul>
           </nav>
 
-          {/* Footer */}
-          <div className="border-t border-stone-200 p-4 bg-white">
-            <p className="text-xs text-stone-500 text-center">© {new Date().getFullYear()} {siteConfig.name.toUpperCase()} </p>
+          {/* Secondary Navigation */}
+          <div className="px-6 py-6 border-t border-stone-200">
+            <p className="text-xs font-medium text-stone-400 uppercase tracking-widest mb-4">
+              Customer Care
+            </p>
+            <ul className="space-y-3">
+              {footerNavigation.customerCare.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={close}
+                    className="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          {/* Footer */}
+          <div className="mt-auto px-6 py-6 border-t border-stone-200 bg-white">
+            <div className="flex items-center justify-between">
+              {siteConfig.social.instagram && (
+                <a
+                  href={siteConfig.social.instagram.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                  aria-label="Follow us on Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                  <span>@{siteConfig.social.instagram.handle}</span>
+                </a>
+              )}
+              <p className="text-xs text-stone-400">
+                © {new Date().getFullYear()} {siteConfig.name.toUpperCase()}
+              </p>
+            </div>
+          </div>
+
         </div>
       </SheetContent>
-    </Sheet>
+    </Sheet >
   )
 }
