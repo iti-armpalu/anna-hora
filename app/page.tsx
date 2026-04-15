@@ -9,7 +9,13 @@ import FeaturedProducts from "@/components/home/featured-products"
 import GiftingSection from "@/components/home/gifting-section"
 import NewsletterSection from "@/components/home/newsletter-section"
 
-export const metadata: Metadata = pageMeta.home
+export const metadata: Metadata = {
+  ...pageMeta.home,
+  title: {
+    absolute: "Mulberry Silk Loungewear | ANNA HORA",
+  },
+}
+
 export const revalidate = 60
 
 export default async function HomePage() {
