@@ -81,7 +81,7 @@ export function QuantitySelector({
       <Button
         variant="ghost"
         size="icon"
-        aria-label="Previous image"
+        aria-label="Decrease quantity"
         disabled={isDisabledDecrease}
         onClick={handleDecrease}
         className={cn("rounded-none", sizeClasses[variant])}
@@ -101,6 +101,7 @@ export function QuantitySelector({
       <Button
         variant="ghost"
         size="icon"
+        aria-label="Increase quantity"
         disabled={isDisabledIncrease}
         onClick={handleIncrease}
         className={cn("rounded-none", sizeClasses[variant])}
