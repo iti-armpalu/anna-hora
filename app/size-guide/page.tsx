@@ -1,43 +1,21 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { SIZE_GUIDE_CONTENT } from "./_data"
+import type { Metadata } from "next"
+import { pageMeta } from "@/lib/config/metadata"
 import { HeroSection } from "./_components/hero-section"
 import { MeasurementTips } from "./_components/measurement-tips"
-import { SizeTable } from "./_components/size-table"
-import { pageMeta } from "@/lib/config/metadata"
-import { Metadata } from "next"
+import { SizeTablesSection } from "./_components/size-tables-section"
+import { GeneralNotesSection } from "./_components/general-notes-section"
+import { SizeGuideClosingSection } from "./closing-section"
 
-export const metadata: Metadata = pageMeta.sizeGuide;
+export const metadata: Metadata = pageMeta.sizeGuide
 
-export default function Page() {
+export default function SizeGuidePage() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <HeroSection />
-        <MeasurementTips />
-
-        {/* Size Tables */}
-        <div className="space-y-16">
-          {SIZE_GUIDE_CONTENT.sizeCategories.map((category, index) => (
-            <SizeTable key={index} category={category} />
-          ))}
-        </div>
-
-        {/* General Notes */}
-        <div className="mt-16 text-center">
-          <h2 className="font-serif text-3xl text-stone-900 mb-6">{SIZE_GUIDE_CONTENT.generalNotes.title}</h2>
-          <p className="text-stone-600 leading-relaxed max-w-3xl mx-auto text-pretty">
-            {SIZE_GUIDE_CONTENT.generalNotes.content}
-          </p>
-        </div>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <Button asChild>
-            <Link href="/shop">Shop Collection</Link>
-          </Button>
-        </div>
-      </div>
-    </div>
+    <>
+      <HeroSection />
+      <MeasurementTips />
+      <SizeTablesSection />
+      <GeneralNotesSection />
+      <SizeGuideClosingSection />
+    </>
   )
 }

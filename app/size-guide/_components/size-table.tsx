@@ -1,8 +1,6 @@
-// app/size-guide/_components/SizeTable.tsx
 "use client"
 
 import * as React from "react"
-import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { SizeCategory, Unit } from "../_data"
 
@@ -72,9 +70,9 @@ export function SizeTable({ category, defaultUnit = "cm" }: Props) {
           </thead>
 
           <tbody>
-            {table.rows.map((row, rowIndex) => (
+            {table.rows.map((row) => (
               <tr
-                key={rowIndex}
+                key={row.measurement}
                 className="border-b border-stone-100 hover:bg-stone-50/50"
               >
                 <td className="px-4 py-3 font-medium text-stone-900 whitespace-nowrap sticky left-0 bg-white">
