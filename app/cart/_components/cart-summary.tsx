@@ -1,18 +1,15 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-
-import { CartSubtotal } from "./cart-subtotal";
-import { CartCheckoutNote } from "./cart-checkout-note";
+import { Button } from "@/components/ui/button"
+import { CartSubtotal } from "./cart-subtotal"
+import { CartCheckoutNote } from "./cart-checkout-note"
 
 type CartSummaryProps = {
-  subtotal: number;
-  currencyCode: string;
-  totalQuantity: number;
-  onCheckout: () => void;
-};
+  subtotal: number
+  currencyCode: string
+  totalQuantity: number
+  onCheckout: () => void
+}
 
 export function CartSummary({
   subtotal,
@@ -21,29 +18,24 @@ export function CartSummary({
   onCheckout,
 }: CartSummaryProps) {
   return (
-    <Card className="border-0 shadow-sm bg-white sticky top-24">
-      <CardContent className="p-6">
-        <h3 className="font-serif text-xl text-stone-800 mb-6">
-          Order Summary
-        </h3>
+    <div className="bg-white rounded-xl shadow-sm p-6 lg:sticky lg:top-24">
+      <h2 className="font-serif text-xl text-stone-800 mb-6">
+        Order Summary
+      </h2>
 
-        {/* Cart totals (Shopify-based) */}
-        <CartSubtotal
-          subtotal={subtotal}
-          currencyCode={currencyCode}
-        />
+      <CartSubtotal subtotal={subtotal} currencyCode={currencyCode} />
 
+      <div className="border-t border-stone-100 pt-4 mt-2">
         <Button
           onClick={onCheckout}
           disabled={totalQuantity === 0}
-          className="w-full bg-stone-800 hover:bg-stone-700 text-white mt-4"
+          className="w-full"
           size="lg"
         >
           Proceed to Checkout
         </Button>
-
         <CartCheckoutNote />
-      </CardContent>
-    </Card>
-  );
+      </div>
+    </div>
+  )
 }

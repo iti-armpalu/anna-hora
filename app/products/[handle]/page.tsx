@@ -97,10 +97,13 @@ export async function generateMetadata({
     return {
         title: product.title,
         description: product.description || `Shop ${product.title} — premium mulberry silk loungewear by ANNA HORA.`,
+        alternates: {
+            canonical: `${siteConfig.url}/products/${handle}`,
+          },
         openGraph: {
             title: `${product.title} | ${siteConfig.name}`,
             description: product.description,
-            url: `/products/${handle}`,
+            url: `${siteConfig.url}/products/${handle}`,
             type: "website",
             images: firstImage
                 ? [

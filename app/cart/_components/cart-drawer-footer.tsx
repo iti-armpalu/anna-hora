@@ -1,19 +1,17 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-
-import { CartSubtotal } from "./cart-subtotal";
-import { CartCheckoutNote } from "./cart-checkout-note";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { CartSubtotal } from "./cart-subtotal"
+import { CartCheckoutNote } from "./cart-checkout-note"
 
 type CartDrawerFooterProps = {
-    subtotal: number;
-    currencyCode: string;
-    totalQuantity: number;
-    checkoutUrl?: string;
-    onClose: () => void;
-};
+    subtotal: number
+    currencyCode: string
+    totalQuantity: number
+    checkoutUrl?: string
+    onClose: () => void
+}
 
 export function CartDrawerFooter({
     subtotal,
@@ -22,20 +20,14 @@ export function CartDrawerFooter({
     checkoutUrl,
     onClose,
 }: CartDrawerFooterProps) {
-
     const handleCheckout = () => {
-        if (!checkoutUrl) return;
-        window.location.assign(checkoutUrl);
-    };
+        if (!checkoutUrl) return
+        window.location.assign(checkoutUrl)
+    }
 
     return (
         <div className="border-t border-stone-200 bg-white px-6 py-4">
-
-            <CartSubtotal
-                subtotal={subtotal}
-                currencyCode={currencyCode}
-            />
-
+            <CartSubtotal subtotal={subtotal} currencyCode={currencyCode} />
             <div className="space-y-3">
                 <Button
                     onClick={handleCheckout}
@@ -44,14 +36,13 @@ export function CartDrawerFooter({
                 >
                     Proceed to Checkout
                 </Button>
-
-                <Link href="/cart" onClick={onClose}>
-                    <Button variant="outline" className="w-full">
+                <Button asChild variant="outline" className="w-full">
+                    <Link href="/cart" onClick={onClose}>
                         View Full Cart
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
                 <CartCheckoutNote />
             </div>
         </div>
-    );
+    )
 }

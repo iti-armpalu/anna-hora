@@ -21,6 +21,9 @@ export async function generateMetadata({
   return {
     title: collection.title,
     description: collection.description || pageMeta.shop.description,
+    alternates: {
+      canonical: `${siteConfig.url}/collections/${handle}`,
+    },
     openGraph: {
       title: `${collection.title} | ${siteConfig.name.toUpperCase()}`,
       url: `/collections/${handle}`,

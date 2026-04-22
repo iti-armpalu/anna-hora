@@ -1,6 +1,58 @@
 import { siteConfig } from "@/lib/config/site"
 
-export const SHIPPING_RETURNS_CONTENT = {
+export interface ShippingReturnsContent {
+    hero: {
+        title: string
+        subtitle: string
+        description: string
+    }
+    delivery: {
+        title: string
+        description: string
+        info: Array<{
+            name: string
+            items: string[]
+        }>
+        importantNotes: string[]
+        ctaText: string
+        ctaHref: string
+    }
+    returns: {
+        title: string
+        description: string
+        policy: Array<{
+            name: string
+            conditions: string[]
+        }>
+        steps: Array<{
+            step: number
+            title: string
+            description: string
+        }>
+        ctaText: string
+        ctaHref: string
+    }
+    complaints: {
+        title: string
+        description: string
+        resolution: string
+        labels: {
+            email: string
+            phone: string
+            hours: string
+        }
+    }
+    support: {
+        title: string
+        description: string
+        links: {
+            faq: { label: string; href: string }
+            care: { label: string; href: string }
+        }
+    }
+}
+
+export const shippingReturnsContent: ShippingReturnsContent = {
     hero: {
         title: "Shipping, Returns & Care",
         subtitle: "Because your experience matters as much as your purchase.",
@@ -9,7 +61,8 @@ export const SHIPPING_RETURNS_CONTENT = {
     },
     delivery: {
         title: "Delivery",
-        description: "Every order is carefully wrapped in our signature packaging and dispatched with care.",
+        description:
+            "Every order is carefully wrapped in our signature packaging and dispatched with care.",
         info: [
             {
                 name: "Order Processing",
@@ -42,7 +95,6 @@ export const SHIPPING_RETURNS_CONTENT = {
                 ],
             },
         ],
-
         importantNotes: [
             "Orders cannot be redirected once dispatched.",
             "Delivery delays caused by customs clearance are outside our control.",
@@ -56,9 +108,7 @@ export const SHIPPING_RETURNS_CONTENT = {
         policy: [
             {
                 name: "Return Window",
-                conditions: [
-                    "Returns accepted within 14 days of delivery"
-                ],
+                conditions: ["Returns accepted within 14 days of delivery"],
             },
             {
                 name: "Item Condition",
@@ -70,63 +120,55 @@ export const SHIPPING_RETURNS_CONTENT = {
             },
             {
                 name: "Return Costs",
-                conditions: [
-                    "Return shipping costs are paid by the customer",
-                ],
+                conditions: ["Return shipping costs are paid by the customer"],
             },
             {
                 name: "Refund Timing",
                 conditions: [
                     "Refund processed within 14 days after returned goods are received and approved",
                 ],
-            }
-
+            },
         ],
         steps: [
             {
                 step: 1,
                 title: "Request",
-                description: "Initiate your return through your account or email customerservice@annahora.com",
+                description:
+                    "Initiate your return through your account or email customerservice@annahora.com",
             },
             {
                 step: 2,
                 title: "Pack",
-                description: "Carefully pack your item (preferably in the original packaging)",
+                description:
+                    "Carefully pack your item (preferably in the original packaging)",
             },
             {
                 step: 3,
                 title: "Send Back",
-                description: "Ship according to instructions provided by customer service",
+                description:
+                    "Ship according to instructions provided by customer service",
             },
         ],
         ctaText: "Read full Returns FAQ",
         ctaHref: "/faq",
-
     },
     complaints: {
         title: "We're Here to Make It Right",
         description:
             "If something isn't as expected, we want to hear from you. Our customer care team will work with you to resolve any issue promptly.",
         resolution: "Our aim is to resolve all concerns within 48 hours.",
-        contacts: [
-            {
-                type: "phone",
-                label: "Call us",
-                value: siteConfig.phone,
-
-            },
-            {
-                type: "email",
-                label: "Email us",
-                value: siteConfig.supportEmail,
-            },
-        ],
-    },
-    support: {
-        description: "Looking for product care tips?",
-        links: {
-            faq: "FAQ",
-            careInstructions: "Care Instructions",
+        labels: {
+            email: "Email us directly",
+            phone: "Call us",
+            hours: "Customer Care Hours",
         },
     },
+    support: {
+        title: "Need Quick Answers?",
+        description: "Looking for product care tips?",
+        links: {
+            faq: { label: "FAQ", href: "/faq" },
+            care: { label: "Care Instructions", href: "/care-guide" },
+        },
+    }
 }
