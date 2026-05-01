@@ -17,7 +17,7 @@ export function ReturnsSection() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     {returns.steps.map((step) => (
                         <div key={step.step} className="text-center">
-                            <div className="w-12 h-12 bg-anna-green-950 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-medium">
+                            <div className="w-12 h-12 bg-forest-950 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-medium">
                                 {step.step}
                             </div>
                             <h3 className="font-medium text-stone-900 mb-2">{step.title}</h3>
@@ -37,7 +37,7 @@ export function ReturnsSection() {
                     <h3 className="font-medium text-stone-900 mb-4">Return Policy</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {returns.policy.map((block) => (
-                            <div key={block.name} className="border border-stone-200 rounded-lg p-4">
+                            <div key={block.name} className="border border-stone-200 p-4">
                                 <h3 className="font-medium text-stone-900 mb-2">{block.name}</h3>
                                 <ul className="list-disc ml-4 flex flex-col gap-1.5 text-sm text-muted-foreground">
                                     {block.conditions.map((condition) => (

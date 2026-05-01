@@ -14,7 +14,7 @@ interface CategoryCardProps {
 export default function CategoryCard({ image, title, description, href, alt }: CategoryCardProps) {
   return (
     <Card className="group border-0 shadow-none bg-transparent overflow-hidden">
-      <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg">
+      <div className="relative aspect-[3/4] mb-4 overflow-hidden">
         <Image
           src={image || "/placeholder.svg"}
           alt={alt}

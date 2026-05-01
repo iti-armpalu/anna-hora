@@ -28,7 +28,7 @@ export const footerNavigation = {
     { label: "Care Guide", href: "/care-guide" },
   ],
   about: [
-    { label: "Our Story", href: "/about" },
+    { label: "About", href: "/about" },
     { label: "Our Silk", href: "/our-silk" },
     { label: "Gift Guide", href: "/gift-guide" },
     { label: "Journal", href: "/journal" },

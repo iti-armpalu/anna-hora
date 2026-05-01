@@ -25,7 +25,7 @@ export function CartButton() {
               absolute -right-2 -top-2
               min-w-[1.25rem] h-5 px-1
               rounded-full
-              bg-anna-green-950 text-white
+              bg-forest-950 text-white
               text-xs font-semibold
               flex items-center justify-center
               ring-2 ring-white

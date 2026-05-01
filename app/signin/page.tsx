@@ -1,17 +1,18 @@
 import { pageMeta } from "@/lib/config/metadata"
-import { Metadata } from "next"
-import { redirect } from "next/navigation";
+import type { Metadata } from "next"
+import { redirect } from "next/navigation"
+import { AuthLayout } from "@/components/header/auth-layout"
+import { getAuthSession } from "@/lib/auth/session"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
-import { AuthLayout } from "@/components/header/auth-layout";
-import { getAuthSession } from "@/lib/auth/session";
-
-export const metadata: Metadata = pageMeta.signIn;
+export const metadata: Metadata = pageMeta.signIn
 
 export default async function SigninPage() {
-  const { isAuthenticated } = await getAuthSession();
+  const { isAuthenticated } = await getAuthSession()
 
   if (isAuthenticated) {
-    redirect("/account");
+    redirect("/account")
   }
 
   return (
@@ -21,14 +22,14 @@ export default async function SigninPage() {
     >
       <a
         href="/api/auth/login"
-        className="inline-flex w-full items-center justify-center rounded-md bg-anna-green-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-800 transition"
+        className={cn(buttonVariants({ size: "lg" }), "w-full")}
       >
         Continue
       </a>
 
       <p className="text-xs text-stone-500">
-        If you don’t have an account yet, you’ll be able to create one during sign-in.
+        If you don't have an account yet, you'll be able to create one during sign-in.
       </p>
-    </AuthLayout>
-  );
+    </AuthLayout >
+  )
 }

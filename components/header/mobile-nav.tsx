@@ -70,14 +70,11 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
                     href={item.href}
                     onClick={close}
                     className={`flex items-center justify-between py-3 text-2xl font-light transition-colors border-b border-stone-100 ${isActive(item.href)
-                      ? "text-anna-green-900"
-                      : "text-stone-800 hover:text-anna-green-900"
+                      ? "text-forest-900"
+                      : "text-stone-800 hover:text-forest-900"
                       }`}
                   >
                     {item.label}
-                    {isActive(item.href) && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-anna-green-900" />
-                    )}
                   </Link>
                 </li>
               ))}

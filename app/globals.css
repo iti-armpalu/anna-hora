@@ -5,149 +5,225 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+
+  /* ----------------------------------------
+     Typography
+  ---------------------------------------- */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+
+  /* ----------------------------------------
+     Radius
+  ---------------------------------------- */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* ANNA green */
-  --color-anna-green-50: #f5f8f8;
-  --color-anna-green-100: #dcebe7;
-  --color-anna-green-200: #b9d6cf;
-  --color-anna-green-300: #8fb9b1;
-  --color-anna-green-400: #679a91;
-  --color-anna-green-500: #4d7f77;
-  --color-anna-green-600: #3c655f;
-  --color-anna-green-700: #33524f;
-  --color-anna-green-800: #2c4341;
-  --color-anna-green-900: #2a3d3b;
-  /* ANNA green original */
-  --color-anna-green-950: #132020;
+  /* ----------------------------------------
+     Semantic colour tokens (mapped to CSS vars)
+  ---------------------------------------- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-  /* ANNA cement */
-  --color-anna-cement-50: #f5f4f1;
-  --color-anna-cement-100: #e7e4da;
-  --color-anna-cement-200: #d1c9b7;
-  --color-anna-cement-300: #b7a88d;
-  --color-anna-cement-400: #a18d6e;
-  --color-anna-cement-500: #927d60;
-  --color-anna-cement-600: #846c55;
-  /* ANNA cement original */
-  --color-anna-cement-700: #655143;
-  --color-anna-cement-800: #57453c;
-  --color-anna-cement-900: #4c3d37;
-  --color-anna-cement-950: #2b201d;
+  /* ----------------------------------------
+     ANNA HORA Brand Palette — Forest
+     Base: #2a3d3b
+  ---------------------------------------- */
+  --color-forest-50: #f3f7f6;
+  --color-forest-100: #d9eae7;
+  --color-forest-200: #b4d4cf;
+  --color-forest-300: #87b7b0;
+  --color-forest-400: #5e9890;
+  --color-forest-500: #457d76;
+  --color-forest-600: #36635d;
+  --color-forest-700: #2e504c;
+  --color-forest-800: #2a3d3b;
+  /* ← brand primary */
+  --color-forest-900: #1e2d2c;
+  --color-forest-950: #132020;
 
+  /* ----------------------------------------
+     ANNA HORA Brand Palette — Silk
+     Base: #AE8F72
+  ---------------------------------------- */
+  --color-silk-50: #faf7f4;
+  --color-silk-100: #f0e8df;
+  --color-silk-200: #e2d0bc;
+  --color-silk-300: #cfb193;
+  --color-silk-400: #be9575;
+  --color-silk-500: #ae8f72;
+  /* ← brand accent */
+  --color-silk-600: #9a7860;
+  --color-silk-700: #7f6250;
+  --color-silk-800: #685143;
+  --color-silk-900: #554339;
+  --color-silk-950: #2d231e;
 
+  /* ----------------------------------------
+     Neutral — warm stone (used throughout UI)
+  ---------------------------------------- */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+  --color-stone-950: #0c0a09;
+
+  /* ----------------------------------------
+     Chart colours (kept for shadcn compat)
+  ---------------------------------------- */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* ----------------------------------------
+     Sidebar (shadcn compat)
+  ---------------------------------------- */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ----------------------------------------
+   Light mode — semantic tokens
+---------------------------------------- */
 :root {
-  --primary: oklch(0.28 0.03 172);
-  /* anna-green-900 #2a3d3b */
-  --primary-foreground: oklch(1 0 0);
-  /* white */
-  --primary-hover: oklch(0.18 0.025 172);
-  /* anna-green-950 #132020 */
+  --radius: 0.5rem;
+  --header-height: 4rem;
+  /* 64px — matches h-16 */
 
-  --radius: 0.625rem;
+  /* Core */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* white */
+  --foreground: oklch(0.15 0.01 172);
+  /* near-black with forest tint */
+
+  /* Card / Popover */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.15 0.01 172);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.15 0.01 172);
+
+  /* Primary — Forest #2a3d3b */
+  --primary: oklch(0.28 0.03 172);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Secondary — warm light stone */
+  --secondary: oklch(0.97 0.005 60);
+  --secondary-foreground: oklch(0.2 0.01 172);
+
+  /* Muted */
+  --muted: oklch(0.96 0.003 60);
+  --muted-foreground: oklch(0.52 0.01 60);
+
+  /* Accent — Silk #AE8F72 */
+  --accent: oklch(0.65 0.07 55);
+  --accent-foreground: oklch(1 0 0);
+
+  /* Destructive */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+
+  /* Borders & inputs */
+  --border: oklch(0.91 0.005 60);
+  --input: oklch(0.91 0.005 60);
+  --ring: oklch(0.28 0.03 172);
+  /* forest — focus rings */
+
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-2: oklch(0.600 0.118 184.704);
+  --chart-3: oklch(0.398 0.070 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --chart-5: oklch(0.769 0.188 70.080);
+
+  /* Sidebar */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.28 0.03 172);
+  --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 5rem;
+    /* 80px — matches lg:h-20 */
+  }
+}
+
+/* ----------------------------------------
+   Dark mode (minimal — ANNA HORA is light-first)
+---------------------------------------- */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.12 0.01 172);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.17 0.01 172);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.17 0.01 172);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.85 0.02 60);
+  /* silk in dark mode */
+  --primary-foreground: oklch(0.15 0.01 172);
+  --secondary: oklch(0.22 0.01 172);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.22 0.01 172);
+  --muted-foreground: oklch(0.65 0.01 60);
+  --accent: oklch(0.65 0.07 55);
+  --accent-foreground: oklch(0.15 0.01 172);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.65 0.07 55);
   --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-2: oklch(0.696 0.170 162.480);
+  --chart-3: oklch(0.769 0.188 70.080);
+  --chart-4: oklch(0.627 0.265 303.900);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.17 0.01 172);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.65 0.07 55);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.22 0.01 172);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.65 0.07 55);
 }
 
+/* ----------------------------------------
+   Base styles
+---------------------------------------- */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -158,6 +234,9 @@
   }
 }
 
+/* ----------------------------------------
+   Utilities
+---------------------------------------- */
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none;
@@ -167,36 +246,4 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(8%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-8%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.animate-slideInRight {
-  animation: slideInRight 0.35s ease-out;
-}
-
-.animate-slideInLeft {
-  animation: slideInLeft 0.35s ease-out;
 }

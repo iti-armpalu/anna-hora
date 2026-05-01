@@ -10,7 +10,7 @@ interface CraftsmanshipCardProps {
 export function CraftsmanshipCard({ image, alt, title, text }: CraftsmanshipCardProps) {
   return (
     <div className="text-center">
-      <div className="relative aspect-square mb-6 overflow-hidden rounded-lg">
+      <div className="relative aspect-square mb-6 overflow-hidden">
         <Image src={image || "/placeholder.svg"} alt={alt} fill className="object-cover" />
       </div>
       <h4 className="text-xl font-light text-stone-800 mb-4">{title}</h4>

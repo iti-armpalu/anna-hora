@@ -10,7 +10,7 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ title, description, children }: AuthLayoutProps) {
     return (
-        <div className="flex min-h-[100dvh]">
+        <div className="flex" style={{ minHeight: "calc(100dvh - var(--header-height))" }}>
             {/* Left Side - Image */}
             <div className="hidden lg:flex lg:w-1/2 relative bg-stone-100">
                 <div className="absolute inset-0">
@@ -36,7 +36,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
             <div className="flex-1 flex items-center justify-center p-8 bg-background">
                 <div className="w-full max-w-md mx-auto py-4 px-4">
                     {/* Form Card */}
-                    <Card className="border-stone-200 shadow-sm">
+                    <Card>
                         <CardHeader className="space-y-1">
                             <CardTitle className="text-2xl font-light text-stone-900">{title}</CardTitle>
                             <CardDescription className="text-stone-600">{description}</CardDescription>

@@ -36,9 +36,8 @@ export function GiftGuideHero() {
                         <Image
                             src={hero.image.src}
                             alt={hero.image.alt}
-                            width={500}
-                            height={600}
-                            className="rounded-lg"
+                            width={600}
+                            height={700}
                             priority
                             sizes="(min-width: 1024px) 500px, 90vw"
                         />

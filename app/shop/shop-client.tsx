@@ -293,7 +293,7 @@ export default function ShopClient({
 
       <button
         onClick={() => setIsFilterOpen(true)}
-        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-anna-green-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
+        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-forest-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
           ? "pointer-events-none translate-y-4 opacity-0"
           : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
           }`}

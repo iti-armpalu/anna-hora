@@ -41,10 +41,8 @@ export function SourcingSection() {
                                 alt={sourcing.imageAlt}
                                 width={500}
                                 height={600}
-                                className="rounded-lg"
                                 sizes="(min-width: 1024px) 500px, 90vw"
                             />
-                            <div className="absolute -top-8 -left-8 w-24 h-24 bg-stone-200 rounded-full opacity-30 -z-10" />
                         </div>
                     </div>
                 </div>

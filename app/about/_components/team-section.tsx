@@ -28,7 +28,7 @@ export function TeamSection() {
                             alt={team.image.alt}
                             width={350}
                             height={500}
-                            className="rounded-lg mx-auto"
+                            className="mx-auto"
                             sizes="(min-width:1024px) 500px, 90vw"
                         />
                     </div>

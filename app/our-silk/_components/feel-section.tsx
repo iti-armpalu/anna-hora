@@ -19,7 +19,7 @@ export function FeelSection() {
                             ))}
                         </div>
                         <div className="relative">
-                            <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
+                            <div className="relative aspect-[4/5] overflow-hidden">
                                 <Image
                                     src={feel.media.image}
                                     alt={feel.media.alt}
@@ -28,7 +28,6 @@ export function FeelSection() {
                                     sizes="(min-width: 1024px) 50vw, 90vw"
                                 />
                             </div>
-                            <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-stone-200 rounded-full opacity-30 -z-10" />
                         </div>
                     </div>
                 </div>

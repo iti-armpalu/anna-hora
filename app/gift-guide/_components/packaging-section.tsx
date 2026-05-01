@@ -20,7 +20,7 @@ export function PackagingSection() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {packaging.images.map((img) => (
                             <div key={img.src} className="group">
-                                <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-stone-100">
+                                <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
                                     <Image
                                         src={img.src}
                                         alt={img.alt}

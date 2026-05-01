@@ -16,7 +16,7 @@ export default function InstagramGrid() {
           href={siteConfig.social.instagram.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-sm text-anna-cement-200 transition-colors hover:text-white"
+          className="flex items-center gap-1 text-sm text-silk-200 transition-colors hover:text-white"
         >
           <Instagram className="h-4 w-4" />
           @{siteConfig.social.instagram.handle}

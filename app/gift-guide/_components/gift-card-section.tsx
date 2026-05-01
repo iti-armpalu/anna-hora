@@ -30,7 +30,6 @@ export function GiftCardSection({ startingAmount }: GiftCardSectionProps) {
                                 alt={giftCard.image.alt}
                                 width={500}
                                 height={400}
-                                className="rounded-lg"
                                 sizes="(min-width: 1024px) 500px, 90vw"
                             />
                         </div>

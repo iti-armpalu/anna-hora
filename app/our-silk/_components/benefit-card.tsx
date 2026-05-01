@@ -20,8 +20,8 @@ export function BenefitCard({ icon, title, text }: BenefitCardProps) {
   return (
     <Card className="border-0 shadow-sm bg-white p-8">
       <div className="flex items-start space-x-4">
-        <div className="w-12 h-12 bg-anna-cement-100 rounded-full flex items-center justify-center flex-shrink-0">
-          <IconComponent className="w-6 h-6 text-anna-cement-600" />
+        <div className="w-12 h-12 bg-silk-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <IconComponent className="w-6 h-6 text-silk-600" />
         </div>
         <div>
           <h4 className="text-lg font-light text-stone-800 mb-3">{title}</h4>
