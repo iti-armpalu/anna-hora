@@ -1,95 +1,100 @@
-
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Badge } from "@/components/ui/badge"
-import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 
-interface ProductDetailsAccordionProps {
-    product: ProductNormalized
-}
+export function ProductDetailsAccordion({ product }: { product: ProductNormalized }) {
+    const { metafields } = product
 
-export function ProductDetailsAccordion({ product }: ProductDetailsAccordionProps) {
     return (
         <Accordion type="single" collapsible defaultValue="details" className="w-full">
 
-            <AccordionItem value="details" className="border-stone-200">
-                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+            <AccordionItem value="details" className="border-stone-100">
+                <AccordionTrigger className="text-sm font-medium text-stone-800 hover:text-stone-600">
                     Product Details
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-stone-600">
-                    <p>{product.metafields.descriptionCore}</p>
-                    <p>{product.metafields.descriptionStyle}</p>
-                    <p>{product.metafields.descriptionSensory}</p>
-                    <p>{product.metafields.descriptionLifestyle}</p>
+                <AccordionContent className="space-y-2 text-sm text-stone-600 leading-relaxed">
+                    {metafields.descriptionCore && <p>{metafields.descriptionCore}</p>}
+                    {metafields.descriptionStyle && <p>{metafields.descriptionStyle}</p>}
+                    {metafields.descriptionSensory && <p>{metafields.descriptionSensory}</p>}
+                    {metafields.descriptionLifestyle && <p>{metafields.descriptionLifestyle}</p>}
                 </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="fabric" className="border-stone-200">
-                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+            <AccordionItem value="fabric" className="border-stone-100">
+                <AccordionTrigger className="text-sm font-medium text-stone-800 hover:text-stone-600">
                     Fabric & Care
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-stone-600">
-                    <div className="grid grid-cols-1 gap-4">
+                <AccordionContent className="space-y-4 text-sm text-stone-600">
+                    <div>
+                        <p className="font-medium text-stone-800 mb-1">Fabric & Construction</p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            {metafields.fabricFull && <li>{metafields.fabricFull}</li>}
+                            {metafields.madeIn && <li>Made in {metafields.madeIn}</li>}
+                        </ul>
+                    </div>
+                    {metafields.fabricCertifications && (
                         <div>
-                            <h4 className="font-medium text-stone-800 mb-2">Fabric & Construction</h4>
-                            <ul className="list-disc pl-4 space-y-1 text-sm">
-                                <li>{product.metafields.fabricFull}</li>
-                                <li>Made in {product.metafields.madeIn}</li>
-                            </ul>
+                            <p className="font-medium text-stone-800 mb-1">Certifications</p>
+                            <Badge variant="secondary">{metafields.fabricCertifications}</Badge>
                         </div>
-                        <div>
-                            <h4 className="font-medium text-stone-800 mb-2">Fabric Certifications</h4>
-                            <Badge variant="secondary">
-                                {product.metafields.fabricCertifications}
-                            </Badge>
-
-                        </div>
-                        <div>
-                            <h4 className="font-medium text-stone-800 mb-2">Care & Sustainability</h4>
-                            <ul className="list-disc pl-4 space-y-1 text-sm">
+                    )}
+                    <div>
+                        <p className="font-medium text-stone-800 mb-1">Care</p>
+                        <ul className="list-disc pl-4 space-y-1">
+                            {metafields.careInstructions && (
                                 <li>
-                                    {product.metafields.careInstructions}{" "}
-                                    <Link href="/care-guide" className="text-stone-700 hover:text-stone-900 underline">
+                                    {metafields.careInstructions}{" "}
+                                    <Link href="/care-guide" className="underline underline-offset-2 hover:text-stone-900 transition-colors">
                                         Care guide
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href="/our-silk" className="text-stone-700 hover:text-stone-900 underline">
-                                        Learn about our silk
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                            )}
+                            <li>
+                                <Link href="/our-silk" className="underline underline-offset-2 hover:text-stone-900 transition-colors">
+                                    Learn about our silk
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
                 </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="fit" className="border-stone-200">
-                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+            <AccordionItem value="fit" className="border-stone-100">
+                <AccordionTrigger className="text-sm font-medium text-stone-800 hover:text-stone-600">
                     Fit & Sizing
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-stone-600">
-                    <div>
-                        <ul className="list-disc pl-4 space-y-1 text-sm">
-                            <li>{product.metafields.fitNotes}</li>
+                <AccordionContent className="text-sm text-stone-600">
+                    {metafields.fitNotes && (
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>{metafields.fitNotes}</li>
                         </ul>
-                    </div>
+                    )}
                 </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="shipping" className="border-stone-200">
-                <AccordionTrigger className="text-lg font-light text-stone-800 hover:text-stone-600">
+            <AccordionItem value="shipping" className="border-stone-100">
+                <AccordionTrigger className="text-sm font-medium text-stone-800 hover:text-stone-600">
                     Shipping & Returns
                 </AccordionTrigger>
-                <AccordionContent className="space-y-3 text-stone-600">
-                    <div>
-                        <ul className="list-disc pl-4 space-y-1 text-sm">
-                            <li>14-day returns for unworn items</li>
-                            <li>{product.metafields.ethicalNotes}</li>
-                        </ul>
-                    </div>
+                <AccordionContent className="text-sm text-stone-600">
+                    <ul className="list-disc pl-4 space-y-1">
+                        <li>14-day returns for unworn items</li>
+                        {metafields.ethicalNotes && <li>{metafields.ethicalNotes}</li>}
+                        <li>
+                            <Link href="/shipping-returns" className="underline underline-offset-2 hover:text-stone-900 transition-colors">
+                                Full shipping & returns policy
+                            </Link>
+                        </li>
+                    </ul>
                 </AccordionContent>
             </AccordionItem>
+
         </Accordion>
     )
 }

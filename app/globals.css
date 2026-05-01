@@ -53,30 +53,35 @@
   --color-anna-green-600: #3c655f;
   --color-anna-green-700: #33524f;
   --color-anna-green-800: #2c4341;
-  --color-anna-green-900: #2a3d3b; /* ANNA green original */
+  --color-anna-green-900: #2a3d3b;
+  /* ANNA green original */
   --color-anna-green-950: #132020;
 
-    /* ANNA cement */
+  /* ANNA cement */
   --color-anna-cement-50: #f5f4f1;
   --color-anna-cement-100: #e7e4da;
   --color-anna-cement-200: #d1c9b7;
   --color-anna-cement-300: #b7a88d;
   --color-anna-cement-400: #a18d6e;
   --color-anna-cement-500: #927d60;
-  --color-anna-cement-600: #846c55; /* ANNA cement original */
+  --color-anna-cement-600: #846c55;
+  /* ANNA cement original */
   --color-anna-cement-700: #655143;
   --color-anna-cement-800: #57453c;
   --color-anna-cement-900: #4c3d37;
   --color-anna-cement-950: #2b201d;
-  
-  
+
+
 }
 
 :root {
-  --primary: oklch(0.28 0.03 172);        /* anna-green-900 #2a3d3b */
-  --primary-foreground: oklch(1 0 0);     /* white */
-  --primary-hover: oklch(0.18 0.025 172); /* anna-green-950 #132020 */
-  
+  --primary: oklch(0.28 0.03 172);
+  /* anna-green-900 #2a3d3b */
+  --primary-foreground: oklch(1 0 0);
+  /* white */
+  --primary-hover: oklch(0.18 0.025 172);
+  /* anna-green-950 #132020 */
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -162,4 +167,36 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(8%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-8%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.35s ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.35s ease-out;
 }

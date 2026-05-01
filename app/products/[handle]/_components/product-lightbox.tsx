@@ -144,7 +144,7 @@ export default function ProductLightbox({
                         <div className="flex flex-col gap-3">
                             {images.map((img, idx) => (
                                 <button
-                                    key={idx}
+                                    key={img.url}
                                     onClick={() => emblaMain?.scrollTo(idx)}
                                     className={`relative w-full aspect-[4/5] overflow-hidden border ${idx === selectedIndex ? "border-white" : "border-transparent"
                                         }`}
@@ -175,9 +175,9 @@ export default function ProductLightbox({
                 {/* MAIN IMAGE CAROUSEL */}
                 <div className="flex-1 overflow-hidden" ref={emblaMainRef}>
                     <div className="flex h-full">
-                        {images.map((img, idx) => (
+                        {images.map((img) => (
                             <div
-                                key={idx}
+                                key={img.url}
                                 className="flex-[0_0_100%] flex items-center justify-center"
                             >
                                 <div
