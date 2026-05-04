@@ -172,7 +172,7 @@ export const pageMeta = {
     title: "Sign In",
     description:
       "Sign in to your ANNA HORA account to track orders, manage returns, and save your wishlist.",
-    openGraph: { url: `${siteConfig.url}/sign-in` },
+    openGraph: { url: `${siteConfig.url}/signin` },
     robots: { index: false, follow: false },
   },
   cart: {
