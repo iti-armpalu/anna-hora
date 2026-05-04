@@ -16,6 +16,8 @@ import { buildFilterData } from "@/lib/filters/build-filter-data";
 
 type GridDensity = "comfortable" | "compact"
 
+const FILTER_WIDTH = 280
+
 interface Props {
   initialProducts: ProductNormalized[];
   collections: CollectionNormalized[];
@@ -40,7 +42,8 @@ export default function ShopClient({
   >("newest");
 
   const [density, setDensity] = useState<GridDensity>("compact")
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   const [hideFloatingFilterButton, setHideFloatingFilterButton] = useState(false);
 
   // -------------------------------------------------
@@ -199,8 +202,9 @@ export default function ShopClient({
   }, []);
 
   const gridClass = density === "comfortable"
-    ? "grid-cols-1 sm:grid-cols-2"
-    : "grid-cols-2 sm:grid-cols-3"
+    ? "grid-cols-1 sm:grid-cols-3"
+    : "grid-cols-2 sm:grid-cols-4"
+
 
   return (
     <div className="bg-stone-50">
@@ -218,46 +222,97 @@ export default function ShopClient({
       </section>
 
       {/* Toolbar */}
-      <section className="sticky top-16 z-40 border-b border-stone-200 bg-white lg:top-20">
+      <div
+        className="sticky z-40 border-b border-stone-200 bg-white"
+        style={{ top: "var(--header-height)" }}
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <FiltersPanel
-              collections={collections}
-              activeCollection={activeCollection}
-            />
-            <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
+          <div className="py-4 flex items-center justify-between gap-4">
+
+            <div className="flex items-center gap-6">
+              {/* Desktop filter toggle */}
+              <button
+                onClick={() => setIsFilterOpen((prev) => !prev)}
+                className="hidden lg:flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900 transition-colors"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                {isFilterOpen ? "Hide Filters" : "Filter"}
+                {activeFilterCount > 0 && !isFilterOpen && (
+                  <span className="flex h-4 w-4 items-center justify-center bg-forest-800 text-white text-[10px] font-medium">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </button>
+
+              <FiltersPanel
+                collections={collections}
+                activeCollection={activeCollection}
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
               <SortControl value={selectedSort} onChange={setSelectedSort} />
               <ViewToggle value={density} onChange={setDensity} />
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Products */}
       <main className="container mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-          <aside className="hidden lg:block">
-            <FilterSidebar
-              fabrics={filterData.fabrics}
-              sizes={filterData.sizes}
-              colors={filterData.colors}
-              selectedFabric={fabric}
-              setSelectedFabric={setFabric}
-              selectedSizes={sizes}
-              setSelectedSizes={setSizes}
-              selectedColors={colors}
-              setSelectedColors={setColors}
-              selectedPrice={priceRange}
-              setSelectedPrice={setPriceRange}
-              priceBounds={priceBounds}
-              currency={products[0]?.currencyCode}
-            />
+        <div className="flex">
+
+          {/* Filter sidebar — animates width */}
+          <aside
+            className="hidden lg:block shrink-0 overflow-hidden transition-[width] duration-300 ease-in-out sticky self-start"
+            style={{
+              top: "var(--sticky-offset)",
+              width: isFilterOpen ? FILTER_WIDTH : 0,
+            }}
+          >
+            <div
+              className="pr-8 overflow-y-auto"
+              style={{
+                width: FILTER_WIDTH,
+                maxHeight: "calc(100vh - var(--sticky-offset))",
+              }}
+            >
+              <FilterSidebar
+                fabrics={filterData.fabrics}
+                sizes={filterData.sizes}
+                colors={filterData.colors}
+                selectedFabric={fabric}
+                setSelectedFabric={setFabric}
+                selectedSizes={sizes}
+                setSelectedSizes={setSizes}
+                selectedColors={colors}
+                setSelectedColors={setColors}
+                selectedPrice={priceRange}
+                setSelectedPrice={setPriceRange}
+                priceBounds={priceBounds}
+                currency={products[0]?.currencyCode}
+              />
+            </div>
           </aside>
 
-          <div className="lg:col-span-3">
+          {/* Grid */}
+          <div className="flex-1 min-w-0">
             {sortedProducts.length === 0 ? (
               <div className="py-24 text-center">
-                <p className="text-stone-500">No products match your filters.</p>
+                <p className="text-stone-500">
+                  No products match your filters.
+                </p>
+                <button
+                  onClick={() => {
+                    setFabric([])
+                    setSizes([])
+                    setColors([])
+                    setPriceRange(priceBounds)
+                  }}
+                  className="mt-4 text-sm text-stone-400 hover:text-stone-700 underline transition-colors"
+                >
+                  Clear all filters
+                </button>
               </div>
             ) : (
               <div className={`grid items-stretch gap-x-6 gap-y-12 ${gridClass}`}>
@@ -276,8 +331,8 @@ export default function ShopClient({
 
       {/* Mobile filter sheet */}
       <MobileFilterSheet
-        open={isFilterOpen}
-        onOpenChange={setIsFilterOpen}
+        open={isMobileFilterOpen}
+        onOpenChange={setIsMobileFilterOpen}
         collections={collections}
         activeCollection={activeCollection}
         fabrics={filterData.fabrics}
@@ -297,10 +352,10 @@ export default function ShopClient({
 
       {/* Mobile floating filter button */}
       <button
-        onClick={() => setIsFilterOpen(true)}
-        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 bg-forest-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
-            ? "pointer-events-none translate-y-4 opacity-0"
-            : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
+        onClick={() => setIsMobileFilterOpen(true)}
+        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 bg-forest-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 lg:hidden ${hideFloatingFilterButton
+          ? "pointer-events-none translate-y-4 opacity-0"
+          : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
           }`}
       >
         <SlidersHorizontal className="h-4 w-4" />
@@ -308,4 +363,5 @@ export default function ShopClient({
       </button>
     </div>
   )
+
 }
