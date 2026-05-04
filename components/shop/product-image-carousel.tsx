@@ -1,112 +1,102 @@
 "use client"
 
-import React, { useState, useCallback } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import useEmblaCarousel from "embla-carousel-react"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 
-type ProductImageCarouselProps = {
-    product: ProductNormalized;
-};
+export default function ProductImageCarousel({ product }: { product: ProductNormalized }) {
+    const [index, setIndex] = useState(0)
+    const touchStartX = useRef<number | null>(null)
 
-export default function ProductImageCarousel({ product }: ProductImageCarouselProps) {
-    const [imageError, setImageError] = useState(false)
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
-    const [currentIndex, setCurrentIndex] = useState(0)
+    const images = product.images.length > 0
+        ? product.images
+        : [{ url: "/placeholder.svg", altText: "Placeholder" }]
 
-    const images =
-        product.images.length > 0
-            ? product.images
-            : [{ url: "/placeholder.svg", altText: "Placeholder" }];
+    function prev(e: React.MouseEvent) {
+        e.preventDefault()
+        e.stopPropagation()
+        setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+    }
 
-    const scrollPrev = useCallback(
-        (e: React.MouseEvent) => {
-            e.preventDefault()
-            e.stopPropagation()
-            if (emblaApi) emblaApi.scrollPrev()
-        },
-        [emblaApi],
-    )
+    function next(e: React.MouseEvent) {
+        e.preventDefault()
+        e.stopPropagation()
+        setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+    }
 
-    const scrollNext = useCallback(
-        (e: React.MouseEvent) => {
-            e.preventDefault()
-            e.stopPropagation()
-            if (emblaApi) emblaApi.scrollNext()
-        },
-        [emblaApi],
-    )
+    function onTouchStart(e: React.TouchEvent) {
+        touchStartX.current = e.touches[0].clientX
+    }
 
-    const onSelect = useCallback(() => {
-        if (!emblaApi) return
-        setCurrentIndex(emblaApi.selectedScrollSnap())
-    }, [emblaApi])
-
-    React.useEffect(() => {
-        if (!emblaApi) return
-
-        emblaApi.on("select", onSelect)
-        onSelect()
-
-        return () => {
-            emblaApi.off("select", onSelect)
+    function onTouchEnd(e: React.TouchEvent) {
+        if (touchStartX.current === null) return
+        const diff = touchStartX.current - e.changedTouches[0].clientX
+        if (Math.abs(diff) > 40) {
+            diff > 0
+                ? setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+                : setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
         }
-    }, [emblaApi, onSelect])
+        touchStartX.current = null
+    }
 
     return (
-        <div className="relative w-full h-full">
-            <div className="embla overflow-hidden h-full" ref={emblaRef}>
-                <div className="embla__container flex h-full">
-                    {images.map((image, index) => (
-                        <div key={index} className="embla__slide relative w-full flex-[0_0_100%] h-full">
-                            <div className="relative w-full h-full aspect-[3/4]">
-                                <Image
-                                    src={imageError ? "/placeholder.svg" : image.url}
-                                    alt={image.altText || `${product.title} - Image ${index + 1}`}
-                                    width={768}
-                                    height={1024}
-                                    className="object-cover w-full h-full"
-                                    onError={() => setImageError(true)}
-                                    sizes="(max-width: 768px) 100vw, 33vw"
+        <div
+            className="relative w-full h-full overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+        >
+            {/* Sliding track */}
+            <div
+                className="flex h-full transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${index * 100}%)` }}
 
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            >
+                {images.map((image, i) => (
+                    <div
+                        key={image.url}
+                        className="relative w-full h-full flex-shrink-0"
+                        style={{ width: "100%" }}
+                    >
+                        <Image
+                            src={image.url}
+                            alt={image.altText || `${product.title} - Image ${i + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            priority={i === 0}
+                        />
+                    </div>
+                ))}
             </div>
 
+            {/* Prev / Next */}
             {images.length > 1 && (
                 <>
-                    <Button
-                        size="icon"
-                        variant="secondary"
+                    <button
+                        onClick={prev}
                         aria-label="Previous image"
-                        onClick={scrollPrev}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 z-10"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 flex items-center justify-center"
                     >
                         <ChevronLeft className="w-4 h-4 text-stone-600" />
-                    </Button>
-                    <Button
-                        size="icon"
-                        variant="secondary"
+                    </button>
+                    <button
+                        onClick={next}
                         aria-label="Next image"
-                        onClick={scrollNext}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 z-10"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 flex items-center justify-center"
                     >
                         <ChevronRight className="w-4 h-4 text-stone-600" />
-                    </Button>
+                    </button>
                 </>
             )}
 
+            {/* Dots */}
             {images.length > 1 && (
-                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
-                    {images.map((_, index) => (
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+                    {images.map((image, i) => (
                         <div
-                            key={index}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-white w-4" : "bg-white/50"
+                            key={image.url}
+                            className={`h-1.5 rounded-full transition-all duration-300 bg-white ${i === index ? "w-4 opacity-100" : "w-1.5 opacity-50"
                                 }`}
                         />
                     ))}

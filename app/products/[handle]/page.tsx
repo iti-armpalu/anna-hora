@@ -33,7 +33,7 @@ function ProductStructuredData({
         image: product.images.map((img) => img.url),
         brand: {
             "@type": "Brand",
-            name: siteConfig.name,
+            name: siteConfig.displayName,
         },
         url: `${siteConfig.url}/products/${handle}`,
         offers: {
@@ -46,7 +46,7 @@ function ProductStructuredData({
             url: `${siteConfig.url}/products/${handle}`,
             seller: {
                 "@type": "Organization",
-                name: siteConfig.name,
+                name: siteConfig.displayName,
             },
             shippingDetails: {
                 "@type": "OfferShippingDetails",
@@ -109,12 +109,12 @@ export async function generateMetadata({
         title: product.title,
         description:
             product.description ||
-            `Shop ${product.title} — premium mulberry silk loungewear by ANNA HORA.`,
+            `Shop ${product.title} — premium mulberry silk loungewear by ${siteConfig.displayName}.`,
         alternates: {
             canonical: `${siteConfig.url}/products/${handle}`,
         },
         openGraph: {
-            title: `${product.title} | ${siteConfig.name}`,
+            title: `${product.title} | ${siteConfig.displayName}`,
             description: product.description,
             url: `${siteConfig.url}/products/${handle}`,
             type: "website",

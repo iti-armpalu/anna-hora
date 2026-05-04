@@ -82,7 +82,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
             {
                 name: "Packaging",
                 items: [
-                    `Orders arrive in ${siteConfig.name.toUpperCase()} signature packaging`,
+                    `Orders arrive in ${siteConfig.displayName} signature packaging`,
                     "Items are securely protected during transit",
                 ],
             },
@@ -104,7 +104,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
     },
     returns: {
         title: "Effortless Returns",
-        description: `We want you to love your ${siteConfig.name.toUpperCase()} piece. If it isn't perfect, returns are simple.`,
+        description: `We want you to love your ${siteConfig.displayName} piece. If it isn't perfect, returns are simple.`,
         policy: [
             {
                 name: "Return Window",

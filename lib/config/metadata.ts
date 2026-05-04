@@ -7,13 +7,13 @@ import { siteConfig } from "@/lib/config/site";
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    default: siteConfig.displayName,
+    template: `%s | ${siteConfig.displayName}`,
   },
   description: "Mulberry silk loungewear crafted for the moments you keep to yourself.",
   keywords: ["silk loungewear", "mulberry silk", "luxury sleepwear", "silk pyjamas", "ANNA HORA"],
   openGraph: {
-    siteName: siteConfig.name,
+    siteName: siteConfig.displayName,
     type: "website",
     locale: "en_GB",
     images: [

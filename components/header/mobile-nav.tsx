@@ -45,7 +45,7 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
             <Link href="/" onClick={close} aria-label="ANNA HORA - Return to homepage">
               <Image
                 src="/anna-hora-logo-2026-04.png"
-                alt="ANNA HORA"
+                alt="ANNA HORA logo"
                 width={120}
                 height={40}
                 className="object-contain"
@@ -117,7 +117,7 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
                 </a>
               )}
               <p className="text-xs text-stone-400">
-                © {new Date().getFullYear()} {siteConfig.name.toUpperCase()}
+                © {new Date().getFullYear()} {siteConfig.displayName}
               </p>
             </div>
           </div>

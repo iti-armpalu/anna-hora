@@ -25,7 +25,7 @@ export async function generateMetadata({
       canonical: `${siteConfig.url}/collections/${handle}`,
     },
     openGraph: {
-      title: `${collection.title} | ${siteConfig.name.toUpperCase()}`,
+      title: `${collection.title} | ${siteConfig.displayName}`,
       url: `/collections/${handle}`,
       images: collection.image
         ? [{ url: collection.image.url, width: 1200, height: 630, alt: collection.title }]

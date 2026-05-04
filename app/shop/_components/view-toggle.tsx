@@ -1,31 +1,37 @@
 "use client"
 
+import { LayoutGrid, Grid3x3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Grid3X3, List } from "lucide-react"
 
-type Props = {
-  value: "grid" | "list"
-  onChange: (mode: "grid" | "list") => void
+type GridDensity = "comfortable" | "compact"
+
+interface ViewToggleProps {
+  value: GridDensity
+  onChange: (value: GridDensity) => void
 }
 
-export function ViewToggle({ value, onChange }: Props) {
+export function ViewToggle({ value, onChange }: ViewToggleProps) {
   return (
-    <div className="hidden md:flex items-center space-x-1 border border-stone-300 rounded-md">
+    <div className="flex items-center border border-stone-200 bg-white">
       <Button
-        variant={value === "grid" ? "default" : "ghost"}
-        size="sm"
-        onClick={() => onChange("grid")}
-        className="rounded-r-none"
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => onChange("compact")}
+        aria-label="Compact grid"
+        aria-pressed={value === "compact"}
+        className={value === "compact" ? "text-stone-900" : "text-stone-400"}
       >
-        <Grid3X3 className="w-4 h-4" />
+        <Grid3x3 className="h-4 w-4" />
       </Button>
       <Button
-        variant={value === "list" ? "default" : "ghost"}
-        size="sm"
-        onClick={() => onChange("list")}
-        className="rounded-l-none"
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => onChange("comfortable")}
+        aria-label="Comfortable grid"
+        aria-pressed={value === "comfortable"}
+        className={value === "comfortable" ? "text-stone-900" : "text-stone-400"}
       >
-        <List className="w-4 h-4" />
+        <LayoutGrid className="h-4 w-4" />
       </Button>
     </div>
   )

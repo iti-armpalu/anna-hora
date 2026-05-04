@@ -287,7 +287,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
 export const sizeGuideContent: SizeGuideContent = {
   hero: {
     title: "Find Your Perfect Fit",
-    subtitle: `Each piece has been carefully designed to fit beautifully. Use our guide to find the right size for your ${siteConfig.name.toUpperCase()} piece.`,
+    subtitle: `Each piece has been carefully designed to fit beautifully. Use our guide to find the right size for your ${siteConfig.displayName} piece.`,
     supportingText:
       "You'll find product-specific measurements on individual product pages. For bespoke advice, our customer care team is always here to help.",
   },

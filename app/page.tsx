@@ -8,11 +8,12 @@ import OurSilkSection from "@/components/home/our-silk-selection"
 import FeaturedProducts from "@/components/home/featured-products"
 import GiftingSection from "@/components/home/gifting-section"
 import NewsletterSection from "@/components/home/newsletter-section"
+import { siteConfig } from "@/lib/config/site"
 
 export const metadata: Metadata = {
   ...pageMeta.home,
   title: {
-    absolute: "Mulberry Silk Loungewear | ANNA HORA",
+    absolute: `Mulberry Silk Loungewear | ${siteConfig.displayName}`,
   },
 }
 

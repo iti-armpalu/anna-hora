@@ -1,5 +1,6 @@
 // lib/config/footer.ts
 import type { Route } from "next";
+import { siteConfig } from "./site";
 
 export type FooterLink = {
   label: string;
@@ -7,19 +8,19 @@ export type FooterLink = {
 };
 
 export type FooterSection =
-  // | "shop"
+  | "shop"
   | "customerCare"
   | "about"
   | "legal";
 
 export const footerNavigation = {
-  // shop: [
-  //   { label: "All Products", href: "/shop" },
-  //   { label: "Sets", href: "/shop?category=sets" },
-  //   { label: "Tops", href: "/shop?category=tops" },
-  //   { label: "Bottoms", href: "/shop?category=bottoms" },
-  //   { label: "Gift Guide", href: "/gift-guide" },
-  // ],
+  shop: [
+    { label: "All Products", href: "/shop" },
+    { label: "Sets", href: "/shop?category=shirts" },
+    { label: "Tops", href: "/shop?category=shorts" },
+    { label: "Bottoms", href: "/shop?category=trousers" },
+    { label: "Gift Guide", href: "/gift-guide" },
+  ],
   customerCare: [
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
@@ -28,15 +29,13 @@ export const footerNavigation = {
     { label: "Care Guide", href: "/care-guide" },
   ],
   about: [
-    { label: "About", href: "/about" },
+    { label: `About ${siteConfig.displayName}`, href: "/about" },
     { label: "Our Silk", href: "/our-silk" },
     { label: "Gift Guide", href: "/gift-guide" },
     { label: "Journal", href: "/journal" },
-    // { label: "Press", href: "/press" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms and Conditions", href: "/terms-and-conditions" },
-    // { label: "QR Scanned Link", href: "/product-experience" },
   ],
 } satisfies Record<FooterSection, readonly FooterLink[]>;

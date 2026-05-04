@@ -122,14 +122,14 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Shipping & Delivery",
     question: "How will my order be packaged?",
     answer:
-      "All orders are carefully prepared and shipped in our signature ANNA HORA packaging to ensure your items arrive safely and beautifully protected.",
+      `All orders are carefully prepared and shipped in our signature ${siteConfig.displayName} packaging to ensure your items arrive safely and beautifully protected.`,
   },
 
   {
     category: "Shipping & Delivery",
     question: "What should I do if I cannot find my tracking information?",
     answer:
-      "If you cannot locate your shipping confirmation email, please check your spam or promotions folder first. If you still need assistance, contact us at customerservice@annahora.com and we will be happy to help.",
+      `If you cannot locate your shipping confirmation email, please check your spam or promotions folder first. If you still need assistance, contact us at ${siteConfig.supportEmail} and we will be happy to help.`,
   },
 
   {
@@ -152,7 +152,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Returns & Exchanges",
     question: "How do I return an item?",
     answer:
-      "To start a return, log into your account and open your order history, where you will find the Return Request Form. Once submitted, our customer care team will review your request and provide further instructions.\n\nIf you are unable to access your account, you may also contact us at customerservice@annahora.com for assistance.\n\nReturned items should be carefully packed, preferably in the original packaging, and sent to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic",
+      `To start a return, log into your account and open your order history, where you will find the Return Request Form. Once submitted, our customer care team will review your request and provide further instructions.\n\nIf you are unable to access your account, you may also contact us at ${siteConfig.supportEmail} for assistance.\n\nReturned items should be carefully packed, preferably in the original packaging, and sent to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic`,
   },
 
   {
@@ -187,7 +187,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Returns & Exchanges",
     question: "What should I do if my item is faulty or damaged?",
     answer:
-      "If you receive a faulty or damaged item, please contact customerservice@annahora.com as soon as possible with your order details and photos of the issue. We will review the case and arrange a repair, replacement, or refund depending on the situation.",
+      `If you receive a faulty or damaged item, please contact ${siteConfig.supportEmail} as soon as possible with your order details and photos of the issue. We will review the case and arrange a repair, replacement, or refund depending on the situation.`,
   },
 
   // Complaints & Warranty
@@ -196,7 +196,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Complaints & Warranty",
     question: "What should I do if my item is faulty or damaged?",
     answer:
-      "We are sorry if something isn’t quite right. Please contact our customer care team at customerservice@annahora.com with your order details and a description of the issue. We will review the situation together and guide you through the next steps.",
+      `We are sorry if something isn’t quite right. Please contact our customer care team at ${siteConfig.supportEmail} with your order details and a description of the issue. We will review the situation together and guide you through the next steps.`,
   },
 
   {
@@ -210,7 +210,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Complaints & Warranty",
     question: "How do I submit a complaint?",
     answer:
-      "To submit a complaint, please contact customerservice@annahora.com. Our team will provide instructions and a Complaint Form to complete. The item should then be sent together with a copy of the invoice and the completed Complaint Form to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic",
+      `To submit a complaint, please contact ${siteConfig.supportEmail}. Our team will provide instructions and a Complaint Form to complete. The item should then be sent together with a copy of the invoice and the completed Complaint Form to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic`,
   },
 
   {
@@ -265,14 +265,14 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Gift Cards & Wrapping",
     question: "Do you offer gift cards?",
     answer:
-      "Gift cards are currently available upon request through our customer care team. Please contact customerservice@annahora.com and we will be happy to assist you.\n\nWe are currently enhancing our website to introduce digital gift cards as a dedicated product in the near future.",
+      `Gift cards are currently available upon request through our customer care team. Please contact ${siteConfig.supportEmail} and we will be happy to assist you.\n\nWe are currently enhancing our website to introduce digital gift cards as a dedicated product in the near future.`,
   },
 
   {
     category: "Gift Cards & Wrapping",
     question: "Can you gift wrap my order?",
     answer:
-      "All ANNA HORA orders are already presented in our signature packaging, including a cotton dust bag, branded tissue paper, and our signature mailer box — making them ready for gifting.\n\nIf you would like to include a personalised message, please contact our customer care team after placing your order.",
+      `All ${siteConfig.displayName} orders are already presented in our signature packaging, including a cotton dust bag, branded tissue paper, and our signature mailer box — making them ready for gifting.\n\nIf you would like to include a personalised message, please contact our customer care team after placing your order.`,
   },
 
   {

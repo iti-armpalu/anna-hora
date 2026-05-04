@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { SlidersHorizontal } from "lucide-react";
 
 import { FiltersPanel } from "./_components/filters-panel";
 import { SortControl } from "./_components/sort-control";
@@ -13,7 +14,7 @@ import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 import { buildFilterData } from "@/lib/filters/build-filter-data";
 
-import { SlidersHorizontal } from "lucide-react";
+type GridDensity = "comfortable" | "compact"
 
 interface Props {
   initialProducts: ProductNormalized[];
@@ -38,10 +39,9 @@ export default function ShopClient({
     "newest" | "price-low" | "price-high" | "bestsellers"
   >("newest");
 
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [density, setDensity] = useState<GridDensity>("compact")
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [hideFloatingFilterButton, setHideFloatingFilterButton] = useState(false);
-
 
   // -------------------------------------------------
   // FILTER STATES
@@ -198,40 +198,42 @@ export default function ShopClient({
     return () => observer.disconnect();
   }, []);
 
-  // -------------------------------------------------
-  // RENDER
-  // -------------------------------------------------
+  const gridClass = density === "comfortable"
+    ? "grid-cols-1 sm:grid-cols-2"
+    : "grid-cols-2 sm:grid-cols-3"
+
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="bg-stone-50">
+
+      {/* Hero */}
       <section className="py-12 lg:py-16">
         <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
+          <h1 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
             {activeCollection ? "Collection" : "The Collection"}
-          </h2>
-          <p className="mx-auto max-w-2xl text-lg text-stone-600">
+          </h1>
+          <p className="mx-auto max-w-2xl text-stone-600">
             Discover pieces designed to elevate the everyday.
           </p>
         </div>
       </section>
 
+      {/* Toolbar */}
       <section className="sticky top-16 z-40 border-b border-stone-200 bg-white lg:top-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <FiltersPanel
-                collections={collections}
-                activeCollection={activeCollection}
-              />
-
-              <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
-                <SortControl value={selectedSort} onChange={setSelectedSort} />
-                <ViewToggle value={viewMode} onChange={setViewMode} />
-              </div>
+          <div className="py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <FiltersPanel
+              collections={collections}
+              activeCollection={activeCollection}
+            />
+            <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
+              <SortControl value={selectedSort} onChange={setSelectedSort} />
+              <ViewToggle value={density} onChange={setDensity} />
             </div>
           </div>
         </div>
       </section>
 
+      {/* Products */}
       <main className="container mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <aside className="hidden lg:block">
@@ -253,24 +255,26 @@ export default function ShopClient({
           </aside>
 
           <div className="lg:col-span-3">
-            <div
-              className={`grid items-stretch gap-8 ${viewMode === "grid"
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "grid-cols-1"
-                }`}
-            >
-              {sortedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  viewMode={viewMode}
-                />
-              ))}
-            </div>
+            {sortedProducts.length === 0 ? (
+              <div className="py-24 text-center">
+                <p className="text-stone-500">No products match your filters.</p>
+              </div>
+            ) : (
+              <div className={`grid items-stretch gap-x-6 gap-y-12 ${gridClass}`}>
+                {sortedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    density={density}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>
 
+      {/* Mobile filter sheet */}
       <MobileFilterSheet
         open={isFilterOpen}
         onOpenChange={setIsFilterOpen}
@@ -291,16 +295,17 @@ export default function ShopClient({
         currency={products[0]?.currencyCode}
       />
 
+      {/* Mobile floating filter button */}
       <button
         onClick={() => setIsFilterOpen(true)}
-        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 rounded-full bg-forest-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
-          ? "pointer-events-none translate-y-4 opacity-0"
-          : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
+        className={`fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 bg-forest-900 px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden ${hideFloatingFilterButton
+            ? "pointer-events-none translate-y-4 opacity-0"
+            : "bottom-[calc(1.5rem+env(safe-area-inset-bottom))] opacity-100"
           }`}
       >
         <SlidersHorizontal className="h-4 w-4" />
         Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}
       </button>
     </div>
-  );
+  )
 }

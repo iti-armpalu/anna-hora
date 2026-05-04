@@ -1,5 +1,6 @@
 // lib/config/navigation.ts
 import type { Route } from "next";
+import { siteConfig } from "./site";
 
 export type NavigationItem = {
   label: string;
@@ -11,5 +12,5 @@ export const navigation: readonly NavigationItem[] = [
   { label: "Our Silk", href: "/our-silk" },
   { label: "Journal", href: "/journal" },
   { label: "Gift Guide", href: "/gift-guide" },
-  { label: "About", href: "/about" },
+  { label: `About ${siteConfig.displayName}`, href: "/about" },
 ] as const;

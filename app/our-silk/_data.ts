@@ -1,4 +1,5 @@
 import type { ClosingContent } from "@/components/common/page-closing"
+import { siteConfig } from "@/lib/config/site"
 
 export interface SilkContent {
     hero: {
@@ -92,7 +93,7 @@ export const silkContent: SilkContent = {
         cards: [
             {
                 image: "/silk-shirts.webp",
-                alt: "ANNA HORA silk shirts in mink and off-white hanging on branded hangers.",
+                alt: `${siteConfig.displayName} silk shirts in mink and off-white hanging on branded hangers.`,
                 title: "Grade 6A Mulberry Silk",
                 text: "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
             },

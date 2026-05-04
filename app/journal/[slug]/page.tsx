@@ -33,12 +33,12 @@ export async function generateMetadata({
     description:
       article.seo?.description ??
       article.excerpt ??
-      `Read ${article.title} on the ANNA HORA Journal.`,
+      `Read ${article.title} on the ${siteConfig.displayName} Journal.`,
     alternates: {
       canonical: `${siteConfig.url}/journal/${slug}`,
     },
     openGraph: {
-      title: `${article.seo?.title ?? article.title} | ${siteConfig.name}`,
+      title: `${article.seo?.title ?? article.title} | ${siteConfig.displayName}`,
       description: article.seo?.description ?? article.excerpt,
       url: `${siteConfig.url}/journal/${slug}`,
       type: "article",

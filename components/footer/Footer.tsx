@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h3 className="mb-4 text-xl">{siteConfig.name.toUpperCase()}</h3>
+              <h3 className="mb-4 text-xl">{siteConfig.displayName}</h3>
               <p className="text-sm leading-relaxed text-silk-100">
                 {siteConfig.tagline}
               </p>
@@ -64,7 +64,7 @@ export default function Footer() {
 
         <div className="mt-8 flex flex-col items-center justify-between border-t border-forest-700 pt-8 md:flex-row">
           <p className="text-sm text-silk-300">
-            © <Year /> {siteConfig.name.toUpperCase()}. All rights reserved.
+            © <Year /> {siteConfig.displayName}. All rights reserved.
           </p>
 
           <div className="mt-4 flex space-x-6 md:mt-0">
