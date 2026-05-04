@@ -301,7 +301,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Contact Us",
     question: "How can I contact customer service?",
     answer:
-      `Our team is here to help Monday through Friday, 9am to 6pm CET. You can reach us via email at ${siteConfig.supportEmail} or by phone at ${siteConfig.phone}.`,
+      `Our team is here to help Monday through Friday, ${siteConfig.customerCareHours.mondayFriday}. You can reach us via email at ${siteConfig.supportEmail} or by phone at ${siteConfig.phone}.`,
   },
   {
     category: "Contact Us",
