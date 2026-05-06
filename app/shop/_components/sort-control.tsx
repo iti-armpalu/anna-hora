@@ -1,6 +1,12 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 type Props = {
   value: "newest" | "price-low" | "price-high" | "bestsellers"
@@ -9,8 +15,8 @@ type Props = {
 
 export function SortControl({ value, onChange }: Props) {
   return (
-    <Select value={value} onValueChange={v => onChange(v as Props["value"])}>
-      <SelectTrigger className="w-45 border-stone-300">
+    <Select value={value} onValueChange={(v) => onChange(v as Props["value"])}>
+      <SelectTrigger className="h-9 w-44 border-stone-200 text-sm text-stone-700">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>

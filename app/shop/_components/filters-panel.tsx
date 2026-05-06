@@ -34,7 +34,7 @@ export function FiltersPanel({ collections, activeCollection }: Props) {
           <Link
             key={col.handle}
             href={href}
-            className={`text-sm transition-colors pb-1 whitespace-nowrap ${isActive
+            className={`inline-flex items-center h-9 text-sm transition-colors whitespace-nowrap border-b-1 ${isActive
                 ? "text-stone-900 font-medium border-b border-stone-900"
                 : "text-stone-500 hover:text-stone-900"
               }`}

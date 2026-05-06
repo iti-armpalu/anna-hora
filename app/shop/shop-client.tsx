@@ -13,6 +13,7 @@ import { MobileFilterSheet } from "./_components/mobile-filter-sheet";
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 import { buildFilterData } from "@/lib/filters/build-filter-data";
+import { Button } from "@/components/ui/button";
 
 type GridDensity = "comfortable" | "compact"
 
@@ -231,18 +232,20 @@ export default function ShopClient({
 
             <div className="flex items-center gap-6">
               {/* Desktop filter toggle */}
-              <button
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => setIsFilterOpen((prev) => !prev)}
-                className="hidden lg:flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                className="hidden lg:flex items-center gap-2 items-center h-9 border border-stone-200 bg-white"
               >
                 <SlidersHorizontal className="h-4 w-4" />
-                {isFilterOpen ? "Hide Filters" : "Filter"}
+                {isFilterOpen ? "Hide Filters" : "Filters"}
                 {activeFilterCount > 0 && !isFilterOpen && (
                   <span className="flex h-4 w-4 items-center justify-center bg-forest-800 text-white text-[10px] font-medium">
                     {activeFilterCount}
                   </span>
                 )}
-              </button>
+              </Button>
 
               <FiltersPanel
                 collections={collections}

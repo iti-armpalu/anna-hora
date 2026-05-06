@@ -105,7 +105,7 @@ export default function NewsletterSection() {
 
                   <form
                     onSubmit={handleSubmit}
-                    className="mx-auto flex w-full max-w-lg flex-col gap-4 sm:flex-row"
+                    className="mx-auto flex w-full max-w-xs sm:max-w-lg flex-col gap-4 sm:flex-row"
                   >
                     <Input
                       type="email"
@@ -122,7 +122,6 @@ export default function NewsletterSection() {
                     <Button
                       type="submit"
                       disabled={submitState === "submitting"}
-                      className="max-w-xs"
                     >
                       {submitState === "submitting"
                         ? newsletter.submittingLabel
