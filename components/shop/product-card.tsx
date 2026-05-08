@@ -116,8 +116,8 @@ export function ProductCard({
           </div>
 
           <h3 className={cn(
-            "font-medium text-stone-800 group-hover:text-stone-600 transition-colors",
-            density === "comfortable" ? "text-base" : "text-sm"
+            "font-medium text-stone-800 group-hover:text-stone-600 transition-colors text-sm",
+            isCompact ? "text-xs sm:text-sm" : ""
           )}>
             {product.title}
           </h3>

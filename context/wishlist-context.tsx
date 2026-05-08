@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   createContext,
@@ -6,86 +6,66 @@ import {
   useEffect,
   useState,
   type ReactNode,
-} from "react";
-import { toast } from "sonner";
+} from "react"
+import { toast } from "sonner"
 
 // ---------------------------------------------------
 // Types
 // ---------------------------------------------------
 
 export interface WishlistItem {
-  id: string;
-  title: string;
-  price: string;
-  currencyCode: string;
-  image: string;
-  size?: string;
-  addedAt: number;
+  id: string
+  handle: string
+  title: string
+  price: string
+  currencyCode: string
+  image: string
+  images: Array<{ url: string; altText?: string | null }>
+  sizes: Array<{ size: string; inStock: boolean }>
+  fabricShort?: string
+  size?: string
+  addedAt: number
 }
 
 interface WishlistContextType {
-  items: WishlistItem[];
-  isInWishlist: (variantId: string) => boolean;
-  add: (item: Omit<WishlistItem, "addedAt">) => void;
-  remove: (variantId: string) => void;
-  clear: () => void;
+  items: WishlistItem[]
+  isInWishlist: (id: string) => boolean
+  add: (item: Omit<WishlistItem, "addedAt">) => void
+  remove: (id: string) => void
+  clear: () => void
 }
 
 // ---------------------------------------------------
 // Context
 // ---------------------------------------------------
 
-const WishlistContext = createContext<WishlistContextType | null>(null);
+const WishlistContext = createContext<WishlistContextType | null>(null)
 
 // ---------------------------------------------------
-// Local Storage Helpers
+// localStorage helpers
 // ---------------------------------------------------
 
-const LOCAL_KEY = "guest-wishlist";
-const EXPIRY_DAYS = 14;
+const LOCAL_KEY = "guest-wishlist"
+const EXPIRY_DAYS = 14
 
-function loadGuestWishlist(): WishlistItem[] {
+function loadWishlist(): WishlistItem[] {
   try {
-    const raw = localStorage.getItem(LOCAL_KEY);
-    if (!raw) return [];
-
-    const parsed = JSON.parse(raw) as WishlistItem[];
-    const cutoff = Date.now() - EXPIRY_DAYS * 24 * 60 * 60 * 1000;
-
-    const valid = parsed.filter((i) => i.addedAt > cutoff);
-
-    // Cleanup expired
+    const raw = localStorage.getItem(LOCAL_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw) as WishlistItem[]
+    const cutoff = Date.now() - EXPIRY_DAYS * 24 * 60 * 60 * 1000
+    const valid = parsed.filter((i) => i.addedAt > cutoff)
     if (valid.length !== parsed.length) {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(valid));
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(valid))
     }
-
-    return valid;
+    return valid
   } catch {
-    return [];
+    return []
   }
 }
 
-function saveGuestWishlist(items: WishlistItem[]) {
-  localStorage.setItem(LOCAL_KEY, JSON.stringify(items));
-}
-
-// ---------------------------------------------------
-// Shopify Wishlist (Stubbed for future integration)
-// ---------------------------------------------------
-
-
-// async function updateShopifyWishlist(_items: WishlistItem[]) {
-  // TODO: Replace with Shopify metafield mutation
-// }
-
-// ---------------------------------------------------
-// Merge logic: dedupe by variant ID
-// ---------------------------------------------------
-
-function mergeWishlists(a: WishlistItem[], b: WishlistItem[]) {
-  const map = new Map<string, WishlistItem>();
-  [...a, ...b].forEach((item) => map.set(item.id, item));
-  return [...map.values()];
+function saveWishlist(items: WishlistItem[]) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(items))
 }
 
 // ---------------------------------------------------
@@ -93,72 +73,44 @@ function mergeWishlists(a: WishlistItem[], b: WishlistItem[]) {
 // ---------------------------------------------------
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<WishlistItem[]>([]);
+  const [items, setItems] = useState<WishlistItem[]>([])
+  const [hydrated, setHydrated] = useState(false)
 
-  /**
-   * Load wishlist on mount or when login state changes.
-   * Because isAuthenticated comes from the server during hydration,
-   * there's no loading/flicker issue.
-   */
+  // Load from localStorage on mount
+  useEffect(() => {
+    setItems(loadWishlist())
+    setHydrated(true)
+  }, [])
 
-  /**
-   * Save guest wishlist updates to localStorage
-   */
+  // Save to localStorage on change
+  useEffect(() => {
+    if (!hydrated) return
+    saveWishlist(items)
+  }, [items, hydrated])
 
+  const isInWishlist = (id: string) => items.some((i) => i.id === id)
 
-  /**
-   * Add item to wishlist
-   */
   const add = (item: Omit<WishlistItem, "addedAt">) => {
     if (isInWishlist(item.id)) {
-      return toast.error("Already in wishlist");
+      toast.error("Already in wishlist")
+      return
     }
+    setItems((prev) => [...prev, { ...item, addedAt: Date.now() }])
+    toast.success("Added to wishlist")
+  }
 
-    const newItem: WishlistItem = {
-      ...item,
-      addedAt: Date.now(),
-    };
+  const remove = (id: string) => {
+    setItems((prev) => prev.filter((i) => i.id !== id))
+    toast.success("Removed from wishlist")
+  }
 
-    const updated = [...items, newItem];
-    setItems(updated);
-
-
-    toast.success("Added to wishlist");
-  };
-
-  /**
-   * Remove item from wishlist
-   */
-  const remove = (variantId: string) => {
-    const updated = items.filter((i) => i.id !== variantId);
-    setItems(updated);
-
-
-    toast.success("Removed from wishlist");
-  };
-
-  /**
-   * Clear all wishlist items
-   */
-  const clear = () => {
-    setItems([]);
-
-
-  };
-
-  /**
-   * Check if item is already in wishlist
-   */
-  const isInWishlist = (variantId: string) =>
-    items.some((i) => i.id === variantId);
+  const clear = () => setItems([])
 
   return (
-    <WishlistContext.Provider
-      value={{ items, isInWishlist, add, remove, clear }}
-    >
+    <WishlistContext.Provider value={{ items, isInWishlist, add, remove, clear }}>
       {children}
     </WishlistContext.Provider>
-  );
+  )
 }
 
 // ---------------------------------------------------
@@ -166,9 +118,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 // ---------------------------------------------------
 
 export function useWishlist() {
-  const ctx = useContext(WishlistContext);
-  if (!ctx) {
-    throw new Error("useWishlist must be used within a <WishlistProvider>");
-  }
-  return ctx;
+  const ctx = useContext(WishlistContext)
+  if (!ctx) throw new Error("useWishlist must be used within a <WishlistProvider>")
+  return ctx
 }
