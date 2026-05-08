@@ -60,7 +60,7 @@ export function WishlistButton({ product }: WishlistButtonProps) {
       variant="secondary"
       onClick={handleClick}
       aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
-      className="bg-white/90 hover:bg-white hover:shadow-md active:scale-95 transition-all duration-200"
+      className="bg-white/90 hover:bg-white active:scale-95 transition-all duration-200"
     >
       <Heart
         className={`h-5 w-5 transition-transform duration-200 ${active

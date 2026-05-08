@@ -15,6 +15,7 @@ import { SizeGuideDialog } from "./_components/size-guide-dialog"
 import { CustomerAssurance } from "./_components/customer-assurance"
 import { ProductDetailsAccordion } from "./_components/product-detail-accordion"
 import ProductImageCarousel from "@/components/shop/product-image-carousel"
+import { WishlistButton } from "@/components/wishlist-button"
 
 interface Props {
     product: ProductNormalized
@@ -97,7 +98,7 @@ export default function ProductPageClient({
                         <h1 className="text-2xl lg:text-3xl font-light font-serif leading-tight text-stone-900">
                             {product.title}
                         </h1>
-                        <p className="text-stone-500 italic leading-relaxed text-sm">
+                        <p className="text-stone-500 leading-relaxed text-sm">
                             {product.description}
                         </p>
                         <p className="text-xl font-medium text-stone-900 pt-1">
@@ -129,7 +130,7 @@ export default function ProductPageClient({
                             ))}
                         </div>
                         {product.metafields.fitNotes && (
-                            <p className="text-xs text-stone-400 leading-relaxed">
+                            <p className="text-xs text-stone-400">
                                 {product.metafields.fitNotes}
                             </p>
                         )}
@@ -141,18 +142,20 @@ export default function ProductPageClient({
                             We don't ship to your country yet — hopefully soon.
                         </p>
                     ) : (
-                        <Button
-                            size="lg"
-                            onClick={handleAddToBag}
-                            className="w-full"
-                            disabled={!selectedVariant || isOutOfStock}
-                        >
-                            {!selectedVariant
-                                ? "Select a size"
-                                : isOutOfStock
-                                    ? "Currently Out of Stock"
-                                    : `Add to Bag – ${formattedPrice}`}
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button
+                                onClick={handleAddToBag}
+                                className="flex-1"
+                                disabled={!selectedVariant || isOutOfStock}
+                            >
+                                {!selectedVariant
+                                    ? "Select a size"
+                                    : isOutOfStock
+                                        ? "Currently Out of Stock"
+                                        : `Add to Bag – ${formattedPrice}`}
+                            </Button>
+                            <WishlistButton product={product} />
+                        </div>
                     )}
 
                     <CustomerAssurance />
