@@ -228,15 +228,15 @@ export default function ShopClient({
         style={{ top: "var(--header-height)" }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-4 flex items-center justify-between gap-4">
+          <div className="h-14 flex items-center justify-between gap-4">
 
-            <div className="flex items-center gap-6">
-              {/* Desktop filter toggle */}
+            {/* Left — desktop only */}
+            <div className="hidden lg:flex items-center gap-6">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setIsFilterOpen((prev) => !prev)}
-                className="hidden lg:flex items-center gap-2 items-center h-9 border border-stone-200 bg-white"
+                className="flex items-center gap-2 h-9"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 {isFilterOpen ? "Hide Filters" : "Filters"}
@@ -246,17 +246,23 @@ export default function ShopClient({
                   </span>
                 )}
               </Button>
-
               <FiltersPanel
                 collections={collections}
                 activeCollection={activeCollection}
               />
             </div>
 
+            {/* Mobile left — collection name only */}
+            <p className="lg:hidden text-sm text-stone-600">
+              {activeCollection ?? "All Products"}
+            </p>
+
+            {/* Right — always visible */}
             <div className="flex items-center gap-3">
               <SortControl value={selectedSort} onChange={setSelectedSort} />
               <ViewToggle value={density} onChange={setDensity} />
             </div>
+
           </div>
         </div>
       </div>
@@ -318,7 +324,7 @@ export default function ShopClient({
                 </button>
               </div>
             ) : (
-              <div className={`grid items-stretch gap-x-6 gap-y-12 ${gridClass}`}>
+              <div className={`grid items-stretch gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-12 ${gridClass}`}>
                 {sortedProducts.map((product) => (
                   <ProductCard
                     key={product.id}

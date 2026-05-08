@@ -46,6 +46,8 @@ export function ProductCard({
     })
     : []
 
+  const isCompact = density === "compact"
+
   return (
     <div className={cn("relative flex flex-col h-full group overflow-hidden", className)}>
 
@@ -73,26 +75,43 @@ export function ProductCard({
         prefetch={false}
         className="flex flex-col flex-1"
       >
+
         <div className="space-y-1">
-          <div className="flex items-center gap-2 mt-2">
-            <p className="text-xs text-stone-400">{fabric}</p>
+
+          {/* Fabric + sizes */}
+          <div className={cn(
+            "mt-2 flex",
+            isCompact ? "flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3 mb-2 sm:mb-1" : "flex-row items-center gap-3"
+          )}>
+            {fabric && (
+              <p className={cn(
+                "text-stone-400 shrink-0",
+                isCompact ? "text-[10px] sm:text-xs" : "text-xs"
+              )}>
+                {fabric}
+              </p>
+            )}
             {sizes.length > 0 && (
-              <>
-                <span className="text-xs text-stone-300">•</span>
-                <div className="flex items-center gap-3 flex-wrap">
-                  {sizes.map(({ size, inStock, variantId }) => (
-                    <span
-                      key={variantId}
-                      className={cn(
-                        "text-xs text-stone-400",
-                        !inStock && "line-through opacity-40"
-                      )}
-                    >
-                      {size}
-                    </span>
-                  ))}
-                </div>
-              </>
+              <div className="flex items-center gap-3 flex-wrap">
+
+                <span className={cn(
+                  "text-stone-300 text-xs",
+                  isCompact ? "hidden sm:block" : "block"
+                )}>·</span>
+
+                {sizes.map(({ size, inStock, variantId }) => (
+                  <span
+                    key={variantId}
+                    className={cn(
+                      "text-stone-400",
+                      isCompact ? "text-[10px] sm:text-xs" : "text-xs",
+                      !inStock && "line-through opacity-30"
+                    )}
+                  >
+                    {size}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
 
@@ -100,7 +119,7 @@ export function ProductCard({
             "font-medium text-stone-800 group-hover:text-stone-600 transition-colors",
             density === "comfortable" ? "text-base" : "text-sm"
           )}>
-            {product.title} 
+            {product.title}
           </h3>
         </div>
 
