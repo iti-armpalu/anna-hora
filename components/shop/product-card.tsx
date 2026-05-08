@@ -50,7 +50,7 @@ export function ProductCard({
     <div className={cn("relative flex flex-col h-full group overflow-hidden", className)}>
 
       {/* Image */}
-      <div className="relative overflow-hidden mb-3 aspect-[3/4]">
+      <div className="relative overflow-hidden mb-3">
         {/* Wishlist — stopPropagation in WishlistButton so it doesn't navigate */}
         <div className="absolute top-3 right-3 z-10">
           <WishlistButton product={product} />

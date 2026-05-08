@@ -42,7 +42,7 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
 
     return (
         <div
-            className="relative w-full h-full overflow-hidden"
+            className="relative w-full aspect-[3/4] overflow-hidden"
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
         >
@@ -50,7 +50,6 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
             <div
                 className="flex h-full transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${index * 100}%)` }}
-
             >
                 {images.map((image, i) => (
                     <div
