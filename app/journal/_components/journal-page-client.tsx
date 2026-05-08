@@ -177,7 +177,7 @@ export default function JournalPageClient({
                                         <span className="text-xs text-stone-400 tracking-wide mb-2 block">
                                             {article.category ?? article.tags[0]}
                                         </span>
-                                        <h3 className="text-base font-light text-stone-800 mb-2 leading-snug group-hover:text-stone-500 transition-colors duration-300">
+                                        <h3 className="text-base font-medium text-stone-800 mb-2 leading-snug group-hover:text-stone-500 transition-colors duration-300">
                                             {article.title}
                                         </h3>
                                         <p className="text-stone-500 text-sm leading-relaxed line-clamp-2 mb-3">
