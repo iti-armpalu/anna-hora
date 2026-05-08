@@ -72,6 +72,7 @@ export const PRODUCTS_QUERY = `
   
         metafields(
           identifiers: [
+            { namespace: "custom", key: "edit" },
             { namespace: "custom", key: "fabric_short" },
             { namespace: "custom", key: "is_new" },
             { namespace: "custom", key: "is_limited" },
@@ -149,6 +150,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
 
       metafields(
         identifiers: [
+          { namespace: "custom", key: "edit" },
           { namespace: "custom", key: "fabric_short" },
           { namespace: "custom", key: "fabric_full" },
           { namespace: "custom", key: "fabric_certifications" },

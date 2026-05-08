@@ -32,6 +32,7 @@ export interface FilterData {
   sizes: string[];
   colors: string[];
   fabrics: string[];
+  edits: string[];
 }
 
 /* -------------------------------------------------------
@@ -44,6 +45,7 @@ export function buildFilterData(
   const sizeSet = new Set<string>();
   const colorSet = new Set<string>();
   const fabricSet = new Set<string>();
+  const editSet = new Set<string>();
 
   for (const product of products) {
     /* -----------------------------
@@ -76,11 +78,19 @@ export function buildFilterData(
     if (product.metafields.fabricShort) {
       fabricSet.add(product.metafields.fabricShort);
     }
+
+    /* -----------------------------
+     * EDIT
+     * ----------------------------- */
+    if (product.metafields.edit) {
+      editSet.add(product.metafields.edit);
+    }
   }
 
   return {
     sizes: sortSizes(Array.from(sizeSet)),
     colors: sortAlpha(Array.from(colorSet)),
     fabrics: sortAlpha(Array.from(fabricSet)),
+    edits: sortAlpha(Array.from(editSet)),
   };
 }

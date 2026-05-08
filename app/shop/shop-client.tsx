@@ -50,6 +50,7 @@ export default function ShopClient({
   // -------------------------------------------------
   // FILTER STATES
   // -------------------------------------------------
+  const [edits, setEdits] = useState<string[]>([]);
   const [fabric, setFabric] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
@@ -77,6 +78,7 @@ export default function ShopClient({
   // ACTIVE FILTER COUNT (for mobile button)
   // -------------------------------------------------
   const activeFilterCount =
+    edits.length +
     fabric.length +
     sizes.length +
     colors.length +
@@ -114,6 +116,14 @@ export default function ShopClient({
   // -------------------------------------------------
   const filteredProducts = useMemo(() => {
     let arr = [...products];
+
+    if (edits.length > 0) {
+      arr = arr.filter((p) =>
+        p.metafields.edit
+          ? edits.includes(p.metafields.edit)
+          : false
+      );
+    }
 
     if (fabric.length > 0) {
       arr = arr.filter((p) =>
@@ -157,7 +167,7 @@ export default function ShopClient({
     }
 
     return arr;
-  }, [products, fabric, sizes, colors, priceRange]);
+  }, [products, edits, fabric, sizes, colors, priceRange]);
 
   // -------------------------------------------------
   // SORTING
@@ -287,9 +297,12 @@ export default function ShopClient({
               }}
             >
               <FilterSidebar
+                edits={filterData.edits}
                 fabrics={filterData.fabrics}
                 sizes={filterData.sizes}
                 colors={filterData.colors}
+                selectedEdits={edits}
+                setSelectedEdits={setEdits}
                 selectedFabric={fabric}
                 setSelectedFabric={setFabric}
                 selectedSizes={sizes}
@@ -313,6 +326,7 @@ export default function ShopClient({
                 </p>
                 <button
                   onClick={() => {
+                    setEdits([])
                     setFabric([])
                     setSizes([])
                     setColors([])
@@ -344,9 +358,12 @@ export default function ShopClient({
         onOpenChange={setIsMobileFilterOpen}
         collections={collections}
         activeCollection={activeCollection}
+        edits={filterData.edits}
         fabrics={filterData.fabrics}
         sizes={filterData.sizes}
         colors={filterData.colors}
+        selectedEdits={edits}
+        setSelectedEdits={setEdits}
         selectedFabric={fabric}
         setSelectedFabric={setFabric}
         selectedSizes={sizes}

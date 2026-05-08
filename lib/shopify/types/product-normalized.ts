@@ -37,6 +37,7 @@ export interface ProductOptionNormalized {
  * You can expand this as needed.
  */
 export interface ProductMetafieldsNormalized {
+  edit: string | null;
   fabricShort: string | null;
   fabricFull: string | null;
   fabricCertifications: string | null;

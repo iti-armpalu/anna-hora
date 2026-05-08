@@ -12,7 +12,7 @@ interface FilterSectionProps {
   children: React.ReactNode
 }
 
-function FilterSection({ title, defaultOpen = true, children }: FilterSectionProps) {
+function FilterSection({ title, defaultOpen = false, children }: FilterSectionProps) {
   const [open, setOpen] = useState(defaultOpen)
 
   return (
@@ -62,8 +62,8 @@ function Chip({
       type="button"
       onClick={onClick}
       className={`px-3 py-1.5 text-xs font-medium transition-all duration-200 ${active
-          ? "bg-forest-800 text-white"
-          : "bg-stone-100 text-stone-700 hover:bg-stone-200"
+        ? "bg-forest-800 text-white"
+        : "bg-stone-100 text-stone-700 hover:bg-stone-200"
         }`}
     >
       {label}
@@ -85,8 +85,8 @@ function SizeChip({
       type="button"
       onClick={onClick}
       className={`flex h-9 min-w-9 items-center justify-center px-3 text-xs font-medium transition-all duration-200 ${active
-          ? "bg-forest-800 text-white"
-          : "bg-stone-100 text-stone-700 hover:bg-stone-200"
+        ? "bg-forest-800 text-white"
+        : "bg-stone-100 text-stone-700 hover:bg-stone-200"
         }`}
     >
       {label}
@@ -99,9 +99,12 @@ function toggleValue(arr: string[], val: string, setter: (value: string[]) => vo
 }
 
 export interface FilterSidebarProps {
+  edits: string[]
   fabrics: string[]
   sizes: string[]
   colors: string[]
+  selectedEdits: string[]
+  setSelectedEdits: (value: string[]) => void
   selectedFabric: string[]
   setSelectedFabric: (value: string[]) => void
   selectedSizes: string[]
@@ -116,9 +119,12 @@ export interface FilterSidebarProps {
 }
 
 export function FilterSidebar({
+  edits,
   fabrics,
   sizes,
   colors,
+  selectedEdits,
+  setSelectedEdits,
   selectedFabric,
   setSelectedFabric,
   selectedSizes,
@@ -135,6 +141,7 @@ export function FilterSidebar({
   const priceRange = selectedPrice ?? priceBounds
 
   const activeCount =
+    selectedEdits.length +
     selectedFabric.length +
     selectedSizes.length +
     selectedColors.length +
@@ -144,6 +151,7 @@ export function FilterSidebar({
       : 0)
 
   const clearAll = () => {
+    setSelectedEdits([])
     setSelectedFabric([])
     setSelectedSizes([])
     setSelectedColors([])
@@ -152,6 +160,19 @@ export function FilterSidebar({
 
   return (
     <div className={className}>
+
+      <FilterSection title="Edit" defaultOpen>
+        <div className="flex flex-wrap gap-2">
+          {edits.map((e) => (
+            <Chip
+              key={e}
+              label={e}
+              active={selectedEdits.includes(e)}
+              onClick={() => toggleValue(selectedEdits, e, setSelectedEdits)}
+            />
+          ))}
+        </div>
+      </FilterSection>
 
       <FilterSection title="Fabric">
         <div className="flex flex-wrap gap-2">

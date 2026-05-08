@@ -19,9 +19,13 @@ interface Props {
   collections: CollectionNormalized[];
   activeCollection: string | null;
 
+  edits: string[];
   fabrics: string[];
   sizes: string[];
   colors: string[];
+
+  selectedEdits: string[];
+  setSelectedEdits: (value: string[]) => void;
 
   selectedFabric: string[];
   setSelectedFabric: (value: string[]) => void;
@@ -44,9 +48,12 @@ export function MobileFilterSheet({
   onOpenChange,
   collections,
   activeCollection,
+  edits,
   fabrics,
   sizes,
   colors,
+  selectedEdits,
+  setSelectedEdits,
   selectedFabric,
   setSelectedFabric,
   selectedSizes,
@@ -81,9 +88,12 @@ export function MobileFilterSheet({
 
         <div className="p-4">
           <FilterSidebar
+            edits={edits}
             fabrics={fabrics}
             sizes={sizes}
             colors={colors}
+            selectedEdits={selectedEdits}
+            setSelectedEdits={setSelectedEdits}
             selectedFabric={selectedFabric}
             setSelectedFabric={setSelectedFabric}
             selectedSizes={selectedSizes}

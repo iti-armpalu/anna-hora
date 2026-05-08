@@ -27,6 +27,7 @@ function normalizeMetafields(
   }
 
   return {
+    edit: map["edit"] ?? null,
     fabricShort: map["fabric_short"] ?? null,
     fabricFull: map["fabric_full"] ?? null,
     fabricCertifications: map["fabric_certifications"] ?? null,
