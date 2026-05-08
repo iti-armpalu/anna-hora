@@ -57,7 +57,7 @@ export function ProductDetailsAccordion({ product }: { product: ProductNormalize
                             )}
                             <li>
                                 <Link href="/our-silk" className="underline underline-offset-2 hover:text-stone-900 transition-colors">
-                                    Learn about our silk
+                                    Learn about our materials
                                 </Link>
                             </li>
                         </ul>
