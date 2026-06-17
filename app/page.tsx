@@ -22,7 +22,7 @@ export const revalidate = 60
 export default async function HomePage() {
   const categoryHandles = ["shirts", "shorts", "trousers"]
 
-  const [featuredCollection, categoryCollections, giftCardProduct] = await Promise.all([
+  const [featuredCollection, categoryCollections] = await Promise.all([
     getCollectionByHandle("featured"),
     Promise.all(categoryHandles.map((h) => getCollectionByHandle(h))).then((r) =>
       r.filter(Boolean)

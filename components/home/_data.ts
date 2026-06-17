@@ -69,7 +69,11 @@ export const homeContent = {
             heading: "Gift Cards",
             description:
                 "Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time, in her own style.",
-            badge: "Coming soon",
+            badge: "Now Available",
+            cta: {
+                label: "Shop Gift Cards",
+                href: "/gift-guide",
+            },
         },
         packaging: {
             image: {
@@ -81,7 +85,7 @@ export const homeContent = {
                 "Every order arrives in our signature packaging, complete with a handwritten note — because the unboxing should feel as special as what's inside.",
             badge: "Always Included",
             cta: {
-                label: "Learn More",
+                label: "See Our Packaging",
                 href: "/gift-guide",
             },
         },

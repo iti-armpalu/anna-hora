@@ -44,10 +44,10 @@ export const giftGuideContent: GiftGuideContent = {
         titleLines: ["The Art of"],
         titleEm: "Giving",
         paragraphs: [
-            `Some gifts are a moment. Others become a ritual. Right now, the simplest way to give ${siteConfig.displayName} is through a gift card — so she can choose what feels right, when it feels right.`,
-            `Gift cards are something we're preparing carefully and will introduce soon. For now, we invite you to explore the pieces themselves — and the details that make them special. Each order is packed with care, so it arrives ready to give.`,
+            `Some gifts are a moment. Others become a ritual. Give the gift of ${siteConfig.displayName} — and let her choose the piece that feels right, when it feels right.`,
+            `Each order is packed with care, so it arrives ready to give.`,
         ],
-        ctaLabel: "Gift Cards (Coming Soon)",
+        ctaLabel: "Give a Gift Card",
         ctaScrollTarget: "gift-card",
         image: {
             src: "/gift-guide-hero-1.png",
@@ -62,13 +62,13 @@ export const giftGuideContent: GiftGuideContent = {
             src: "/anna-hora-giftcard-2.webp",
             alt: `An ${siteConfig.displayName} gift card tied with a branded green satin ribbon on marble table top.`,
         },
-        description: "Gift cards will be digital and delivered by email at launch, with the option to add a personal message.",
+        description: "Choose an amount and we will deliver it to your inbox instantly.",
         features: [
             "Multiple amounts",
             "Optional personal message",
-            "Email delivery (instant)",
+            "Email delivery — instant",
         ],
-        ctaLabel: "Coming Soon",
+        ctaLabel: "Add to Bag",
     },
     packaging: {
         titleTop: "Packaging",

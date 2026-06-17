@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
 import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_QUERY } from "@/lib/shopify/queries/product";
@@ -9,7 +10,6 @@ import { normalizeProduct, normalizeProducts } from "../normalizers/product";
 interface ShopifyProductsQueryResponse {
   products: {
     nodes: Product[];
-
     pageInfo: {
       hasNextPage: boolean;
       endCursor: string | null;
@@ -37,16 +37,13 @@ export async function getProducts(
   first: number = 12,
   after?: null
 ): Promise<GetProductsResult> {
-
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
     variables: {
       first,
       after,
-      // country,
-      query: '-tag:"gift-card"', // exclude gift cards
+      query: '-tag:"gift-card"',
     },
-    // revalidate: 60,
     cache: "no-store",
   });
 
@@ -56,8 +53,6 @@ export async function getProducts(
   };
 }
 
-
-
 // --------------------------------------------------
 // Fetch SINGLE product by handle
 // --------------------------------------------------
@@ -66,13 +61,11 @@ interface ShopifyProductQueryResponse {
 }
 
 export async function getProductByHandle(handle: string): Promise<ProductNormalized | null> {
-
   const res = await shopifyFetch<ShopifyProductQueryResponse>({
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle },
     cache: "no-store",
   });
-
 
   if (!res.product) return null;
 
@@ -80,14 +73,18 @@ export async function getProductByHandle(handle: string): Promise<ProductNormali
 }
 
 // --------------------------------------------------
-// Fetch gift card product
+// Fetch gift card product (market-aware)
 // --------------------------------------------------
-export async function getGiftCardProduct() {
+export async function getGiftCardProduct(): Promise<ProductNormalized | null> {
+  const cookieStore = await cookies();
+  const country = cookieStore.get("shippingCountry")?.value || "CZ";
+
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
     variables: {
-      first: 1,              // only one product expected
-      query: 'tag:"gift-card"', // fetch *only* the product with this tag
+      first: 1,
+      query: 'tag:"gift-card"',
+      country,
     },
   });
 
@@ -96,5 +93,3 @@ export async function getGiftCardProduct() {
 
   return normalizeProduct(productNode);
 }
-
-

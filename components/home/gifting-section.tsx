@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { homeContent } from "@/components/home/_data"
 
@@ -19,9 +18,9 @@ export default function GiftingSection() {
           <p className="text-stone-600 max-w-2xl mx-auto">{gifting.subDescription}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Gift Card */}
-          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src={gifting.giftCard.image.src}
@@ -31,19 +30,23 @@ export default function GiftingSection() {
                 sizes="(min-width: 768px) 50vw, 100vw"
               />
             </div>
-            <CardContent className="p-6">
+            <CardContent className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-light text-stone-800 mb-2">
                 {gifting.giftCard.heading}
               </h3>
-              <p className="text-stone-600 mb-4">{gifting.giftCard.description}</p>
-              <Badge variant="secondary" className="text-stone-800">
-                {gifting.giftCard.badge}
-              </Badge>
+              <p className="text-stone-600 mb-4 flex-1">{gifting.giftCard.description}</p>
+              <div className="flex items-center justify-end">
+                <Button asChild variant="outline" size="sm">
+                  <Link href={gifting.giftCard.cta.href}>
+                    {gifting.giftCard.cta.label}
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
           {/* Signature Packaging */}
-          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+          <Card className="group border-0 py-0 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src={gifting.packaging.image.src}
@@ -53,11 +56,11 @@ export default function GiftingSection() {
                 sizes="(min-width: 768px) 50vw, 100vw"
               />
             </div>
-            <CardContent className="p-6">
+            <CardContent className="p-6 flex flex-col flex-1">
               <h3 className="text-xl font-light text-stone-800 mb-3">
                 {gifting.packaging.heading}
               </h3>
-              <p className="text-stone-600 mb-4">{gifting.packaging.description}</p>
+              <p className="text-stone-600 mb-4 flex-1">{gifting.packaging.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-lg font-medium text-stone-800">
                   {gifting.packaging.badge}
