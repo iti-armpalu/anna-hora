@@ -28,16 +28,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <head>
-        {/* Cookiebot — must load first to block other scripts until consent */}
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="dafbf68a-3e6a-4673-bc69-511150fb7d11"
-          data-blockingmode="auto"
-          async
-        />
-      </head>
       <body className="min-h-screen bg-stone-50 flex flex-col">
 
         {/* GTM noscript fallback */}
