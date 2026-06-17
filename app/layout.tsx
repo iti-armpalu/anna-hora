@@ -28,8 +28,6 @@ export default async function RootLayout({
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
   const cartRes = await getCartAction()
-  console.log("SSR cart lines count:", cartRes.cart?.lines?.length)
-
   const initialCart = cartRes.ok ? cartRes.cart : null
   const cartId = initialCart?.id ?? null
 
