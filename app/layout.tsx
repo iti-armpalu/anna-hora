@@ -13,6 +13,8 @@ import { WishlistProvider } from "@/context/wishlist-context"
 import { getCartAction } from "@/lib/actions/cart/get-cart"
 import { defaultMetadata } from "@/lib/config/metadata"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = defaultMetadata
 
 export default async function RootLayout({
@@ -20,9 +22,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
+  
+  
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
   const cartRes = await getCartAction()
+  console.log("SSR cart lines count:", cartRes.cart?.lines?.length)
+
   const initialCart = cartRes.ok ? cartRes.cart : null
   const cartId = initialCart?.id ?? null
 

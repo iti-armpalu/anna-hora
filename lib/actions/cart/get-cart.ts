@@ -41,6 +41,7 @@ export async function getCartAction(): Promise<GetCartResult> {
         cartId,
         country,
       },
+      cache: "no-store",
     });
 
     // Shopify returned no cart (maybe cart expired)
