@@ -1,5 +1,5 @@
 // app/privacy/_data.ts
-import { siteConfig } from "@/lib/config/site"
+import { siteConfig, getAddressLines, getAddressInline } from "@/lib/config/site"
 
 // Type Definitions
 export interface SectionSubItem {
@@ -72,7 +72,8 @@ const PRIVACY_DATA: PrivacyData = {
             title: "1. Information About Anna Hora",
             paragraphs: [
                 "Your trust is important to us. The protection of your privacy when processing personal data is important for us. This Privacy Policy explains how we handle your personal data when you use our website and services.",
-                `The website (the “Website”) is operated by Anna Hora s.r.o., ID 09373781, Jinonická 804/80, Praha 5 (“Anna Hora”, “we”, “us”). We are the controller responsible for processing your personal data under the General Data Protection Regulation (“GDPR”) and Czech personal data protection legislation.`,
+                // Address is derived from siteConfig — update in lib/config/site.ts
+                `The website (the “Website”) is operated by ${siteConfig.address.companyName}, ID 09373781, ${getAddressInline(siteConfig).split(", ").slice(1).join(", ")} (“Anna Hora”, “we”, “us”). We are the controller responsible for processing your personal data under the General Data Protection Regulation (“GDPR”) and Czech personal data protection legislation.`,
             ],
             emphasis: "card",
         },
@@ -276,12 +277,7 @@ const PRIVACY_DATA: PrivacyData = {
             "If you have questions about this Privacy Policy or want to exercise your rights, please contact us:",
         email: siteConfig.supportEmail,
         phone: siteConfig.phone,
-        addressLines: [
-            "Anna Hora s.r.o.",
-            "Jinonická 804/80",
-            "Praha 5",
-            "Czech Republic",
-        ],
+        addressLines: getAddressLines(siteConfig),
         ctaText: "Contact Customer Service",
         ctaHref: "/contact",
     },

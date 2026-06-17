@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/config/site"
+import { siteConfig, getAddressLines, getAddressInline } from "@/lib/config/site"
 
 export interface TermsSection {
   key: string
@@ -26,6 +26,7 @@ interface TermsData {
     intro: string
     email: string
     phone: string
+    addressLines: string[]
     ctaText: string
     ctaHref: string
   }
@@ -35,7 +36,7 @@ interface TermsData {
   }
 }
 
-const TERMS_DATA = {
+const TERMS_DATA: TermsData = {
   hero: {
     title: "Terms and Conditions",
     intro: [
@@ -49,11 +50,15 @@ const TERMS_DATA = {
       key: "initial-provisions",
       title: "1. Initial Provisions",
       paragraphs: [
-        "These Business Terms and Conditions regulate the contractual relationship between Anna Hora s.r.o., Jinonická 804/80, Praha 5, ID 09373781 (the “Seller”) and customers purchasing goods through the online shop available at www.annahora.com (the “Website”).",
-        "These terms apply to purchase contracts concluded between the Seller and another natural or legal person (the “Buyer”) through the website’s web interface.",
-        "These Business Terms and Conditions do not apply where a person purchasing goods does so within the scope of their own business activity.",
-        "The provisions of these Business Terms and Conditions form an integral part of every purchase contract.",
-        "The Seller may update or amend these Business Terms and Conditions. Rights and obligations arising during the validity of a previous version remain unaffected.",
+        // Address and company name are derived from siteConfig — update in lib/config/site.ts
+        `These Business Terms and Conditions regulate the contractual relationship between ${siteConfig.address.companyName}, ${getAddressInline(siteConfig)
+          .split(", ")
+          .slice(1) // omit companyName — already named above
+          .join(", ")}, ID 09373781 (the "Seller") and customers purchasing goods through the online shop available at www.annahora.com (the "Website").`,
+        `These terms apply to purchase contracts concluded between the Seller and another natural or legal person (the "Buyer") through the website's web interface.`,
+        `These Business Terms and Conditions do not apply where a person purchasing goods does so within the scope of their own business activity.`,
+        `The provisions of these Business Terms and Conditions form an integral part of every purchase contract.`,
+        `The Seller may update or amend these Business Terms and Conditions. Rights and obligations arising during the validity of a previous version remain unaffected.`,
       ],
     },
 
@@ -62,7 +67,7 @@ const TERMS_DATA = {
       title: "2. Customer Accounts",
       paragraphs: [
         "Buyers may order goods either through a customer account or directly without registration.",
-        "Customer accounts are provided through Shopify’s secure authentication infrastructure. Account authentication is handled by Shopify and the Seller does not store or have access to account passwords or authentication credentials.",
+        "Customer accounts are provided through Shopify's secure authentication infrastructure. Account authentication is handled by Shopify and the Seller does not store or have access to account passwords or authentication credentials.",
       ],
       subsections: [
         {
@@ -99,14 +104,14 @@ const TERMS_DATA = {
         "packaging and delivery costs",
       ],
       note:
-        "The contractual relationship between the Buyer and the Seller is established once the Seller confirms the order by email sent to the Buyer’s email address.",
+        "The contractual relationship between the Buyer and the Seller is established once the Seller confirms the order by email sent to the Buyer's email address.",
     },
 
     {
       key: "pricing-payment",
       title: "4. Prices and Payment Terms",
       paragraphs: [
-        "Product prices displayed on the Website may be shown in the currency corresponding to the Buyer’s location or selected region.",
+        "Product prices displayed on the Website may be shown in the currency corresponding to the Buyer's location or selected region.",
         "All prices and applicable delivery costs will be clearly displayed during checkout before the Buyer confirms the order.",
       ],
       items: [
@@ -119,7 +124,7 @@ const TERMS_DATA = {
       subsections: [
         {
           heading: "Invoices",
-          text: "After payment of the purchase price, the Seller will issue an electronic invoice and send it to the Buyer’s email address.",
+          text: "After payment of the purchase price, the Seller will issue an electronic invoice and send it to the Buyer's email address.",
         },
         {
           heading: "Customs and Taxes",
@@ -141,7 +146,7 @@ const TERMS_DATA = {
         "The Seller will refund the purchase price within 14 days after receiving the returned goods.",
       ],
       note:
-        "Withdrawal is not possible for goods customized according to the Buyer’s requirements or goods that cannot be returned for hygiene reasons once unsealed.",
+        "Withdrawal is not possible for goods customized according to the Buyer's requirements or goods that cannot be returned for hygiene reasons once unsealed.",
     },
 
     {
@@ -165,7 +170,7 @@ const TERMS_DATA = {
         },
       ],
       note:
-        "Delivery times are estimates and may be affected by customs clearance or circumstances beyond the Seller’s control.",
+        "Delivery times are estimates and may be affected by customs clearance or circumstances beyond the Seller's control.",
     },
 
     {
@@ -182,7 +187,7 @@ const TERMS_DATA = {
       title: "8. Intellectual Property",
       paragraphs: [
         "All content on the Website, including product photographs, design, and text, is protected by copyright.",
-        "The Buyer may not copy, distribute, reproduce, or otherwise use the Website’s content without the Seller’s prior written consent.",
+        "The Buyer may not copy, distribute, reproduce, or otherwise use the Website's content without the Seller's prior written consent.",
       ],
     },
 
@@ -190,7 +195,7 @@ const TERMS_DATA = {
       key: "privacy",
       title: "9. Personal Data Protection",
       paragraphs: [
-        "The protection of the Buyer’s personal data is governed by the Seller’s Privacy Policy, which is available on the Website.",
+        "The protection of the Buyer's personal data is governed by the Seller's Privacy Policy, which is available on the Website.",
       ],
     },
 
@@ -210,12 +215,7 @@ const TERMS_DATA = {
       "If you have questions regarding these Terms and Conditions, please contact us:",
     email: siteConfig.supportEmail,
     phone: siteConfig.phone,
-    addressLines: [
-      "Anna Hora s.r.o.",
-      "Jinonická 804/80",
-      "Praha 5",
-      "Czech Republic",
-    ],
+    addressLines: getAddressLines(siteConfig),
     ctaText: "Contact Customer Service",
     ctaHref: "/contact",
   },

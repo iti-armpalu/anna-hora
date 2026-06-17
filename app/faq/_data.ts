@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/config/site"
+import { siteConfig, getAddressLines } from "@/lib/config/site"
 
 export interface FAQItem {
   category: string
@@ -152,7 +152,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Returns & Exchanges",
     question: "How do I return an item?",
     answer:
-      `To start a return, log into your account and open your order history, where you will find the Return Request Form. Once submitted, our customer care team will review your request and provide further instructions.\n\nIf you are unable to access your account, you may also contact us at ${siteConfig.supportEmail} for assistance.\n\nReturned items should be carefully packed, preferably in the original packaging, and sent to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic`,
+      `To start a return, log into your account and open your order history, where you will find the Return Request Form. Once submitted, our customer care team will review your request and provide further instructions.\n\nIf you are unable to access your account, you may also contact us at ${siteConfig.supportEmail} for assistance.\n\nReturned items should be carefully packed, preferably in the original packaging, and sent to:\n\n${getAddressLines(siteConfig).join("\n")}`,
   },
 
   {
@@ -210,7 +210,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Complaints & Warranty",
     question: "How do I submit a complaint?",
     answer:
-      `To submit a complaint, please contact ${siteConfig.supportEmail}. Our team will provide instructions and a Complaint Form to complete. The item should then be sent together with a copy of the invoice and the completed Complaint Form to:\n\nAnna Hora s.r.o.\nJinonická 804/80\n158 00 Praha 5\nCzech Republic`,
+      `To submit a complaint, please contact ${siteConfig.supportEmail}. Our team will provide instructions and a Complaint Form to complete. The item should then be sent together with a copy of the invoice and the completed Complaint Form to:\n\n${getAddressLines(siteConfig).join("\n")}`,
   },
 
   {
