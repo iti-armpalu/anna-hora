@@ -6,246 +6,446 @@
 
 @theme inline {
 
-  /* ----------------------------------------
-     Typography
+   /* ----------------------------------------
+     Typography — Fonts
   ---------------------------------------- */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+   --font-sans: var(--font-geist-sans);
+   --font-mono: var(--font-geist-mono);
+   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
-  /* ----------------------------------------
-     Radius
+   /* ----------------------------------------
+     Typography — Scale
+     Named for role, not size — so you can
+     adjust values without renaming tokens.
   ---------------------------------------- */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+   --text-display: 3.5rem;
+   /* h1 — hero headlines              */
+   --text-heading-lg: 2.25rem;
+   /* h2 — section titles              */
+   --text-heading-md: 1.5rem;
+   /* h3 — card titles, sub-sections   */
+   --text-heading-sm: 1.125rem;
+   /* h4 — labels with weight          */
+   --text-body: 1rem;
+   /* p  — default body                */
+   --text-small: 0.875rem;
+   /* captions, helper text            */
+   --text-xs: 0.75rem;
+   /* fine print, legal, tags          */
 
-  /* ----------------------------------------
+   /* ----------------------------------------
+     Typography — Leading
+  ---------------------------------------- */
+   --leading-display: 1.00;
+   --leading-heading: 1.1;
+   --leading-body: 1.5;
+
+   /* ----------------------------------------
+     Typography — Tracking
+  ---------------------------------------- */
+   --tracking-tight: -0.02em;
+   /* display headlines                */
+   --tracking-heading: -0.01em;
+   /* section headings                 */
+   --tracking-normal: 0em;
+   --tracking-wide: 0.06em;
+   /* nav items                        */
+   --tracking-widest: 0.14em;
+   /* uppercase section labels         */
+
+   /* ----------------------------------------
      Semantic colour tokens (mapped to CSS vars)
   ---------------------------------------- */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+   --color-background: var(--background);
+   --color-foreground: var(--foreground);
+   --color-card: var(--card);
+   --color-card-foreground: var(--card-foreground);
+   --color-popover: var(--popover);
+   --color-popover-foreground: var(--popover-foreground);
+   --color-primary: var(--primary);
+   --color-primary-foreground: var(--primary-foreground);
+   --color-secondary: var(--secondary);
+   --color-secondary-foreground: var(--secondary-foreground);
+   --color-muted: var(--muted);
+   --color-muted-foreground: var(--muted-foreground);
+   --color-accent: var(--accent);
+   --color-accent-foreground: var(--accent-foreground);
+   --color-destructive: var(--destructive);
+   --color-border: var(--border);
+   --color-input: var(--input);
+   --color-ring: var(--ring);
 
-  /* ----------------------------------------
+   /* ----------------------------------------
      ANNA HORA Brand Palette — Forest
      Base: #2a3d3b
   ---------------------------------------- */
-  --color-forest-50: #f3f7f6;
-  --color-forest-100: #d9eae7;
-  --color-forest-200: #b4d4cf;
-  --color-forest-300: #87b7b0;
-  --color-forest-400: #5e9890;
-  --color-forest-500: #457d76;
-  --color-forest-600: #36635d;
-  --color-forest-700: #2e504c;
-  --color-forest-800: #2a3d3b;
-  /* ← brand primary */
-  --color-forest-900: #1e2d2c;
-  --color-forest-950: #132020;
+   --color-forest-50: #f3f7f6;
+   --color-forest-100: #d9eae7;
+   --color-forest-200: #b4d4cf;
+   --color-forest-300: #87b7b0;
+   --color-forest-400: #5e9890;
+   --color-forest-500: #457d76;
+   --color-forest-600: #36635d;
+   --color-forest-700: #2e504c;
+   --color-forest-800: #2a3d3b;
+   /* ← brand primary */
+   --color-forest-900: #1e2d2c;
+   --color-forest-950: #132020;
 
-  /* ----------------------------------------
+   /* ----------------------------------------
      ANNA HORA Brand Palette — Silk
      Base: #AE8F72
   ---------------------------------------- */
-  --color-silk-50: #faf7f4;
-  --color-silk-100: #f0e8df;
-  --color-silk-200: #e2d0bc;
-  --color-silk-300: #cfb193;
-  --color-silk-400: #be9575;
-  --color-silk-500: #ae8f72;
-  /* ← brand accent */
-  --color-silk-600: #9a7860;
-  --color-silk-700: #7f6250;
-  --color-silk-800: #685143;
-  --color-silk-900: #554339;
-  --color-silk-950: #2d231e;
+   --color-silk-50: #faf7f4;
+   --color-silk-100: #f0e8df;
+   --color-silk-200: #e2d0bc;
+   --color-silk-300: #cfb193;
+   --color-silk-400: #be9575;
+   --color-silk-500: #ae8f72;
+   /* ← brand accent */
+   --color-silk-600: #9a7860;
+   --color-silk-700: #7f6250;
+   --color-silk-800: #685143;
+   --color-silk-900: #554339;
+   --color-silk-950: #2d231e;
 
-  /* ----------------------------------------
+   /* ----------------------------------------
      Neutral — warm stone (used throughout UI)
   ---------------------------------------- */
-  --color-stone-50: #fafaf9;
-  --color-stone-100: #f5f5f4;
-  --color-stone-200: #e7e5e4;
-  --color-stone-300: #d6d3d1;
-  --color-stone-400: #a8a29e;
-  --color-stone-500: #78716c;
-  --color-stone-600: #57534e;
-  --color-stone-700: #44403c;
-  --color-stone-800: #292524;
-  --color-stone-900: #1c1917;
-  --color-stone-950: #0c0a09;
+   --color-stone-50: #fafaf9;
+   --color-stone-100: #f5f5f4;
+   --color-stone-200: #e7e5e4;
+   --color-stone-300: #d6d3d1;
+   --color-stone-400: #a8a29e;
+   --color-stone-500: #78716c;
+   --color-stone-600: #57534e;
+   --color-stone-700: #44403c;
+   --color-stone-800: #292524;
+   --color-stone-900: #1c1917;
+   --color-stone-950: #0c0a09;
 
-  /* ----------------------------------------
+   /* ----------------------------------------
      Chart colours (kept for shadcn compat)
   ---------------------------------------- */
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+   --color-chart-1: var(--chart-1);
+   --color-chart-2: var(--chart-2);
+   --color-chart-3: var(--chart-3);
+   --color-chart-4: var(--chart-4);
+   --color-chart-5: var(--chart-5);
 
-  /* ----------------------------------------
+   /* ----------------------------------------
      Sidebar (shadcn compat)
   ---------------------------------------- */
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+   --color-sidebar: var(--sidebar);
+   --color-sidebar-foreground: var(--sidebar-foreground);
+   --color-sidebar-primary: var(--sidebar-primary);
+   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+   --color-sidebar-accent: var(--sidebar-accent);
+   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+   --color-sidebar-border: var(--sidebar-border);
+   --color-sidebar-ring: var(--sidebar-ring);
 }
 
 /* ----------------------------------------
    Light mode — semantic tokens
 ---------------------------------------- */
 :root {
-  --radius: 0.5rem;
-  --header-height: 4rem;
-  /* 64px — matches h-16 */
-  --toolbar-height: 4.5rem;
-  --sticky-offset: calc(var(--header-height) + var(--toolbar-height));
+   /* Radius — intentionally zero. ANNA HORA uses sharp corners. */
+   --radius: 0rem;
 
-  /* Core */
-  --background: oklch(1 0 0);
-  /* white */
-  --foreground: oklch(0.15 0.01 172);
-  /* near-black with forest tint */
 
-  /* Card / Popover */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.01 172);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.01 172);
+   /* Layout */
+   --header-height: 4rem;
+   /* 64px — matches h-16  */
+   --toolbar-height: 4.5rem;
+   --sticky-offset: calc(var(--header-height) + var(--toolbar-height));
+   --section-padding: 4rem;
+   /* py-16 equivalent     */
+   --section-padding-lg: 6rem;
+   /* py-24 equivalent     */
+   --content-max: 80rem;
+   /* max content width    */
+   --content-narrow: 42rem;
+   /* editorial columns    */
 
-  /* Primary — Forest #2a3d3b */
-  --primary: oklch(0.28 0.03 172);
-  --primary-foreground: oklch(1 0 0);
+   /* Core */
+   --background: oklch(0.99 0.001 60);
+   --foreground: oklch(0.15 0.01 172);
 
-  /* Secondary — warm light stone */
-  --secondary: oklch(0.97 0.005 60);
-  --secondary-foreground: oklch(0.2 0.01 172);
+   /* Card / Popover */
+   --card: oklch(1 0 0);
+   --card-foreground: oklch(0.15 0.01 172);
+   --popover: oklch(1 0 0);
+   --popover-foreground: oklch(0.15 0.01 172);
 
-  /* Muted */
-  --muted: oklch(0.96 0.003 60);
-  --muted-foreground: oklch(0.52 0.01 60);
+   /* Primary — Forest #2a3d3b */
+   --primary: oklch(0.28 0.03 172);
+   --primary-foreground: oklch(1 0 0);
 
-  /* Accent — Silk #AE8F72 */
-  --accent: oklch(0.65 0.07 55);
-  --accent-foreground: oklch(1 0 0);
+   /* Secondary — warm light stone */
+   --secondary: oklch(0.97 0.005 60);
+   --secondary-foreground: oklch(0.2 0.01 172);
 
-  /* Destructive */
-  --destructive: oklch(0.577 0.245 27.325);
+   /* Muted */
+   --muted: oklch(0.96 0.003 60);
+   --muted-foreground: oklch(0.45 0.015 60);
 
-  /* Borders & inputs */
-  --border: oklch(0.91 0.005 60);
-  --input: oklch(0.91 0.005 60);
-  --ring: oklch(0.28 0.03 172);
-  /* forest — focus rings */
+   /* Accent — Silk #AE8F72 */
+   --accent: oklch(0.65 0.07 55);
+   --accent-foreground: oklch(1 0 0);
 
-  /* Charts */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.600 0.118 184.704);
-  --chart-3: oklch(0.398 0.070 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.080);
+   /* Destructive */
+   --destructive: oklch(0.577 0.245 27.325);
 
-  /* Sidebar */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.28 0.03 172);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+   /* Borders & inputs */
+   --border: oklch(0.91 0.005 60);
+   --input: oklch(0.91 0.005 60);
+   --ring: oklch(0.28 0.03 172);
+
+   /* Charts */
+   --chart-1: oklch(0.646 0.222 41.116);
+   --chart-2: oklch(0.600 0.118 184.704);
+   --chart-3: oklch(0.398 0.070 227.392);
+   --chart-4: oklch(0.828 0.189 84.429);
+   --chart-5: oklch(0.769 0.188 70.080);
+
+   /* Sidebar */
+   --sidebar: oklch(0.985 0 0);
+   --sidebar-foreground: oklch(0.145 0 0);
+   --sidebar-primary: oklch(0.28 0.03 172);
+   --sidebar-primary-foreground: oklch(1 0 0);
+   --sidebar-accent: oklch(0.97 0 0);
+   --sidebar-accent-foreground: oklch(0.205 0 0);
+   --sidebar-border: oklch(0.922 0 0);
+   --sidebar-ring: oklch(0.708 0 0);
 }
 
 @media (min-width: 1024px) {
-  :root {
-    --header-height: 5rem;
-    /* 80px — matches lg:h-20 */
-  }
+   :root {
+      --header-height: 5rem;
+      /* 80px — matches lg:h-20  */
+      --section-padding: 6rem;
+      /* py-24 on desktop        */
+      --section-padding-lg: 8rem;
+   }
 }
 
 /* ----------------------------------------
    Dark mode (minimal — ANNA HORA is light-first)
 ---------------------------------------- */
 .dark {
-  --background: oklch(0.12 0.01 172);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.17 0.01 172);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.17 0.01 172);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.85 0.02 60);
-  /* silk in dark mode */
-  --primary-foreground: oklch(0.15 0.01 172);
-  --secondary: oklch(0.22 0.01 172);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.22 0.01 172);
-  --muted-foreground: oklch(0.65 0.01 60);
-  --accent: oklch(0.65 0.07 55);
-  --accent-foreground: oklch(0.15 0.01 172);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.07 55);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.170 162.480);
-  --chart-3: oklch(0.769 0.188 70.080);
-  --chart-4: oklch(0.627 0.265 303.900);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.17 0.01 172);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.07 55);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.22 0.01 172);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.65 0.07 55);
+   --background: oklch(0.12 0.01 172);
+   --foreground: oklch(0.95 0 0);
+   --card: oklch(0.17 0.01 172);
+   --card-foreground: oklch(0.95 0 0);
+   --popover: oklch(0.17 0.01 172);
+   --popover-foreground: oklch(0.95 0 0);
+   --primary: oklch(0.85 0.02 60);
+   --primary-foreground: oklch(0.15 0.01 172);
+   --secondary: oklch(0.22 0.01 172);
+   --secondary-foreground: oklch(0.95 0 0);
+   --muted: oklch(0.22 0.01 172);
+   --muted-foreground: oklch(0.65 0.01 60);
+   --accent: oklch(0.65 0.07 55);
+   --accent-foreground: oklch(0.15 0.01 172);
+   --destructive: oklch(0.704 0.191 22.216);
+   --border: oklch(1 0 0 / 10%);
+   --input: oklch(1 0 0 / 15%);
+   --ring: oklch(0.65 0.07 55);
+   --chart-1: oklch(0.488 0.243 264.376);
+   --chart-2: oklch(0.696 0.170 162.480);
+   --chart-3: oklch(0.769 0.188 70.080);
+   --chart-4: oklch(0.627 0.265 303.900);
+   --chart-5: oklch(0.645 0.246 16.439);
+   --sidebar: oklch(0.17 0.01 172);
+   --sidebar-foreground: oklch(0.95 0 0);
+   --sidebar-primary: oklch(0.65 0.07 55);
+   --sidebar-primary-foreground: oklch(0.95 0 0);
+   --sidebar-accent: oklch(0.22 0.01 172);
+   --sidebar-accent-foreground: oklch(0.95 0 0);
+   --sidebar-border: oklch(1 0 0 / 10%);
+   --sidebar-ring: oklch(0.65 0.07 55);
 }
 
 /* ----------------------------------------
    Base styles
 ---------------------------------------- */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
+   * {
+      @apply border-border outline-ring/50;
+   }
 
-  body {
-    @apply bg-background text-foreground;
-  }
+   body {
+      @apply bg-background text-foreground;
+      font-family: var(--font-sans);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+   }
+
+   /* ----------------------------------------
+     Headings
+     All headings use the serif font and are
+     font-weight 300 (light) — luxury, not loud.
+     Colour defaults to foreground (near-black),
+     which is correct for 95% of cases.
+     Override in context only when needed,
+     e.g. white text over a dark image overlay.
+  ---------------------------------------- */
+   h1 {
+      font-family: var(--font-sans);
+      font-size: var(--text-display);
+      line-height: var(--leading-display);
+      letter-spacing: var(--tracking-tight);
+      font-weight: 300;
+      color: var(--foreground);
+   }
+
+   h2 {
+      font-family: var(--font-sans);
+      font-size: var(--text-heading-lg);
+      line-height: var(--leading-heading);
+      letter-spacing: var(--tracking-heading);
+      font-weight: 300;
+      color: var(--foreground);
+      margin-bottom: 1rem;
+   }
+
+   h3 {
+      font-family: var(--font-sans);
+      font-size: var(--text-heading-md);
+      line-height: var(--leading-heading);
+      letter-spacing: var(--tracking-heading);
+      font-weight: 300;
+      color: var(--foreground);
+      margin-bottom: 0.5rem;
+   }
+
+   h4 {
+      font-family: var(--font-sans);
+      font-size: var(--text-heading-sm);
+      line-height: var(--leading-heading);
+      font-weight: 500;
+      color: var(--foreground);
+   }
+
+   /* ----------------------------------------
+     Body copy
+     Muted foreground by default — slightly
+     softer than near-black, keeps headings
+     as the visual anchor.
+  ---------------------------------------- */
+   p {
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--muted-foreground);
+   }
+
+   /* ----------------------------------------
+     <em> inside headings
+     Cormorant's italic is the brand signature —
+     used on key words in h1/h2 e.g. "Our <em>Silk</em>"
+  ---------------------------------------- */
+   em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+   }
+
+   /* Inline links */
+   a {
+      color: inherit;
+      text-decoration: none;
+   }
+}
+
+/* ----------------------------------------
+   Responsive type scale
+   Adjust token values at breakpoints so
+   every h1/h2/h3 on the site scales together.
+   No more md:text-5xl in components.
+---------------------------------------- */
+@media (min-width: 768px) {
+   :root {
+      --text-display: 4rem;
+      --text-heading-lg: 2.25rem;
+   }
+}
+
+@media (min-width: 1024px) {
+   :root {
+      --text-display: 5rem;
+      --text-heading-lg: 2.5rem;
+   }
 }
 
 /* ----------------------------------------
    Utilities
 ---------------------------------------- */
 @layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+   /* Section layout — use on every <section> */
+   .section {
+      padding-top: var(--section-padding);
+      padding-bottom: var(--section-padding);
+   }
+
+   /* Inner container — use inside every section */
+   .container-site {
+      width: 100%;
+      max-width: var(--content-max);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+   }
+
+   @media (min-width: 640px) {
+      .container-site {
+         padding-left: 1.5rem;
+         padding-right: 1.5rem;
+      }
+   }
+
+   @media (min-width: 1024px) {
+      .container-site {
+         padding-left: 2rem;
+         padding-right: 2rem;
+      }
+   }
+
+   /* Section heading block — centred, used in most sections */
+   .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      max-width: var(--content-narrow);
+      margin-left: auto;
+      margin-right: auto;
+   }
+
+   /* Uppercase eyebrow labels — "NEW ARRIVALS", nav items */
+   .label-uppercase {
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      color: var(--muted-foreground);
+   }
+
+   /* Fine print — privacy notes, legal copy */
+   .text-fine {
+      font-size: var(--text-xs);
+      color: var(--muted-foreground);
+      line-height: var(--leading-body);
+   }
+
+   /* Scroll hiding — carousels etc. */
+   .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
+
+   .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+   }
 }

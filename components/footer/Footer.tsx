@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { siteConfig } from "@/lib/config/site"
 import { footerNavigation } from "@/lib/config/footer"
 import { footerSections } from "./sections"
@@ -14,16 +15,16 @@ function FooterColumn({ section }: FooterColumnProps) {
 
   return (
     <nav aria-labelledby={section.key} className="lg:col-span-1">
-      <h4 id={section.key} className="mb-4 font-medium">
+      <h4 id={section.key} className="mb-4 text-white">
         {section.title}
       </h4>
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-2">
         {items.map((item) => (
           <li key={`${section.key}-${item.href}`}>
             <Link
               href={item.href}
               prefetch={false}
-              className="text-silk-200 transition-colors hover:text-white"
+              className="text-xs transition-colors text-silk-100 hover:text-white"
             >
               {item.label}
             </Link>
@@ -40,14 +41,19 @@ export default function Footer() {
       data-mobile-filter-footer
       className="bg-forest-800 py-12 text-silk-50"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-site">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h3 className="mb-4 text-xl">{siteConfig.displayName}</h3>
-              <p className="text-sm leading-relaxed text-silk-100">
-                {siteConfig.tagline}
-              </p>
+              {/* TODO: replace with white logo variant when available */}
+              <Image
+                src="/anna-hora-logo-2026-04.png"
+                alt={siteConfig.displayName}
+                width={120}
+                height={40}
+                className="mb-4 brightness-0 invert"
+              />
+              <p className="text-silk-100">{siteConfig.tagline}</p>
             </div>
           </div>
 
@@ -63,7 +69,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between border-t border-forest-700 pt-8 md:flex-row">
-          <p className="text-sm text-silk-300">
+          <p className="text-xs transition-colors text-silk-100 hover:text-white">
             © <Year /> {siteConfig.displayName}. All rights reserved.
           </p>
 
@@ -73,7 +79,7 @@ export default function Footer() {
                 key={`legal-${item.href}`}
                 href={item.href}
                 prefetch={false}
-                className="text-sm text-silk-300 transition-colors hover:text-silk-100"
+                className="text-xs transition-colors text-silk-100 hover:text-white"
               >
                 {item.label}
               </Link>

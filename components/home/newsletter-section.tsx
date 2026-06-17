@@ -63,8 +63,8 @@ export default function NewsletterSection() {
   }, [submitState])
 
   return (
-    <section className="py-16 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section">
+      <div className="container-site">
         <div className="mx-auto max-w-2xl text-center">
           <div className="relative min-h-[320px]">
             <AnimatePresence mode="wait">
@@ -77,15 +77,9 @@ export default function NewsletterSection() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <h2 className="mb-3 text-3xl font-light text-stone-800 lg:text-4xl">
-                    {newsletter.success.heading}
-                  </h2>
-                  <p className="mb-3 text-stone-600">
-                    {newsletter.success.description}
-                  </p>
-                  <p className="text-xs text-stone-500">
-                    {newsletter.success.note}
-                  </p>
+                  <h2 className="mb-3">{newsletter.success.heading}</h2>
+                  <p className="mb-3">{newsletter.success.description}</p>
+                  <p className="text-fine">{newsletter.success.note}</p>
                 </motion.div>
               ) : (
                 <motion.div
@@ -96,12 +90,8 @@ export default function NewsletterSection() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <h2 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
-                    {newsletter.heading}
-                  </h2>
-                  <p className="mb-8 text-stone-600">
-                    {newsletter.description}
-                  </p>
+                  <h2 className="mb-4">{newsletter.heading}</h2>
+                  <p className="mb-8">{newsletter.description}</p>
 
                   <form
                     onSubmit={handleSubmit}
@@ -116,7 +106,7 @@ export default function NewsletterSection() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       disabled={submitState === "submitting"}
-                      className="flex-1 border-stone-300 focus:border-stone-500"
+                      className="flex-1"
                       aria-label="Email address"
                     />
                     <Button
@@ -130,12 +120,10 @@ export default function NewsletterSection() {
                   </form>
 
                   {submitState === "error" && (
-                    <p className="mt-4 text-sm text-red-600">{errorMessage}</p>
+                    <p className="mt-4 text-sm text-destructive">{errorMessage}</p>
                   )}
 
-                  <p className="mt-4 text-xs text-stone-500">
-                    {newsletter.privacy}
-                  </p>
+                  <p className="mt-4 text-fine">{newsletter.privacy}</p>
                 </motion.div>
               )}
             </AnimatePresence>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google"
 import "./globals.css"
 
 import Script from "next/script"
@@ -17,14 +18,23 @@ export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = defaultMetadata
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+  display: "swap",
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+})
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-
-  
-  
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
   const cartRes = await getCartAction()
@@ -32,10 +42,9 @@ export default async function RootLayout({
   const cartId = initialCart?.id ?? null
 
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-stone-50 flex flex-col">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-screen bg-background flex flex-col">
 
-        {/* GTM noscript fallback */}
         {GTM_ID && (
           <noscript>
             <iframe
@@ -58,7 +67,7 @@ export default async function RootLayout({
           </WishlistProvider>
         </CartProvider>
 
-        {/* GTM — afterInteractive keeps it outside React hydration cycle */}
+        {/* GTM — afterInteractive keeps it outside the React hydration cycle */}
         {GTM_ID && (
           <Script
             id="gtm"

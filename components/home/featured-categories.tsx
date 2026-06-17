@@ -21,16 +21,14 @@ export default function FeaturedCategories({ collections }: { collections: Colle
   }))
 
   return (
-    <section className="py-16 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section">
+      <div className="container-site">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
+          <h2>
             {categories.heading}{" "}
-            <em className="font-serif italic">{categories.headingEm}</em>
+            <em>{categories.headingEm}</em>
           </h2>
-          <p className="text-stone-600 max-w-2xl mx-auto">
-            {categories.description}
-          </p>
+          <p>{categories.description}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

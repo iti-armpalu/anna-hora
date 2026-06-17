@@ -25,7 +25,7 @@ export const homeContent = {
 
     categories: {
         heading: "Designed for",
-        headingEm: "Moments That Are Yours Alone",
+        headingEm: "moments that are yours alone",
         description:
             "Shirts, shorts and trousers — each made to move with you. Comfortable, confident, and always intentional.",
     },
@@ -48,7 +48,7 @@ export const homeContent = {
     },
 
     featuredProducts: {
-        heading: "Featured Pieces",
+        heading: "Featured pieces",
         description: "Handpicked selections for your most cherished moments",
         cta: {
             label: "View All Products",
@@ -57,7 +57,7 @@ export const homeContent = {
     },
 
     gifting: {
-        heading: "Thoughtful Gifting",
+        heading: "Thoughtful gifting",
         description: "Because the best gifts feel personal.",
         subDescription:
             "Each piece is carefully wrapped and ready to honour her rituals, her milestones, or simply, Her.",
@@ -66,7 +66,7 @@ export const homeContent = {
                 src: "/anna-hora-giftcard-2.webp",
                 alt: "An ANNA HORA gift card tied with a branded green satin ribbon on marble table top",
             },
-            heading: "Gift Cards",
+            heading: "Gift cards",
             description:
                 "Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time, in her own style.",
             badge: "Now Available",
@@ -80,7 +80,7 @@ export const homeContent = {
                 src: "/packing-4.jpeg",
                 alt: "An ANNA HORA order packed in branded tissue and packaging with a sealed sticker.",
             },
-            heading: "Complimentary Signature Packaging",
+            heading: "Complimentary signature packaging",
             description:
                 "Every order arrives in our signature packaging, complete with a handwritten note — because the unboxing should feel as special as what's inside.",
             badge: "Always Included",
@@ -92,7 +92,7 @@ export const homeContent = {
     },
 
     newsletter: {
-        heading: "Me-Time Letters",
+        heading: "Me-time letters",
         description:
             "Join our community and receive thoughtful notes about self-care, styling tips, and exclusive access to new collections. Sent occasionally, always with intention.",
         placeholder: "Your email address",

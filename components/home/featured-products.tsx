@@ -12,13 +12,11 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   const { featuredProducts } = homeContent
 
   return (
-    <section className="py-16 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section">
+      <div className="container-site">
         <div className="mb-6 lg:mb-12">
-          <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
-            {featuredProducts.heading}
-          </h2>
-          <p className="text-stone-600">{featuredProducts.description}</p>
+          <h2>{featuredProducts.heading}</h2>
+          <p>{featuredProducts.description}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
