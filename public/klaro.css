@@ -1,0 +1,161 @@
+/* ----------------------------------------
+   Klaro Cookie Banner — ANNA HORA
+   Uses Klaro's own CSS custom properties
+   for theming, then overrides structural
+   styles that variables don't cover.
+---------------------------------------- */
+
+/* ----------------------------------------
+   Klaro CSS variable overrides
+   These are Klaro's own theming tokens —
+   setting them here beats the cascade cleanly
+   without needing !important on every rule.
+---------------------------------------- */
+:root {
+    --klaro-green: #2a3d3b;
+    --green1: #2a3d3b;
+    --green2: #1e2d2c;
+    --dark1: #fafaf9;
+    --dark2: #f5f5f4;
+    --dark3: #e7e5e4;
+    --dark4: #d6d3d1;
+    --light1: #1c1917;
+    --light2: #44403c;
+    --light3: #57534e;
+    --border-radius: 0px;
+    --button-text-color: #ffffff;
+    --font-family: var(--font-geist-sans), system-ui, sans-serif;
+    --font-size: 14px;
+}
+
+/* ----------------------------------------
+     Structural overrides that variables
+     don't cover
+  ---------------------------------------- */
+
+/* Banner container */
+.klaro .cookie-notice {
+    background: #fafaf9 !important;
+    border: 1px solid #e7e5e4 !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+    max-width: 22rem !important;
+}
+
+/* Body text */
+.klaro .cookie-notice p,
+.klaro .cookie-notice .cn-body p {
+    color: #44403c !important;
+    font-weight: 300 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Accept button — forest filled */
+.klaro .cookie-notice .cm-btn.cm-btn-success {
+    background-color: #2a3d3b !important;
+    border: 1px solid #2a3d3b !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.5rem 1.25rem !important;
+}
+
+.klaro .cookie-notice .cm-btn.cm-btn-success:hover {
+    background-color: #1e2d2c !important;
+    border-color: #1e2d2c !important;
+}
+
+/* Decline button — outlined */
+.klaro .cookie-notice .cm-btn.cm-btn-danger,
+.klaro .cookie-notice .cm-btn:not(.cm-btn-success) {
+    background-color: transparent !important;
+    border: 1px solid #d6d3d1 !important;
+    color: #57534e !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.5rem 1.25rem !important;
+}
+
+.klaro .cookie-notice .cm-btn.cm-btn-danger:hover,
+.klaro .cookie-notice .cm-btn:not(.cm-btn-success):hover {
+    color: #1c1917 !important;
+    border-color: #a8a29e !important;
+}
+
+/* "Let me choose" link */
+.klaro .cookie-notice a,
+.klaro .cookie-notice .cn-learn-more {
+    color: #78716c !important;
+    font-size: 0.75rem !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+}
+
+/* ----------------------------------------
+     Modal
+  ---------------------------------------- */
+.klaro .cookie-modal .cm-modal {
+    background: #fafaf9 !important;
+    border: 1px solid #e7e5e4 !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12) !important;
+}
+
+.klaro .cookie-modal .cm-header {
+    border-bottom: 1px solid #e7e5e4 !important;
+    background: #fafaf9 !important;
+}
+
+.klaro .cookie-modal .cm-body {
+    background: #fafaf9 !important;
+}
+
+.klaro .cookie-modal .cm-footer {
+    border-top: 1px solid #e7e5e4 !important;
+    background: #fafaf9 !important;
+}
+
+/* Modal accept all */
+.klaro .cookie-modal .cm-btn.cm-btn-success {
+    background-color: #2a3d3b !important;
+    border: 1px solid #2a3d3b !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.5rem 1.25rem !important;
+}
+
+/* Modal decline */
+.klaro .cookie-modal .cm-btn:not(.cm-btn-success) {
+    background-color: transparent !important;
+    border: 1px solid #d6d3d1 !important;
+    color: #57534e !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.5rem 1.25rem !important;
+}
+
+/* Toggle — off */
+.klaro .cm-list-label .slider {
+    background: #d6d3d1 !important;
+}
+
+/* Toggle — on */
+.klaro input:checked+.cm-list-label .slider {
+    background: #2a3d3b !important;
+}
+
+/* Overlay */
+.klaro .cookie-modal-overlay {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(2px) !important;
+}
+
+/* Hide "Powered by Klaro" */
+.klaro .cm-powered-by,
+.klaro .cn-powered-by {
+    display: none !important;
+}
