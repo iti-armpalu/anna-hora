@@ -48,7 +48,8 @@ export function WishlistButton({ product }: WishlistButtonProps) {
             )
             return { size, inStock: variant?.availableForSale ?? false }
           }) ?? [],
-        fabricShort: product.metafields.fabricShort,
+        // metafields use null for missing values; wishlist item uses undefined
+        fabricShort: product.metafields.fabricShort ?? undefined,
         size: undefined,
       })
     }

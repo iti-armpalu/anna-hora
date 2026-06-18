@@ -1,25 +1,28 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import Script from "next/script";
-import { Instagram } from "lucide-react";
-import { siteConfig } from "@/lib/config/site";
+import Link from "next/link"
+import Script from "next/script"
+import { Instagram } from "lucide-react"
+import { siteConfig } from "@/lib/config/site"
 
-const EMBED_SOCIAL_REF = "ed5f0124a26c086321a572430e09a3d6b22015f2";
+const EMBED_SOCIAL_REF = "ed5f0124a26c086321a572430e09a3d6b22015f2"
 
 export default function InstagramGrid() {
+  const instagram = siteConfig.social.instagram
+  if (!instagram) return null
+
   return (
     <>
       <div className="mb-4 flex items-center gap-2">
         <h4 className="font-medium text-white">Follow Us</h4>
         <Link
-          href={siteConfig.social.instagram.link}
+          href={instagram.link}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-sm text-silk-100 transition-colors hover:text-white"
         >
           <Instagram className="h-4 w-4" />
-          @{siteConfig.social.instagram.handle}
+          @{instagram.handle}
         </Link>
       </div>
 
@@ -36,5 +39,5 @@ export default function InstagramGrid() {
         strategy="lazyOnload"
       />
     </>
-  );
+  )
 }
