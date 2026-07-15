@@ -15,13 +15,13 @@ const buttonVariants = cva(
         outline:
           "border border-stone-300 bg-transparent text-stone-700 hover:bg-stone-50 hover:border-stone-400",
         secondary:
-          "bg-silk-100 text-silk-900 hover:bg-silk-200",
+          "bg-stone-100 text-stone-900 hover:bg-stone-200",
         ghost:
           "bg-transparent text-stone-700 hover:bg-stone-100 hover:text-stone-900",
         link:
           "text-forest-800 underline-offset-4 hover:underline p-0 h-auto",
         silk:
-          "bg-silk-500 text-white hover:bg-silk-600 active:bg-silk-700",
+          "bg-stone-500 text-white hover:bg-stone-600 active:bg-stone-700",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

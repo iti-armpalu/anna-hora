@@ -13,7 +13,7 @@ export const homeContent = {
         description: "Not just silk. A ritual. A feeling. A way to come home to yourself.",
         ctas: {
             primary: {
-                label: "Explore Collection",
+                label: "Explore collection",
                 href: "/shop",
             },
             secondary: {
@@ -42,7 +42,7 @@ export const homeContent = {
             "It took 18 months to find a silk that felt right — not just to the touch, but in principle. It had to meet our standards for comfort, quality, and consciousness. The result? A fabric that moves like water, wears like second skin, and elevates the everyday. It's silk that speaks to confidence, calm, and the freedom to feel — the ANNA HORA way of living.",
         ],
         cta: {
-            label: "Learn More About Our Silk",
+            label: "Learn more about our silk",
             href: "/our-silk",
         },
     },
@@ -51,7 +51,7 @@ export const homeContent = {
         heading: "Featured pieces",
         description: "Handpicked selections for your most cherished moments",
         cta: {
-            label: "View All Products",
+            label: "View all products",
             href: "/shop",
         },
     },
@@ -71,7 +71,7 @@ export const homeContent = {
                 "Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time, in her own style.",
             badge: "Now Available",
             cta: {
-                label: "Shop Gift Cards",
+                label: "Shop gift cards",
                 href: "/gift-guide",
             },
         },
@@ -83,9 +83,9 @@ export const homeContent = {
             heading: "Complimentary signature packaging",
             description:
                 "Every order arrives in our signature packaging, complete with a handwritten note — because the unboxing should feel as special as what's inside.",
-            badge: "Always Included",
+            badge: "Always included",
             cta: {
-                label: "See Our Packaging",
+                label: "See our packaging",
                 href: "/gift-guide",
             },
         },
@@ -100,7 +100,7 @@ export const homeContent = {
         submittingLabel: "Submitting...",
         privacy: "We respect your privacy. Unsubscribe at any time.",
         success: {
-            heading: "You're In!",
+            heading: "You're in!",
             description:
                 "Thank you for subscribing. We'll send thoughtful notes, styling inspiration, and early access to new collections.",
             note: "Check your inbox for a welcome note from us.",

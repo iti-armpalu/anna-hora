@@ -22,8 +22,8 @@ export function CareInstructionsGrid() {
               <CardContent className="p-8">
                 <div className="mb-4 flex items-start gap-4">
 
-                  <div className="w-16 h-16 bg-silk-100 rounded-full flex items-center justify-center shadow-sm">
-                    <span className="text-3xl md:text-5xl lg:text-7xl font-serif italic text-silk-600 leading-none translate-y-[-8px]">
+                  <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center shadow-sm">
+                    <span className="text-3xl md:text-5xl lg:text-7xl font-serif italic text-stone-600 leading-none translate-y-[-8px]">
                       {instruction.step}
                     </span>
                   </div>

@@ -4,7 +4,6 @@ import { getGiftCardProduct } from "@/lib/shopify/product"
 import { GiftGuideHero } from "./_components/gift-guide-hero"
 import { GiftCardSection } from "./_components/gift-card-section"
 import { PackagingSection } from "./_components/packaging-section"
-import { GiftGuideClosingSection } from "./_components/closing-section"
 
 export const metadata: Metadata = pageMeta.giftGuide
 export const revalidate = 3600
@@ -17,7 +16,6 @@ export default async function GiftGuidePage() {
       <GiftGuideHero />
       <GiftCardSection giftCardProduct={giftCardProduct} />
       <PackagingSection />
-      <GiftGuideClosingSection />
     </>
   )
 }

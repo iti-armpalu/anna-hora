@@ -1,5 +1,3 @@
-import { Card } from "@/components/ui/card"
-
 interface CareGuideStepProps {
   step: number
   title: string
@@ -8,14 +6,14 @@ interface CareGuideStepProps {
 
 export function CareGuideStep({ step, title, description }: CareGuideStepProps) {
   return (
-    <Card className="border-0 shadow-sm bg-stone-50 p-6 text-center items-center">
-      <div className="w-16 h-16 bg-silk-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-        <span className="text-7xl font-serif italic text-silk-600 leading-none translate-y-[-8px]">
+    <div className="text-center">
+      <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span className="text-3xl font-serif italic text-stone-600 leading-none translate-y-[-4px]">
           {step}
         </span>
       </div>
-      <h4 className="text-lg font-light text-stone-800 mb-1">{title}</h4>
-      <p className="text-sm text-stone-600 leading-relaxed">{description}</p>
-    </Card>
+      <h4 className="mb-1">{title}</h4>
+      <p className="text-small leading-relaxed">{description}</p>
+    </div>
   )
 }

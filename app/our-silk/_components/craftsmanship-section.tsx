@@ -6,17 +6,17 @@ export function CraftsmanshipSection() {
     const { craftsmanship } = silkContent
 
     return (
-        <section className="py-16 lg:py-24 bg-white">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="section bg-white">
+            <div className="container-site">
                 <div className="max-w-6xl mx-auto">
                     <SectionHeader
                         titleTop={craftsmanship.headingTop}
                         titleEm={craftsmanship.headingEm}
                         subtitle={craftsmanship.intro}
                     />
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        {craftsmanship.cards.map((card) => (
-                            <CraftsmanshipCard key={card.title} {...card} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                        {craftsmanship.cards.map((card, index) => (
+                            <CraftsmanshipCard key={index} {...card} />
                         ))}
                     </div>
                 </div>

@@ -17,20 +17,34 @@
      Typography — Scale
      Named for role, not size — so you can
      adjust values without renaming tokens.
+
+     Fluid via clamp(min, preferred, max), all in rem
+     so the scale still respects the user's font-size
+     preference/zoom at both ends — only the preferred
+     (middle) value uses vw, and it's anchored to a rem
+     base rather than a bare viewport unit. Ranges are
+     interpolated linearly between a 400px and 1440px
+     viewport. Larger tokens get a wider clamp range;
+     body-level tokens get a narrow one, since reading
+     comfort benefits from staying close to constant.
+     Replaces the old breakpoint-jump overrides that
+     used to live in a media query further down this
+     file — every token now scales continuously and
+     on the same curve, not just the top two.
   ---------------------------------------- */
-   --text-display: 3.5rem;
+   --text-display: clamp(3.5rem, 2.923rem + 2.308vw, 5rem);
    /* h1 — hero headlines              */
-   --text-heading-lg: 2.25rem;
+   --text-heading-lg: clamp(2.25rem, 2.202rem + 0.192vw, 2.375rem);
    /* h2 — section titles              */
-   --text-heading-md: 1.5rem;
+   --text-heading-md: clamp(1.375rem, 1.327rem + 0.192vw, 1.5rem);
    /* h3 — card titles, sub-sections   */
    --text-heading-sm: 1.125rem;
-   /* h4 — labels with weight          */
-   --text-body: 1rem;
+   /* h4 — card titles, light weight — 18px fixed, no desktop growth */
+   --text-body: clamp(1rem, 0.976rem + 0.096vw, 1.0625rem);
    /* p  — default body                */
-   --text-small: 0.875rem;
+   --text-small: clamp(0.875rem, 0.851rem + 0.096vw, 0.9375rem);
    /* captions, helper text            */
-   --text-xs: 0.75rem;
+   --text-xs: clamp(0.75rem, 0.726rem + 0.096vw, 0.8125rem);
    /* fine print, legal, tags          */
 
    /* ----------------------------------------
@@ -91,23 +105,6 @@
    /* ← brand primary */
    --color-forest-900: #1e2d2c;
    --color-forest-950: #132020;
-
-   /* ----------------------------------------
-     ANNA HORA Brand Palette — Silk
-     Base: #AE8F72
-  ---------------------------------------- */
-   --color-silk-50: #faf7f4;
-   --color-silk-100: #f0e8df;
-   --color-silk-200: #e2d0bc;
-   --color-silk-300: #cfb193;
-   --color-silk-400: #be9575;
-   --color-silk-500: #ae8f72;
-   /* ← brand accent */
-   --color-silk-600: #9a7860;
-   --color-silk-700: #7f6250;
-   --color-silk-800: #685143;
-   --color-silk-900: #554339;
-   --color-silk-950: #2d231e;
 
    /* ----------------------------------------
      Neutral — warm stone (used throughout UI)
@@ -190,8 +187,8 @@
    --muted: oklch(0.96 0.003 60);
    --muted-foreground: oklch(0.45 0.015 60);
 
-   /* Accent — Silk #AE8F72 */
-   --accent: oklch(0.65 0.07 55);
+   /* Accent — Silk, same value as Stone-500 (#78716c) */
+   --accent: oklch(0.5 0.012 60);
    --accent-foreground: oklch(1 0 0);
 
    /* Destructive */
@@ -246,7 +243,7 @@
    --secondary-foreground: oklch(0.95 0 0);
    --muted: oklch(0.22 0.01 172);
    --muted-foreground: oklch(0.65 0.01 60);
-   --accent: oklch(0.65 0.07 55);
+   --accent: oklch(0.5 0.012 60);
    --accent-foreground: oklch(0.15 0.01 172);
    --destructive: oklch(0.704 0.191 22.216);
    --border: oklch(1 0 0 / 10%);
@@ -324,7 +321,7 @@
       font-family: var(--font-sans);
       font-size: var(--text-heading-sm);
       line-height: var(--leading-heading);
-      font-weight: 500;
+      font-weight: 300;
       color: var(--foreground);
    }
 
@@ -359,26 +356,6 @@
 }
 
 /* ----------------------------------------
-   Responsive type scale
-   Adjust token values at breakpoints so
-   every h1/h2/h3 on the site scales together.
-   No more md:text-5xl in components.
----------------------------------------- */
-@media (min-width: 768px) {
-   :root {
-      --text-display: 4rem;
-      --text-heading-lg: 2.25rem;
-   }
-}
-
-@media (min-width: 1024px) {
-   :root {
-      --text-display: 5rem;
-      --text-heading-lg: 2.5rem;
-   }
-}
-
-/* ----------------------------------------
    Utilities
 ---------------------------------------- */
 @layer utilities {
@@ -387,6 +364,12 @@
    .section {
       padding-top: var(--section-padding);
       padding-bottom: var(--section-padding);
+   }
+
+   /* Larger variant — closing/hero-style sections that want more air than a standard section */
+   .section-lg {
+      padding-top: var(--section-padding-lg);
+      padding-bottom: var(--section-padding-lg);
    }
 
    /* Inner container — use inside every section */

@@ -5,7 +5,7 @@ export function HeroSection() {
     const { hero } = silkContent
 
     return (
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen h-dvh flex items-center justify-center overflow-hidden">
 
             {/* Image */}
             <div className="absolute inset-0">
@@ -14,6 +14,7 @@ export function HeroSection() {
                     alt={hero.alt}
                     fill
                     className="object-cover"
+                    sizes="100vw"
                     priority
                 />
             </div>
@@ -23,12 +24,10 @@ export function HeroSection() {
 
             {/* Text */}
             <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight">
-                    {hero.titleTop}
-                    <br />
-                    <em className="font-serif italic">{hero.titleEm}</em>
+                <h1 className="text-white mb-6">
+                    {hero.titleTop} <em>{hero.titleEm}</em>
                 </h1>
-                <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
+                <p className="text-heading-sm text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
                     {hero.subtitle}
                 </p>
             </div>

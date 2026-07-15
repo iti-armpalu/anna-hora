@@ -24,7 +24,7 @@ function FooterColumn({ section }: FooterColumnProps) {
             <Link
               href={item.href}
               prefetch={false}
-              className="text-xs transition-colors text-silk-100 hover:text-white"
+              className="text-xs transition-colors text-stone-100 hover:text-white"
             >
               {item.label}
             </Link>
@@ -39,7 +39,7 @@ export default function Footer() {
   return (
     <footer
       data-mobile-filter-footer
-      className="bg-forest-800 py-12 text-silk-50"
+      className="bg-forest-800 py-12 text-stone-50"
     >
       <div className="container-site">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -53,7 +53,7 @@ export default function Footer() {
                 height={40}
                 className="mb-4 brightness-0 invert"
               />
-              <p className="text-silk-100">{siteConfig.tagline}</p>
+              <p className="text-stone-100">{siteConfig.tagline}</p>
             </div>
           </div>
 
@@ -69,7 +69,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between border-t border-forest-700 pt-8 md:flex-row">
-          <p className="text-xs transition-colors text-silk-100 hover:text-white">
+          <p className="text-xs transition-colors text-stone-100 hover:text-white">
             © <Year /> {siteConfig.displayName}. All rights reserved.
           </p>
 
@@ -79,7 +79,7 @@ export default function Footer() {
                 key={`legal-${item.href}`}
                 href={item.href}
                 prefetch={false}
-                className="text-xs transition-colors text-silk-100 hover:text-white"
+                className="text-xs transition-colors text-stone-100 hover:text-white"
               >
                 {item.label}
               </Link>
