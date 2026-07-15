@@ -107,10 +107,11 @@ export const aboutContent: AboutContent = {
     },
 
     closing: {
-        titleLines: ["This Is Just", { italic: "The Beginning" }],
+        heading: "This is just",
+        headingEm: "the beginning",
         ctas: [
-            { label: "Explore Our Collection", href: "/shop", variant: "primary" },
-            { label: "Read Our Journal", href: "/journal", variant: "outline" },
+            { label: "Explore our collection", href: "/shop", variant: "primary" },
+            { label: "Read our journal", href: "/journal", variant: "outline" },
         ],
     },
 }

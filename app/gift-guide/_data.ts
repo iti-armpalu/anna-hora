@@ -82,7 +82,8 @@ export const giftGuideContent: GiftGuideContent = {
         ],
     },
     closing: {
-        titleLines: ["Give the Gift of", { italic: "Pure Silk" }],
+            heading: "Give the gift of",
+            headingEm: "pure silk",
         ctas: [
             { label: "Shop Collection", href: "/shop", variant: "primary" },
             { label: "Read About Our Silk", href: "/our-silk", variant: "outline" },

@@ -347,10 +347,11 @@ export const sizeGuideContent: SizeGuideContent = {
     },
   },
   closing: {
-    titleLines: ["Find Your", { italic: "Perfect Fit" }],
+    heading: "Find your",
+    headingEm: "perfect fit",
     ctas: [
-      { label: "Shop Collection", href: "/shop", variant: "primary" },
-      { label: "Contact Us", href: "/contact", variant: "outline" },
+      { label: "Shop collection", href: "/shop", variant: "primary" },
+      { label: "Contact us", href: "/contact", variant: "outline" },
     ],
   },
 }
