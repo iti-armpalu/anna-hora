@@ -50,7 +50,6 @@ export type CareGuideContent = {
     title: string
     items: string[]
   }
-  closing: ClosingContent
 }
 
 export const careGuideContent: CareGuideContent = {
@@ -204,12 +203,5 @@ export const careGuideContent: CareGuideContent = {
       "Storing silk while damp, which can cause mildew and permanent damage",
       "Wire hangers, which can leave rust marks and distort garment shape",
     ],
-  },
-  closing: {
-    titleLines: ["Ready to Experience", { italic: "Pure Silk Luxury?" }],
-    ctas: [
-      { label: "Shop Collection", href: "/shop", variant: "primary" },
-      { label: "Learn About Our Silk", href: "/our-silk", variant: "outline" },
-    ],
-  },
+  }
 }

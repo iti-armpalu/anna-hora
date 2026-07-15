@@ -7,7 +7,6 @@ import { CareInstructionsGrid } from "./_components/care-instructions-grid"
 import { CommonIssues } from "./_components/common-issues"
 import { StorageTipsGrid } from "./_components/storage-tips-grid"
 import { AvoidList } from "./_components/avoid-list"
-import { CareGuideClosingSection } from "./_components/closing-section"
 
 
 export const metadata: Metadata = pageMeta.careGuide;
@@ -21,7 +20,6 @@ export default function CareGuidePage() {
       <CommonIssues />
       <StorageTipsGrid />
       <AvoidList />
-      <CareGuideClosingSection />
     </div>
   )
 }
