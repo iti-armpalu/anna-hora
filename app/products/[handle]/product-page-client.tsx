@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import { formatPrice } from "@/hooks/use-price"
@@ -29,7 +30,8 @@ export default function ProductPageClient({
     shippingCountry,
     canShip,
 }: Props) {
-    const { addToCart } = useCart()
+    const { addToCart, loading: isAdding } = useCart()
+    const router = useRouter()
     const [selectedSize, setSelectedSize] = useState<string | null>(null)
     const [showSizeGuide, setShowSizeGuide] = useState(false)
 
@@ -75,7 +77,13 @@ export default function ProductPageClient({
             toast.error(`We don't ship to ${shippingCountry}.`)
             return
         }
-        await addToCart(selectedVariant.id, 1)
+        const result = await addToCart(selectedVariant.id, 1)
+        if (!result.ok) {
+            toast.error(result.error)
+            // Stock may have changed since the page loaded — re-render with fresh sizes
+            router.refresh()
+            return
+        }
         toast.success(
             `${product.title} added to bag • Size ${selectedSize}${isPreorder ? ` (${PREORDER_COPY.buttonLabel.toLowerCase()})` : ""}`
         )
@@ -154,18 +162,21 @@ export default function ProductPageClient({
                     {/* Add to bag */}
                     {!canShip ? (
                         <p className="text-sm text-stone-500">
-                            We don't ship to your country yet — hopefully soon.
+                            We don&apos;t ship to your country yet — hopefully soon.
                         </p>
                     ) : (
                         <div className="flex gap-2">
                             <Button
                                 onClick={handleAddToBag}
                                 className="flex-1"
-                                disabled={!selectedVariant}
+                                disabled={!selectedVariant || isAdding}
+                                aria-busy={isAdding}
                             >
                                 {!selectedVariant
                                     ? "Select a size"
-                                    : isPreorder
+                                    : isAdding
+                                        ? "Adding…"
+                                        : isPreorder
                                         ? `${PREORDER_COPY.buttonLabel} – ${formattedPrice}`
                                         : `Add to Bag – ${formattedPrice}`}
                             </Button>

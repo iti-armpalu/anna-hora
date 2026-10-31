@@ -1,8 +1,17 @@
+// lib/shopify/queries/product.ts
 
-
-// lib/queries/product.ts
-// Stores the raw GraphQL query used by the fetchers.
-// GraphQL
+// Leftover-fabric metaobject linked to a product; null when the product has no pre-order fabric
+const PREORDER_FABRIC_FIELD = /* GraphQL */ `
+  preorderFabric: metafield(namespace: "custom", key: "preorder_fabric") {
+    reference {
+      ... on Metaobject {
+        leadTimeWeeks: field(key: "lead_time_weeks") {
+          value
+        }
+      }
+    }
+  }
+`;
 
 export const PRODUCTS_QUERY = `
   query ProductsWithVariants($first: Int!, $after: String, $country: CountryCode, $query: String)
@@ -174,17 +183,24 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
         value
       }
 
-      # Fabric metaobject for pre-order sizes; null for products without leftover fabric
-      preorderFabric: metafield(namespace: "custom", key: "preorder_fabric") {
-        reference {
-          ... on Metaobject {
-            leadTimeWeeks: field(key: "lead_time_weeks") {
-              value
-            }
-          }
+      ${PREORDER_FABRIC_FIELD}
+    }
+  }
+`;
+
+
+// Fresh stock check for a single variant at add-to-bag time
+export const VARIANT_STOCK_QUERY = /* GraphQL */ `
+  query VariantStock($variantId: ID!, $country: CountryCode)
+  @inContext(country: $country) {
+    node(id: $variantId) {
+      ... on ProductVariant {
+        availableForSale
+        currentlyNotInStock
+        product {
+          ${PREORDER_FABRIC_FIELD}
         }
       }
     }
   }
 `;
-

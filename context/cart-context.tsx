@@ -13,7 +13,7 @@ type CartContextType = {
   cart: Cart | null;
   loading: boolean;
 
-  addToCart: (variantId: string, quantity: number) => Promise<void>;
+  addToCart: (variantId: string, quantity: number) => Promise<AddToCartResult>;
   updateQuantity: (
     lineId: string,
     quantity: number
@@ -25,6 +25,10 @@ type CartContextType = {
   close: () => void;
   toggle: () => void;
 };
+
+export type AddToCartResult = { ok: boolean; error?: string };
+
+const ADD_TO_CART_FALLBACK_ERROR = "Something went wrong. Please try again.";
 
 export const CartContext = createContext<CartContextType | null>(null);
 
@@ -77,17 +81,23 @@ export function CartProvider({
   // Cart Mutations (Server Actions)
   // -----------------------------
 
-  async function addToCart(variantId: string, quantity: number) {
+  // Returns the outcome so the caller can show the right message — never assume success
+  async function addToCart(
+    variantId: string,
+    quantity: number
+  ): Promise<AddToCartResult> {
     setLoading(true);
     try {
       const res = await cartAddAction({ variantId, quantity });
       if (!res.ok || !res.cart) {
-        console.error("Add to cart failed:", res.error);
-        return;
+        return { ok: false, error: res.error ?? ADD_TO_CART_FALLBACK_ERROR };
       }
       setCart(res.cart);
-    } catch (err) {
-      console.error("addToCart unexpected error:", err);
+      return { ok: true };
+    } catch (err: unknown) {
+      // Network failure reaching the server action itself
+      console.error("addToCart error:", err instanceof Error ? err.message : err);
+      return { ok: false, error: ADD_TO_CART_FALLBACK_ERROR };
     } finally {
       setLoading(false);
     }

@@ -32,9 +32,15 @@ export interface ShopifyMoneyV2 {
     totalAmount: ShopifyMoneyV2;
   }
   
+  export interface ShopifyCartAttribute {
+    key: string;
+    value: string | null;
+  }
+
   export interface ShopifyCartLineNode {
     id: string;
     quantity: number;
+    attributes: ShopifyCartAttribute[];
     merchandise?: ShopifyProductVariant;
     cost: ShopifyCartLineCost;
   }

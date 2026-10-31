@@ -41,6 +41,7 @@ export default function CartPageClient() {
               title={line.title}
               image={line.image}
               size={line.size}
+              preorderNote={line.preorderNote}
               quantity={line.quantity}
               totalAmount={Number(line.cost.totalAmount)}
               currencyCode={line.cost.currencyCode}

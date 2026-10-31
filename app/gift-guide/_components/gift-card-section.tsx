@@ -42,7 +42,11 @@ export function GiftCardSection({ giftCardProduct }: GiftCardSectionProps) {
 
         setLoading(true)
         try {
-            await addToCart(selectedVariant.id, 1)
+            const result = await addToCart(selectedVariant.id, 1)
+            if (!result.ok) {
+                toast.error(result.error)
+                return
+            }
             const formattedAmount = formatPrice({
                 amount: selectedVariant.price.amount,
                 currencyCode: selectedVariant.price.currencyCode,

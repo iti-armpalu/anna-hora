@@ -5,6 +5,7 @@ import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { QuantitySelector } from "./quantity-selector"
 import { formatPrice } from "@/hooks/use-price"
+import { PREORDER_COPY } from "@/lib/config/preorder"
 
 export type CartLineItemVariant = "page" | "drawer"
 
@@ -14,6 +15,7 @@ type CartLineItemProps = {
   title: string
   image?: string | null
   size?: string | null
+  preorderNote?: string | null
   quantity: number
   totalAmount: number
   currencyCode: string
@@ -27,6 +29,7 @@ export function CartLineItem({
   title,
   image,
   size,
+  preorderNote,
   quantity,
   totalAmount,
   currencyCode,
@@ -71,8 +74,14 @@ export function CartLineItem({
           </div>
 
           {size && (
-            <p className="text-xs sm:text-sm text-stone-500 mb-3">
+            <p className={`text-xs sm:text-sm text-stone-500 ${preorderNote ? "mb-1" : "mb-3"}`}>
               Size: {size}
+            </p>
+          )}
+
+          {preorderNote && (
+            <p className="text-xs text-stone-600 mb-3">
+              {PREORDER_COPY.buttonLabel} · {preorderNote}
             </p>
           )}
 

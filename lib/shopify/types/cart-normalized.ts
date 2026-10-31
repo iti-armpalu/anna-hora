@@ -8,6 +8,8 @@ export interface CartLine {
   
     size: string | null;
     image: string | null;
+    /** e.g. "Ships in 3–4 weeks"; null for in-stock lines */
+    preorderNote: string | null;
   
     cost: {
       amountPerQuantity: string;   // "29.00"

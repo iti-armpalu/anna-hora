@@ -5,8 +5,8 @@ import type {
   Metafield,
 } from "@/lib/shopify/types/product";
 
+import { getStockStatus } from "@/lib/shopify/utils/stock-status";
 import type {
-  VariantStockStatus,
   ProductNormalized,
   ProductVariantNormalized,
   ProductImageNormalized,
@@ -64,11 +64,6 @@ function normalizeImage(
 /* ----------------------------------------------------
  * Normalize product variant
  * ---------------------------------------------------- */
-function getStockStatus(variant: ProductVariant): VariantStockStatus {
-  if (!variant.availableForSale) return "sold_out";
-  return variant.currentlyNotInStock ? "preorder" : "in_stock";
-}
-
 function normalizeVariant(variant: ProductVariant): ProductVariantNormalized {
   return {
     id: variant.id,

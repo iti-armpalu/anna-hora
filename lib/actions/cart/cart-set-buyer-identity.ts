@@ -48,6 +48,7 @@ export async function cartSetBuyerIdentityAction(
         },
         country,
       },
+      cache: "no-store",
     });
 
     const shopifyCart = res.cartBuyerIdentityUpdate.cart;

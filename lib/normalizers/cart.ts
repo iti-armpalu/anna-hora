@@ -5,6 +5,7 @@ import type {
   } from "@/lib/shopify/types/cart";
   
   import type { Cart, CartLine } from "@/lib/shopify/types/cart-normalized";
+  import { PREORDER_LINE_ATTRIBUTE_KEY } from "@/lib/config/preorder";
   
   /**
    * Normalize one cart line.
@@ -29,6 +30,10 @@ import type {
         line.merchandise?.image?.url ??
         line.merchandise?.product?.featuredImage?.url ??
         null,
+  
+      preorderNote:
+        line.attributes.find((attr) => attr.key === PREORDER_LINE_ATTRIBUTE_KEY)
+          ?.value ?? null,
   
       cost: {
         amountPerQuantity: line.cost.amountPerQuantity.amount,

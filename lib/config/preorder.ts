@@ -1,3 +1,10 @@
+/**
+ * Cart line attribute key for pre-order lines. Shopify shows it on checkout, the order,
+ * and the confirmation email; the order webhook uses it to deduct fabric. Do not rename
+ * without updating the webhook.
+ */
+export const PREORDER_LINE_ATTRIBUTE_KEY = "Pre-order";
+
 export const PREORDER_COPY = {
   buttonLabel: "Pre-order",
   sizeBadge: "Pre-order",
