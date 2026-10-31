@@ -1,11 +1,12 @@
 import "server-only";
 import { cookies } from "next/headers";
+import { SHOPIFY_CONFIG } from "./config";
 
 type Discovery = {
   graphql_api: string;
 };
 
-const SHOP_DOMAIN = process.env.SHOP_STOREFRONT_DOMAIN!;
+const SHOP_DOMAIN = SHOPIFY_CONFIG.domain;
 
 async function getGraphqlEndpoint(): Promise<string> {
   const res = await fetch(`https://${SHOP_DOMAIN}/.well-known/customer-account-api`, {

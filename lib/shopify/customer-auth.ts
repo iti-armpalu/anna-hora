@@ -1,6 +1,7 @@
 import "server-only";
+import { SHOPIFY_CONFIG } from "./config";
 
-const STORE_DOMAIN = process.env.SHOP_STOREFRONT_DOMAIN!;
+const STORE_DOMAIN = SHOPIFY_CONFIG.domain;
 
 export type OpenIdConfig = {
   authorization_endpoint: string;

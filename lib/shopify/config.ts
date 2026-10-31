@@ -1,10 +1,10 @@
 import "server-only";
 
-const domain = process.env.SHOPIFY_STORE_URL;
+const domain = process.env.SHOPIFY_STORE_DOMAIN;
 const publicAccessToken = process.env.SHOPIFY_STOREFRONT_API_KEY;
 
 if (!domain) {
-  throw new Error("Missing SHOPIFY_STORE_URL env var");
+  throw new Error("Missing SHOPIFY_STORE_DOMAIN env var");
 }
 
 if (!publicAccessToken) {
