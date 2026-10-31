@@ -47,6 +47,7 @@ export const PRODUCTS_QUERY = `
             node {
               id
               availableForSale
+              currentlyNotInStock
               selectedOptions {
                 name
                 value
@@ -136,6 +137,7 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
           node {
             id
             availableForSale
+            currentlyNotInStock
             selectedOptions {
               name
               value
@@ -172,6 +174,16 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
         value
       }
 
+      # Fabric metaobject for pre-order sizes; null for products without leftover fabric
+      preorderFabric: metafield(namespace: "custom", key: "preorder_fabric") {
+        reference {
+          ... on Metaobject {
+            leadTimeWeeks: field(key: "lead_time_weeks") {
+              value
+            }
+          }
+        }
+      }
     }
   }
 `;

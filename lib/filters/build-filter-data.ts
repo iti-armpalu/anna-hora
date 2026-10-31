@@ -1,4 +1,5 @@
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
+import { isPurchasable } from "@/lib/shopify/utils/stock-status";
 
 /* -------------------------------------------------------
  * Helpers
@@ -52,7 +53,7 @@ export function buildFilterData(
      * SIZE (available variants only)
      * ----------------------------- */
     for (const variant of product.variants) {
-      if (!variant.availableForSale) continue;
+      if (!isPurchasable(variant.stockStatus)) continue;
 
       const sizeOpt = variant.selectedOptions.find(
         (opt) => opt.name.toLowerCase() === "size"

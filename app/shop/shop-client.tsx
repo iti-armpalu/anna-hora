@@ -14,6 +14,7 @@ import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
 import { buildFilterData } from "@/lib/filters/build-filter-data";
 import { Button } from "@/components/ui/button";
+import { isPurchasable } from "@/lib/shopify/utils/stock-status";
 
 type GridDensity = "comfortable" | "compact"
 
@@ -136,7 +137,7 @@ export default function ShopClient({
     if (sizes.length > 0) {
       arr = arr.filter((product) =>
         product.variants.some((variant) => {
-          if (!variant.availableForSale) return false;
+          if (!isPurchasable(variant.stockStatus)) return false;
 
           const sizeOpt = variant.selectedOptions.find(
             (opt) => opt.name.toLowerCase() === "size"

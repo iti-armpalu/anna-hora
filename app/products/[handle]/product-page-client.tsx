@@ -16,6 +16,7 @@ import { CustomerAssurance } from "./_components/customer-assurance"
 import { ProductDetailsAccordion } from "./_components/product-detail-accordion"
 import ProductImageCarousel from "@/components/shop/product-image-carousel"
 import { WishlistButton } from "@/components/wishlist-button"
+import { PREORDER_COPY, getPreorderShippingText } from "@/lib/config/preorder"
 
 interface Props {
     product: ProductNormalized
@@ -48,7 +49,7 @@ export default function ProductPageClient({
         () =>
             Array.from(sizeMap.entries()).map(([size, variant]) => ({
                 size,
-                inStock: variant.availableForSale,
+                status: variant.stockStatus,
             })),
         [sizeMap]
     )
@@ -63,7 +64,7 @@ export default function ProductPageClient({
             : product.currencyCode,
     })
 
-    const isOutOfStock = !!selectedVariant && !selectedVariant.availableForSale
+    const isPreorder = selectedVariant?.stockStatus === "preorder"
 
     async function handleAddToBag() {
         if (!selectedVariant) {
@@ -75,7 +76,9 @@ export default function ProductPageClient({
             return
         }
         await addToCart(selectedVariant.id, 1)
-        toast.success(`${product.title} added to bag • Size ${selectedSize}`)
+        toast.success(
+            `${product.title} added to bag • Size ${selectedSize}${isPreorder ? ` (${PREORDER_COPY.buttonLabel.toLowerCase()})` : ""}`
+        )
     }
 
     return (
@@ -117,18 +120,30 @@ export default function ProductPageClient({
                             />
                         </div>
                         <div className="grid grid-cols-5 gap-2">
-                            {sizes.map(({ size, inStock }) => (
-                                <Button
-                                    key={size}
-                                    onClick={() => inStock ? setSelectedSize(size) : undefined}
-                                    disabled={!inStock}
-                                    variant={selectedSize === size ? "default" : "outline"}
-                                    className={!inStock ? "opacity-40 cursor-not-allowed line-through" : ""}
-                                >
-                                    {size}
-                                </Button>
-                            ))}
+                            {sizes.map(({ size, status }) => {
+                                const isSoldOut = status === "sold_out"
+                                return (
+                                    <Button
+                                        key={size}
+                                        onClick={() => setSelectedSize(size)}
+                                        disabled={isSoldOut}
+                                        aria-label={status === "preorder" ? `${size}, ${PREORDER_COPY.sizeBadge}` : size}
+                                        variant={selectedSize === size ? "default" : "outline"}
+                                        className={isSoldOut ? "opacity-40 cursor-not-allowed line-through" : ""}
+                                    >
+                                        {size}
+                                    </Button>
+                                )
+                            })}
                         </div>
+                        {isPreorder && (
+                            <div className="border border-stone-200 bg-stone-50 px-4 py-3 space-y-1">
+                                <p className="text-sm font-medium text-stone-800">
+                                    {PREORDER_COPY.buttonLabel} · {getPreorderShippingText(product.preorderLeadTimeWeeks)}
+                                </p>
+                                <p className="text-xs text-stone-500">{PREORDER_COPY.explainer}</p>
+                            </div>
+                        )}
                         {product.metafields.fitNotes && (
                             <p className="text-xs text-stone-400">
                                 {product.metafields.fitNotes}
@@ -146,12 +161,12 @@ export default function ProductPageClient({
                             <Button
                                 onClick={handleAddToBag}
                                 className="flex-1"
-                                disabled={!selectedVariant || isOutOfStock}
+                                disabled={!selectedVariant}
                             >
                                 {!selectedVariant
                                     ? "Select a size"
-                                    : isOutOfStock
-                                        ? "Currently Out of Stock"
+                                    : isPreorder
+                                        ? `${PREORDER_COPY.buttonLabel} – ${formattedPrice}`
                                         : `Add to Bag – ${formattedPrice}`}
                             </Button>
                             <WishlistButton product={product} />

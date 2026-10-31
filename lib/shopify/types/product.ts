@@ -14,6 +14,8 @@ export type ProductVariant = {
   id: string;
   title: string;
   availableForSale: boolean;
+  /** True when stock is ≤ 0 but the variant still sells ("Continue selling when out of stock") */
+  currentlyNotInStock: boolean;
   selectedOptions: { name: string; value: string }[];
   price: { amount: string; currencyCode: string };
 };
@@ -37,4 +39,8 @@ export type Product = {
     maxVariantPrice: { amount: string; currencyCode: string };
   };
   metafields?: Metafield[];
+  /** Only requested by the PDP query */
+  preorderFabric?: {
+    reference: { leadTimeWeeks: { value: string | null } | null } | null;
+  } | null;
 };

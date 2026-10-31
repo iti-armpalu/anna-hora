@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useWishlist } from "@/context/wishlist-context"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/shop/product-card"
-import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
+import type { ProductNormalized, ProductVariantNormalized } from "@/lib/shopify/types/product-normalized"
 
 function wishlistItemToProduct(item: ReturnType<typeof useWishlist>["items"][number]): ProductNormalized {
     return {
@@ -22,10 +22,10 @@ function wishlistItemToProduct(item: ReturnType<typeof useWishlist>["items"][num
         variants: item.sizes.map((s, i) => ({
             id: `${item.id}-${i}`,
             title: s.size,
-            availableForSale: s.inStock,
+            stockStatus: s.inStock ? "in_stock" : "sold_out",
             price: { amount: item.price, currencyCode: item.currencyCode },
             selectedOptions: [{ name: "Size", value: s.size }],
-        })),
+        })) satisfies ProductVariantNormalized[],
         metafields: {
             fabricShort: item.fabricShort,
         },

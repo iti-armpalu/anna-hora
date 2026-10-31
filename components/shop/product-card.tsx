@@ -6,6 +6,7 @@ import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { formatPrice } from "@/hooks/use-price"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { isPurchasable } from "@/lib/shopify/utils/stock-status"
 
 type GridDensity = "comfortable" | "compact"
 
@@ -40,7 +41,7 @@ export function ProductCard({
       )
       return {
         size,
-        inStock: variantForSize?.availableForSale ?? false,
+        purchasable: variantForSize ? isPurchasable(variantForSize.stockStatus) : false,
         variantId: variantForSize?.id ?? null,
       }
     })
@@ -99,13 +100,13 @@ export function ProductCard({
                   isCompact ? "hidden sm:block" : "block"
                 )}>·</span>
 
-                {sizes.map(({ size, inStock, variantId }) => (
+                {sizes.map(({ size, purchasable, variantId }) => (
                   <span
                     key={variantId}
                     className={cn(
                       "text-stone-400",
                       isCompact ? "text-[10px] sm:text-xs" : "text-xs",
-                      !inStock && "line-through opacity-30"
+                      !purchasable && "line-through opacity-30"
                     )}
                   >
                     {size}

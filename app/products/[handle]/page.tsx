@@ -15,6 +15,19 @@ const DEFAULT_COUNTRY = "CZ"
 // ------------------------------------
 // Structured Data
 // ------------------------------------
+const SCHEMA_AVAILABILITY = {
+    inStock: "https://schema.org/InStock",
+    preOrder: "https://schema.org/PreOrder",
+    outOfStock: "https://schema.org/OutOfStock",
+} as const
+
+function getSchemaAvailability(product: ProductNormalized): string {
+    const statuses = product.variants.map((v) => v.stockStatus)
+    if (statuses.includes("in_stock")) return SCHEMA_AVAILABILITY.inStock
+    if (statuses.includes("preorder")) return SCHEMA_AVAILABILITY.preOrder
+    return SCHEMA_AVAILABILITY.outOfStock
+}
+
 function ProductStructuredData({
     product,
     handle,
@@ -23,7 +36,7 @@ function ProductStructuredData({
     handle: string
 }) {
     const firstVariant = product.variants?.[0]
-    const availableForSale = product.variants?.some((v) => v.availableForSale)
+    const availability = getSchemaAvailability(product)
 
     const structuredData = {
         "@context": "https://schema.org",
@@ -40,9 +53,7 @@ function ProductStructuredData({
             "@type": "Offer",
             price: firstVariant?.price.amount ?? product.minPrice,
             priceCurrency: firstVariant?.price.currencyCode ?? product.currencyCode,
-            availability: availableForSale
-                ? "https://schema.org/InStock"
-                : "https://schema.org/OutOfStock",
+            availability,
             url: `${siteConfig.url}/products/${handle}`,
             seller: {
                 "@type": "Organization",

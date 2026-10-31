@@ -68,6 +68,7 @@ export const COLLECTION_BY_HANDLE_QUERY = /* GraphQL */ `
                 id
                 title
                 availableForSale
+                currentlyNotInStock
                 selectedOptions {
                   name
                   value

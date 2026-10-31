@@ -6,6 +6,7 @@ import type {
 } from "@/lib/shopify/types/product";
 
 import type {
+  VariantStockStatus,
   ProductNormalized,
   ProductVariantNormalized,
   ProductImageNormalized,
@@ -63,11 +64,16 @@ function normalizeImage(
 /* ----------------------------------------------------
  * Normalize product variant
  * ---------------------------------------------------- */
+function getStockStatus(variant: ProductVariant): VariantStockStatus {
+  if (!variant.availableForSale) return "sold_out";
+  return variant.currentlyNotInStock ? "preorder" : "in_stock";
+}
+
 function normalizeVariant(variant: ProductVariant): ProductVariantNormalized {
   return {
     id: variant.id,
     title: variant.title ?? "",
-    availableForSale: variant.availableForSale,
+    stockStatus: getStockStatus(variant),
     selectedOptions: variant.selectedOptions ?? [],
     price: {
       amount: variant.price.amount,
@@ -119,6 +125,9 @@ export function normalizeProduct(
     currencyCode: product.priceRange.minVariantPrice.currencyCode,
 
     metafields,
+
+    preorderLeadTimeWeeks:
+      product.preorderFabric?.reference?.leadTimeWeeks?.value ?? null,
   };
 }
 

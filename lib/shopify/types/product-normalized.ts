@@ -10,12 +10,20 @@ export interface ProductImageNormalized {
 }
 
 /**
+ * Derived from Shopify's availableForSale + currentlyNotInStock.
+ * - in_stock:  physical stock available
+ * - preorder:  no stock, but still sellable (made to order from leftover fabric)
+ * - sold_out:  not sellable
+ */
+export type VariantStockStatus = "in_stock" | "preorder" | "sold_out";
+
+/**
  * Normalized product variant shape.
  */
 export interface ProductVariantNormalized {
   id: string;
   title: string;
-  availableForSale: boolean;
+  stockStatus: VariantStockStatus;
   selectedOptions: { name: string; value: string }[];
   price: {
     amount: string;        // "120.00"
@@ -77,4 +85,7 @@ export interface ProductNormalized {
   currencyCode: string;    // "GBP"
 
   metafields: ProductMetafieldsNormalized;
+
+  /** e.g. "3–4" (weeks). Only populated on the PDP; null when not linked to a fabric. */
+  preorderLeadTimeWeeks: string | null;
 }

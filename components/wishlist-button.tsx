@@ -4,6 +4,7 @@ import { Heart } from "lucide-react"
 import { useWishlist } from "@/context/wishlist-context"
 import { Button } from "./ui/button"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
+import { isPurchasable } from "@/lib/shopify/utils/stock-status"
 
 type WishlistButtonProps = {
   product: ProductNormalized
@@ -46,7 +47,7 @@ export function WishlistButton({ product }: WishlistButtonProps) {
                 (opt) => opt.name.toLowerCase() === "size" && opt.value === size
               )
             )
-            return { size, inStock: variant?.availableForSale ?? false }
+            return { size, inStock: variant ? isPurchasable(variant.stockStatus) : false }
           }) ?? [],
         // metafields use null for missing values; wishlist item uses undefined
         fabricShort: product.metafields.fabricShort ?? undefined,
