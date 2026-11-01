@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CopyButtonProps {
     value: string;
@@ -26,16 +27,16 @@ export function CopyButton({ value, className }: CopyButtonProps) {
         <button
             type="button"
             onClick={handleCopy}
-            className={`flex items-center gap-2 text-stone-900 hover:text-stone-700 transition-colors ${className}`}
+            className={cn("flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors", className)}
         >
             <span>{value}</span>
 
             {copied ? (
-                <span className="text-[11px] tracking-wide text-stone-400">
+                <span className="text-[11px] tracking-wide text-muted-foreground">
                     Copied
                 </span>
             ) : (
-                <Copy className="w-4 h-4 text-stone-400" />
+                <Copy className="w-4 h-4 text-muted-foreground" />
             )}
         </button>
     );
