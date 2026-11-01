@@ -68,6 +68,37 @@
    /* uppercase section labels         */
 
    /* ----------------------------------------
+     Radius — sharp corners everywhere.
+     Tailwind's rounded-* utilities (and every shadcn
+     component) read these tokens, so zeroing them here
+     enforces the rule site-wide. rounded-full is not a
+     token and stays round — use it only for things that
+     are genuinely circular (swatches, dots, spinners).
+  ---------------------------------------- */
+   --radius-xs: 0;
+   --radius-sm: 0;
+   --radius-md: 0;
+   --radius-lg: 0;
+   --radius-xl: 0;
+   --radius-2xl: 0;
+   --radius-3xl: 0;
+   --radius-4xl: 0;
+
+   /* ----------------------------------------
+     Shadows — flat by default.
+     Small shadows (cards, buttons, inputs) are removed;
+     depth comes from hairline borders instead.
+     md and up are kept for overlays only: dialogs,
+     dropdowns, sheets, popovers.
+     Value must be a zero shadow, not `none` — Tailwind
+     combines this with ring shadows in one box-shadow,
+     and `none` would invalidate it and kill focus rings.
+  ---------------------------------------- */
+   --shadow-2xs: 0 0 #0000;
+   --shadow-xs: 0 0 #0000;
+   --shadow-sm: 0 0 #0000;
+
+   /* ----------------------------------------
      Semantic colour tokens (mapped to CSS vars)
   ---------------------------------------- */
    --color-background: var(--background);
