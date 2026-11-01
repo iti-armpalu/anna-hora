@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { useCart } from "@/context/cart-context"
 import { formatPrice } from "@/hooks/use-price"
 import { toast } from "sonner"
@@ -155,7 +156,8 @@ export default function ProductPageClient({
                                         disabled={isSoldOut}
                                         aria-label={status === "preorder" ? `${size}, ${PREORDER_COPY.sizeBadge}` : size}
                                         variant={selectedSize === size ? "default" : "outline"}
-                                        className={isSoldOut ? "opacity-40 cursor-not-allowed line-through" : ""}
+                                        // px-0: grid cells set the width; button padding would crowd "XL" on mobile
+                                        className={cn("px-0", isSoldOut && "opacity-40 cursor-not-allowed line-through")}
                                     >
                                         {size}
                                     </Button>
@@ -185,6 +187,7 @@ export default function ProductPageClient({
                     ) : (
                         <div className="flex gap-2">
                             <Button
+                                size="lg"
                                 onClick={handleAddToBag}
                                 className="flex-1"
                                 disabled={!selectedVariant || isAdding}
