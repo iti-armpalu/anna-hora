@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/image"
+import { cn } from "@/lib/utils";
 import { X, ChevronUp, ChevronDown } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -105,12 +106,13 @@ export default function ProductLightbox({
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 z-[999] bg-white flex items-center justify-center">
+        <div className="fixed inset-0 z-[999] bg-background flex items-center justify-center">
 
             {/* CLOSE BUTTON */}
             <button
                 onClick={onClose}
-                className="absolute top-6 right-6 text-black"
+                aria-label="Close gallery"
+                className="absolute top-6 right-6 p-2 text-foreground transition-colors hover:bg-muted"
             >
                 <X size={28} />
             </button>
@@ -126,8 +128,8 @@ export default function ProductLightbox({
                     <button
                         onClick={() => emblaThumbs?.scrollPrev()}
                         disabled={!canScrollUp}
-                        className={`text-black p-2 mb-2 rounded-full transition ${canScrollUp ? "bg-white/20 hover:bg-white/40" : "opacity-30"
-                            }`}
+                        aria-label="Previous images"
+                        className={cn("mb-2", "p-2 text-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent")}
                     >
                         <ChevronUp size={20} />
                     </button>
@@ -146,8 +148,12 @@ export default function ProductLightbox({
                                 <button
                                     key={img.url}
                                     onClick={() => emblaMain?.scrollTo(idx)}
-                                    className={`relative w-full aspect-[4/5] overflow-hidden border ${idx === selectedIndex ? "border-white" : "border-transparent"
-                                        }`}
+                                    aria-label={`View image ${idx + 1}`}
+                                    aria-current={idx === selectedIndex ? "true" : undefined}
+                                    className={cn(
+                                        "relative w-full aspect-[4/5] overflow-hidden border transition-colors",
+                                        idx === selectedIndex ? "border-foreground" : "border-transparent hover:border-input"
+                                    )}
                                 >
                                     <Image
                                         src={img.url}
@@ -164,8 +170,8 @@ export default function ProductLightbox({
                     <button
                         onClick={() => emblaThumbs?.scrollNext()}
                         disabled={!canScrollDown}
-                        className={`text-black p-2 mt-2 rounded-full transition ${canScrollDown ? "bg-white/20 hover:bg-white/40" : "opacity-30"
-                            }`}
+                        aria-label="Next images"
+                        className={cn("mt-2", "p-2 text-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent")}
                     >
                         <ChevronDown size={20} />
                     </button>

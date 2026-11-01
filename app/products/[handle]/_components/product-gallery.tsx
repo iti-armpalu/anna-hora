@@ -35,11 +35,8 @@ export function ProductGallery({ images }: ProductGalleryProps) {
         })
     }
 
-    // Remove the h-6 arrow buttons from the column flow
-    // and make the thumbnail container start at the same top as the main image
-
     return (
-        <div className="lg:sticky lg:top-24 flex gap-3 items-start">
+        <div className="lg:sticky lg:top-[calc(var(--header-height)+1rem)] flex gap-3 items-start">
 
             {/* Thumbnail strip */}
             {images.length > 1 && (
@@ -85,7 +82,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                                 onClick={() => setThumbOffset((p) => Math.max(0, p - 1))}
                                 disabled={thumbOffset === 0}
                                 aria-label="Scroll thumbnails up"
-                                className={`text-stone-400 transition-opacity ${thumbOffset === 0 ? "opacity-20 pointer-events-none" : "hover:opacity-100 opacity-50"
+                                className={`text-muted-foreground transition-opacity ${thumbOffset === 0 ? "opacity-20 pointer-events-none" : "hover:opacity-100 opacity-50"
                                     }`}
                             >
                                 <ChevronUp size={14} />
@@ -94,7 +91,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                                 onClick={() => setThumbOffset((p) => Math.min(maxOffset, p + 1))}
                                 disabled={thumbOffset >= maxOffset}
                                 aria-label="Scroll thumbnails down"
-                                className={`text-stone-400 transition-opacity ${thumbOffset >= maxOffset ? "opacity-20 pointer-events-none" : "hover:opacity-100 opacity-50"
+                                className={`text-muted-foreground transition-opacity ${thumbOffset >= maxOffset ? "opacity-20 pointer-events-none" : "hover:opacity-100 opacity-50"
                                     }`}
                             >
                                 <ChevronDown size={14} />
@@ -108,7 +105,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             <div className="flex-1">
                 <div
                     ref={mainRef}
-                    className={`relative aspect-[4/5] overflow-hidden bg-stone-50 ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"
+                    className={`relative aspect-[4/5] overflow-hidden bg-secondary ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"
                         }`}
                     onClick={() => {
                         setZoomed((p) => !p)
@@ -138,13 +135,13 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                     )}
 
                     {!zoomed && (
-                        <span className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm text-stone-500 text-xs px-2 py-1 pointer-events-none">
+                        <span className="absolute bottom-3 right-3 bg-background/80 backdrop-blur-sm text-muted-foreground text-xs px-2 py-1 pointer-events-none">
                             Click to zoom
                         </span>
                     )}
 
                     {images.length > 1 && (
-                        <span className="absolute bottom-3 left-3 text-xs text-stone-400 bg-white/80 backdrop-blur-sm px-2 py-1 pointer-events-none">
+                        <span className="absolute bottom-3 left-3 text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 pointer-events-none">
                             {activeIndex + 1} / {images.length}
                         </span>
                     )}

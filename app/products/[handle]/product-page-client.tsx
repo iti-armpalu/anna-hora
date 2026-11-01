@@ -103,7 +103,7 @@ export default function ProductPageClient({
     }
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="container-site py-12">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-8 lg:gap-12">
 
                 {/* Gallery */}
@@ -115,17 +115,17 @@ export default function ProductPageClient({
                 </div>
 
                 {/* Product info */}
-                <div className="flex flex-col gap-8 lg:sticky lg:top-24 lg:h-fit">
+                <div className="flex flex-col gap-8 lg:sticky lg:top-[calc(var(--header-height)+1rem)] lg:h-fit">
 
                     {/* Title & price */}
                     <div className="space-y-2">
-                        <h1 className="text-2xl lg:text-3xl font-light font-serif leading-tight text-stone-900">
+                        <h1 className="text-heading-md font-light font-serif">
                             {product.title}
                         </h1>
-                        <p className="text-stone-500 leading-relaxed text-sm">
+                        <p className="text-small text-muted-foreground">
                             {product.description}
                         </p>
-                        <p className="text-xl font-medium text-stone-900 pt-1">
+                        <p className="text-heading-sm text-foreground pt-1">
                             {formattedPrice}
                         </p>
                     </div>
@@ -139,7 +139,7 @@ export default function ProductPageClient({
                     {/* Size */}
                     <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-sm font-medium text-stone-800">Size</h2>
+                            <h2 className="label-uppercase mb-0">Size</h2>
                             <SizeGuideDialog
                                 open={showSizeGuide}
                                 onOpenChange={setShowSizeGuide}
@@ -165,15 +165,15 @@ export default function ProductPageClient({
                             })}
                         </div>
                         {isPreorder && (
-                            <div className="border border-stone-200 bg-stone-50 px-4 py-3 space-y-1">
-                                <p className="text-sm font-medium text-stone-800">
+                            <div className="border border-border bg-secondary px-4 py-3 space-y-1">
+                                <p className="text-small font-medium text-foreground">
                                     {PREORDER_COPY.buttonLabel} · {getPreorderShippingText(product.preorderLeadTimeWeeks)}
                                 </p>
-                                <p className="text-xs text-stone-500">{PREORDER_COPY.explainer}</p>
+                                <p className="text-xs text-muted-foreground">{PREORDER_COPY.explainer}</p>
                             </div>
                         )}
                         {product.metafields.fitNotes && (
-                            <p className="text-xs text-stone-400">
+                            <p className="text-xs text-muted-foreground">
                                 {product.metafields.fitNotes}
                             </p>
                         )}
@@ -181,7 +181,7 @@ export default function ProductPageClient({
 
                     {/* Add to bag */}
                     {!canShip ? (
-                        <p className="text-sm text-stone-500">
+                        <p className="text-small text-muted-foreground">
                             We don&apos;t ship to your country yet — hopefully soon.
                         </p>
                     ) : (

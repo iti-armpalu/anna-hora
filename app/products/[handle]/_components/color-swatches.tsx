@@ -13,7 +13,7 @@ type Props = {
     selectedSize: string | null
 }
 
-const SWATCH_BASE = "relative block h-7 w-7 overflow-hidden rounded-full border border-stone-200"
+const SWATCH_BASE = "relative block h-7 w-7 overflow-hidden rounded-full border border-border"
 
 function SwatchFill({ color, label }: { color: ColorSwatchNormalized | null; label: string }) {
     if (color?.imageUrl) {
@@ -32,7 +32,7 @@ function SwatchFill({ color, label }: { color: ColorSwatchNormalized | null; lab
 
     // No swatch configured in Shopify — show the initial so the option is still usable
     return (
-        <span className={cn(SWATCH_BASE, "flex items-center justify-center bg-stone-100 text-[10px] text-stone-600")}>
+        <span className={cn(SWATCH_BASE, "flex items-center justify-center bg-muted text-[10px] text-muted-foreground")}>
             {label.charAt(0)}
         </span>
     )
@@ -46,8 +46,11 @@ export function ColorSwatches({ siblings, currentHandle, selectedSize }: Props) 
 
     return (
         <div className="space-y-3">
-            <h2 className="text-sm font-medium text-stone-800">
-                Colour{currentLabel && <span className="font-normal text-stone-500">: {currentLabel}</span>}
+            <h2 className="label-uppercase mb-0">
+                Colour
+                {currentLabel && (
+                    <span className="ml-2 normal-case tracking-normal font-normal text-foreground">{currentLabel}</span>
+                )}
             </h2>
             <ul className="flex flex-wrap gap-2">
                 {siblings.map((sibling) => {
@@ -55,7 +58,7 @@ export function ColorSwatches({ siblings, currentHandle, selectedSize }: Props) 
                     const isCurrent = sibling.handle === currentHandle
                     const ringClass = cn(
                         "block rounded-full p-0.5 ring-1 transition",
-                        isCurrent ? "ring-stone-900" : "ring-transparent hover:ring-stone-300",
+                        isCurrent ? "ring-foreground" : "ring-transparent hover:ring-input",
                         !sibling.purchasable && "opacity-40"
                     )
                     const accessibleLabel = sibling.purchasable ? label : `${label} — sold out`
