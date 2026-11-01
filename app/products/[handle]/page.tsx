@@ -2,9 +2,13 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { cookies } from "next/headers"
 import { siteConfig } from "@/lib/config/site"
-import { getProductByHandle } from "@/lib/shopify/product"
+import { getProductByHandle, getColorSiblings } from "@/lib/shopify/product"
 import { getAvailableCountries } from "@/lib/shopify/queries/localization"
-import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
+import type {
+    ProductNormalized,
+    ColorSiblingNormalized,
+} from "@/lib/shopify/types/product-normalized"
+import { SIZE_SEARCH_PARAM } from "@/lib/config/color-group"
 import ProductPageClient from "./product-page-client"
 
 export const revalidate = 60
@@ -144,21 +148,47 @@ export async function generateMetadata({
 }
 
 // ------------------------------------
+// Data
+// ------------------------------------
+
+/** Colour swatches are an enhancement — if they fail, the page still renders without them. */
+async function getColorSiblingsSafe(
+    product: ProductNormalized | null
+): Promise<ColorSiblingNormalized[]> {
+    if (!product?.colorGroup) return []
+    try {
+        return await getColorSiblings(product.colorGroup)
+    } catch (err: unknown) {
+        console.error("getColorSiblings failed:", err instanceof Error ? err.message : err)
+        return []
+    }
+}
+
+// ------------------------------------
 // Page
 // ------------------------------------
 export default async function ProductPage({
     params,
+    searchParams,
 }: {
     params: Promise<{ handle: string }>
+    searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
-    const { handle } = await params
+    const [{ handle }, query, cookieStore] = await Promise.all([params, searchParams, cookies()])
 
-    const cookieStore = await cookies()
     const shippingCountry =
         cookieStore.get("shippingCountry")?.value || DEFAULT_COUNTRY
 
-    const [product, availableCountries] = await Promise.all([
-        getProductByHandle(handle),
+    const sizeParam = query[SIZE_SEARCH_PARAM]
+    const initialSize = typeof sizeParam === "string" ? sizeParam : null
+
+    // Siblings depend on the product's group tag, so they chain off the product fetch;
+    // countries are independent and run alongside both.
+    const [{ product, colorSiblings }, availableCountries] = await Promise.all([
+        getProductByHandle(handle).then(async (product) => ({
+            product,
+            colorSiblings: await getColorSiblingsSafe(product),
+        })),
         getAvailableCountries(),
     ])
 
@@ -169,8 +199,12 @@ export default async function ProductPage({
     return (
         <>
             <ProductStructuredData product={product} handle={handle} />
+            {/* key: guarantees fresh state (selected size, gallery) when switching colours */}
             <ProductPageClient
+                key={product.handle}
                 product={product}
+                colorSiblings={colorSiblings}
+                initialSize={initialSize}
                 shippingCountry={shippingCountry}
                 canShip={canShip}
             />

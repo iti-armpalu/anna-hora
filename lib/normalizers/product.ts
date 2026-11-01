@@ -2,8 +2,10 @@ import type {
   Product as ShopifyProduct,
   ProductImage,
   ProductVariant,
+  ProductOption,
   Metafield,
 } from "@/lib/shopify/types/product";
+import { COLOR_GROUP_TAG_PREFIX, COLOR_OPTION_NAME } from "@/lib/config/color-group";
 
 import { getStockStatus } from "@/lib/shopify/utils/stock-status";
 import type {
@@ -12,6 +14,7 @@ import type {
   ProductImageNormalized,
   ProductOptionNormalized,
   ProductMetafieldsNormalized,
+  ColorSwatchNormalized,
 } from "@/lib/shopify/types/product-normalized";
 
 /* ----------------------------------------------------
@@ -78,6 +81,32 @@ function normalizeVariant(variant: ProductVariant): ProductVariantNormalized {
 }
 
 /* ----------------------------------------------------
+ * Colour: swatch from the Color option, group from tags
+ * ---------------------------------------------------- */
+
+/** Each product is one colour, so the Color option has a single value. */
+export function getColorSwatch(
+  options: ProductOption[] | undefined
+): ColorSwatchNormalized | null {
+  const colorValue = options
+    ?.find((opt) => opt.name.toLowerCase() === COLOR_OPTION_NAME)
+    ?.optionValues?.[0];
+
+  if (!colorValue) return null;
+
+  return {
+    name: colorValue.name,
+    hex: colorValue.swatch?.color ?? null,
+    imageUrl: colorValue.swatch?.image?.previewImage?.url ?? null,
+  };
+}
+
+function getColorGroup(tags: string[] | undefined): string | null {
+  const groupTag = tags?.find((tag) => tag.startsWith(COLOR_GROUP_TAG_PREFIX));
+  return groupTag ? groupTag.slice(COLOR_GROUP_TAG_PREFIX.length) : null;
+}
+
+/* ----------------------------------------------------
  * Normalize a single product
  * ---------------------------------------------------- */
 export function normalizeProduct(
@@ -123,6 +152,9 @@ export function normalizeProduct(
 
     preorderLeadTimeWeeks:
       product.preorderFabric?.reference?.leadTimeWeeks?.value ?? null,
+
+    colorGroup: getColorGroup(product.tags),
+    color: getColorSwatch(product.options),
   };
 }
 

@@ -13,6 +13,20 @@ const PREORDER_FABRIC_FIELD = /* GraphQL */ `
   }
 `;
 
+// Swatch per option value — hex for plain colours, pattern image for prints.
+// Populated because the Color option is linked to Shopify's colour metafield.
+const OPTION_SWATCHES_FIELD = /* GraphQL */ `
+  optionValues {
+    name
+    swatch {
+      color
+      image {
+        previewImage { url }
+      }
+    }
+  }
+`;
+
 export const PRODUCTS_QUERY = `
   query ProductsWithVariants($first: Int!, $after: String, $country: CountryCode, $query: String)
   @inContext(country: $country) 
@@ -124,10 +138,13 @@ export const PRODUCT_BY_HANDLE_QUERY = /* GraphQL */ `
         altText
       }
 
+      tags
+
       options {
         id
         name
         values
+        ${OPTION_SWATCHES_FIELD}
       }
 
       priceRange {
@@ -199,6 +216,24 @@ export const VARIANT_STOCK_QUERY = /* GraphQL */ `
         currentlyNotInStock
         product {
           ${PREORDER_FABRIC_FIELD}
+        }
+      }
+    }
+  }
+`;
+
+// Every colour of one style, linked by a shared "group:<style>" tag
+export const PRODUCT_COLOR_SIBLINGS_QUERY = /* GraphQL */ `
+  query ProductColorSiblings($query: String!, $country: CountryCode)
+  @inContext(country: $country) {
+    products(first: 20, query: $query, sortKey: TITLE) {
+      nodes {
+        handle
+        title
+        availableForSale
+        options {
+          name
+          ${OPTION_SWATCHES_FIELD}
         }
       }
     }

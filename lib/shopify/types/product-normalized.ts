@@ -31,6 +31,21 @@ export interface ProductVariantNormalized {
   };
 }
 
+/** Plain colours have a hex; prints have a pattern image. */
+export interface ColorSwatchNormalized {
+  name: string;
+  hex: string | null;
+  imageUrl: string | null;
+}
+
+/** Another colour of the same style, for the colour picker on the PDP. */
+export interface ColorSiblingNormalized {
+  handle: string;
+  title: string;
+  color: ColorSwatchNormalized | null;
+  purchasable: boolean;
+}
+
 /**
  * Normalized product option shape.
  */
@@ -88,4 +103,9 @@ export interface ProductNormalized {
 
   /** e.g. "3–4" (weeks). Only populated on the PDP; null when not linked to a fabric. */
   preorderLeadTimeWeeks: string | null;
+
+  /** Style key from the "group:<style>" tag; null when the product has no other colours. PDP only. */
+  colorGroup: string | null;
+  /** This product's colour swatch. PDP only. */
+  color: ColorSwatchNormalized | null;
 }

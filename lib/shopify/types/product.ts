@@ -20,6 +20,22 @@ export type ProductVariant = {
   price: { amount: string; currencyCode: string };
 };
 
+export type ProductOptionValue = {
+  name: string;
+  swatch: {
+    color: string | null;
+    image: { previewImage: { url: string } | null } | null;
+  } | null;
+};
+
+export type ProductOption = {
+  id: string;
+  name: string;
+  values: string[];
+  /** Only requested by the PDP and colour-siblings queries */
+  optionValues?: ProductOptionValue[];
+};
+
 export type Metafield = {
   key: string | null;
   value: string | null;
@@ -31,7 +47,9 @@ export type Product = {
   title: string;
   description: string;
   featuredImage?: ProductImage | null;
-  options?: { id: string; name: string; values: string[]; }[];
+  options?: ProductOption[];
+  /** Only requested by the PDP query */
+  tags?: string[];
   images: { edges: { node: ProductImage }[] };
   variants: { edges: { node: ProductVariant }[] };
   priceRange: {

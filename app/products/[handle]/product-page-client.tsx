@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import type {
     ProductNormalized,
     ProductVariantNormalized,
+    ColorSiblingNormalized,
 } from "@/lib/shopify/types/product-normalized"
 
 import { ProductGallery } from "./_components/product-gallery"
@@ -17,22 +18,27 @@ import { CustomerAssurance } from "./_components/customer-assurance"
 import { ProductDetailsAccordion } from "./_components/product-detail-accordion"
 import ProductImageCarousel from "@/components/shop/product-image-carousel"
 import { WishlistButton } from "@/components/wishlist-button"
+import { ColorSwatches } from "./_components/color-swatches"
 import { PREORDER_COPY, getPreorderShippingText } from "@/lib/config/preorder"
 
 interface Props {
     product: ProductNormalized
+    colorSiblings: ColorSiblingNormalized[]
+    /** Size carried over from another colour via ?size= */
+    initialSize: string | null
     shippingCountry: string
     canShip: boolean
 }
 
 export default function ProductPageClient({
     product,
+    colorSiblings,
+    initialSize,
     shippingCountry,
     canShip,
 }: Props) {
     const { addToCart, loading: isAdding } = useCart()
     const router = useRouter()
-    const [selectedSize, setSelectedSize] = useState<string | null>(null)
     const [showSizeGuide, setShowSizeGuide] = useState(false)
 
     // Size → variant map
@@ -46,6 +52,12 @@ export default function ProductPageClient({
         }
         return map
     }, [product.variants])
+
+    // Keep the size from the previous colour only if it can be bought in this one
+    const [selectedSize, setSelectedSize] = useState<string | null>(() => {
+        const carriedVariant = initialSize ? sizeMap.get(initialSize) : undefined
+        return carriedVariant && carriedVariant.stockStatus !== "sold_out" ? initialSize : null
+    })
 
     const sizes = useMemo(
         () =>
@@ -116,6 +128,12 @@ export default function ProductPageClient({
                             {formattedPrice}
                         </p>
                     </div>
+
+                    <ColorSwatches
+                        siblings={colorSiblings}
+                        currentHandle={product.handle}
+                        selectedSize={selectedSize}
+                    />
 
                     {/* Size */}
                     <div className="space-y-3">
