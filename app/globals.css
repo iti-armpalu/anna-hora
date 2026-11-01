@@ -46,6 +46,8 @@
    /* captions, helper text            */
    --text-xs: clamp(0.75rem, 0.726rem + 0.096vw, 0.8125rem);
    /* fine print, legal, tags          */
+   --text-2xs: 0.6875rem;
+   /* 11px fixed — uppercase eyebrows (fabric on product cards); uppercase reads larger, so it sits a step below xs */
 
    /* ----------------------------------------
      Typography — Leading

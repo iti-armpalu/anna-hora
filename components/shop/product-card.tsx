@@ -118,7 +118,7 @@ export function ProductCard({
         className="flex flex-col flex-1 gap-1"
       >
         {/* Always rendered so cards without a fabric keep the same height */}
-        <p className="text-xs uppercase tracking-wide text-muted-foreground truncate min-h-[1lh]">
+        <p className="text-2xs uppercase tracking-wide text-muted-foreground truncate min-h-[1lh]">
           {fabric}
         </p>
 
