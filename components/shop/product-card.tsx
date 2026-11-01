@@ -7,6 +7,7 @@ import { formatPrice } from "@/hooks/use-price"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { isPurchasable } from "@/lib/shopify/utils/stock-status"
+import { SIZE_SEARCH_PARAM } from "@/lib/config/color-group"
 
 type GridDensity = "comfortable" | "compact"
 
@@ -48,19 +49,20 @@ export function ProductCard({
     : []
 
   const isCompact = density === "compact"
+  const productHref = `/products/${product.handle}`
 
   return (
-    <div className={cn("relative flex flex-col h-full group overflow-hidden", className)}>
+    <div className={cn("relative flex flex-col h-full group", className)}>
 
       {/* Image */}
       <div className="relative overflow-hidden mb-3">
         {/* Wishlist — stopPropagation in WishlistButton so it doesn't navigate */}
-        <div className="absolute top-3 right-3 z-10">
+        <div className="absolute top-3 right-3 z-20">
           <WishlistButton product={product} />
         </div>
         {/* Carousel prev/next already have stopPropagation */}
         <Link
-          href={`/products/${product.handle}`}
+          href={productHref}
           prefetch={false}
           className="block w-full h-full"
           aria-hidden="true"
@@ -68,70 +70,75 @@ export function ProductCard({
         >
           <ProductImageCarousel product={product} />
         </Link>
-      </div>
 
-      {/* Info */}
-      <Link
-        href={`/products/${product.handle}`}
-        prefetch={false}
-        className="flex flex-col flex-1"
-      >
-
-        <div className="space-y-1">
-
-          {/* Fabric + sizes */}
-          <div className={cn(
-            "mt-2 flex",
-            isCompact ? "flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3 mb-2 sm:mb-1" : "flex-row items-center gap-3"
-          )}>
-            {fabric && (
-              <p className={cn(
-                "text-stone-400 shrink-0",
-                isCompact ? "text-[10px] sm:text-xs" : "text-xs"
-              )}>
-                {fabric}
-              </p>
+        {/*
+          Sizes reveal on hover (and on keyboard focus within the card).
+          Tailwind v4 only applies hover on devices that support it, so on touch
+          screens this stays hidden — size choice happens on the product page there.
+        */}
+        {sizes.length > 0 && (
+          <div
+            className={cn(
+              "absolute inset-x-0 bottom-0 z-20 flex flex-wrap items-center justify-center gap-x-4 gap-y-1",
+              "bg-background/90 backdrop-blur-sm px-3 py-3",
+              "translate-y-full opacity-0 transition-all duration-300 ease-out",
+              "group-hover:translate-y-0 group-hover:opacity-100",
+              "group-focus-within:translate-y-0 group-focus-within:opacity-100"
             )}
-            {sizes.length > 0 && (
-              <div className="flex items-center gap-3 flex-wrap">
-
-                <span className={cn(
-                  "text-stone-300 text-xs",
-                  isCompact ? "hidden sm:block" : "block"
-                )}>·</span>
-
-                {sizes.map(({ size, purchasable, variantId }) => (
-                  <span
-                    key={variantId}
-                    className={cn(
-                      "text-stone-400",
-                      isCompact ? "text-[10px] sm:text-xs" : "text-xs",
-                      !purchasable && "line-through opacity-30"
-                    )}
-                  >
-                    {size}
-                  </span>
-                ))}
-              </div>
+          >
+            {sizes.map(({ size, purchasable, variantId }) =>
+              purchasable ? (
+                <Link
+                  key={variantId ?? size}
+                  href={`${productHref}?${SIZE_SEARCH_PARAM}=${encodeURIComponent(size)}`}
+                  prefetch={false}
+                  aria-label={`${product.title}, size ${size}`}
+                  className="text-xs uppercase tracking-wide text-foreground underline-offset-4 hover:underline"
+                >
+                  {size}
+                </Link>
+              ) : (
+                <span
+                  key={variantId ?? size}
+                  aria-label={`Size ${size}, sold out`}
+                  className="text-xs uppercase tracking-wide text-muted-foreground/60 line-through"
+                >
+                  {size}
+                </span>
+              )
             )}
           </div>
+        )}
+      </div>
 
-          <h3 className={cn(
-            "font-medium text-stone-800 group-hover:text-stone-600 transition-colors text-sm",
-            isCompact ? "text-xs sm:text-sm" : ""
-          )}>
-            {product.title}
-          </h3>
-        </div>
+      {/* Info — fixed rows (fabric · title · price) so every card in a row lines up */}
+      <Link
+        href={productHref}
+        prefetch={false}
+        className="flex flex-col flex-1 gap-1"
+      >
+        {/* Always rendered so cards without a fabric keep the same height */}
+        <p className="text-xs uppercase tracking-wide text-muted-foreground truncate min-h-[1lh]">
+          {fabric}
+        </p>
 
-        <div className="mt-auto pt-2">
-          <p className={cn(
-            "font-medium text-stone-800",
-            density === "comfortable" ? "text-base" : "text-sm"
-          )}>
-            {price}
-          </p>
-        </div>
+        <h3
+          className={cn(
+            "font-normal text-foreground line-clamp-2 mb-0 transition-colors group-hover:text-muted-foreground",
+            isCompact ? "text-xs sm:text-small" : "text-small"
+          )}
+        >
+          {product.title}
+        </h3>
+
+        <p
+          className={cn(
+            "mt-auto pt-2 text-foreground",
+            isCompact ? "text-xs sm:text-small" : "text-small"
+          )}
+        >
+          {price}
+        </p>
       </Link>
     </div>
   )

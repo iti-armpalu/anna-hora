@@ -33,9 +33,9 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
         if (touchStartX.current === null) return
         const diff = touchStartX.current - e.changedTouches[0].clientX
         if (Math.abs(diff) > 40) {
-            diff > 0
-                ? setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
-                : setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+            // Swipe left → next image, swipe right → previous
+            if (diff > 0) setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+            else setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
         }
         touchStartX.current = null
     }
@@ -75,23 +75,23 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
                     <button
                         onClick={prev}
                         aria-label="Previous image"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 flex items-center justify-center"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/90 hover:bg-background w-8 h-8 flex items-center justify-center"
                     >
-                        <ChevronLeft className="w-4 h-4 text-stone-600" />
+                        <ChevronLeft className="w-4 h-4 text-foreground" />
                     </button>
                     <button
                         onClick={next}
                         aria-label="Next image"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 hover:bg-white w-8 h-8 flex items-center justify-center"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/90 hover:bg-background w-8 h-8 flex items-center justify-center"
                     >
-                        <ChevronRight className="w-4 h-4 text-stone-600" />
+                        <ChevronRight className="w-4 h-4 text-foreground" />
                     </button>
                 </>
             )}
 
             {/* Dots */}
             {images.length > 1 && (
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 transition-opacity duration-300 group-hover:opacity-0">
                     {images.map((image, i) => (
                         <div
                             key={image.url}
