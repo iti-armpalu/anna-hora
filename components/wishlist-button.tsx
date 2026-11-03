@@ -65,7 +65,7 @@ export function WishlistButton({ product, variant = "overlay" }: WishlistButtonP
 
   return (
     <Button
-      size="icon"
+      size={variant === "inline" ? "icon" : "icon-sm"}
       variant={variant === "inline" ? "outline" : "ghost"}
       onClick={handleClick}
       aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
@@ -74,14 +74,15 @@ export function WishlistButton({ product, variant = "overlay" }: WishlistButtonP
         "transition-transform duration-200 active:scale-95",
         variant === "inline"
           ? "size-12"
-          // Soft white glow keeps the bare icon legible on darker photos without a background box
-          : "hover:bg-transparent [filter:drop-shadow(0_0_3px_rgb(255_255_255/0.7))]"
+          // Frosted square: enough contrast on any photo while letting the image show through
+          : "bg-background/50 backdrop-blur-md hover:bg-background/70"
       )}
     >
       <Heart
-        strokeWidth={variant === "inline" ? 1.5 : 1.25}
+        strokeWidth={1.5}
         className={cn(
-          "h-5 w-5 stroke-foreground transition-colors duration-200",
+          "stroke-foreground transition-colors duration-200",
+          variant === "inline" ? "h-5 w-5" : "h-4 w-4",
           active ? "fill-foreground" : "fill-transparent"
         )}
       />

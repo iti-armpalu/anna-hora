@@ -6,7 +6,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { cn } from "@/lib/utils"
 
-export default function ProductImageCarousel({ product }: { product: ProductNormalized }) {
+type Props = {
+    product: ProductNormalized
+    /** Position indicator — off on product cards (kept quiet), on for the PDP mobile gallery where it's the only swipe hint */
+    showIndicator?: boolean
+}
+
+export default function ProductImageCarousel({ product, showIndicator = false }: Props) {
     const [index, setIndex] = useState(0)
     const touchStartX = useRef<number | null>(null)
 
@@ -92,7 +98,7 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
 
             {/* Position indicator — hairline segments, one per image.
                 mix-blend-difference keeps them visible on light and dark photos alike. */}
-            {images.length > 1 && (
+            {showIndicator && images.length > 1 && (
                 <div
                     aria-hidden="true"
                     className="absolute inset-x-4 bottom-3 z-10 flex gap-1 mix-blend-difference transition-opacity duration-300 group-hover:opacity-0"

@@ -112,7 +112,7 @@ export default function ProductPageClient({
                     <ProductGallery images={product.images} />
                 </div>
                 <div className="md:hidden">
-                    <ProductImageCarousel product={product} />
+                    <ProductImageCarousel product={product} showIndicator />
                 </div>
 
                 {/* Product info */}

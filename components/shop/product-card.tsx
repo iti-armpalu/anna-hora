@@ -57,7 +57,7 @@ export function ProductCard({
       {/* Image */}
       <div className="relative overflow-hidden mb-3">
         {/* Wishlist — stopPropagation in WishlistButton so it doesn't navigate */}
-        <div className="absolute top-3 right-3 z-20">
+        <div className="absolute top-2 right-2 z-20">
           <WishlistButton product={product} />
         </div>
         {/* Carousel prev/next already have stopPropagation */}
