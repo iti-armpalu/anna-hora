@@ -31,7 +31,9 @@ export function ActiveFilters({ chips, onClearAll }: Props) {
           aria-label={`Remove filter: ${chip.label}`}
           className="inline-flex h-8 items-center gap-2 border border-input px-3 text-xs text-foreground transition-colors hover:border-foreground"
         >
-          {chip.label}
+          {/* Trim the text box to cap height → baseline so it centres optically against the icon.
+              Firefox lacks text-box support; leading-none keeps it close there. */}
+          <span className="leading-none [text-box:trim-both_cap_alphabetic]">{chip.label}</span>
           <X className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
         </button>
       ))}
