@@ -4,6 +4,7 @@ import { useState, useRef } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
+import { cn } from "@/lib/utils"
 
 export default function ProductImageCarousel({ product }: { product: ProductNormalized }) {
     const [index, setIndex] = useState(0)
@@ -89,14 +90,20 @@ export default function ProductImageCarousel({ product }: { product: ProductNorm
                 </>
             )}
 
-            {/* Dots */}
+            {/* Position indicator — hairline segments, one per image.
+                mix-blend-difference keeps them visible on light and dark photos alike. */}
             {images.length > 1 && (
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 transition-opacity duration-300 group-hover:opacity-0">
+                <div
+                    aria-hidden="true"
+                    className="absolute inset-x-4 bottom-3 z-10 flex gap-1 mix-blend-difference transition-opacity duration-300 group-hover:opacity-0"
+                >
                     {images.map((image, i) => (
                         <div
                             key={image.url}
-                            className={`h-1.5 rounded-full transition-all duration-300 bg-white ${i === index ? "w-4 opacity-100" : "w-1.5 opacity-50"
-                                }`}
+                            className={cn(
+                                "h-0.5 flex-1 bg-white transition-opacity duration-300",
+                                i === index ? "opacity-100" : "opacity-30"
+                            )}
                         />
                     ))}
                 </div>

@@ -203,7 +203,7 @@ export default function ProductPageClient({
                                         ? `${PREORDER_COPY.buttonLabel} – ${formattedPrice}`
                                         : `Add to Bag – ${formattedPrice}`}
                             </Button>
-                            <WishlistButton product={product} />
+                            <WishlistButton product={product} variant="inline" />
                         </div>
                     )}
 

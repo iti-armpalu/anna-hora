@@ -3,11 +3,18 @@
 import { Heart } from "lucide-react"
 import { useWishlist } from "@/context/wishlist-context"
 import { Button } from "./ui/button"
+import { cn } from "@/lib/utils"
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { isPurchasable } from "@/lib/shopify/utils/stock-status"
 
 type WishlistButtonProps = {
   product: ProductNormalized
+  /**
+   * overlay — bare icon on top of product imagery (cards); a secondary action that
+   *           shouldn't compete with the photo
+   * inline  — bordered square beside Add to Bag, matching its 48px height
+   */
+  variant?: "overlay" | "inline"
 }
 
 function getPrimaryImage(product: ProductNormalized): string {
@@ -18,7 +25,7 @@ function getPrimaryImage(product: ProductNormalized): string {
   )
 }
 
-export function WishlistButton({ product }: WishlistButtonProps) {
+export function WishlistButton({ product, variant = "overlay" }: WishlistButtonProps) {
   const { isInWishlist, add, remove } = useWishlist()
 
   const wishlistId = product.id
@@ -59,16 +66,24 @@ export function WishlistButton({ product }: WishlistButtonProps) {
   return (
     <Button
       size="icon"
-      variant="secondary"
+      variant={variant === "inline" ? "outline" : "ghost"}
       onClick={handleClick}
       aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
-      className="bg-white/90 hover:bg-white active:scale-95 transition-all duration-200"
+      aria-pressed={active}
+      className={cn(
+        "transition-transform duration-200 active:scale-95",
+        variant === "inline"
+          ? "size-12"
+          // Soft white glow keeps the bare icon legible on darker photos without a background box
+          : "hover:bg-transparent [filter:drop-shadow(0_0_3px_rgb(255_255_255/0.7))]"
+      )}
     >
       <Heart
-        className={`h-5 w-5 transition-transform duration-200 ${active
-            ? "fill-red-500 stroke-red-500 scale-110"
-            : "stroke-stone-700"
-          }`}
+        strokeWidth={variant === "inline" ? 1.5 : 1.25}
+        className={cn(
+          "h-5 w-5 stroke-foreground transition-colors duration-200",
+          active ? "fill-foreground" : "fill-transparent"
+        )}
       />
     </Button>
   )
