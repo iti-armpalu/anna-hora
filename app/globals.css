@@ -70,6 +70,18 @@
    /* uppercase section labels         */
 
    /* ----------------------------------------
+     Spacing — vertical rhythm. Use these instead of
+     raw gap-/space-y- numbers so related things are
+     always the same distance apart:
+       gap-tight  lines of one text group (title → price)
+       gap-field  a label → its control (SIZE → size buttons)
+       gap-block  between blocks in a column (colour → size → add to bag)
+  ---------------------------------------- */
+   --spacing-tight: 0.5rem;
+   --spacing-field: 0.75rem;
+   --spacing-block: 2rem;
+
+   /* ----------------------------------------
      Radius — sharp corners everywhere.
      Tailwind's rounded-* utilities (and every shadcn
      component) read these tokens, so zeroing them here

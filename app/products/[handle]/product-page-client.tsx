@@ -20,6 +20,7 @@ import { ProductDetailsAccordion } from "./_components/product-detail-accordion"
 import ProductImageCarousel from "@/components/shop/product-image-carousel"
 import { WishlistButton } from "@/components/wishlist-button"
 import { ColorSwatches } from "./_components/color-swatches"
+import { OptionGroup } from "./_components/option-group"
 import { PREORDER_COPY, getPreorderShippingText } from "@/lib/config/preorder"
 
 interface Props {
@@ -115,17 +116,17 @@ export default function ProductPageClient({
                 </div>
 
                 {/* Product info */}
-                <div className="flex flex-col gap-8 lg:sticky lg:top-[calc(var(--header-height)+1rem)] lg:h-fit">
+                <div className="flex flex-col gap-block lg:sticky lg:top-[calc(var(--header-height)+1rem)] lg:h-fit">
 
                     {/* Title & price */}
-                    <div className="space-y-2">
+                    <div className="flex flex-col gap-tight">
                         <h1 className="text-heading-md font-light font-serif">
                             {product.title}
                         </h1>
                         <p className="text-small text-muted-foreground">
                             {product.description}
                         </p>
-                        <p className="text-heading-sm text-foreground pt-1">
+                        <p className="text-heading-sm text-foreground">
                             {formattedPrice}
                         </p>
                     </div>
@@ -137,15 +138,16 @@ export default function ProductPageClient({
                     />
 
                     {/* Size */}
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                            <h2 className="label-uppercase mb-0">Size</h2>
+                    <OptionGroup
+                        label="Size"
+                        action={
                             <SizeGuideDialog
                                 open={showSizeGuide}
                                 onOpenChange={setShowSizeGuide}
                                 sizeGuideId={sizeGuideId}
                             />
-                        </div>
+                        }
+                    >
                         <div className="grid grid-cols-5 gap-2">
                             {sizes.map(({ size, status }) => {
                                 const isSoldOut = status === "sold_out"
@@ -177,7 +179,7 @@ export default function ProductPageClient({
                                 {product.metafields.fitNotes}
                             </p>
                         )}
-                    </div>
+                    </OptionGroup>
 
                     {/* Add to bag */}
                     {!canShip ? (

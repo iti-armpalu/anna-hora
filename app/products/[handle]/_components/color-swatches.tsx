@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { SIZE_SEARCH_PARAM } from "@/lib/config/color-group"
+import { OptionGroup } from "./option-group"
 import type {
     ColorSiblingNormalized,
     ColorSwatchNormalized,
@@ -45,13 +46,7 @@ export function ColorSwatches({ siblings, currentHandle, selectedSize }: Props) 
     const currentLabel = current?.color?.name ?? current?.title
 
     return (
-        <div className="space-y-3">
-            <h2 className="label-uppercase mb-0">
-                Colour
-                {currentLabel && (
-                    <span className="ml-2 normal-case tracking-normal font-normal text-foreground">{currentLabel}</span>
-                )}
-            </h2>
+        <OptionGroup label="Colour" value={currentLabel}>
             <ul className="flex flex-wrap gap-2">
                 {siblings.map((sibling) => {
                     const label = sibling.color?.name ?? sibling.title
@@ -86,6 +81,6 @@ export function ColorSwatches({ siblings, currentHandle, selectedSize }: Props) 
                     )
                 })}
             </ul>
-        </div>
+        </OptionGroup>
     )
 }
