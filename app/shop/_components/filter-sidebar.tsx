@@ -115,6 +115,9 @@ export interface FilterSidebarProps {
   setSelectedPrice: (value: [number, number]) => void
   priceBounds: [number, number]
   currency?: string
+  /** Owned by the shop client so the toolbar, chips and sidebar always agree */
+  activeCount: number
+  onClearAll: () => void
   className?: string
 }
 
@@ -135,31 +138,29 @@ export function FilterSidebar({
   setSelectedPrice,
   priceBounds,
   currency,
+  activeCount,
+  onClearAll,
   className = "",
 }: FilterSidebarProps) {
   const [minBound, maxBound] = priceBounds
   const priceRange = selectedPrice ?? priceBounds
 
-  const activeCount =
-    selectedEdits.length +
-    selectedFabric.length +
-    selectedSizes.length +
-    selectedColors.length +
-    (selectedPrice &&
-      (selectedPrice[0] !== minBound || selectedPrice[1] !== maxBound)
-      ? 1
-      : 0)
-
-  const clearAll = () => {
-    setSelectedEdits([])
-    setSelectedFabric([])
-    setSelectedSizes([])
-    setSelectedColors([])
-    setSelectedPrice([minBound, maxBound])
-  }
-
   return (
     <div className={className}>
+
+      {/* Header row — reserves its height so the sections don't jump when Clear all appears */}
+      <div className="flex h-8 items-center justify-between">
+        <span className="label-uppercase">Refine</span>
+        {activeCount > 0 && (
+          <button
+            type="button"
+            onClick={onClearAll}
+            className="text-xs uppercase tracking-widest text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
+          >
+            Clear all ({activeCount})
+          </button>
+        )}
+      </div>
 
       <FilterSection title="Edit" defaultOpen>
         <div className="flex flex-wrap gap-2">
@@ -223,7 +224,7 @@ export function FilterSidebar({
             onValueChange={(value) => setSelectedPrice(value as [number, number])}
             className="my-2"
           />
-          <div className="mt-2 flex justify-between text-xs text-stone-500">
+          <div className="mt-2 flex justify-between text-xs text-muted-foreground">
             <span>{formatPrice({ amount: priceRange[0], currencyCode: currency })}</span>
             <span>{formatPrice({ amount: priceRange[1], currencyCode: currency })}</span>
           </div>

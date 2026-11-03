@@ -9,6 +9,8 @@ import { ViewToggle } from "./_components/view-toggle";
 import { ProductCard } from "@/components/shop/product-card";
 import { FilterSidebar } from "./_components/filter-sidebar";
 import { MobileFilterSheet } from "./_components/mobile-filter-sheet";
+import { ActiveFilters, type ActiveFilterChip } from "./_components/active-filters";
+import { formatPrice } from "@/hooks/use-price";
 
 import { ProductNormalized } from "@/lib/shopify/types/product-normalized";
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized";
@@ -76,18 +78,54 @@ export default function ShopClient({
   }, [priceBounds]);
 
   // -------------------------------------------------
-  // ACTIVE FILTER COUNT (for mobile button)
+  // ACTIVE FILTERS — single source for the count, the chips and "clear all"
   // -------------------------------------------------
-  const activeFilterCount =
-    edits.length +
-    fabric.length +
-    sizes.length +
-    colors.length +
-    (priceRange &&
-      (priceRange[0] !== priceBounds[0] ||
-        priceRange[1] !== priceBounds[1])
-      ? 1
-      : 0);
+  const isPriceFiltered =
+    priceRange !== null &&
+    (priceRange[0] !== priceBounds[0] || priceRange[1] !== priceBounds[1]);
+
+  const clearAllFilters = () => {
+    setEdits([]);
+    setFabric([]);
+    setSizes([]);
+    setColors([]);
+    setPriceRange(priceBounds);
+  };
+
+  const currency = products[0]?.currencyCode;
+
+  const activeFilterChips: ActiveFilterChip[] = [
+    ...edits.map((value) => ({
+      id: `edit:${value}`,
+      label: value,
+      onRemove: () => setEdits((prev) => prev.filter((v) => v !== value)),
+    })),
+    ...fabric.map((value) => ({
+      id: `fabric:${value}`,
+      label: value,
+      onRemove: () => setFabric((prev) => prev.filter((v) => v !== value)),
+    })),
+    // "Size M" rather than "M" — a bare letter is ambiguous in a row of chips
+    ...sizes.map((value) => ({
+      id: `size:${value}`,
+      label: `Size ${value}`,
+      onRemove: () => setSizes((prev) => prev.filter((v) => v !== value)),
+    })),
+    ...colors.map((value) => ({
+      id: `color:${value}`,
+      label: value,
+      onRemove: () => setColors((prev) => prev.filter((v) => v !== value)),
+    })),
+    ...(isPriceFiltered && priceRange
+      ? [{
+          id: "price",
+          label: `${formatPrice({ amount: priceRange[0], currencyCode: currency })} – ${formatPrice({ amount: priceRange[1], currencyCode: currency })}`,
+          onRemove: () => setPriceRange(priceBounds),
+        }]
+      : []),
+  ];
+
+  const activeFilterCount = activeFilterChips.length;
 
   // -------------------------------------------------
   // HELPERS
@@ -316,26 +354,24 @@ export default function ShopClient({
                 selectedPrice={priceRange}
                 setSelectedPrice={setPriceRange}
                 priceBounds={priceBounds}
-                currency={products[0]?.currencyCode}
+                currency={currency}
+                activeCount={activeFilterCount}
+                onClearAll={clearAllFilters}
               />
             </div>
           </aside>
 
           {/* Grid */}
           <div className="flex-1 min-w-0">
+            <ActiveFilters chips={activeFilterChips} onClearAll={clearAllFilters} />
+
             {sortedProducts.length === 0 ? (
               <div className="py-24 text-center">
                 <p className="text-muted-foreground">
                   No products match your filters.
                 </p>
                 <button
-                  onClick={() => {
-                    setEdits([])
-                    setFabric([])
-                    setSizes([])
-                    setColors([])
-                    setPriceRange(priceBounds)
-                  }}
+                  onClick={clearAllFilters}
                   className="mt-4 text-small text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
                 >
                   Clear all filters
@@ -377,7 +413,9 @@ export default function ShopClient({
         selectedPrice={priceRange}
         setSelectedPrice={setPriceRange}
         priceBounds={priceBounds}
-        currency={products[0]?.currencyCode}
+        currency={currency}
+        activeCount={activeFilterCount}
+        onClearAll={clearAllFilters}
       />
 
       {/* Mobile floating filter button */}

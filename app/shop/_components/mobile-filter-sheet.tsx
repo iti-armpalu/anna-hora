@@ -41,6 +41,8 @@ interface Props {
 
   priceBounds: [number, number];
   currency?: string;
+  activeCount: number;
+  onClearAll: () => void;
 }
 
 export function MobileFilterSheet({
@@ -64,6 +66,8 @@ export function MobileFilterSheet({
   setSelectedPrice,
   priceBounds,
   currency,
+  activeCount,
+  onClearAll,
 }: Props) {
   const sortedCollections = useMemo(() => {
     return [...collections]
@@ -104,6 +108,8 @@ export function MobileFilterSheet({
             setSelectedPrice={setSelectedPrice}
             priceBounds={priceBounds}
             currency={currency}
+            activeCount={activeCount}
+            onClearAll={onClearAll}
             className="py-2"
           />
         </div>
