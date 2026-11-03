@@ -16,8 +16,13 @@ type Props = {
 export function SortControl({ value, onChange }: Props) {
   return (
     <Select value={value} onValueChange={(v) => onChange(v as Props["value"])}>
-      <SelectTrigger className="h-9 w-44 border-stone-200 text-sm text-stone-700">
-        <SelectValue placeholder="Sort by" />
+      {/* Borderless trigger styled as a toolbar label; the dropdown items stay in sentence case */}
+      <SelectTrigger
+        aria-label="Sort products"
+        className="h-9 gap-2 border-0 bg-transparent px-0 text-xs uppercase tracking-widest text-foreground"
+      >
+        <span className="text-muted-foreground">Sort:</span>
+        <SelectValue placeholder="Newest" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="newest">Newest</SelectItem>

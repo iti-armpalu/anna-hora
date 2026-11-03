@@ -2,6 +2,7 @@
 
 import { LayoutGrid, Grid3x3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 type GridDensity = "comfortable" | "compact"
 
@@ -12,14 +13,14 @@ interface ViewToggleProps {
 
 export function ViewToggle({ value, onChange }: ViewToggleProps) {
   return (
-    <div className="flex items-center h-9 border border-stone-200 bg-white">
+    <div className="flex items-center h-9">
       <Button
         variant="ghost"
         size="icon-sm"
         onClick={() => onChange("compact")}
         aria-label="Compact grid"
         aria-pressed={value === "compact"}
-        className={`h-full ${value === "compact" ? "text-stone-900" : "text-stone-400"}`}
+        className={cn("h-full", value === "compact" ? "text-foreground" : "text-muted-foreground")}
       >
         <Grid3x3 className="h-4 w-4" />
       </Button>
@@ -29,7 +30,7 @@ export function ViewToggle({ value, onChange }: ViewToggleProps) {
         onClick={() => onChange("comfortable")}
         aria-label="Comfortable grid"
         aria-pressed={value === "comfortable"}
-        className={`h-full ${value === "comfortable" ? "text-stone-900" : "text-stone-400"}`}
+        className={cn("h-full", value === "comfortable" ? "text-foreground" : "text-muted-foreground")}
       >
         <LayoutGrid className="h-4 w-4" />
       </Button>

@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { CollectionNormalized } from "@/lib/shopify/types/collection-normalized"
 
 interface Props {
@@ -22,7 +23,7 @@ export function FiltersPanel({ collections, activeCollection }: Props) {
   ]
 
   return (
-    <nav className="flex items-center gap-6">
+    <nav aria-label="Collections" className="flex items-center gap-6">
       {finalCollections.map((col) => {
         const isActive =
           (col.handle === "all" && activeCollection === null) ||
@@ -34,10 +35,12 @@ export function FiltersPanel({ collections, activeCollection }: Props) {
           <Link
             key={col.handle}
             href={href}
-            className={`inline-flex items-center h-9 text-sm transition-colors whitespace-nowrap border-b-1 ${isActive
-                ? "text-stone-900 font-medium border-b border-stone-900"
-                : "text-stone-500 hover:text-stone-900"
-              }`}
+            aria-current={isActive ? "page" : undefined}
+            // Active state is colour alone — no underlines, so the row stays calm
+            className={cn(
+              "inline-flex items-center h-9 whitespace-nowrap text-xs uppercase tracking-widest transition-colors",
+              isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+            )}
           >
             {col.title}
           </Link>

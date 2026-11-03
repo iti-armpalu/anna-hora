@@ -213,46 +213,49 @@ export default function ShopClient({
     return () => observer.disconnect();
   }, []);
 
+  // activeCollection is a handle — show the collection's real title
+  const activeCollectionTitle = activeCollection
+    ? collections.find((c) => c.handle === activeCollection)?.title ?? null
+    : null
+  const pageTitle = activeCollectionTitle ?? "The Collection"
+
   const gridClass = density === "comfortable"
     ? "grid-cols-1 sm:grid-cols-3"
     : "grid-cols-2 sm:grid-cols-4"
 
 
   return (
-    <div className="bg-stone-50">
+    <div className="bg-background">
 
-      {/* Hero */}
-      <section className="py-12 lg:py-16">
-        <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="mb-4 text-3xl font-light text-stone-800 lg:text-4xl">
-            {activeCollection ? "Collection" : "The Collection"}
-          </h1>
-          <p className="mx-auto max-w-2xl text-stone-600">
-            Discover pieces designed to elevate the everyday.
-          </p>
-        </div>
-      </section>
+      {/* Heading — compact so the first row of products is visible without scrolling */}
+      <div className="container-site flex items-baseline gap-3 pt-8 pb-4 lg:pt-10">
+        <h1 className="text-heading-md font-light mb-0">{pageTitle}</h1>
+        <span className="text-xs uppercase tracking-widest text-muted-foreground">
+          {sortedProducts.length} {sortedProducts.length === 1 ? "piece" : "pieces"}
+        </span>
+      </div>
 
-      {/* Toolbar */}
+      {/* Toolbar — one quiet style: small uppercase labels, no boxes */}
       <div
-        className="sticky z-40 border-b border-stone-200 bg-white"
+        className="sticky z-40 border-y border-border bg-background/95 backdrop-blur-sm"
         style={{ top: "var(--header-height)" }}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container-site">
           <div className="h-14 flex items-center justify-between gap-4">
 
             {/* Left — desktop only */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-10">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
                 onClick={() => setIsFilterOpen((prev) => !prev)}
-                className="flex items-center gap-2 h-9"
+                aria-expanded={isFilterOpen}
+                className="px-0 hover:bg-transparent hover:text-muted-foreground"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 {isFilterOpen ? "Hide Filters" : "Filters"}
                 {activeFilterCount > 0 && !isFilterOpen && (
-                  <span className="flex h-4 w-4 items-center justify-center bg-forest-800 text-white text-[10px] font-medium">
+                  <span className="flex h-4 min-w-4 items-center justify-center bg-primary px-1 text-2xs text-primary-foreground">
                     {activeFilterCount}
                   </span>
                 )}
@@ -264,12 +267,12 @@ export default function ShopClient({
             </div>
 
             {/* Mobile left — collection name only */}
-            <p className="lg:hidden text-sm text-stone-600">
-              {activeCollection ?? "All Products"}
+            <p className="lg:hidden text-xs uppercase tracking-widest text-foreground">
+              {activeCollectionTitle ?? "All Products"}
             </p>
 
             {/* Right — always visible */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-6">
               <SortControl value={selectedSort} onChange={setSelectedSort} />
               <ViewToggle value={density} onChange={setDensity} />
             </div>
@@ -279,7 +282,7 @@ export default function ShopClient({
       </div>
 
       {/* Products */}
-      <main className="container mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+      <main className="container-site py-8 pb-24">
         <div className="flex">
 
           {/* Filter sidebar — animates width */}
@@ -322,7 +325,7 @@ export default function ShopClient({
           <div className="flex-1 min-w-0">
             {sortedProducts.length === 0 ? (
               <div className="py-24 text-center">
-                <p className="text-stone-500">
+                <p className="text-muted-foreground">
                   No products match your filters.
                 </p>
                 <button
@@ -333,7 +336,7 @@ export default function ShopClient({
                     setColors([])
                     setPriceRange(priceBounds)
                   }}
-                  className="mt-4 text-sm text-stone-400 hover:text-stone-700 underline transition-colors"
+                  className="mt-4 text-small text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
                 >
                   Clear all filters
                 </button>
