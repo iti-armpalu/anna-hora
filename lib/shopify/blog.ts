@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { shopifyFetch } from "./fetch";
 import { GET_ARTICLES_QUERY, GET_ARTICLE_BY_HANDLE_QUERY } from "./queries/blog";
 
@@ -107,9 +108,10 @@ export async function getAllArticles(): Promise<NormalizedArticle[]> {
     );
 }
 
-export async function getArticleByHandle(
+// cache(): generateMetadata and the article page both call this — one request per render
+export const getArticleByHandle = cache(async (
     handle: string
-): Promise<NormalizedArticle | null> {
+): Promise<NormalizedArticle | null> => {
     const data = await shopifyFetch<ArticleByHandleResponse>({
         query: GET_ARTICLE_BY_HANDLE_QUERY,
         variables: { blogHandle: BLOG_HANDLE, articleHandle: handle },
@@ -121,4 +123,4 @@ export async function getArticleByHandle(
     const article = data.blog?.articleByHandle;
     if (!article) return null;
     return normalizeArticle(article);
-}
+});

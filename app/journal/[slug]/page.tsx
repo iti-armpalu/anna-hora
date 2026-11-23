@@ -9,6 +9,7 @@ import { getArticleByHandle, getAllArticles } from "@/lib/shopify/blog"
 import { getProductByHandle } from "@/lib/shopify/product"
 import { ProductCard } from "@/components/shop/product-card"
 import { journalContent } from "../_data"
+import { JournalCard } from "../_components/journal-card"
 
 export const revalidate = 3600
 export const dynamicParams = true
@@ -196,43 +197,17 @@ export default async function JournalArticlePage({
         <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-light text-stone-800 mb-12 text-center">
+              <h2 className="text-heading-lg font-light mb-12 text-center">
                 {relatedContent.heading}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
                 {relatedArticles.map((related) => (
-                  <Link
+                  <JournalCard
                     key={related.id}
-                    href={`/journal/${related.slug}`}
-                    aria-label={`Read more about ${related.title}`}
-                  >
-                    <div className="group cursor-pointer overflow-hidden">
-                      <div className="relative aspect-[3/4] overflow-hidden mb-4">
-                        <Image
-                          src={related.image || "/placeholder.svg"}
-                          alt={related.imageAlt || related.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        />
-                      </div>
-                      <span className="text-xs text-stone-400 tracking-wide mb-1 block">
-                        {related.category ?? related.tags[0]}
-                      </span>
-                      <h3 className="text-base font-light text-stone-800 mb-2 leading-snug group-hover:text-stone-500 transition-colors duration-300">
-                        {related.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-xs text-stone-400">
-                        <span>{related.date}</span>
-                        {related.readTime && (
-                          <>
-                            <span>·</span>
-                            <span>{related.readTime}</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
+                    article={related}
+                    showExcerpt={false}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  />
                 ))}
               </div>
             </div>
