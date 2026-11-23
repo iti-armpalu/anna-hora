@@ -54,14 +54,14 @@ export type CareGuideContent = {
 
 export const careGuideContent: CareGuideContent = {
   hero: {
-    title: "Caring for Your Silk",
-    subtitle: "A Guide to Preserving Beauty",
+    title: "Caring for your silk",
+    subtitle: "A guide to preserving beauty",
     description:
       "Silk is nature's most precious fabric, and with proper care, your pieces will remain beautiful for years to come. Learn how to protect your investment and keep your silk looking as luxurious as the day you received it.",
   },
   introduction: {
-    title: "Why Silk Care",
-    subtitle: "Matters",
+    title: "Why silk care",
+    subtitle: "matters",
     paragraphs: [
       "Silk is a natural protein fiber with remarkable properties—it's strong yet delicate, luxurious yet practical. Like any fine fabric, it requires thoughtful care to maintain its luster, softness, and structural integrity.",
       "Understanding how to care for silk isn't complicated, but it does require attention to detail. The rewards are worth it: with proper care, your silk pieces will develop a beautiful patina over time, becoming more precious with each wear.",
@@ -69,8 +69,8 @@ export const careGuideContent: CareGuideContent = {
     ],
   },
   careInstructions: {
-    title: "Essential Care",
-    subtitle: "Instructions",
+    title: "Essential care",
+    subtitle: "instructions",
     description:
       "Follow these four fundamental steps to keep your silk pieces in pristine condition. Each step is designed to protect the delicate fibers while maintaining the fabric's natural beauty.",
     instructions: [
@@ -115,7 +115,7 @@ export const careGuideContent: CareGuideContent = {
       },
       {
         step: 4,
-        title: "Stain Removal",
+        title: "Stain removal",
         description: "Act quickly to treat stains without damage",
         details: [
           "Blot spills immediately with a clean, white cloth—never rub",
@@ -129,71 +129,71 @@ export const careGuideContent: CareGuideContent = {
     ],
   },
   commonIssues: {
-    title: "Common Issues",
-    subtitle: "& Solutions",
+    title: "Common issues",
+    subtitle: "& solutions",
     issues: [
       {
-        issue: "Water Spots or Rings",
+        issue: "Water spots or rings",
         solution:
           "Gently dampen the entire area with cool water using a spray bottle, then blot with a clean towel and air dry flat. This redistributes the water marks evenly.",
       },
       {
-        issue: "Loss of Sheen",
+        issue: "Loss of sheen",
         solution:
           "Rinse silk in cool water with a splash of white vinegar (1 tablespoon per gallon) to restore pH balance. The natural acidity helps revive the luster.",
       },
       {
-        issue: "Wrinkles from Storage",
+        issue: "Wrinkles from storage",
         solution:
           "Hang garment in a steamy bathroom for 15-20 minutes, or use a steamer held 15 cm / 6 inches away. Never apply steam directly to silk.",
       },
       {
-        issue: "Color Fading",
+        issue: "Color fading",
         solution:
           "Always store silk away from direct sunlight and harsh lighting. For minor fading, professional silk specialists can sometimes restore color.",
       },
       {
-        issue: "Snags or Pulls",
+        issue: "Snags or pulls",
         solution:
           "Gently work the snag back through to the wrong side using a needle. Never cut loose threads. For significant damage, consult a textile repair specialist.",
       },
       {
-        issue: "Yellowing from Age",
+        issue: "Yellowing from age",
         solution:
           "Prevention is key. Store with acid-free tissue paper. For existing yellowing, professional silk restoration may help, but severe discoloration may be permanent.",
       },
     ],
   },
   storage: {
-    title: "Proper Storage",
-    subtitle: "Preserves Your Investment",
+    title: "Proper storage",
+    subtitle: "preserves your investment",
     description:
       "How you store your silk between wears is just as important as how you clean it. Follow these guidelines to keep your pieces fresh, clean, and ready to wear.",
     tips: [
       {
-        title: "Breathable Garment Bags",
+        title: "Breathable garment bags",
         description:
           "Store silk in cotton or linen garment bags—never plastic, which traps moisture and can cause yellowing. Natural fabrics allow silk to breathe while protecting from dust.",
       },
       {
-        title: "Cool, Dark Environment",
+        title: "Cool, dark environment",
         description:
           "Keep silk in a cool, dry place away from direct sunlight, which causes fading. Avoid attics or basements where temperature and humidity fluctuate.",
       },
       {
-        title: "Natural Cedar Protection",
+        title: "Natural cedar protection",
         description:
           "Use cedar sachets or blocks to naturally repel moths—never mothballs, which contain harsh chemicals. Replace cedar annually for continued protection.",
       },
       {
-        title: "Proper Hanging",
+        title: "Proper hanging",
         description:
           "Use padded or wide hangers to prevent shoulder marks. For delicate pieces or long-term storage, fold gently with acid-free tissue paper between folds.",
       },
     ],
   },
   avoidList: {
-    title: "What to Avoid",
+    title: "What to avoid",
     items: [
       "Hot water, which can shrink silk and damage its protein structure",
       "Direct sunlight or heat sources, which cause fading and fiber damage",

@@ -94,7 +94,7 @@ export const silkContent: SilkContent = {
             {
                 image: "/silk-shirts.webp",
                 alt: `${siteConfig.displayName} silk shirts in mink and off-white hanging on branded hangers.`,
-                title: "Grade 6A Mulberry Silk",
+                title: "Grade 6A Mulberry silk",
                 text: "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
             },
             {

@@ -58,7 +58,7 @@ export interface PrivacyData {
  */
 const PRIVACY_DATA: PrivacyData = {
     hero: {
-        title: "Privacy Policy",
+        title: "Privacy policy",
         intro: [
             "We collect cookies to make our online store work properly. Cookies are short text files that help the website function correctly and make your next visit easier.",
             "Subject to your consent, we may also use analytical and marketing cookies to create a tailored offer reflecting your priorities and preferences. We do not intend to swamp you with spam; your trust and comfort are our topmost priorities.",
@@ -69,7 +69,7 @@ const PRIVACY_DATA: PrivacyData = {
     sections: [
         {
             key: "controller-and-scope",
-            title: "1. Information About Anna Hora",
+            title: "1. Information about Anna Hora",
             paragraphs: [
                 "Your trust is important to us. The protection of your privacy when processing personal data is important for us. This Privacy Policy explains how we handle your personal data when you use our website and services.",
                 // Address is derived from siteConfig — update in lib/config/site.ts
@@ -80,7 +80,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "legal-bases",
-            title: "2. Legal Bases for Processing",
+            title: "2. Legal bases for processing",
             intro: "We process your personal data on the following legal bases:",
             items: [
                 "Consent (GDPR Art. 6(1)(a)) – for example, when you subscribe to our newsletters as a non-customer",
@@ -93,7 +93,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "what-we-mean-by-your-data",
-            title: "3. What We Mean by “Your Data”",
+            title: "3. What we mean by “your data”",
             intro: "“Your data” means personal data relating to you. We may process, in particular:",
             items: [
                 "Name, shipping address, email address, and phone number",
@@ -107,7 +107,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "when-we-process",
-            title: "4. When We Process Your Data",
+            title: "4. When we process your data",
             intro: "We may process your personal data in the following situations:",
             items: [
                 "When you register and use a user account (Part I)",
@@ -121,7 +121,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "account-registration",
-            title: "Part I – Customer Account",
+            title: "Part I – Customer account",
             paragraphs: [
                 "You may create or access a customer account to manage your orders and personal information. Customer accounts are provided through Shopify’s secure authentication system.",
                 "When you sign in to your account, Shopify manages the authentication process (for example through secure login verification). We do not store or have access to your account password or authentication credentials.",
@@ -162,7 +162,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "marketing-and-social",
-            title: "Part IV – Advertising and Promotional Purposes",
+            title: "Part IV – Advertising and promotional purposes",
             subsections: [
                 {
                     heading: "1) Newsletter",
@@ -170,13 +170,13 @@ const PRIVACY_DATA: PrivacyData = {
                         "We may send informational newsletters either based on your consent (GDPR Art. 6(1)(a)) if you are not our customer, or based on our legitimate interest (GDPR Art. 6(1)(f)) if you are our customer.",
                 },
                 {
-                    heading: "Unsubscribe Options",
+                    heading: "Unsubscribe options",
                     text:
                         "You can unsubscribe at any time by clicking the unsubscribe link in the footer of each newsletter, using your user account settings, or by emailing customerservice@annahora.com.",
                     small: true,
                 },
                 {
-                    heading: "2) Social Networks",
+                    heading: "2) Social networks",
                     text:
                         "We are present on social networks (e.g. Instagram and Pinterest) to communicate with interested parties and inform them about offers. We do not control how platform operators process data. Please consult their respective privacy policies for more details.",
                 },
@@ -194,17 +194,17 @@ const PRIVACY_DATA: PrivacyData = {
             ],
             subsections: [
                 {
-                    heading: "Technical / Functional Cookies",
+                    heading: "Technical / functional cookies",
                     text: "Required for the website to function properly (e.g. essential site features).",
                     small: true,
                 },
                 {
-                    heading: "Analytical Cookies",
+                    heading: "Analytical cookies",
                     text: "Help us understand how visitors use the website so we can improve user experience.",
                     small: true,
                 },
                 {
-                    heading: "Marketing Cookies",
+                    heading: "Marketing cookies",
                     text: "Used to personalize advertising and measure marketing performance (subject to your consent, where required).",
                     small: true,
                 },
@@ -216,7 +216,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "your-rights",
-            title: "5. Your Rights",
+            title: "5. Your rights",
             paragraphs: [
                 "You can contact us regarding the processing of your personal data and request:",
             ],
@@ -238,7 +238,7 @@ const PRIVACY_DATA: PrivacyData = {
                         "Explanation and remedy of an incorrect state (e.g. blocking, correction, completion, or deletion) if you believe processing is unlawful.",
                 },
                 {
-                    title: "Deletion / Restriction",
+                    title: "Deletion / restriction",
                     description:
                         "Deletion of personal data (“right to be forgotten”) or restriction of processing if data is no longer needed or there is no lawful basis.",
                 },
@@ -255,7 +255,7 @@ const PRIVACY_DATA: PrivacyData = {
 
         {
             key: "security-and-recipients",
-            title: "6. Security, Safety, and Recipients of Data",
+            title: "6. Security, safety, and recipients of data",
             paragraphs: [
                 "We protect your data using appropriate technical and organizational measures. Electronic personal data is stored in systems accessible only to persons who need the data for the purposes described in this policy (need-to-know basis). Access is protected by passwords and security controls. We regularly test and improve our security measures.",
             ],
@@ -278,12 +278,12 @@ const PRIVACY_DATA: PrivacyData = {
         email: siteConfig.supportEmail,
         phone: siteConfig.phone,
         addressLines: getAddressLines(siteConfig),
-        ctaText: "Contact Customer Service",
+        ctaText: "Contact customer service",
         ctaHref: "/contact",
     },
 
     policyUpdates: {
-        title: "Policy Updates",
+        title: "Policy updates",
         text:
             "We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of material changes by email or by a notice on our website. Your continued use of our services after changes take effect constitutes acceptance of the updated policy.",
     },

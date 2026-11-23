@@ -48,7 +48,7 @@ export interface AboutContent {
 
 export const aboutContent: AboutContent = {
     hero: {
-        titleLines: [`The ${siteConfig.displayName}`, { italic: "Journey" }],
+        titleLines: [`The ${siteConfig.displayName}`, { italic: "journey" }],
         introLead: `${siteConfig.displayName} began with sisterhood — and grew into something much bigger.`,
         introText: `Founded by sisters Kat and Barbora, ${siteConfig.displayName} was born from a simple but deeply personal idea: to create space for women — to rest, to build, and to lead — without having to choose between softness and strength.`,
     },
@@ -58,7 +58,7 @@ export const aboutContent: AboutContent = {
             src: "/anna-hora-founders.webp",
             alt: `Two women, one standing and one seated, photographed in black and white against draped curtains — the founders of ${siteConfig.displayName}, Kat and Barbora.`,
         },
-        titleLines: ["Where It All", { italic: "Began" }],
+        titleLines: ["Where it all", { italic: "began" }],
         paragraphs: [
             `Our starting point was loungewear. Not because it was easy, but because it mattered. We wanted to design pieces that feel intentional, timeless, and quietly powerful — garments that honour "you time" in a world that rarely pauses.`,
             `From carefully sourced fabrics to thoughtful silhouettes, our focus has always been on how women feel in our designs, not on chasing trends.`,
@@ -67,19 +67,19 @@ export const aboutContent: AboutContent = {
     },
 
     philosophy: {
-        titleLines: ["By Women,", { italic: "With Women" }],
+        titleLines: ["By women,", { italic: "with women" }],
         text: `We are a brand built by women, for women — and increasingly, with women. We believe women build differently: with intuition, collaboration, resilience, and an instinctive understanding that beauty and intelligence are not opposites.`,
         pillars: [
             {
                 initial: "B",
                 name: "Barbora",
-                title: "Craftsmanship & Operations",
+                title: "Craftsmanship & operations",
                 text: "Leads craftsmanship, production, and operations from Prague — grounding the brand in quality, detail, and longevity.",
             },
             {
                 initial: "K",
                 name: "Kat",
-                title: "Vision & Strategy",
+                title: "Vision & strategy",
                 text: "Shapes the long-term vision and business strategy from Dubai, bridging creative, commercial, and technological worlds.",
             },
         ],
@@ -87,7 +87,7 @@ export const aboutContent: AboutContent = {
     },
 
     team: {
-        titleLines: ["As the Brand Evolved,", { italic: "So Did Our Ambition" }],
+        titleLines: ["As the brand evolved,", { italic: "so did our ambition" }],
         paragraphs: [
             `That evolution welcomed a third pillar into ${siteConfig.displayName}: our close friend Iti — technologist, systems thinker, and now Chief Technology Officer. Her arrival marked a turning point. Not just in how we operate, but in what we stand for.`,
         ],
@@ -98,7 +98,7 @@ export const aboutContent: AboutContent = {
     },
 
     why: {
-        titleLines: ["Our", { italic: "Why" }],
+        titleLines: ["Our", { italic: "why" }],
         paragraphs: [
             "We don't believe empowerment is a slogan. We believe in its infrastructure.",
             `${siteConfig.displayName} exists to create a world where women are supported not only in how they look or feel — but in how they build, lead, and grow. Where softness is strategic. Where intelligence is elegant. Where success doesn't require burnout.`,

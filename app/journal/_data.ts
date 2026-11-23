@@ -12,7 +12,7 @@ export const journalContent = {
     },
     featured: {
         badge: "Featured",
-        ctaLabel: "Read Story",
+        ctaLabel: "Read story",
     },
     empty: "No stories in this category yet.",
     article: {
@@ -20,6 +20,6 @@ export const journalContent = {
         featuredProductLabel: "Featured in this story",
     },
     relatedArticles: {
-        heading: "Continue Reading",
+        heading: "Continue reading",
     },
 }

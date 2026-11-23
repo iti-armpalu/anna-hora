@@ -36,7 +36,7 @@ export const homeContent = {
             alt: "A collage showing the Signature Edit Green Lounge Trousers — waistband detail, hem close-up, and worn outdoors while reading.",
         },
         heading: "The art of",
-        headingEm: "Mulberry Silk",
+        headingEm: "Mulberry silk",
         paragraphs: [
             "Our silk reflects everything ANNA HORA stands for — quiet luxury, integrity, and thoughtful design. It's chosen with care, crafted with intention, and worn with ease. We only partner with skilled artisans who honour tradition while designing for those who value beauty with purpose.",
             "It took 18 months to find a silk that felt right — not just to the touch, but in principle. It had to meet our standards for comfort, quality, and consciousness. The result? A fabric that moves like water, wears like second skin, and elevates the everyday. It's silk that speaks to confidence, calm, and the freedom to feel — the ANNA HORA way of living.",
@@ -69,7 +69,7 @@ export const homeContent = {
             heading: "Gift cards",
             description:
                 "Instant. Effortless. Always right. The easiest way to gift her something she'll love — in her own time, in her own style.",
-            badge: "Now Available",
+            badge: "Now available",
             cta: {
                 label: "Shop gift cards",
                 href: "/gift-guide",

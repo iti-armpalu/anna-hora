@@ -120,7 +120,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-trousers",
     edit: "signature",
-    category: "Signature Edit Lounge Trousers",
+    category: "Signature Edit lounge trousers",
     description: "Relaxed-fit trousers designed for comfort and style",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -137,7 +137,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-shorts",
     edit: "signature",
-    category: "Signature Edit Lounge Shorts",
+    category: "Signature Edit lounge shorts",
     description: "Comfortable shorts ideal for warm weather lounging",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -154,7 +154,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-shirt",
     edit: "signature",
-    category: "Signature Edit Lounge Shirt",
+    category: "Signature Edit lounge shirt",
     description: "Elegant long shirts perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -175,7 +175,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-trousers",
     edit: "silk",
-    category: "Silk Edit Lounge Trousers",
+    category: "Silk Edit lounge trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -192,7 +192,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-shorts",
     edit: "silk",
-    category: "Silk Edit Lounge Shorts",
+    category: "Silk Edit lounge shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -209,7 +209,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-shirt",
     edit: "silk",
-    category: "Silk Edit Lounge Shirt",
+    category: "Silk Edit lounge shirt",
     description: "Elegant short shirt perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -232,7 +232,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-trousers",
     edit: "core",
-    category: "Core Edit Lounge Trousers",
+    category: "Core Edit lounge trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -249,7 +249,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-shorts",
     edit: "core",
-    category: "Core Edit Lounge Shorts",
+    category: "Core Edit lounge shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -266,7 +266,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-shirt",
     edit: "core",
-    category: "Core Edit Lounge Shirt",
+    category: "Core Edit lounge shirt",
     description: "Elegant short shirt perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
     table: {
@@ -286,21 +286,21 @@ const CM_CATEGORIES: CmCategoryInput[] = [
 
 export const sizeGuideContent: SizeGuideContent = {
   hero: {
-    title: "Find Your Perfect Fit",
+    title: "Find your perfect fit",
     subtitle: `Each piece has been carefully designed to fit beautifully. Use our guide to find the right size for your ${siteConfig.displayName} piece.`,
     supportingText:
       "You'll find product-specific measurements on individual product pages. For bespoke advice, our customer care team is always here to help.",
   },
   contact: {
-    title: "Need Personal Assistance?",
+    title: "Need personal assistance?",
     phone: siteConfig.phone,
     email: siteConfig.supportEmail,
     description:
       "There is nothing we love more than speaking to our customers. If you need assistance, we're here to help.",
-    chatButton: "Book a Virtual Fitting",
+    chatButton: "Book a virtual fitting",
   },
   measurementTips: {
-    title: "How to Measure",
+    title: "How to measure",
     description: "For the most accurate fit, take measurements over your undergarments.",
     measurements: [
       {
@@ -336,13 +336,13 @@ export const sizeGuideContent: SizeGuideContent = {
     },
   })),
   generalNotes: {
-    fitTitle: "Fit Notes & Garment Care",
+    fitTitle: "Fit notes & garment care",
     fitDescription:
       "Our pieces are designed to drape effortlessly and flatter every silhouette. All measurements are garment measurements taken flat. For the best fit, we recommend following your body measurements and referring to our size charts. If you're between sizes, we suggest sizing up for a more relaxed fit or sizing down for a closer fit.",
-    careTitle: "Garment Care",
+    careTitle: "Garment care",
     careDescription: "Silk requires gentle care to maintain its beauty. Read our full guide for washing, drying, and storage instructions.",
     careCta: {
-      label: "View Silk Care Guide",
+      label: "View silk care guide",
       href: "/care-guide",
     },
   },

@@ -38,7 +38,7 @@ interface TermsData {
 
 const TERMS_DATA: TermsData = {
   hero: {
-    title: "Terms and Conditions",
+    title: "Terms and conditions",
     intro: [
       "These Business Terms and Conditions govern the mutual rights and obligations between the Seller and the Buyer arising from purchase contracts concluded through the ANNA HORA online store.",
     ],
@@ -48,7 +48,7 @@ const TERMS_DATA: TermsData = {
   sections: [
     {
       key: "initial-provisions",
-      title: "1. Initial Provisions",
+      title: "1. Initial provisions",
       paragraphs: [
         // Address and company name are derived from siteConfig — update in lib/config/site.ts
         `These Business Terms and Conditions regulate the contractual relationship between ${siteConfig.address.companyName}, ${getAddressInline(siteConfig)
@@ -64,14 +64,14 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "user-accounts",
-      title: "2. Customer Accounts",
+      title: "2. Customer accounts",
       paragraphs: [
         "Buyers may order goods either through a customer account or directly without registration.",
         "Customer accounts are provided through Shopify's secure authentication infrastructure. Account authentication is handled by Shopify and the Seller does not store or have access to account passwords or authentication credentials.",
       ],
       subsections: [
         {
-          heading: "Account Information",
+          heading: "Account information",
           text: "When using a customer account or placing an order, the Buyer must provide accurate and truthful information and keep such information updated.",
         },
         {
@@ -79,7 +79,7 @@ const TERMS_DATA: TermsData = {
           text: "Only persons over 15 years of age may register or create a customer account on the Website.",
         },
         {
-          heading: "Account Suspension",
+          heading: "Account suspension",
           text: "The Seller may suspend or close a user account if it has been inactive for a prolonged period or if the Buyer breaches obligations arising from the purchase contract or these Terms.",
         },
         {
@@ -109,15 +109,15 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "pricing-payment",
-      title: "4. Prices and Payment Terms",
+      title: "4. Prices and payment terms",
       paragraphs: [
         "Product prices displayed on the Website may be shown in the currency corresponding to the Buyer's location or selected region.",
         "All prices and applicable delivery costs will be clearly displayed during checkout before the Buyer confirms the order.",
       ],
       items: [
-        "Credit or Debit Card",
+        "Credit or debit card",
         "Apple Pay",
-        "Cash on Delivery (Czech Republic only)",
+        "Cash on delivery (Czech Republic only)",
       ],
       note:
         "The Seller is currently not a VAT payer under Czech law due to the applicable annual turnover threshold. Therefore prices shown on the Website do not include VAT.",
@@ -127,7 +127,7 @@ const TERMS_DATA: TermsData = {
           text: "After payment of the purchase price, the Seller will issue an electronic invoice and send it to the Buyer's email address.",
         },
         {
-          heading: "Customs and Taxes",
+          heading: "Customs and taxes",
           text: "Orders shipped outside the European Union may be subject to additional customs duties or taxes in the destination country. These charges are the responsibility of the Buyer.",
         },
       ],
@@ -135,7 +135,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "withdrawal",
-      title: "5. Withdrawal from the Contract",
+      title: "5. Withdrawal from the contract",
       paragraphs: [
         "In accordance with applicable consumer protection laws, the Buyer may withdraw from the purchase contract within fourteen (14) days from receiving the goods.",
         "Returned goods must be unused, undamaged and returned in their original packaging unless the nature of the goods prevents this.",
@@ -151,7 +151,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "delivery",
-      title: "6. Transport and Delivery",
+      title: "6. Transport and delivery",
       paragraphs: [
         "Delivery methods are selected by the Buyer during the ordering process.",
       ],
@@ -165,7 +165,7 @@ const TERMS_DATA: TermsData = {
           text: "Delivery typically takes 3–4 business days via DHL Express.",
         },
         {
-          heading: "Rest of the World",
+          heading: "Rest of the world",
           text: "Delivery typically takes 4–5 business days via DHL Express.",
         },
       ],
@@ -175,7 +175,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "defects",
-      title: "7. Rights Arising from Defective Performance",
+      title: "7. Rights arising from defective performance",
       paragraphs: [
         "Rights and obligations regarding defective performance are governed by the relevant provisions of the Czech Civil Code.",
         "The Seller is responsible for ensuring that goods delivered to the Buyer comply with the purchase contract and are free from defects at the time of delivery.",
@@ -184,7 +184,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "intellectual-property",
-      title: "8. Intellectual Property",
+      title: "8. Intellectual property",
       paragraphs: [
         "All content on the Website, including product photographs, design, and text, is protected by copyright.",
         "The Buyer may not copy, distribute, reproduce, or otherwise use the Website's content without the Seller's prior written consent.",
@@ -193,7 +193,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "privacy",
-      title: "9. Personal Data Protection",
+      title: "9. Personal data protection",
       paragraphs: [
         "The protection of the Buyer's personal data is governed by the Seller's Privacy Policy, which is available on the Website.",
       ],
@@ -201,7 +201,7 @@ const TERMS_DATA: TermsData = {
 
     {
       key: "final",
-      title: "10. Final Provisions",
+      title: "10. Final provisions",
       paragraphs: [
         "Legal relationships established through the Website are governed by Czech law.",
         "Disputes between the Seller and Buyer may also be resolved through out-of-court dispute resolution, for example through the Czech Trade Inspection Authority or the EU Online Dispute Resolution platform.",
@@ -216,12 +216,12 @@ const TERMS_DATA: TermsData = {
     email: siteConfig.supportEmail,
     phone: siteConfig.phone,
     addressLines: getAddressLines(siteConfig),
-    ctaText: "Contact Customer Service",
+    ctaText: "Contact customer service",
     ctaHref: "/contact",
   },
 
   termsUpdates: {
-    title: "Changes to These Terms",
+    title: "Changes to these terms",
     text: "The Seller reserves the right to update or modify these Terms and Conditions. Updated versions will be published on this page.",
   },
 }

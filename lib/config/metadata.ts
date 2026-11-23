@@ -21,7 +21,7 @@ export const defaultMetadata: Metadata = {
         url: "/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "ANNA HORA – Mulberry Silk Loungewear",
+        alt: "ANNA HORA – Mulberry silk loungewear",
       },
     ],
   },
@@ -51,7 +51,7 @@ export const pageMeta = {
     },
   },
   shop: {
-    title: "Shop All",
+    title: "Shop all",
     description:
       "Browse the full ANNA HORA collection — mulberry silk loungewear designed with intention.",
     openGraph: {
@@ -62,7 +62,7 @@ export const pageMeta = {
     },
   },
   ourSilk: {
-    title: "Our Silk",
+    title: "Our silk",
     description:
       "18 months in the making. Discover why ANNA HORA's mulberry silk is unlike anything else — chosen with care, worn with ease.",
     openGraph: {
@@ -84,7 +84,7 @@ export const pageMeta = {
     },
   },
   giftGuide: {
-    title: "Gift Guide",
+    title: "Gift guide",
     description:
       "Find the perfect gift for her — silk pieces that arrive beautifully wrapped, with a handwritten note.",
     openGraph: {
@@ -106,7 +106,7 @@ export const pageMeta = {
     },
   },
   contact: {
-    title: "Contact Us",
+    title: "Contact us",
     description:
       "Questions about your order, sizing, or a collaboration? We're here and happy to help.",
     openGraph: {
@@ -128,7 +128,7 @@ export const pageMeta = {
     },
   },
   shippingReturns: {
-    title: "Shipping & Returns",
+    title: "Shipping & returns",
     description:
       "Free shipping within EU. Easy returns within 14 days. All the details you need.",
     openGraph: {
@@ -139,7 +139,7 @@ export const pageMeta = {
     },
   },
   sizeGuide: {
-    title: "Size Guide",
+    title: "Size guide",
     description:
       "Find your perfect fit with the ANNA HORA size guide — relaxed, considered sizing for silk loungewear.",
     openGraph: {
@@ -150,7 +150,7 @@ export const pageMeta = {
     },
   },
   careGuide: {
-    title: "Care Guide",
+    title: "Care guide",
     description:
       "How to care for your ANNA HORA silk — simple steps to keep your pieces beautiful for years.",
     openGraph: {
@@ -169,26 +169,26 @@ export const pageMeta = {
     robots: { index: false, follow: false },
   },
   signIn: {
-    title: "Sign In",
+    title: "Sign in",
     description:
       "Sign in to your ANNA HORA account to track orders, manage returns, and save your wishlist.",
     openGraph: { url: `${siteConfig.url}/signin` },
     robots: { index: false, follow: false },
   },
   cart: {
-    title: "Your Cart",
+    title: "Your cart",
     description: "Review your ANNA HORA selection before checkout.",
     openGraph: { url: `${siteConfig.url}/cart` },
     robots: { index: false, follow: false },
   },
   account: {
-    title: "My Account",
+    title: "My account",
     description: "Manage your ANNA HORA account, orders, and preferences.",
     openGraph: { url: `${siteConfig.url}/account` },
     robots: { index: false, follow: false },
   },
   terms: {
-    title: "Terms & Conditions",
+    title: "Terms & conditions",
     description:
       "The terms and conditions governing your use of the ANNA HORA website and services.",
     openGraph: { url: `${siteConfig.url}/terms-and-conditions` },
@@ -197,7 +197,7 @@ export const pageMeta = {
     },
   },
   privacy: {
-    title: "Privacy Policy",
+    title: "Privacy policy",
     description:
       "How ANNA HORA collects, uses, and protects your personal data.",
     openGraph: { url: `${siteConfig.url}/privacy` },

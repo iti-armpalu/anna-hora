@@ -49,13 +49,13 @@ export interface GiftGuideContent {
 
 export const giftGuideContent: GiftGuideContent = {
     hero: {
-        titleLines: ["The Art of"],
-        titleEm: "Giving",
+        titleLines: ["The art of"],
+        titleEm: "giving",
         paragraphs: [
             `Some gifts are a moment. Others become a ritual. Give the gift of ${siteConfig.displayName} — and let her choose the piece that feels right, when it feels right.`,
             `Each order is packed with care, so it arrives ready to give.`,
         ],
-        ctaLabel: "Give a Gift Card",
+        ctaLabel: "Give a gift card",
         ctaScrollTarget: "gift-card",
         image: {
             src: "/gift-guide-hero-1.png",
@@ -64,7 +64,7 @@ export const giftGuideContent: GiftGuideContent = {
     },
     giftCard: {
         titleTop: `The ${siteConfig.displayName}`,
-        titleEm: "Gift Card",
+        titleEm: "gift card",
         subtitle: "When you can't decide, let her choose.",
         image: {
             src: "/anna-hora-giftcard-2.webp",
@@ -79,7 +79,7 @@ export const giftGuideContent: GiftGuideContent = {
         purchase: {
             amountLabel: "Amount",
             selectPrompt: "Select an amount",
-            ctaLabel: "Add to Bag",
+            ctaLabel: "Add to bag",
             adding: "Adding…",
             addedToast: (formattedAmount) => `Gift card added to bag • ${formattedAmount}`,
             deliveryNote:
@@ -89,7 +89,7 @@ export const giftGuideContent: GiftGuideContent = {
     },
     packaging: {
         titleTop: "Packaging",
-        titleEm: "Preview",
+        titleEm: "preview",
         description: "A glimpse of how we pack orders. Carefully prepared, with attention to every detail.",
         images: [
             { src: "/packing-1.jpeg", alt: "Folded garment tied with ribbon" },
@@ -102,8 +102,8 @@ export const giftGuideContent: GiftGuideContent = {
         heading: "Give the gift of",
         headingEm: "pure silk",
         ctas: [
-            { label: "Shop Collection", href: "/shop", variant: "primary" },
-            { label: "Read About Our Silk", href: "/our-silk", variant: "outline" },
+            { label: "Shop collection", href: "/shop", variant: "primary" },
+            { label: "Read about our silk", href: "/our-silk", variant: "outline" },
         ],
     },
 }

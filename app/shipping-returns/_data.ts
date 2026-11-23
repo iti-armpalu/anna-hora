@@ -54,7 +54,7 @@ export interface ShippingReturnsContent {
 
 export const shippingReturnsContent: ShippingReturnsContent = {
     hero: {
-        title: "Shipping, Returns & Care",
+        title: "Shipping, returns & care",
         subtitle: "Because your experience matters as much as your purchase.",
         description:
             "Explore our seamless shipping, returns, and support options designed with the same attention to detail as our silk pieces.",
@@ -65,7 +65,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
             "Every order is carefully wrapped in our signature packaging and dispatched with care.",
         info: [
             {
-                name: "Order Processing",
+                name: "Order processing",
                 items: [
                     "Processing may take up to 3 working days",
                     "Order tracking details sent via email once dispatched",
@@ -73,7 +73,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                 ],
             },
             {
-                name: "Delivery Timing",
+                name: "Delivery timing",
                 items: [
                     "Delivery times are estimates from dispatch date",
                     "Delays may occur due to payment authorization or customs processing",
@@ -87,7 +87,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                 ],
             },
             {
-                name: "International Orders",
+                name: "International orders",
                 items: [
                     "Non-EU orders may incur customs duties or import taxes",
                     "These fees are the responsibility of the customer",
@@ -103,15 +103,15 @@ export const shippingReturnsContent: ShippingReturnsContent = {
         ctaHref: "/faq",
     },
     returns: {
-        title: "Effortless Returns",
+        title: "Effortless returns",
         description: `We want you to love your ${siteConfig.displayName} piece. If it isn't perfect, returns are simple.`,
         policy: [
             {
-                name: "Return Window",
+                name: "Return window",
                 conditions: ["Returns accepted within 14 days of delivery"],
             },
             {
-                name: "Item Condition",
+                name: "Item condition",
                 conditions: [
                     "Items must be unworn and unwashed",
                     "Original tags must be attached",
@@ -119,11 +119,11 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                 ],
             },
             {
-                name: "Return Costs",
+                name: "Return costs",
                 conditions: ["Return shipping costs are paid by the customer"],
             },
             {
-                name: "Refund Timing",
+                name: "Refund timing",
                 conditions: [
                     "Refund processed within 14 days after returned goods are received and approved",
                 ],
@@ -144,7 +144,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
             },
             {
                 step: 3,
-                title: "Send Back",
+                title: "Send back",
                 description:
                     "Ship according to instructions provided by customer service",
             },
@@ -153,22 +153,22 @@ export const shippingReturnsContent: ShippingReturnsContent = {
         ctaHref: "/faq",
     },
     complaints: {
-        title: "We're Here to Make It Right",
+        title: "We're here to make it right",
         description:
             "If something isn't as expected, we want to hear from you. Our customer care team will work with you to resolve any issue promptly.",
         resolution: "Our aim is to resolve all concerns within 48 hours.",
         labels: {
             email: "Email us directly",
             phone: "Call us",
-            hours: "Customer Care Hours",
+            hours: "Customer care hours",
         },
     },
     support: {
-        title: "Need Quick Answers?",
+        title: "Need quick answers?",
         description: "Looking for product care tips?",
         links: {
             faq: { label: "FAQ", href: "/faq" },
-            care: { label: "Care Instructions", href: "/care-guide" },
+            care: { label: "Care instructions", href: "/care-guide" },
         },
     }
 }

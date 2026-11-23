@@ -9,8 +9,8 @@ export type NavigationItem = {
 
 export const navigation: readonly NavigationItem[] = [
   { label: "Shop", href: "/shop" },
-  { label: "Our Silk", href: "/our-silk" },
+  { label: "Our silk", href: "/our-silk" },
   { label: "Journal", href: "/journal" },
-  { label: "Gift Guide", href: "/gift-guide" },
+  { label: "Gift guide", href: "/gift-guide" },
   { label: `About ${siteConfig.displayName}`, href: "/about" },
 ] as const;
