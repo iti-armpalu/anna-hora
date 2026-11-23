@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
 import { usePathname } from "next/navigation"
 import { siteConfig } from "@/lib/config/site"
-import { footerNavigation } from "@/lib/config/footer"
+import { customerCareLinks } from "@/lib/config/footer"
 
 type Item = { label: string; href: string }
 
@@ -87,7 +87,7 @@ export function MobileNav({ items }: { items: readonly Item[] }) {
               Customer Care
             </p>
             <ul className="space-y-3">
-              {footerNavigation.customerCare.map((link) => (
+              {customerCareLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
