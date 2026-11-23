@@ -15,6 +15,10 @@ export const journalContent = {
         ctaLabel: "Read Story",
     },
     empty: "No stories in this category yet.",
+    article: {
+        backLabel: "Journal",
+        featuredProductLabel: "Featured in this story",
+    },
     relatedArticles: {
         heading: "Continue Reading",
     },
