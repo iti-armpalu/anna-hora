@@ -1,104 +1,72 @@
 "use client"
 
 import Image from "next/image"
-import { X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { QuantitySelector } from "./quantity-selector"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
+import { useCart } from "@/context/cart-context"
 import { formatPrice } from "@/hooks/use-price"
 import { PREORDER_COPY } from "@/lib/config/preorder"
+import type { CartLine } from "@/lib/shopify/types/cart-normalized"
+import { cartContent } from "../_data"
+import { QuantitySelector } from "./quantity-selector"
 
-export type CartLineItemVariant = "page" | "drawer"
-
-type CartLineItemProps = {
-  variant: CartLineItemVariant
-  id: string
-  title: string
-  image?: string | null
-  size?: string | null
-  preorderNote?: string | null
-  quantity: number
-  totalAmount: number
-  currencyCode: string
-  loading: boolean
-  onRemove: (id: string) => void
+type Props = {
+  line: CartLine
+  variant: "page" | "drawer"
 }
 
-export function CartLineItem({
-  variant,
-  id,
-  title,
-  image,
-  size,
-  preorderNote,
-  quantity,
-  totalAmount,
-  currencyCode,
-  loading,
-  onRemove,
-}: CartLineItemProps) {
+/** One bag row — same structure in the drawer and on the bag page, only the image size differs. */
+export function CartLineItem({ line, variant }: Props) {
+  const { removeFromCart, loading } = useCart()
   const isDrawer = variant === "drawer"
 
-  const formattedTotal = formatPrice({ amount: totalAmount, currencyCode })
+  async function handleRemove(): Promise<void> {
+    const result = await removeFromCart(line.id)
+    if (!result.ok) toast.error(cartContent.errors.remove)
+  }
 
   return (
-    <div className={`${isDrawer ? "" : "bg-white rounded-xl p-4 sm:p-6 shadow-sm"}`}>
-      <div className="flex gap-4">
-        {/* Image */}
-        <div className={`relative overflow-hidden rounded-lg shrink-0 ${isDrawer ? "w-20 aspect-[3/4]" : "w-24 sm:w-32 aspect-[3/4]"
-          }`}>
+    <li className="flex gap-4 py-block first:pt-0">
+      <div className={cn("relative aspect-[4/5] shrink-0 overflow-hidden bg-secondary", isDrawer ? "w-20" : "w-24 sm:w-32")}>
+        {line.image && (
           <Image
-            src={image ?? "/placeholder.svg"}
-            alt={title}
+            src={line.image}
+            alt={line.title}
             fill
-            sizes={isDrawer ? "80px" : "(max-width: 640px) 96px, 128px"}
+            sizes={isDrawer ? "80px" : "(min-width: 640px) 128px, 96px"}
             className="object-cover"
           />
+        )}
+      </div>
+
+      <div className="flex min-w-0 flex-1 flex-col gap-tight">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-small font-normal text-foreground mb-0">{line.title}</h3>
+          <span className="text-small tabular-nums text-foreground">
+            {formatPrice({ amount: line.cost.totalAmount, currencyCode: line.cost.currencyCode })}
+          </span>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0 flex flex-col">
-          <div className="flex justify-between items-start gap-2 mb-1">
-            <h3 className={`font-serif text-stone-800 leading-tight ${isDrawer ? "text-sm" : "text-base sm:text-lg"
-              }`}>
-              {title}
-            </h3>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={`Remove ${title} from cart`}
-              className="h-6 w-6 text-stone-400 hover:text-stone-600 shrink-0"
-              onClick={() => onRemove(id)}
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          </div>
+        {line.size && <span className="text-xs text-muted-foreground">{cartContent.size(line.size)}</span>}
+        {line.preorderNote && (
+          <span className="text-xs text-muted-foreground">
+            {PREORDER_COPY.buttonLabel} · {line.preorderNote}
+          </span>
+        )}
 
-          {size && (
-            <p className={`text-xs sm:text-sm text-stone-500 ${preorderNote ? "mb-1" : "mb-3"}`}>
-              Size: {size}
-            </p>
-          )}
-
-          {preorderNote && (
-            <p className="text-xs text-stone-600 mb-3">
-              {PREORDER_COPY.buttonLabel} · {preorderNote}
-            </p>
-          )}
-
-          <div className="flex items-center justify-between mt-auto">
-            <QuantitySelector
-              value={quantity}
-              lineId={id}
-              variant={isDrawer ? "compact" : "default"}
-              loading={loading}
-            />
-            <span className={`font-medium text-stone-800 ${isDrawer ? "text-sm" : "text-base sm:text-lg"
-              }`}>
-              {formattedTotal}
-            </span>
-          </div>
+        <div className="mt-auto flex items-center justify-between pt-tight">
+          <QuantitySelector lineId={line.id} value={line.quantity} />
+          <button
+            type="button"
+            onClick={handleRemove}
+            disabled={loading}
+            aria-label={`${cartContent.remove} ${line.title}`}
+            className="text-xs text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground disabled:opacity-40"
+          >
+            {cartContent.remove}
+          </button>
         </div>
       </div>
-    </div>
+    </li>
   )
 }

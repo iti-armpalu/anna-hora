@@ -1,44 +1,33 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { ShoppingBag } from "lucide-react";
-import { useCart } from "@/context/cart-context";
+import { ShoppingBag } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useCart } from "@/context/cart-context"
+
+const MAX_BADGE = 99
 
 export function CartButton() {
-  const { cart, loading, open } = useCart();
-
-  const qty = cart?.totalQuantity ?? 0;
+  const { cart, open } = useCart()
+  const quantity = cart?.totalQuantity ?? 0
 
   return (
-    <div className="relative inline-block">
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label={`Open cart${qty ? `, ${qty} items` : ""}`}
-        onClick={open}
-      >
-        <ShoppingBag className="h-5 w-5" />
-
-        {qty > 0 && (
-          <span
-            className="
-              absolute -right-2 -top-2
-              min-w-[1.25rem] h-5 px-1
-              rounded-full
-              bg-forest-950 text-white
-              text-xs font-semibold
-              flex items-center justify-center
-              ring-2 ring-white
-            "
-          >
-            {qty > 99 ? "99+" : qty}
-          </span>
-        )}
-
-        {loading && qty === 0 ? (
-          <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-stone-400" />
-        ) : null}
-      </Button>
-    </div>
-  );
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={open}
+      aria-label={quantity ? `Open bag, ${quantity} ${quantity === 1 ? "item" : "items"}` : "Open bag"}
+      className="relative"
+    >
+      <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
+      {quantity > 0 && (
+        // Square brand-green count, same as the shop's active-filter count
+        <span
+          aria-hidden="true"
+          className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center bg-primary px-1 text-2xs leading-none text-primary-foreground tabular-nums"
+        >
+          {quantity > MAX_BADGE ? `${MAX_BADGE}+` : quantity}
+        </span>
+      )}
+    </Button>
+  )
 }

@@ -18,7 +18,7 @@ type CartContextType = {
     lineId: string,
     quantity: number
   ) => Promise<{ success: boolean; quantity: number }>;
-  removeFromCart: (lineId: string) => Promise<void>;
+  removeFromCart: (lineId: string) => Promise<{ ok: boolean }>;
 
   isOpen: boolean;
   open: () => void;
@@ -110,8 +110,16 @@ export function CartProvider({
     if (!cart) return { success: false, quantity };
 
     setLoading(true);
-    const res = await cartUpdateAction({ cartId: cart.id, lineId, quantity });
-    setLoading(false);
+    let res: Awaited<ReturnType<typeof cartUpdateAction>>;
+    try {
+      res = await cartUpdateAction({ cartId: cart.id, lineId, quantity });
+    } catch (err: unknown) {
+      // Network failure reaching the server action — report it, never leave the cart locked
+      console.error("updateQuantity error:", err instanceof Error ? err.message : err);
+      return { success: false, quantity };
+    } finally {
+      setLoading(false);
+    }
 
     if (!res.ok || !res.cart) {
       return { success: false, quantity };
@@ -131,13 +139,21 @@ export function CartProvider({
     return { success, quantity: updatedLine.quantity };
   }
 
-  async function removeFromCart(lineId: string) {
-    if (!cart) return;
+  async function removeFromCart(lineId: string): Promise<{ ok: boolean }> {
+    if (!cart) return { ok: false };
 
     setLoading(true);
-    const res = await cartRemoveAction({ cartId: cart.id, lineId });
-    if (res.ok && res.cart) setCart(res.cart);
-    setLoading(false);
+    try {
+      const res = await cartRemoveAction({ cartId: cart.id, lineId });
+      if (!res.ok || !res.cart) return { ok: false };
+      setCart(res.cart);
+      return { ok: true };
+    } catch (err: unknown) {
+      console.error("removeFromCart error:", err instanceof Error ? err.message : err);
+      return { ok: false };
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -1,113 +1,53 @@
-"use client";
+"use client"
 
-import { Minus, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+import { Minus, Plus } from "lucide-react"
+import { toast } from "sonner"
+import { useCart } from "@/context/cart-context"
+import { cartContent } from "../_data"
 
-// Optional: only import CartContext if caller wants to use cart mode
-import { useCart } from "@/context/cart-context";
-
-interface QuantitySelectorProps {
-  value: number;
-  lineId?: string; // required if using CartContext mode
-  onChange?: (qty: number) => void | Promise<void>;
-  variant?: "compact" | "default" | "large";
-  disabled?: boolean;
-  loading?: boolean;
+type Props = {
+  lineId: string
+  value: number
 }
 
-export function QuantitySelector({
-  value,
-  lineId,
-  onChange,
-  variant = "default",
-  disabled = false,
-  loading,
-}: QuantitySelectorProps) {
-  const cart = useCart(); // optional usage
+const STEP_BUTTON =
+  "flex size-8 items-center justify-center text-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent"
 
-  // Style variants
-  const sizeClasses = {
-    compact: "h-6 w-6 text-xs",
-    default: "h-7 w-7 text-sm",
-    large: "h-9 w-9 text-base",
-  };
+/** Quantity stepper for a cart line. Distinguishes a stock limit from a failed request. */
+export function QuantitySelector({ lineId, value }: Props) {
+  const { updateQuantity, loading } = useCart()
 
-  const textClasses = {
-    compact: "text-xs min-w-[1.5rem]",
-    default: "text-sm min-w-[2rem]",
-    large: "text-base min-w-[2.25rem]",
-  };
-
-  // Decide mode:
-  // If `lineId` exists and cart context is present → cart mode
-  // Otherwise → external (product page) mode
-  const isCartMode = lineId && cart;
-
-  async function handleIncrease() {
-    const newQty = value + 1;
-
-    if (isCartMode) {
-      const result = await cart.updateQuantity(lineId!, newQty);
-
-      if (!result.success || result.quantity === value) {
-        toast.info("No more available", {
-          description: "You've reached the maximum available quantity.",
-        });
-      }
-    } else if (onChange) {
-      onChange(newQty);
-    }
+  async function changeTo(quantity: number): Promise<void> {
+    const result = await updateQuantity(lineId, quantity)
+    if (result.success) return
+    // Shopify capped the line below what was asked → stock limit; otherwise the request failed
+    if (result.quantity !== quantity && result.quantity === value) toast.info(cartContent.errors.maxQuantity)
+    else toast.error(cartContent.errors.update)
   }
-
-  async function handleDecrease() {
-    const newQty = value - 1;
-
-    if (newQty < 1) return;
-
-    if (isCartMode) {
-      await cart.updateQuantity(lineId!, newQty);
-    } else if (onChange) {
-      onChange(newQty);
-    }
-  }
-
-  const isDisabledDecrease = disabled || value <= 1 || loading;
-  const isDisabledIncrease = disabled || loading;
 
   return (
-    <div className="flex items-center border border-stone-300 rounded-md">
-      <Button
-        variant="ghost"
-        size="icon"
+    <div className="flex items-center border border-input">
+      <button
+        type="button"
         aria-label="Decrease quantity"
-        disabled={isDisabledDecrease}
-        onClick={handleDecrease}
-        className={cn("rounded-none", sizeClasses[variant])}
+        disabled={loading || value <= 1}
+        onClick={() => changeTo(value - 1)}
+        className={STEP_BUTTON}
       >
-        <Minus className="h-3 w-3" />
-      </Button>
-
-      <span
-        className={cn(
-          "px-3 py-1 font-medium text-center",
-          textClasses[variant]
-        )}
-      >
+        <Minus className="size-3" />
+      </button>
+      <span className="min-w-8 text-center text-small tabular-nums" aria-live="polite">
         {value}
       </span>
-
-      <Button
-        variant="ghost"
-        size="icon"
+      <button
+        type="button"
         aria-label="Increase quantity"
-        disabled={isDisabledIncrease}
-        onClick={handleIncrease}
-        className={cn("rounded-none", sizeClasses[variant])}
+        disabled={loading}
+        onClick={() => changeTo(value + 1)}
+        className={STEP_BUTTON}
       >
-        <Plus className="h-3 w-3" />
-      </Button>
+        <Plus className="size-3" />
+      </button>
     </div>
-  );
+  )
 }
