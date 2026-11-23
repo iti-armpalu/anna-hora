@@ -1,22 +1,18 @@
 import { aboutContent } from "../_data"
-import { SectionTitle } from "./section-title"
 
 export function HeroSection() {
   const { hero } = aboutContent
 
   return (
-    <section className="py-16 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <SectionTitle
-            titleLines={hero.titleLines}
-            className="text-4xl lg:text-5xl font-light text-stone-800 mb-6 leading-tight"
-          />
-
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-xl md:text-2xl font-light text-stone-700 leading-relaxed mb-8">{hero.introLead}</p>
-            <p className="text-lg text-stone-600 leading-relaxed">{hero.introText}</p>
-          </div>
+    <section className="section">
+      <div className="container-site">
+        <div className="mx-auto flex max-w-[var(--content-narrow)] flex-col text-center gap-field">
+          {/* Page h1 at heading-lg, consistent with the other text-led page heroes */}
+          <h1 className="text-heading-lg font-light text-balance mb-0">
+            {hero.titleTop} <em>{hero.titleEm}</em>
+          </h1>
+          <p className="text-heading-sm font-light text-foreground">{hero.introLead}</p>
+          <p className="text-muted-foreground">{hero.introText}</p>
         </div>
       </div>
     </section>

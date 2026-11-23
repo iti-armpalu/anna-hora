@@ -76,7 +76,7 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                 name: "Delivery timing",
                 items: [
                     "Delivery times are estimates from dispatch date",
-                    "Delays may occur due to payment authorization or customs processing",
+                    "Delays may occur due to payment authorisation or customs processing",
                 ],
             },
             {

@@ -46,8 +46,8 @@ export default async function JournalPage({
     return (
         <>
             <header className="container-site pt-12 pb-10 lg:pt-16">
-                <div className="section-header mb-0">
-                    <h1 className="text-heading-lg font-light mb-4">
+                <div className="mx-auto flex max-w-[var(--content-narrow)] flex-col text-center gap-field">
+                    <h1 className="text-heading-lg font-light text-balance mb-0">
                         {hero.headingTop} <em>{hero.headingEm}</em>
                     </h1>
                     <p className="text-muted-foreground">{hero.description}</p>

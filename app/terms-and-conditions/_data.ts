@@ -146,7 +146,7 @@ const TERMS_DATA: TermsData = {
         "The Seller will refund the purchase price within 14 days after receiving the returned goods.",
       ],
       note:
-        "Withdrawal is not possible for goods customized according to the Buyer's requirements or goods that cannot be returned for hygiene reasons once unsealed.",
+        "Withdrawal is not possible for goods customised according to the Buyer's requirements or goods that cannot be returned for hygiene reasons once unsealed.",
     },
 
     {

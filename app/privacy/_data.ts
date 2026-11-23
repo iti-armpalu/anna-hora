@@ -188,9 +188,9 @@ const PRIVACY_DATA: PrivacyData = {
             key: "cookies",
             title: "Part V – Cookies",
             paragraphs: [
-                "Cookies are text files stored on your device that support proper operation of the website (functional/technical cookies), help analyze website use (analytical cookies), and help target advertising (marketing cookies).",
+                "Cookies are text files stored on your device that support proper operation of the website (functional/technical cookies), help analyse website use (analytical cookies), and help target advertising (marketing cookies).",
                 "We use session cookies (deleted when you close your browser) and persistent cookies (stored for a longer or indefinite period).",
-                "During your first visit, you are informed about cookie use and can decide which cookies may be stored on your device. Depending on your selection, cookie information may be sent to our website or to third-party services in subsequent visits from the same device to help optimize the website according to your preferences.",
+                "During your first visit, you are informed about cookie use and can decide which cookies may be stored on your device. Depending on your selection, cookie information may be sent to our website or to third-party services in subsequent visits from the same device to help optimise the website according to your preferences.",
             ],
             subsections: [
                 {
@@ -205,7 +205,7 @@ const PRIVACY_DATA: PrivacyData = {
                 },
                 {
                     heading: "Marketing cookies",
-                    text: "Used to personalize advertising and measure marketing performance (subject to your consent, where required).",
+                    text: "Used to personalise advertising and measure marketing performance (subject to your consent, where required).",
                     small: true,
                 },
             ],

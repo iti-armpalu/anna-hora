@@ -63,7 +63,7 @@ export const careGuideContent: CareGuideContent = {
     title: "Why silk care",
     subtitle: "matters",
     paragraphs: [
-      "Silk is a natural protein fiber with remarkable properties—it's strong yet delicate, luxurious yet practical. Like any fine fabric, it requires thoughtful care to maintain its luster, softness, and structural integrity.",
+      "Silk is a natural protein fibre with remarkable properties—it's strong yet delicate, luxurious yet practical. Like any fine fabric, it requires thoughtful care to maintain its lustre, softness, and structural integrity.",
       "Understanding how to care for silk isn't complicated, but it does require attention to detail. The rewards are worth it: with proper care, your silk pieces will develop a beautiful patina over time, becoming more precious with each wear.",
       "Think of caring for silk as an investment in longevity. Each gentle wash, each careful storage decision, helps preserve the fabric's natural beauty and ensures your pieces remain timeless treasures in your wardrobe.",
     ],
@@ -72,15 +72,15 @@ export const careGuideContent: CareGuideContent = {
     title: "Essential care",
     subtitle: "instructions",
     description:
-      "Follow these four fundamental steps to keep your silk pieces in pristine condition. Each step is designed to protect the delicate fibers while maintaining the fabric's natural beauty.",
+      "Follow these four fundamental steps to keep your silk pieces in pristine condition. Each step is designed to protect the delicate fibres while maintaining the fabric's natural beauty.",
     instructions: [
       {
         step: 1,
         title: "Washing",
-        description: "Gentle cleansing preserves silk's natural luster",
+        description: "Gentle cleansing preserves silk's natural lustre",
         details: [
           "Hand wash in cool water (30°C/86°F or below) using a pH-neutral silk detergent",
-          "Avoid harsh detergents, bleach, or fabric softeners which can damage fibers",
+          "Avoid harsh detergents, bleach, or fabric softeners which can damage fibres",
           "Gently swirl fabric in water—never wring, twist, or scrub",
           "For machine washing, use a delicate silk bag and gentle cycle only",
           "Rinse thoroughly in cool water until all soap is removed",
@@ -95,7 +95,7 @@ export const careGuideContent: CareGuideContent = {
           "Gently press excess water out with a clean, white towel—never wring",
           "Lay flat on a clean, dry towel away from direct sunlight or heat",
           "Reshape the garment to its original form while damp",
-          "Never use a tumble dryer—high heat damages silk fibers permanently",
+          "Never use a tumble dryer—high heat damages silk fibres permanently",
           "Avoid hanging wet silk as it may stretch or lose shape",
           "Allow to air dry completely before storing (usually 24 hours)",
         ],
@@ -140,7 +140,7 @@ export const careGuideContent: CareGuideContent = {
       {
         issue: "Loss of sheen",
         solution:
-          "Rinse silk in cool water with a splash of white vinegar (1 tablespoon per gallon) to restore pH balance. The natural acidity helps revive the luster.",
+          "Rinse silk in cool water with a splash of white vinegar (1 tablespoon per gallon) to restore pH balance. The natural acidity helps revive the lustre.",
       },
       {
         issue: "Wrinkles from storage",
@@ -148,9 +148,9 @@ export const careGuideContent: CareGuideContent = {
           "Hang garment in a steamy bathroom for 15-20 minutes, or use a steamer held 15 cm / 6 inches away. Never apply steam directly to silk.",
       },
       {
-        issue: "Color fading",
+        issue: "Colour fading",
         solution:
-          "Always store silk away from direct sunlight and harsh lighting. For minor fading, professional silk specialists can sometimes restore color.",
+          "Always store silk away from direct sunlight and harsh lighting. For minor fading, professional silk specialists can sometimes restore colour.",
       },
       {
         issue: "Snags or pulls",
@@ -196,9 +196,9 @@ export const careGuideContent: CareGuideContent = {
     title: "What to avoid",
     items: [
       "Hot water, which can shrink silk and damage its protein structure",
-      "Direct sunlight or heat sources, which cause fading and fiber damage",
+      "Direct sunlight or heat sources, which cause fading and fibre damage",
       "Harsh chemicals including bleach, hydrogen peroxide, or ammonia",
-      "Rough surfaces that can snag delicate silk fibers",
+      "Rough surfaces that can snag delicate silk fibres",
       "Deodorants and perfumes applied directly to silk—let them dry first",
       "Storing silk while damp, which can cause mildew and permanent damage",
       "Wire hangers, which can leave rust marks and distort garment shape",

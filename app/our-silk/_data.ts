@@ -94,7 +94,7 @@ export const silkContent: SilkContent = {
                 image: "/silk-shirts.webp",
                 alt: `${siteConfig.displayName} silk shirts in mink and off-white hanging on branded hangers.`,
                 title: "Grade 6A Mulberry silk",
-                text: "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibers nature can provide.",
+                text: "The highest possible grade. Sourced from silkworms fed exclusively on mulberry leaves, creating the finest, most lustrous fibres nature can provide.",
             },
             {
                 image: "/22-momme-weight.webp",
@@ -119,11 +119,11 @@ export const silkContent: SilkContent = {
         items: [
             {
                 title: "Temperature regulation",
-                text: "Silk's natural protein fibers adjust to your body temperature, keeping you cool in summer and warm in winter.",
+                text: "Silk's natural protein fibres adjust to your body temperature, keeping you cool in summer and warm in winter.",
             },
             {
-                title: "Naturally hypoallergenic",
-                text: "Silk's smooth surface and natural properties resist dust mites, mold, and allergens, making it ideal for sensitive skin.",
+                title: "Naturally breathable",
+                text: "Silk's natural protein fibres let your skin breathe and absorb moisture without feeling damp, so it stays comfortable even on sensitive skin.",
             },
             {
                 title: "Skin-kind comfort",
@@ -140,12 +140,12 @@ export const silkContent: SilkContent = {
         headingTop: "Ethical",
         headingEm: "by design",
         paragraphs: [
-            "Our silk is sourced from proven trusted manufacturers who understand that true luxury cannot exist without respect.",
+            "Our silk is sourced from long-standing, certified partners who understand that true luxury cannot exist without respect.",
             "We believe in the philosophy of \"slow luxury\" — creating pieces that are meant to be treasured for years, not seasons. Every purchase supports sustainable practices and fair wages, ensuring that beauty and ethics walk hand in hand.",
         ],
         commitmentsTitle: "Our commitments",
         commitments: [
-            "Partnership with certified proven manufacturers",
+            "Partnerships with long-standing, certified manufacturers",
             "Fair wages and working conditions for all artisans",
             "Long-term relationships built on mutual respect",
         ],
@@ -173,7 +173,7 @@ export const silkContent: SilkContent = {
                 step: 2,
                 title: "Careful drying",
                 description:
-                    "Lay flat on a clean towel, away from direct sunlight. Never wring or twist the delicate fibers.",
+                    "Lay flat on a clean towel, away from direct sunlight. Never wring or twist the delicate fibres.",
             },
             {
                 step: 3,
@@ -185,7 +185,7 @@ export const silkContent: SilkContent = {
                 step: 4,
                 title: "Mindful wearing",
                 description:
-                    "Allow silk to breathe between wears. The natural fibers will maintain their beauty with proper rest.",
+                    "Allow silk to breathe between wears. The natural fibres will maintain their beauty with proper rest.",
             },
         ],
     },

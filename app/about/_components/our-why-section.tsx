@@ -1,42 +1,20 @@
 import { aboutContent } from "../_data"
-import { SectionTitle } from "./section-title"
-
 
 export function OurWhySection() {
   const { why } = aboutContent
 
   return (
-    <section className="py-16 lg:py-24 bg-stone-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <SectionTitle
-            titleLines={why.titleLines}
-            className="text-3xl lg:text-4xl font-light text-stone-800 mb-6 leading-tight"
-          />
-          <div className="flex flex-col gap-8">
-            <p className="text-xl md:text-2xl font-light text-stone-700 leading-relaxed text-center">
-              We don{"'"}t believe empowerment is a slogan.
-              <br />
-              We believe in its infrastructure.
-            </p>
-            <p className="text-lg text-stone-600 leading-relaxed text-center">
-              ANNA HORA exists to create a world where women are supported not
-              only in how they look or feel — but in how they build, lead, and
-              grow. Where softness is strategic. Where intelligence is elegant.
-              Where success doesn{"'"}t require burnout.
-            </p>
-            <div className="w-12 h-px bg-stone-300 mx-auto" />
-            <p className="text-xl md:text-2xl font-light text-stone-700 leading-relaxed text-center">
-              We are still a fashion brand.
-
-              <br />
-              But we are also a business ecosystem.
-              <br />
-              A platform for collaboration.
-              <br />
-              A quiet vote of confidence in women who build.
-            </p>
-          </div>
+    <section className="section bg-secondary">
+      <div className="container-site">
+        <div className="mx-auto flex max-w-[var(--content-narrow)] flex-col text-center gap-block">
+          <h2 className="text-balance mb-0">
+            {why.titleTop} <em>{why.titleEm}</em>
+          </h2>
+          {/* whitespace-pre-line: the statements' line breaks live in the content, not in markup */}
+          <p className="whitespace-pre-line text-heading-md font-light text-foreground">{why.opening}</p>
+          <p>{why.body}</p>
+          <span className="mx-auto h-px w-12 bg-border" aria-hidden="true" />
+          <p className="whitespace-pre-line text-heading-md font-light text-foreground">{why.closing}</p>
         </div>
       </div>
     </section>

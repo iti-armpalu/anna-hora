@@ -16,7 +16,7 @@ type Props = {
 export function SectionHeader({ titleTop, titleEm, subtitle, as: Tag = "h2", align = "center" }: Props) {
   return (
     <div className={cn(align === "center" ? "section-header" : "flex flex-col")}>
-      <Tag>
+      <Tag className="text-balance">
         {titleTop} <em>{titleEm}</em>
       </Tag>
       {subtitle && <p className="text-heading-sm">{subtitle}</p>}

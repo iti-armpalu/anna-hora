@@ -257,7 +257,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Product information",
     question: "What makes your silk special?",
     answer:
-      "We use only the finest Mulberry silk. Our silk is naturally hypoallergenic, temperature-regulating, and becomes softer with each wear. Learn more about our silk story on our Our Silk page.",
+      "We use only the finest Mulberry silk. Our silk is naturally breathable, temperature-regulating, and becomes softer with each wear. Learn more about our silk story on our Our silk page.",
   },
 
   // Gift Cards & Wrapping
