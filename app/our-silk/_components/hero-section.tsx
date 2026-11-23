@@ -5,33 +5,19 @@ export function HeroSection() {
     const { hero } = silkContent
 
     return (
-        <section className="relative h-screen h-dvh flex items-center justify-center overflow-hidden">
+        // Fills the screen below the sticky header (dvh tracks mobile browser chrome)
+        <section className="relative flex h-[calc(100dvh-var(--header-height))] min-h-[32rem] items-center justify-center overflow-hidden">
+            <Image src={hero.image} alt={hero.alt} fill priority sizes="100vw" className="object-cover" />
 
-            {/* Image */}
-            <div className="absolute inset-0">
-                <Image
-                    src={hero.image}
-                    alt={hero.alt}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority
-                />
-            </div>
+            {/* Brand near-black wash so the text reads on any part of the photo */}
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/30 to-foreground/10" />
 
-            {/* Overlay — darkens image so text reads cleanly */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-
-            {/* Text */}
-            <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-                <h1 className="text-white mb-6">
+            <div className="container-site relative z-10 max-w-4xl text-center">
+                <h1 className="text-background mb-6">
                     {hero.titleTop} <em>{hero.titleEm}</em>
                 </h1>
-                <p className="text-heading-sm text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
-                    {hero.subtitle}
-                </p>
+                <p className="mx-auto max-w-2xl text-heading-sm font-light text-background/85">{hero.subtitle}</p>
             </div>
-
         </section>
     )
 }

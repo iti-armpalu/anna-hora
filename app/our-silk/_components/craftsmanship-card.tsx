@@ -1,26 +1,26 @@
 import Image from "next/image"
 
-interface CraftsmanshipCardProps {
+type Props = {
   image: string
   alt: string
   title: string
   text: string
 }
 
-export function CraftsmanshipCard({ image, alt, title, text }: CraftsmanshipCardProps) {
+export function CraftsmanshipCard({ image, alt, title, text }: Props) {
   return (
-    <div className="text-center">
-      <div className="relative aspect-square mb-6 overflow-hidden">
+    <div className="flex flex-col gap-tight text-center">
+      <div className="relative mb-field aspect-[4/5] overflow-hidden bg-muted">
         <Image
           src={image}
           alt={alt}
           fill
-          className="object-cover"
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
         />
       </div>
-      <h4 className="mb-4">{title}</h4>
-      <p className="leading-relaxed">{text}</p>
+      <h3 className="text-heading-sm mb-0">{title}</h3>
+      <p className="text-small">{text}</p>
     </div>
   )
 }

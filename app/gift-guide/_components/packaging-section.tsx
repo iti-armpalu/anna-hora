@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { SectionHeader } from "@/components/common/section-header"
 import { giftGuideContent } from "../_data"
 
 export function PackagingSection() {
@@ -7,12 +8,7 @@ export function PackagingSection() {
     return (
         <section id="packaging" className="section">
             <div className="container-site">
-                <div className="section-header">
-                    <h2 className="text-heading-lg font-light mb-4">
-                        {packaging.titleTop} <em>{packaging.titleEm}</em>
-                    </h2>
-                    <p className="text-muted-foreground">{packaging.description}</p>
-                </div>
+                <SectionHeader titleTop={packaging.titleTop} titleEm={packaging.titleEm} subtitle={packaging.description} />
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
                     {packaging.images.map((image) => (

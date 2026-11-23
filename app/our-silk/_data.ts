@@ -34,7 +34,6 @@ export interface SilkContent {
         headingEm: string
         intro: string
         items: Array<{
-            icon: string
             title: string
             text: string
         }>
@@ -119,22 +118,18 @@ export const silkContent: SilkContent = {
             "Silk's elegance is matched only by its intelligence. A fabric that adapts, protects, and enhances your natural beauty.",
         items: [
             {
-                icon: "thermometer",
                 title: "Temperature regulation",
                 text: "Silk's natural protein fibers adjust to your body temperature, keeping you cool in summer and warm in winter.",
             },
             {
-                icon: "shield",
                 title: "Naturally hypoallergenic",
                 text: "Silk's smooth surface and natural properties resist dust mites, mold, and allergens, making it ideal for sensitive skin.",
             },
             {
-                icon: "droplets",
                 title: "Skin-kind comfort",
                 text: "Silk's naturally smooth surface glides gently against the skin, reducing friction and supporting comfort throughout your day.",
             },
             {
-                icon: "clock",
                 title: "Timeless durability",
                 text: "With proper care, silk becomes more beautiful with age, developing a unique patina that tells the story of cherished moments.",
             },

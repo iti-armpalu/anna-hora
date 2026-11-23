@@ -1,5 +1,7 @@
 import Image from "next/image"
 import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
+import { SectionHeader } from "@/components/common/section-header"
+import { DashList } from "@/components/common/dash-list"
 import { giftGuideContent } from "../_data"
 import { GiftCardPurchase } from "./gift-card-purchase"
 
@@ -10,12 +12,7 @@ export function GiftCardSection({ giftCardProduct }: { giftCardProduct: ProductN
     return (
         <section id="gift-card" className="section bg-secondary scroll-mt-[var(--header-height)]">
             <div className="container-site">
-                <div className="section-header">
-                    <h2 className="text-heading-lg font-light mb-4">
-                        {giftCard.titleTop} <em>{giftCard.titleEm}</em>
-                    </h2>
-                    <p className="text-muted-foreground">{giftCard.subtitle}</p>
-                </div>
+                <SectionHeader titleTop={giftCard.titleTop} titleEm={giftCard.titleEm} subtitle={giftCard.subtitle} />
 
                 <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-block lg:grid-cols-2 lg:gap-16">
                     <div className="relative aspect-[4/5] overflow-hidden bg-muted">
@@ -31,14 +28,7 @@ export function GiftCardSection({ giftCardProduct }: { giftCardProduct: ProductN
                     <div className="flex flex-col gap-block">
                         <div className="flex flex-col gap-field">
                             <p className="text-muted-foreground">{giftCard.description}</p>
-                            <ul className="flex flex-col gap-tight">
-                                {giftCard.features.map((feature) => (
-                                    <li key={feature} className="flex items-center gap-3 text-small text-foreground">
-                                        <span className="h-px w-4 bg-foreground" aria-hidden="true" />
-                                        {feature}
-                                    </li>
-                                ))}
-                            </ul>
+                            <DashList items={giftCard.features} />
                         </div>
 
                         {giftCardProduct ? (
