@@ -1,24 +1,22 @@
 "use client"
 
-import type { FAQItem as FAQItemType } from "../_data"
+import type { FAQGroup } from "../_data"
+import { slugify } from "@/lib/utils/slugify"
 import { FAQItem } from "./faq-item"
 
-interface FAQCategoryGroupProps {
-  category: string
-  items: FAQItemType[]
+type Props = {
+  group: FAQGroup
   expandedItems: Set<string>
   onToggle: (question: string) => void
 }
 
-export function FAQCategoryGroup({ category, items, expandedItems, onToggle }: FAQCategoryGroupProps) {
+export function FAQCategoryGroup({ group, expandedItems, onToggle }: Props) {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-stone-200">
-      <div className="p-6 border-b border-stone-100">
-        <h2 className="text-2xl font-serif text-stone-900">{category}</h2>
-      </div>
-
-      <div className="divide-y divide-stone-100">
-        {items.map((item) => (
+    // scroll-mt keeps the heading clear of the sticky header when jumping from the topic nav
+    <section id={slugify(group.category)} className="flex scroll-mt-[calc(var(--header-height)+2rem)] flex-col gap-field">
+      <h2 className="text-heading-md font-light mb-0">{group.category}</h2>
+      <ul className="divide-y divide-border border-y border-border">
+        {group.items.map((item) => (
           <FAQItem
             key={item.question}
             question={item.question}
@@ -27,7 +25,7 @@ export function FAQCategoryGroup({ category, items, expandedItems, onToggle }: F
             onToggle={() => onToggle(item.question)}
           />
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   )
 }

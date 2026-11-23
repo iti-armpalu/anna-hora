@@ -6,38 +6,27 @@ export interface FAQItem {
   answer: string
 }
 
-export interface UITexts {
-  noResultsPrefix: string
-  clearSearchLabel: string
-  contactPromptTitle: string
-  contactPromptText: string
-  contactCtas: {
-    primary: { label: string; href: string }
-    secondary: { label: string; href: string }
-  }
-}
-
 export interface HeaderContent {
   title: string
   subtitle: string
-  searchPlaceholder: string
 }
 
 export const HEADER: Readonly<HeaderContent> = {
   title: "Frequently asked questions",
   subtitle:
     "We're here to help. Below you'll find answers to our most common questions. If you need a more personal touch, our team would be delighted to assist you.",
-  searchPlaceholder: "Search frequently asked questions...",
 } as const
 
-export const UI_TEXTS: Readonly<UITexts> = {
-  noResultsPrefix: 'No questions found matching "',
-  clearSearchLabel: "Clear search",
-  contactPromptTitle: "Still need help?",
-  contactPromptText: "Didn't find what you were looking for? Get in touch—we'd be happy to help.",
-  contactCtas: {
-    primary: { label: "Contact us", href: "/contact" },
-    secondary: { label: "Learn about our silk", href: "/our-silk" },
+export const UI_TEXTS = {
+  navTitle: "Topics",
+  searchLabel: "Search questions",
+  searchPlaceholder: "Search questions…",
+  noResults: (term: string): string => `No questions match “${term}”.`,
+  clearSearch: "Clear search",
+  help: {
+    title: "Still need help?",
+    text: "Didn't find what you were looking for? Get in touch — we'd be happy to help.",
+    cta: { label: "Contact us", href: "/contact" },
   },
 } as const
 
@@ -265,7 +254,7 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
     category: "Gift cards & wrapping",
     question: "Do you offer gift cards?",
     answer:
-      `Gift cards are currently available upon request through our customer care team. Please contact ${siteConfig.supportEmail} and we will be happy to assist you.\n\nWe are currently enhancing our website to introduce digital gift cards as a dedicated product in the near future.`,
+      `Yes. Digital gift cards are available in several amounts on our Gift guide page and are delivered to your inbox after purchase, ready to forward or share.\n\nPhysical gift cards are available on request — please contact ${siteConfig.supportEmail} and we will be happy to arrange one.`,
   },
 
   {
@@ -311,79 +300,25 @@ export const FAQ_CONTENT: readonly FAQItem[] = [
   },
 ] as const
 
-let cachedCategories: string[] | null = null
-
-/**
- * Get all unique categories in order of first appearance.
- * Result is cached after first call for performance.
- */
-export function getCategories(): string[] {
-  if (cachedCategories) return cachedCategories
-
-  const seen = new Set<string>()
-  const categories: string[] = []
-
-  for (const faq of FAQ_CONTENT) {
-    if (!seen.has(faq.category)) {
-      seen.add(faq.category)
-      categories.push(faq.category)
-    }
-  }
-
-  cachedCategories = categories
-  return categories
-}
-
-/**
- * Group FAQs by category for efficient rendering.
- * Returns a Map for O(1) category lookups.
- */
-export function groupFAQsByCategory(faqs: readonly FAQItem[] = FAQ_CONTENT): Map<string, FAQItem[]> {
-  const grouped = new Map<string, FAQItem[]>()
-
-  for (const faq of faqs) {
-    const categoryFaqs = grouped.get(faq.category)
-    if (categoryFaqs) {
-      categoryFaqs.push(faq)
-    } else {
-      grouped.set(faq.category, [faq])
-    }
-  }
-
-  return grouped
-}
-
-/**
- * Search FAQs by query string across question, answer, and category.
- * Returns empty array for empty queries.
- */
-export function searchFAQs(query: string, faqs: readonly FAQItem[] = FAQ_CONTENT): FAQItem[] {
-  const normalized = query.toLowerCase().trim()
-  if (!normalized) return []
-
-  return faqs.filter(
-    (faq) =>
-      faq.question.toLowerCase().includes(normalized) ||
-      faq.answer.toLowerCase().includes(normalized) ||
-      faq.category.toLowerCase().includes(normalized),
-  )
-}
-
-/**
- * Get FAQs organized by category with items for each category.
- * Useful for rendering category groups.
- */
-export function getCategorizedFAQs(faqs: readonly FAQItem[] = FAQ_CONTENT): Array<{
+export interface FAQGroup {
   category: string
   items: FAQItem[]
-}> {
-  const grouped = groupFAQsByCategory(faqs)
-  const categories = getCategories()
+}
 
-  return categories
-    .map((category) => ({
-      category,
-      items: grouped.get(category) || [],
-    }))
-    .filter((group) => group.items.length > 0)
+/** Group FAQs by category, keeping categories in order of first appearance. */
+export function groupByCategory(faqs: readonly FAQItem[]): FAQGroup[] {
+  const groups = new Map<string, FAQItem[]>()
+  for (const faq of faqs) {
+    groups.set(faq.category, [...(groups.get(faq.category) ?? []), faq])
+  }
+  return Array.from(groups, ([category, items]) => ({ category, items }))
+}
+
+/** Case-insensitive match on question, answer or category. Empty query returns everything. */
+export function searchFAQs(query: string, faqs: readonly FAQItem[] = FAQ_CONTENT): readonly FAQItem[] {
+  const term = query.toLowerCase().trim()
+  if (!term) return faqs
+  return faqs.filter((faq) =>
+    [faq.question, faq.answer, faq.category].some((field) => field.toLowerCase().includes(term))
+  )
 }

@@ -1,50 +1,55 @@
 "use client"
 
-import { ChevronDown } from "lucide-react"
+import { Plus } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { slugify } from "@/lib/utils/slugify"
 
-interface FAQItemProps {
+type Props = {
   question: string
   answer: string
   isExpanded: boolean
   onToggle: () => void
 }
 
-export function FAQItem({ question, answer, isExpanded, onToggle }: FAQItemProps) {
-  const answerId = `faq-answer-${question.replace(/\s+/g, "-").toLowerCase()}`
+export function FAQItem({ question, answer, isExpanded, onToggle }: Props) {
+  const id = slugify(question)
 
   return (
-    <div className="p-6">
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center justify-between text-left group"
-        aria-expanded={isExpanded}
-        aria-controls={answerId}
-      >
-        <h3 className="text-lg font-serif text-stone-900 group-hover:text-stone-700 transition-colors pr-4">
+    <li>
+      <h3 className="mb-0">
+        <button
+          id={`${id}-question`}
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isExpanded}
+          aria-controls={`${id}-answer`}
+          className="flex w-full items-start justify-between gap-6 py-5 text-left text-body font-normal text-foreground transition-colors hover:text-muted-foreground"
+        >
           {question}
-        </h3>
-        <ChevronDown
-          className={`w-5 h-5 text-stone-500 flex-shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""
-            }`}
-          aria-hidden="true"
-        />
-      </button>
+          {/* + turns into × when open */}
+          <Plus
+            strokeWidth={1.25}
+            aria-hidden="true"
+            className={cn("mt-1 size-4 shrink-0 transition-transform duration-200", isExpanded && "rotate-45")}
+          />
+        </button>
+      </h3>
 
-      {/* Answer is always in the DOM — visibility toggled via CSS only.
-          This ensures crawlers and screen readers see the content on first load. */}
+      {/* Always in the DOM so crawlers see every answer; `inert` keeps collapsed ones out of tab order and screen readers */}
       <div
-        id={answerId}
+        id={`${id}-answer`}
         role="region"
-        aria-hidden={!isExpanded}
-        className={`grid transition-all duration-200 ${isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-          }`}
+        aria-labelledby={`${id}-question`}
+        inert={!isExpanded}
+        className={cn(
+          "grid transition-all duration-200",
+          isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        )}
       >
         <div className="overflow-hidden">
-          <div className="mt-4 pt-4 border-t border-stone-100">
-            <p className="text-stone-600 leading-relaxed whitespace-pre-line">{answer}</p>
-          </div>
+          <p className="max-w-[var(--content-narrow)] whitespace-pre-line pb-5 text-small">{answer}</p>
         </div>
       </div>
-    </div>
+    </li>
   )
 }

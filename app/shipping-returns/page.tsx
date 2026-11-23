@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { pageMeta } from "@/lib/config/metadata"
+import { PageHeader } from "@/components/common/page-header"
 import { shippingReturnsContent } from "./_data"
 import { DeliverySection } from "./_components/delivery-section"
 import { ReturnsSection } from "./_components/returns-section"
@@ -13,15 +14,7 @@ export default function ShippingReturnsPage() {
 
   return (
     <>
-      <header className="border-b border-border">
-        <div className="container-site py-12 lg:py-16">
-          <div className="mx-auto flex max-w-[var(--content-narrow)] flex-col gap-field text-center">
-            <h1 className="text-heading-lg font-light text-balance mb-0">{hero.title}</h1>
-            <p className="text-heading-sm font-light text-foreground">{hero.subtitle}</p>
-            <p className="text-muted-foreground">{hero.description}</p>
-          </div>
-        </div>
-      </header>
+      <PageHeader title={hero.title} subtitle={hero.subtitle} description={hero.description} />
 
       <div className="container-site grid grid-cols-1 gap-[var(--section-padding)] py-12 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
         {/* On mobile the FAQ shortcut comes last; the section list is desktop-only */}
