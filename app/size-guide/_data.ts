@@ -51,7 +51,8 @@ export type SizeGuideContent = {
   }
   sizeCategories: SizeCategory[]
   ui: {
-    chartsTitle: string
+    chartTab: string
+    measureTab: string
     editLabel: string
     garmentLabel: string
   }
@@ -347,7 +348,8 @@ export const sizeGuideContent: SizeGuideContent = {
     },
   })),
   ui: {
-    chartsTitle: "Size charts",
+    chartTab: "Size chart",
+    measureTab: "How to measure",
     editLabel: "Edit",
     garmentLabel: "Garment",
   },
