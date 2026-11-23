@@ -12,9 +12,26 @@ export type SizeTableData = {
   rows: SizeRow[]
 }
 
+export type Edit = "signature" | "silk" | "core"
+export type Garment = "trousers" | "shorts" | "shirt"
+
+/** Display order and labels for the size guide selectors */
+export const EDITS: { id: Edit; label: string }[] = [
+  { id: "signature", label: "Signature Edit" },
+  { id: "silk", label: "Silk Edit" },
+  { id: "core", label: "Core Edit" },
+]
+
+export const GARMENTS: { id: Garment; label: string }[] = [
+  { id: "trousers", label: "Trousers" },
+  { id: "shorts", label: "Shorts" },
+  { id: "shirt", label: "Shirt" },
+]
+
 export type SizeCategory = {
   id: string
-  edit: "signature" | "silk" | "core"
+  edit: Edit
+  garment: Garment
   category: string
   description?: string
   fitNotes?: string
@@ -27,28 +44,21 @@ export type SizeGuideContent = {
     subtitle: string
     supportingText: string
   }
-  contact: {
-    title: string
-    phone: string
-    email: string
-    description: string
-    chatButton: string
-  }
   measurementTips: {
     title: string
     description: string
     measurements: Array<{ name: string; description: string }>
   }
   sizeCategories: SizeCategory[]
-  generalNotes: {
-    fitTitle: string
-    fitDescription: string
-    careTitle: string
-    careDescription: string
-    careCta: {
-      label: string
-      href: string
-    }
+  ui: {
+    chartsTitle: string
+    editLabel: string
+    garmentLabel: string
+  }
+  fitNotes: {
+    title: string
+    description: string
+    careLink: { label: string; href: string }
   }
   closing: ClosingContent
 }
@@ -64,9 +74,8 @@ function roundTo(value: number, decimals: number) {
   return Math.round(value * p) / p
 }
 
-function formatNumber(value: number, decimals = 1) {
-  const rounded = roundTo(value, decimals)
-  return Number.isInteger(rounded) ? String(rounded) : String(rounded)
+function formatNumber(value: number, decimals = 1): string {
+  return String(roundTo(value, decimals))
 }
 
 function parseNumberLike(input: string): number | null {
@@ -120,6 +129,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-trousers",
     edit: "signature",
+    garment: "trousers",
     category: "Signature Edit lounge trousers",
     description: "Relaxed-fit trousers designed for comfort and style",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -137,6 +147,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-shorts",
     edit: "signature",
+    garment: "shorts",
     category: "Signature Edit lounge shorts",
     description: "Comfortable shorts ideal for warm weather lounging",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -154,6 +165,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "signature-edit-lounge-shirt",
     edit: "signature",
+    garment: "shirt",
     category: "Signature Edit lounge shirt",
     description: "Elegant long shirts perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -175,6 +187,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-trousers",
     edit: "silk",
+    garment: "trousers",
     category: "Silk Edit lounge trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -192,6 +205,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-shorts",
     edit: "silk",
+    garment: "shorts",
     category: "Silk Edit lounge shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -209,6 +223,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "silk-edit-lounge-shirt",
     edit: "silk",
+    garment: "shirt",
     category: "Silk Edit lounge shirt",
     description: "Elegant short shirt perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -232,6 +247,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-trousers",
     edit: "core",
+    garment: "trousers",
     category: "Core Edit lounge trousers",
     description: "Wide-leg trousers with a sophisticated, relaxed silhouette",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -249,6 +265,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-shorts",
     edit: "core",
+    garment: "shorts",
     category: "Core Edit lounge shorts",
     description: "Classic boxer shorts designed for ultimate comfort",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -266,6 +283,7 @@ const CM_CATEGORIES: CmCategoryInput[] = [
   {
     id: "core-edit-lounge-shirt",
     edit: "core",
+    garment: "shirt",
     category: "Core Edit lounge shirt",
     description: "Elegant short shirt perfect for lounging or layering",
     fitNotes: FLAT_MEASUREMENT_NOTE,
@@ -290,14 +308,6 @@ export const sizeGuideContent: SizeGuideContent = {
     subtitle: `Each piece has been carefully designed to fit beautifully. Use our guide to find the right size for your ${siteConfig.displayName} piece.`,
     supportingText:
       "You'll find product-specific measurements on individual product pages. For bespoke advice, our customer care team is always here to help.",
-  },
-  contact: {
-    title: "Need personal assistance?",
-    phone: siteConfig.phone,
-    email: siteConfig.supportEmail,
-    description:
-      "There is nothing we love more than speaking to our customers. If you need assistance, we're here to help.",
-    chatButton: "Book a virtual fitting",
   },
   measurementTips: {
     title: "How to measure",
@@ -327,6 +337,7 @@ export const sizeGuideContent: SizeGuideContent = {
   sizeCategories: CM_CATEGORIES.map((c) => ({
     id: c.id,
     edit: c.edit,
+    garment: c.garment,
     category: c.category,
     description: c.description,
     fitNotes: c.fitNotes,
@@ -335,16 +346,16 @@ export const sizeGuideContent: SizeGuideContent = {
       in: convertTableCmToIn(c.table),
     },
   })),
-  generalNotes: {
-    fitTitle: "Fit notes & garment care",
-    fitDescription:
-      "Our pieces are designed to drape effortlessly and flatter every silhouette. All measurements are garment measurements taken flat. For the best fit, we recommend following your body measurements and referring to our size charts. If you're between sizes, we suggest sizing up for a more relaxed fit or sizing down for a closer fit.",
-    careTitle: "Garment care",
-    careDescription: "Silk requires gentle care to maintain its beauty. Read our full guide for washing, drying, and storage instructions.",
-    careCta: {
-      label: "View silk care guide",
-      href: "/care-guide",
-    },
+  ui: {
+    chartsTitle: "Size charts",
+    editLabel: "Edit",
+    garmentLabel: "Garment",
+  },
+  fitNotes: {
+    title: "Fit notes",
+    description:
+      "Our pieces are designed to drape effortlessly and flatter every silhouette. All measurements are garment measurements taken flat. For the best fit, follow your body measurements and the size charts. If you're between sizes, size up for a more relaxed fit or down for a closer fit.",
+    careLink: { label: "How to care for your silk", href: "/care-guide" },
   },
   closing: {
     heading: "Find your",
@@ -373,3 +384,6 @@ export function resolveSizeCategory(
 }
 
 export const allSizeCategories = sizeGuideContent.sizeCategories
+export function getSizeCategoryById(id: string | undefined): SizeCategory | null {
+  return sizeGuideContent.sizeCategories.find((c) => c.id === id) ?? null
+}

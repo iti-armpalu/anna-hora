@@ -30,20 +30,20 @@ export function SizeGuideDialog({ open, onOpenChange, sizeGuideId }: Props) {
           variant="link"
           className="text-xs text-muted-foreground hover:text-foreground"
         >
-          Size Guide
+          Size guide
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle className="font-light text-foreground">
-            Size Guide — {category.category}
+            Size guide — {category.category}
           </DialogTitle>
         </DialogHeader>
         <div className="max-h-[70vh] overflow-y-auto pr-2">
           <SizeTable category={category} />
           <div className="mt-8 border-t border-border pt-4">
             <Link
-              href="/size-guide"
+              href={`/size-guide?chart=${category.id}`}
               className="text-small text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
             >
               View full size guide
