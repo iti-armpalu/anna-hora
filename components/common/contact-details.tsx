@@ -1,18 +1,9 @@
-import type { ReactNode } from "react"
 import { siteConfig } from "@/lib/config/site"
 import { CONTACT_COPY } from "@/lib/config/contact"
 import { CopyButton } from "@/components/ui/copy-button"
+import { DetailList, DetailRow as Row } from "@/components/common/detail-list"
 
 const LINK_CLASS = "text-foreground underline-offset-4 decoration-1 hover:underline"
-
-function Row({ label, children }: { label: string; children: ReactNode }) {
-    return (
-        <div className="grid grid-cols-1 gap-tight py-5 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6">
-            <dt className="label-uppercase pt-0.5">{label}</dt>
-            <dd className="flex flex-col gap-1 text-small text-foreground">{children}</dd>
-        </div>
-    )
-}
 
 /** Day → hours pairs; Saturday and Sunday merge into one line when they're the same. */
 function HoursTable() {
@@ -57,7 +48,7 @@ export function ContactDetails({ showSocial = false }: Props) {
     const { supportEmail, phone, phoneDisplay, social } = siteConfig
 
     return (
-        <dl className="divide-y divide-border border-y border-border">
+        <DetailList>
             <Row label={CONTACT_COPY.email}>
                 <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <a href={`mailto:${supportEmail}`} className={LINK_CLASS}>
@@ -87,6 +78,6 @@ export function ContactDetails({ showSocial = false }: Props) {
                     </a>
                 </Row>
             )}
-        </dl>
+        </DetailList>
     )
 }

@@ -1,4 +1,5 @@
 import { siteConfig, getAddressLines, getAddressInline } from "@/lib/config/site"
+import { DELIVERY_REGIONS } from "@/lib/config/delivery"
 
 export interface TermsSection {
   key: string
@@ -155,20 +156,10 @@ const TERMS_DATA: TermsData = {
       paragraphs: [
         "Delivery methods are selected by the Buyer during the ordering process.",
       ],
-      subsections: [
-        {
-          heading: "Czech Republic",
-          text: "Delivery typically takes 2–3 business days via PPL or Zásilkovna.",
-        },
-        {
-          heading: "Europe",
-          text: "Delivery typically takes 3–4 business days via DHL Express.",
-        },
-        {
-          heading: "Rest of the world",
-          text: "Delivery typically takes 4–5 business days via DHL Express.",
-        },
-      ],
+      subsections: DELIVERY_REGIONS.map(({ region, time, carriers }) => ({
+        heading: region,
+        text: `Delivery typically takes ${time} via ${carriers}.`,
+      })),
       note:
         "Delivery times are estimates and may be affected by customs clearance or circumstances beyond the Seller's control.",
     },

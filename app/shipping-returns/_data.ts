@@ -1,4 +1,10 @@
 import { siteConfig } from "@/lib/config/site"
+import type { Step } from "@/components/common/numbered-steps"
+
+export interface InfoGroup {
+    name: string
+    items: string[]
+}
 
 export interface ShippingReturnsContent {
     hero: {
@@ -6,13 +12,18 @@ export interface ShippingReturnsContent {
         subtitle: string
         description: string
     }
+    nav: {
+        title: string
+        delivery: string
+        returns: string
+        help: string
+    }
     delivery: {
         title: string
         description: string
-        info: Array<{
-            name: string
-            items: string[]
-        }>
+        timesLabel: string
+        info: InfoGroup[]
+        notesTitle: string
         importantNotes: string[]
         ctaText: string
         ctaHref: string
@@ -20,44 +31,42 @@ export interface ShippingReturnsContent {
     returns: {
         title: string
         description: string
-        policy: Array<{
-            name: string
-            conditions: string[]
-        }>
-        steps: Array<{
-            step: number
-            title: string
-            description: string
-        }>
+        steps: Step[]
+        startCta: { label: string; href: string }
+        policyTitle: string
+        policy: InfoGroup[]
         ctaText: string
         ctaHref: string
     }
-    complaints: {
+    help: {
         title: string
         description: string
         resolution: string
     }
-    support: {
+    faq: {
         title: string
         description: string
-        links: {
-            faq: { label: string; href: string }
-            care: { label: string; href: string }
-        }
+        cta: { label: string; href: string }
     }
 }
 
 export const shippingReturnsContent: ShippingReturnsContent = {
     hero: {
-        title: "Shipping, returns & care",
+        title: "Shipping & returns",
         subtitle: "Because your experience matters as much as your purchase.",
         description:
-            "Explore our seamless shipping, returns, and support options designed with the same attention to detail as our silk pieces.",
+            "Everything you need to know about delivery and returns, prepared with the same attention to detail as our silk pieces.",
+    },
+    nav: {
+        title: "On this page",
+        delivery: "Delivery",
+        returns: "Returns",
+        help: "Help with an order",
     },
     delivery: {
         title: "Delivery",
-        description:
-            "Every order is carefully wrapped in our signature packaging and dispatched with care.",
+        description: "Every order is carefully wrapped in our signature packaging and dispatched with care.",
+        timesLabel: "Delivery times",
         info: [
             {
                 name: "Order processing",
@@ -65,13 +74,6 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                     "Processing may take up to 3 working days",
                     "Order tracking details sent via email once dispatched",
                     "Track orders anytime from your account",
-                ],
-            },
-            {
-                name: "Delivery timing",
-                items: [
-                    "Delivery times are estimates from dispatch date",
-                    "Delays may occur due to payment authorisation or customs processing",
                 ],
             },
             {
@@ -90,75 +92,62 @@ export const shippingReturnsContent: ShippingReturnsContent = {
                 ],
             },
         ],
+        notesTitle: "Good to know",
         importantNotes: [
+            "Delivery times are estimates from the dispatch date.",
+            "Delays may occur due to payment authorisation or customs processing.",
             "Orders cannot be redirected once dispatched.",
-            "Delivery delays caused by customs clearance are outside our control.",
         ],
-        ctaText: "Read full Delivery FAQ",
+        ctaText: "Read the delivery FAQ",
         ctaHref: "/faq",
     },
     returns: {
-        title: "Effortless returns",
+        title: "Returns",
         description: `We want you to love your ${siteConfig.displayName} piece. If it isn't perfect, returns are simple.`,
-        policy: [
-            {
-                name: "Return window",
-                conditions: ["Returns accepted within 14 days of delivery"],
-            },
-            {
-                name: "Item condition",
-                conditions: [
-                    "Items must be unworn and unwashed",
-                    "Original tags must be attached",
-                    "Items must be packed securely (preferably in the original packaging)",
-                ],
-            },
-            {
-                name: "Return costs",
-                conditions: ["Return shipping costs are paid by the customer"],
-            },
-            {
-                name: "Refund timing",
-                conditions: [
-                    "Refund processed within 14 days after returned goods are received and approved",
-                ],
-            },
-        ],
         steps: [
             {
-                step: 1,
                 title: "Request",
-                description:
-                    "Initiate your return through your account or email customerservice@annahora.com",
+                description: `Start your return from your account, or email ${siteConfig.supportEmail}.`,
             },
             {
-                step: 2,
                 title: "Pack",
-                description:
-                    "Carefully pack your item (preferably in the original packaging)",
+                description: "Carefully pack your item, preferably in its original packaging.",
             },
             {
-                step: 3,
                 title: "Send back",
-                description:
-                    "Ship according to instructions provided by customer service",
+                description: "Ship it following the instructions from our customer care team.",
             },
         ],
-        ctaText: "Read full Returns FAQ",
+        startCta: { label: "Start a return", href: "/account" },
+        policyTitle: "Return policy",
+        policy: [
+            { name: "Return window", items: ["Returns accepted within 14 days of delivery"] },
+            {
+                name: "Item condition",
+                items: [
+                    "Items must be unworn and unwashed",
+                    "Original tags must be attached",
+                    "Items must be packed securely, preferably in the original packaging",
+                ],
+            },
+            { name: "Return costs", items: ["Return shipping costs are paid by the customer"] },
+            {
+                name: "Refund timing",
+                items: ["Refund processed within 14 days after returned goods are received and approved"],
+            },
+        ],
+        ctaText: "Read the returns FAQ",
         ctaHref: "/faq",
     },
-    complaints: {
+    help: {
         title: "We're here to make it right",
         description:
             "If something isn't as expected, we want to hear from you. Our customer care team will work with you to resolve any issue promptly.",
         resolution: "Our aim is to resolve all concerns within 48 hours.",
     },
-    support: {
+    faq: {
         title: "Need quick answers?",
-        description: "Looking for product care tips?",
-        links: {
-            faq: { label: "FAQ", href: "/faq" },
-            care: { label: "Care instructions", href: "/care-guide" },
-        },
-    }
+        description: "Most questions about orders, delivery and returns are answered in our FAQ.",
+        cta: { label: "View FAQ", href: "/faq" },
+    },
 }

@@ -1,51 +1,44 @@
-import Link from "next/link"
-import { CheckCircle2, ArrowRight } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { DashList } from "@/components/common/dash-list"
+import { DetailList, DetailRow } from "@/components/common/detail-list"
+import { DELIVERY_REGIONS } from "@/lib/config/delivery"
 import { shippingReturnsContent } from "../_data"
+import { PolicySection } from "./policy-section"
+import { SECTION_IDS } from "./section-ids"
 
 export function DeliverySection() {
     const { delivery } = shippingReturnsContent
 
     return (
-        <Card className="border-stone-200 shadow-sm py-0">
-            <CardContent className="p-8">
-                <h2 className="font-serif text-2xl text-stone-900 mb-6">{delivery.title}</h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    {delivery.info.map((block) => (
-                        <div key={block.name} className="border border-stone-200 rounded-lg p-4">
-                            <h3 className="font-medium text-stone-900 mb-2">{block.name}</h3>
-                            <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">
-                                {block.items.map((item) => (
-                                    <li key={item} className="flex items-start gap-2">
-                                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-foreground/60" />
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="bg-secondary/60 rounded-lg p-4 mb-6">
-                    <span className="text-sm font-medium text-foreground">Important Notes</span>
-                    <ul className="flex flex-col gap-1 text-sm text-muted-foreground mt-2">
-                        {delivery.importantNotes.map((note) => (
-                            <li key={note}>{note}</li>
+        <PolicySection
+            id={SECTION_IDS.delivery}
+            title={delivery.title}
+            description={delivery.description}
+            cta={{ text: delivery.ctaText, href: delivery.ctaHref }}
+        >
+            <DetailList>
+                <DetailRow label={delivery.timesLabel}>
+                    <span className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1">
+                        {DELIVERY_REGIONS.map(({ region, time, carriers }) => (
+                            <span key={region} className="contents">
+                                <span>{region}</span>
+                                <span>
+                                    {time} <span className="text-muted-foreground">· {carriers}</span>
+                                </span>
+                            </span>
                         ))}
-                    </ul>
-                </div>
+                    </span>
+                </DetailRow>
+                {delivery.info.map((group) => (
+                    <DetailRow key={group.name} label={group.name}>
+                        <DashList items={group.items} />
+                    </DetailRow>
+                ))}
+            </DetailList>
 
-                <div className="border-t border-border pt-6">
-                    <Link
-                        href={delivery.ctaHref}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
-                    >
-                        {delivery.ctaText}
-                        <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                </div>
-            </CardContent>
-        </Card>
+            <div className="flex flex-col gap-field bg-secondary p-6">
+                <span className="label-uppercase">{delivery.notesTitle}</span>
+                <DashList items={delivery.importantNotes} />
+            </div>
+        </PolicySection>
     )
 }

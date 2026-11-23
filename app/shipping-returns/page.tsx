@@ -3,8 +3,8 @@ import { pageMeta } from "@/lib/config/metadata"
 import { shippingReturnsContent } from "./_data"
 import { DeliverySection } from "./_components/delivery-section"
 import { ReturnsSection } from "./_components/returns-section"
-import { ComplaintsSection } from "./_components/complaints-section"
-import { SupportSidebar } from "./_components/support-sidebar"
+import { HelpSection } from "./_components/help-section"
+import { PageNav } from "./_components/page-nav"
 
 export const metadata: Metadata = pageMeta.shippingReturns
 
@@ -13,39 +13,27 @@ export default function ShippingReturnsPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="bg-white border-b border-stone-200">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto py-16 text-center">
-            <h1 className="text-4xl md:text-5xl font-serif text-stone-900 mb-6">
-              {hero.title}
-            </h1>
-            <p className="text-xl text-stone-600 mb-4">{hero.subtitle}</p>
-            <p className="text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-              {hero.description}
-            </p>
+      <header className="border-b border-border">
+        <div className="container-site py-12 lg:py-16">
+          <div className="mx-auto flex max-w-[var(--content-narrow)] flex-col gap-field text-center">
+            <h1 className="text-heading-lg font-light text-balance mb-0">{hero.title}</h1>
+            <p className="text-heading-sm font-light text-foreground">{hero.subtitle}</p>
+            <p className="text-muted-foreground">{hero.description}</p>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2 space-y-12">
-                <DeliverySection />
-                <ReturnsSection />
-                <ComplaintsSection />
-              </div>
-              <aside>
-                <SupportSidebar />
-              </aside>
-            </div>
-          </div>
+      <div className="container-site grid grid-cols-1 gap-[var(--section-padding)] py-12 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16 lg:py-16">
+        {/* On mobile the FAQ shortcut comes last; the section list is desktop-only */}
+        <div className="order-2 lg:order-1">
+          <PageNav />
         </div>
-      </section>
-
+        <div className="order-1 flex max-w-3xl flex-col gap-[var(--section-padding)] lg:order-2">
+          <DeliverySection />
+          <ReturnsSection />
+          <HelpSection />
+        </div>
+      </div>
     </>
   )
 }
