@@ -1,43 +1,49 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Copy } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+import { CONTACT_COPY } from "@/lib/config/contact"
 
-interface CopyButtonProps {
-    value: string;
-    className?: string;
+type CopyState = "idle" | "copied" | "failed"
+
+const RESET_AFTER_MS = 2000
+
+type Props = {
+    value: string
+    /** What's being copied, for screen readers, e.g. "email address" */
+    label: string
+    className?: string
 }
 
-export function CopyButton({ value, className }: CopyButtonProps) {
-    const [copied, setCopied] = useState(false);
+/** Small "Copy" text action beside a value. Confirms success or failure in place. */
+export function CopyButton({ value, label, className }: Props) {
+    const [state, setState] = useState<CopyState>("idle")
 
-    async function handleCopy() {
+    async function handleCopy(): Promise<void> {
         try {
-            await navigator.clipboard.writeText(value);
-            setCopied(true);
-
-            setTimeout(() => setCopied(false), 2000);
-        } catch {
-            console.error("Copy failed");
+            await navigator.clipboard.writeText(value)
+            setState("copied")
+        } catch (err: unknown) {
+            // Clipboard is blocked in some browsers/contexts — tell the user rather than failing silently
+            console.error("Copy failed:", err instanceof Error ? err.message : err)
+            setState("failed")
         }
+        setTimeout(() => setState("idle"), RESET_AFTER_MS)
     }
 
     return (
         <button
             type="button"
             onClick={handleCopy}
-            className={cn("flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors", className)}
-        >
-            <span>{value}</span>
-
-            {copied ? (
-                <span className="text-[11px] tracking-wide text-muted-foreground">
-                    Copied
-                </span>
-            ) : (
-                <Copy className="w-4 h-4 text-muted-foreground" />
+            aria-label={`${CONTACT_COPY.copy} ${label}`}
+            className={cn(
+                "text-xs text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground",
+                className
             )}
+        >
+            <span aria-live="polite">
+                {state === "copied" ? CONTACT_COPY.copied : state === "failed" ? CONTACT_COPY.copyFailed : CONTACT_COPY.copy}
+            </span>
         </button>
-    );
+    )
 }

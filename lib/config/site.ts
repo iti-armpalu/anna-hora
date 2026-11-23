@@ -9,6 +9,8 @@ const customerCareHoursSchema = z.object({
     mondayFriday: z.string(),
     saturday: z.string(),
     sunday: z.string(),
+    /** Shown once under the hours instead of repeating a zone on every line */
+    timezone: z.string(),
 });
 
 const addressSchema = z.object({
@@ -27,6 +29,8 @@ const siteSchema = z.object({
     tagline: z.string(),
     supportEmail: z.string().email(),
     phone: z.string(),
+    /** Grouped for reading; `phone` stays unformatted for tel: links and copying */
+    phoneDisplay: z.string(),
     address: addressSchema,
     customerCareHours: customerCareHoursSchema,
 
@@ -47,6 +51,7 @@ export const siteConfig = siteSchema.parse({
 
     supportEmail: "customerservice@annahora.com",
     phone: "+420773583533",
+    phoneDisplay: "+420 773 583 533",
 
     address: {
         companyName: "Anna Hora s.r.o.",
@@ -58,9 +63,11 @@ export const siteConfig = siteSchema.parse({
     },
 
     customerCareHours: {
-        mondayFriday: "9:00 AM – 6:00 PM CET (12:00 PM – 9:00 PM GST)",
+        // 24-hour clock, the norm in Czechia; zone label covers both winter (CET) and summer (CEST)
+        mondayFriday: "9:00 – 18:00",
         saturday: "Closed",
         sunday: "Closed",
+        timezone: "Prague time (CET/CEST)",
     },
 
     social: {

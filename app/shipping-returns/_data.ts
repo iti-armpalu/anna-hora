@@ -36,11 +36,6 @@ export interface ShippingReturnsContent {
         title: string
         description: string
         resolution: string
-        labels: {
-            email: string
-            phone: string
-            hours: string
-        }
     }
     support: {
         title: string
@@ -157,11 +152,6 @@ export const shippingReturnsContent: ShippingReturnsContent = {
         description:
             "If something isn't as expected, we want to hear from you. Our customer care team will work with you to resolve any issue promptly.",
         resolution: "Our aim is to resolve all concerns within 48 hours.",
-        labels: {
-            email: "Email us directly",
-            phone: "Call us",
-            hours: "Customer care hours",
-        },
     },
     support: {
         title: "Need quick answers?",

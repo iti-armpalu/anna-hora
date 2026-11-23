@@ -1,33 +1,32 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { pageMeta } from "@/lib/config/metadata"
+import { Button } from "@/components/ui/button"
+import { ContactDetails } from "@/components/common/contact-details"
 import { contactContent } from "./_data"
-import { ContactInfoCard } from "./_components/contact-info-card"
-import { FAQCard } from "./_components/faq-card"
-import { FollowUsCard } from "./_components/follow-us-card"
 
 export const metadata: Metadata = pageMeta.contact
 
 export default function ContactPage() {
-    return (
-        <div className="py-12 px-4">
-            <div className="container mx-auto max-w-6xl">
-                <header className="text-center mb-12">
-                    <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-6">
-                        {contactContent.header.title}
-                    </h1>
-                    <p className="text-stone-600 text-lg leading-relaxed max-w-2xl mx-auto">
-                        {contactContent.header.description}
-                    </p>
-                </header>
+    const { header, faq } = contactContent
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <ContactInfoCard />
-                    <div className="grid grid-rows-2 gap-6">
-                        <FAQCard />
-                        <FollowUsCard />
-                    </div>
+    return (
+        // Desktop: fill the screen below the header and centre the content, so the footer starts below the fold
+        <div className="container-site grid grid-cols-1 content-center gap-block py-12 lg:min-h-[calc(100dvh-var(--header-height))] lg:grid-cols-2 lg:items-center lg:gap-24 lg:py-16">
+            <header className="flex flex-col gap-field lg:max-w-md">
+                <h1 className="text-heading-lg font-light text-balance mb-0">{header.title}</h1>
+                <p className="text-muted-foreground">{header.description}</p>
+
+                <div className="mt-block flex flex-col gap-field">
+                    <p className="text-small text-foreground">{faq.title}</p>
+                    <p className="text-small">{faq.description}</p>
+                    <Button asChild variant="outline" className="w-fit">
+                        <Link href={faq.ctaHref}>{faq.ctaText}</Link>
+                    </Button>
                 </div>
-            </div>
+            </header>
+
+            <ContactDetails showSocial />
         </div>
     )
 }
