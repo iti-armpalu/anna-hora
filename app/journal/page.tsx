@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { pageMeta } from "@/lib/config/metadata"
 import { getAllArticles } from "@/lib/shopify/blog"
-import NewsletterSection from "@/components/home/newsletter-section"
+import { NewsletterSection } from "@/components/common/newsletter-section"
 import { journalContent } from "./_data"
 import { JournalCard } from "./_components/journal-card"
 import { JournalFeatured } from "./_components/journal-featured"

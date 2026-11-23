@@ -6,7 +6,7 @@ import FeaturedCategories from "@/components/home/featured-categories"
 import OurSilkSection from "@/components/home/our-silk-section"
 import FeaturedProducts from "@/components/home/featured-products"
 import GiftingSection from "@/components/home/gifting-section"
-import NewsletterSection from "@/components/home/newsletter-section"
+import { NewsletterSection } from "@/components/common/newsletter-section"
 import { siteConfig } from "@/lib/config/site"
 import type { CollectionNormalized } from "@/lib/shopify/types/collection-normalized"
 

@@ -91,19 +91,4 @@ export const homeContent = {
         },
     },
 
-    newsletter: {
-        heading: "Me-time letters",
-        description:
-            "Join our community and receive thoughtful notes about self-care, styling tips, and exclusive access to new collections. Sent occasionally, always with intention.",
-        placeholder: "Your email address",
-        ctaLabel: "Subscribe",
-        submittingLabel: "Submitting...",
-        privacy: "We respect your privacy. Unsubscribe at any time.",
-        success: {
-            heading: "You're in!",
-            description:
-                "Thank you for subscribing. We'll send thoughtful notes, styling inspiration, and early access to new collections.",
-            note: "Check your inbox for a welcome note from us.",
-        },
-    },
 }
