@@ -2,14 +2,14 @@ import { DashList } from "@/components/common/dash-list"
 import { DetailList, DetailRow } from "@/components/common/detail-list"
 import { DELIVERY_REGIONS } from "@/lib/config/delivery"
 import { shippingReturnsContent } from "../_data"
-import { PolicySection } from "./policy-section"
+import { InfoSection } from "@/components/common/info-section"
 import { SECTION_IDS } from "./section-ids"
 
 export function DeliverySection() {
     const { delivery } = shippingReturnsContent
 
     return (
-        <PolicySection
+        <InfoSection
             id={SECTION_IDS.delivery}
             title={delivery.title}
             description={delivery.description}
@@ -39,6 +39,6 @@ export function DeliverySection() {
                 <span className="label-uppercase">{delivery.notesTitle}</span>
                 <DashList items={delivery.importantNotes} />
             </div>
-        </PolicySection>
+        </InfoSection>
     )
 }

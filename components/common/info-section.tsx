@@ -9,8 +9,8 @@ type Props = {
     children: ReactNode
 }
 
-/** One chapter of the policy page — anchor target for the "On this page" nav. */
-export function PolicySection({ id, title, description, cta, children }: Props) {
+/** One chapter of a long information page (FAQ-style pages) — anchor target for the "On this page" nav. */
+export function InfoSection({ id, title, description, cta, children }: Props) {
     return (
         // scroll-mt keeps the heading clear of the sticky header when jumping to #id
         <section id={id} className="flex scroll-mt-[calc(var(--header-height)+2rem)] flex-col gap-block">

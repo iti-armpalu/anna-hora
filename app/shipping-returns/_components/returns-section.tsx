@@ -4,14 +4,14 @@ import { DashList } from "@/components/common/dash-list"
 import { DetailList, DetailRow } from "@/components/common/detail-list"
 import { NumberedSteps } from "@/components/common/numbered-steps"
 import { shippingReturnsContent } from "../_data"
-import { PolicySection } from "./policy-section"
+import { InfoSection } from "@/components/common/info-section"
 import { SECTION_IDS } from "./section-ids"
 
 export function ReturnsSection() {
     const { returns } = shippingReturnsContent
 
     return (
-        <PolicySection
+        <InfoSection
             id={SECTION_IDS.returns}
             title={returns.title}
             description={returns.description}
@@ -32,6 +32,6 @@ export function ReturnsSection() {
                     ))}
                 </DetailList>
             </div>
-        </PolicySection>
+        </InfoSection>
     )
 }
