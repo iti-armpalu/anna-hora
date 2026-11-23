@@ -1,5 +1,4 @@
 import { cache } from "react";
-import { cookies } from "next/headers";
 import { shopifyFetch } from "@/lib/shopify/fetch";
 
 import {
@@ -123,16 +122,16 @@ export async function getColorSiblings(
 // Fetch gift card product (market-aware)
 // --------------------------------------------------
 export async function getGiftCardProduct(): Promise<ProductNormalized | null> {
-  const cookieStore = await cookies();
-  const country = cookieStore.get("shippingCountry")?.value || "CZ";
-
+  // Market country is injected by shopifyFetch from the shippingCountry cookie
   const res = await shopifyFetch<ShopifyProductsQueryResponse>({
     query: PRODUCTS_QUERY,
     variables: {
       first: 1,
       query: 'tag:"gift-card"',
-      country,
     },
+    // Catalog data, not user-specific
+    cache: "force-cache",
+    revalidate: 60,
   });
 
   const productNode = res.products.nodes[0];

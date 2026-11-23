@@ -28,7 +28,15 @@ export interface GiftGuideContent {
         }
         description: string
         features: string[]
-        ctaLabel: string
+        purchase: {
+            amountLabel: string
+            selectPrompt: string
+            ctaLabel: string
+            adding: string
+            addedToast: (formattedAmount: string) => string
+            deliveryNote: string
+            unavailable: string
+        }
     }
     packaging: {
         titleTop: string
@@ -68,7 +76,16 @@ export const giftGuideContent: GiftGuideContent = {
             "Optional personal message",
             "Email delivery — instant",
         ],
-        ctaLabel: "Add to Bag",
+        purchase: {
+            amountLabel: "Amount",
+            selectPrompt: "Select an amount",
+            ctaLabel: "Add to Bag",
+            adding: "Adding…",
+            addedToast: (formattedAmount) => `Gift card added to bag • ${formattedAmount}`,
+            deliveryNote:
+                "Delivered to your inbox after purchase, yours to forward or share. Physical gift cards are available upon request.",
+            unavailable: "Gift cards are briefly unavailable online. Please contact us and we'll arrange one for you.",
+        },
     },
     packaging: {
         titleTop: "Packaging",
@@ -82,8 +99,8 @@ export const giftGuideContent: GiftGuideContent = {
         ],
     },
     closing: {
-            heading: "Give the gift of",
-            headingEm: "pure silk",
+        heading: "Give the gift of",
+        headingEm: "pure silk",
         ctas: [
             { label: "Shop Collection", href: "/shop", variant: "primary" },
             { label: "Read About Our Silk", href: "/our-silk", variant: "outline" },

@@ -1,147 +1,53 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { useCart } from "@/context/cart-context"
-import { formatPrice } from "@/hooks/use-price"
-import { toast } from "sonner"
+import type { ProductNormalized } from "@/lib/shopify/types/product-normalized"
 import { giftGuideContent } from "../_data"
-import type { ProductNormalized, ProductVariantNormalized } from "@/lib/shopify/types/product-normalized"
+import { GiftCardPurchase } from "./gift-card-purchase"
 
-interface GiftCardSectionProps {
-    giftCardProduct: ProductNormalized | null
-}
-
-export function GiftCardSection({ giftCardProduct }: GiftCardSectionProps) {
+/** Server shell — only the purchase controls ship as client JS. */
+export function GiftCardSection({ giftCardProduct }: { giftCardProduct: ProductNormalized | null }) {
     const { giftCard } = giftGuideContent
-    const { addToCart } = useCart()
-
-    const [selectedVariant, setSelectedVariant] = useState<ProductVariantNormalized | null>(null)
-    const [loading, setLoading] = useState(false)
-
-    const variants = giftCardProduct
-        ? [...giftCardProduct.variants].sort(
-            (a, b) => Number(a.price.amount) - Number(b.price.amount)
-        )
-        : []
-
-    const formattedPrice = selectedVariant
-        ? formatPrice({
-            amount: selectedVariant.price.amount,
-            currencyCode: selectedVariant.price.currencyCode,
-        })
-        : null
-
-    async function handleAddToCart() {
-        if (!selectedVariant) {
-            toast.error("Please select an amount first.")
-            return
-        }
-
-        setLoading(true)
-        try {
-            const result = await addToCart(selectedVariant.id, 1)
-            if (!result.ok) {
-                toast.error(result.error)
-                return
-            }
-            const formattedAmount = formatPrice({
-                amount: selectedVariant.price.amount,
-                currencyCode: selectedVariant.price.currencyCode,
-            })
-            toast.success(`Gift card added to bag • ${formattedAmount}`)
-        } catch {
-            toast.error("Something went wrong. Please try again.")
-        } finally {
-            setLoading(false)
-        }
-    }
 
     return (
-        <section id="gift-card" className="py-16 lg:py-24 bg-stone-100">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto">
+        <section id="gift-card" className="section bg-secondary scroll-mt-[var(--header-height)]">
+            <div className="container-site">
+                <div className="section-header">
+                    <h2 className="text-heading-lg font-light mb-4">
+                        {giftCard.titleTop} <em>{giftCard.titleEm}</em>
+                    </h2>
+                    <p className="text-muted-foreground">{giftCard.subtitle}</p>
+                </div>
 
-                    {/* Heading */}
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-6">
-                            {giftCard.titleTop}
-                            <br />
-                            <em className="font-serif italic">{giftCard.titleEm}</em>
-                        </h2>
-                        <p className="text-lg text-stone-600 max-w-2xl mx-auto">{giftCard.subtitle}</p>
+                <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-block lg:grid-cols-2 lg:gap-16">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+                        <Image
+                            src={giftCard.image.src}
+                            alt={giftCard.image.alt}
+                            fill
+                            sizes="(min-width: 1024px) 40vw, 100vw"
+                            className="object-cover"
+                        />
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
-
-                        {/* Image */}
-                        <div className="relative min-h-[200px]">
-                            <Image
-                                src={giftCard.image.src}
-                                alt={giftCard.image.alt}
-                                fill
-                                className="object-cover"
-                                sizes="(min-width: 1024px) 500px, 90vw"
-                            />
+                    <div className="flex flex-col gap-block">
+                        <div className="flex flex-col gap-field">
+                            <p className="text-muted-foreground">{giftCard.description}</p>
+                            <ul className="flex flex-col gap-tight">
+                                {giftCard.features.map((feature) => (
+                                    <li key={feature} className="flex items-center gap-3 text-small text-foreground">
+                                        <span className="h-px w-4 bg-foreground" aria-hidden="true" />
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        {/* Card */}
-                        <Card className="border-0 shadow-lg bg-white p-8 flex flex-col justify-center">
-                            <div className="space-y-6">
-
-                                {/* Amount selector */}
-                                {giftCardProduct ? (
-                                    <>
-                                        <div className="space-y-3">
-                                            <p className="text-sm font-medium text-stone-800">Select amount</p>
-                                            <div className="grid grid-cols-3 gap-2">
-                                                {variants.map((variant) => {
-                                                    const label = formatPrice({
-                                                        amount: variant.price.amount,
-                                                        currencyCode: variant.price.currencyCode,
-                                                    })
-                                                    const isSelected = selectedVariant?.id === variant.id
-
-                                                    return (
-                                                        <Button
-                                                            key={variant.id}
-                                                            variant={isSelected ? "default" : "outline"}
-                                                            onClick={() => setSelectedVariant(variant)}
-                                                            className="text-sm"
-                                                        >
-                                                            {label}
-                                                        </Button>
-                                                    )
-                                                })}
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <Button
-                                                className="w-full"
-                                                disabled={!selectedVariant || loading}
-                                                onClick={handleAddToCart}
-                                            >
-                                                {!selectedVariant
-                                                    ? "Select an amount"
-                                                    : loading
-                                                        ? "Adding..."
-                                                        : `${giftCard.ctaLabel} – ${formattedPrice}`}
-                                            </Button>
-                                            <p className="text-xs text-stone-400 text-center leading-relaxed">
-                                                Delivered to your inbox after purchase, yours to forward or share. Physical gift cards are available upon request.
-                                            </p>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <Button disabled className="w-full opacity-60">
-                                        Currently unavailable
-                                    </Button>
-                                )}
-                            </div>
-                        </Card>
+                        {giftCardProduct ? (
+                            <GiftCardPurchase giftCardProduct={giftCardProduct} />
+                        ) : (
+                            <p className="border border-border px-4 py-3 text-small text-muted-foreground">
+                                {giftCard.purchase.unavailable}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

@@ -5,34 +5,31 @@ export function PackagingSection() {
     const { packaging } = giftGuideContent
 
     return (
-        <section id="packaging" className="py-16 lg:py-24 bg-white">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-5xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl lg:text-4xl font-light text-stone-800 mb-4">
-                            {packaging.titleTop}
-                            <br />
-                            <em className="font-serif italic">{packaging.titleEm}</em>
-                        </h2>
-                        <p className="text-lg text-stone-600 max-w-2xl mx-auto">{packaging.description}</p>
-                    </div>
+        <section id="packaging" className="section">
+            <div className="container-site">
+                <div className="section-header">
+                    <h2 className="text-heading-lg font-light mb-4">
+                        {packaging.titleTop} <em>{packaging.titleEm}</em>
+                    </h2>
+                    <p className="text-muted-foreground">{packaging.description}</p>
+                </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {packaging.images.map((img) => (
-                            <div key={img.src} className="group">
-                                <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
-                                    <Image
-                                        src={img.src}
-                                        alt={img.alt}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                                    />
-                                </div>
-                                <p className="mt-3 text-sm text-stone-600">{img.alt}</p>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+                    {packaging.images.map((image) => (
+                        <figure key={image.src} className="group flex flex-col gap-field">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
+                                {/* alt="" — the visible caption already describes the image; repeating it doubles what screen readers announce */}
+                                <Image
+                                    src={image.src}
+                                    alt=""
+                                    fill
+                                    sizes="(min-width: 1024px) 25vw, 50vw"
+                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                                />
                             </div>
-                        ))}
-                    </div>
+                            <figcaption className="text-small text-muted-foreground">{image.alt}</figcaption>
+                        </figure>
+                    ))}
                 </div>
             </div>
         </section>
